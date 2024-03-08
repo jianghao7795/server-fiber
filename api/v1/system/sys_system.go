@@ -1,0 +1,79 @@
+package system
+
+import (
+	"server-fiber/global"
+	"server-fiber/model/common/response"
+	"server-fiber/model/system"
+	systemRes "server-fiber/model/system/response"
+	"server-fiber/utils"
+
+	"github.com/gin-gonic/gin"
+	"github.com/gofiber/fiber/v2"
+	"go.uber.org/zap"
+)
+
+type SystemApi struct{}
+
+// @Tags System
+// @Summary 获取配置文件内容
+// @Security ApiKeyAuth
+// @Produce  application/json
+// @Success 200 {object} return response.Response{data=systemRes.SysConfigResponse,msg=string} "获取配置文件内容,返回包括系统配置"
+// @Router /system/getSystemConfig [get]
+func (s *SystemApi) GetSystemConfig(c *fiber.Ctx) error {
+	if config, err := systemConfigService.GetSystemConfig(); err != nil {
+		global.LOG.Error("获取失败!", zap.Error(err))
+		return response.FailWithMessage("获取失败", c)
+	} else {
+		return response.OkWithDetailed(systemRes.SysConfigResponse{Config: config}, "获取成功", c)
+	}
+}
+
+// @Tags System
+// @Summary 设置配置文件内容
+// @Security ApiKeyAuth
+// @Produce  application/json
+// @Param data body system.System true "设置配置文件内容"
+// @Success 200 {object} return response.Response{data=string} "设置配置文件内容"
+// @Router /system/setSystemConfig [put]
+func (s *SystemApi) SetSystemConfig(c *fiber.Ctx) error {
+	var sys system.System
+	_ = c.QueryParser(&sys)
+	if err := systemConfigService.SetSystemConfig(sys); err != nil {
+		global.LOG.Error("设置失败!", zap.Error(err))
+		return response.FailWithMessage("设置失败", c)
+	} else {
+		return response.OkWithData("设置成功", c)
+	}
+}
+
+// @Tags System
+// @Summary 重启系统
+// @Security ApiKeyAuth
+// @Produce  application/json
+// @Success 200 {object} return response.Response{msg=string} "重启系统"
+// @Router /system/reloadSystem [post]
+func (s *SystemApi) ReloadSystem(c *fiber.Ctx) error {
+	err := utils.Reload()
+	if err != nil {
+		global.LOG.Error("重启系统失败!", zap.Error(err))
+		return response.FailWithMessage("重启系统失败", c)
+	} else {
+		return response.OkWithMessage("重启系统成功", c)
+	}
+}
+
+// @Tags System
+// @Summary 获取服务器信息
+// @Security ApiKeyAuth
+// @Produce  application/json
+// @Success 200 {object} return response.Response{data=map[string]interface{},msg=string} "获取服务器信息"
+// @Router /system/getServerInfo [post]
+func (s *SystemApi) GetServerInfo(c *fiber.Ctx) error {
+	if server, err := systemConfigService.GetServerInfo(); err != nil {
+		global.LOG.Error("获取失败!", zap.Error(err))
+		return response.FailWithMessage("获取失败", c)
+	} else {
+		return response.OkWithDetailed(gin.H{"server": server}, "获取成功", c)
+	}
+}
