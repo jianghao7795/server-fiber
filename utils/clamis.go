@@ -2,7 +2,6 @@ package utils
 
 import (
 	"errors"
-	"log"
 	"server-fiber/global"
 	systemReq "server-fiber/model/system/request"
 	"strings"
@@ -13,7 +12,7 @@ import (
 
 func GetClaims(c *fiber.Ctx) (*systemReq.CustomClaims, error) {
 	tokenString := c.Get("Authorization")
-	log.Println("token: ", tokenString)
+	// log.Println("token: ", tokenString)
 	tokenValue := strings.Split(tokenString, " ")
 	if tokenValue[0] != "Bearer" {
 		return nil, errors.New("token 错误")
@@ -21,7 +20,7 @@ func GetClaims(c *fiber.Ctx) (*systemReq.CustomClaims, error) {
 	token := tokenValue[1]
 	j := NewJWT()
 	claims, err := j.ParseToken(token)
-	log.Println("claims: ", claims)
+	// log.Println("claims: ", claims)
 	if err != nil {
 		global.LOG.Error("从fiber的Context中获取从jwt解析信息失败, 请检查请求头是否存在token且claims是否为规定结构")
 	}

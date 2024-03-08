@@ -1,7 +1,6 @@
 package example
 
 import (
-	"log"
 	"os"
 	"server-fiber/global"
 	"server-fiber/model/common/request"
@@ -82,12 +81,12 @@ func (e *ExcelApi) ImportExcel(c *fiber.Ctx) error {
 		FilePath:    global.CONFIG.Excel.Dir + filepath_time + "/" + filenameMd5,
 		FileType:    fileTypeName,
 	}
-	// err = excelService.ImportExcel(&importExcel)
-	// if err != nil {
-	// 	global.LOG.Error("导入失败!", zap.Error(err))
-	// 	return response.FailWithMessage("导入失败", c)
-	// }
-	log.Println(importExcel)
+	err = excelService.ImportExcel(&importExcel)
+	if err != nil {
+		global.LOG.Error("导入失败!", zap.Error(err))
+		return response.FailWithMessage("导入失败", c)
+	}
+	// log.Println(importExcel)
 	mkdirErr := os.MkdirAll(global.CONFIG.Excel.Dir+filepath_time, os.ModePerm)
 	if mkdirErr != nil {
 		global.LOG.Error("创建目录失败：", zap.Any("err", mkdirErr.Error()))
