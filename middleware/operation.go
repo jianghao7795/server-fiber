@@ -1,10 +1,6 @@
 package middleware
 
 import (
-	"bytes"
-
-	// "encoding/json"
-
 	"strconv"
 	"strings"
 	"time"
@@ -75,21 +71,20 @@ func OperationRecord(c *fiber.Ctx) error {
 			record.Body = "File or Length out of limit"
 		}
 	}
-	writer := &responseBodyWriter{
-		Response: *c.Response(),
-		body:     &bytes.Buffer{},
+	err := c.Next()
+	if err != nil {
+		return err
 	}
-
 	record.ErrorMessage = string(c.Response().Body())
 	record.Status = c.Response().StatusCode()
 	record.Latency = time.Since(time.Now())
-	record.Resp = writer.body.String()
+	record.Resp = string(c.Response().Body())
 	go func() {
 		if err := operationRecordService.CreateSysOperationRecord(record); err != nil {
 			global.LOG.Error("create operation record error:", zap.Error(err))
 		}
 	}()
-	return c.Next()
+	return nil
 }
 
 // func OperationRecordFrontend(c *fiber.Ctx) error {
@@ -156,11 +151,11 @@ func OperationRecord(c *fiber.Ctx) error {
 // 	}
 // }
 
-type responseBodyWriter struct {
-	fiber.Response
-	body *bytes.Buffer
-}
+// type responseBodyWriter struct {
+// 	fiber.Response
+// 	body *bytes.Buffer
+// }
 
-func (r *responseBodyWriter) Write(b []byte) (int, error) {
-	return r.body.Write(b)
-}
+// func (r *responseBodyWriter) Write(b []byte) (int, error) {
+// 	return r.body.Write(b)
+// }
