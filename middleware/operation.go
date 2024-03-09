@@ -4,8 +4,7 @@ import (
 	"bytes"
 
 	// "encoding/json"
-	ioutil "io"
-	"net/http"
+
 	"strconv"
 	"strings"
 	"time"
@@ -28,12 +27,12 @@ var operationRecordService = service.ServiceGroupApp.SystemServiceGroup.Operatio
 func OperationRecord(c *fiber.Ctx) error {
 	var body []byte
 	var userId int
-	if c.Method() != http.MethodGet {
-		var err error
-		body, err = ioutil.ReadAll(c.Request().BodyStream())
-		if err != nil {
-			global.LOG.Error("read body from request error:", zap.Error(err))
-		}
+	if c.Method() != "GET" {
+		// var err error
+		body = c.Request().Body()
+		// if err != nil {
+		// 	global.LOG.Error("read body from request error:", zap.Error(err))
+		// }
 	} else {
 		query := c.OriginalURL()
 		split := strings.Split(query, "?")
@@ -81,7 +80,7 @@ func OperationRecord(c *fiber.Ctx) error {
 		body:     &bytes.Buffer{},
 	}
 
-	// record.ErrorMessage = c.Err().Error()
+	record.ErrorMessage = string(c.Response().Body())
 	record.Status = c.Response().StatusCode()
 	record.Latency = time.Since(time.Now())
 	record.Resp = writer.body.String()

@@ -102,7 +102,7 @@ mysql:
   max-open-conns: 1000
   log-mode: silent
   log-zap: true
-  debug: false
+  debug: true
 pgsql:
   path: ""
   port: ""
