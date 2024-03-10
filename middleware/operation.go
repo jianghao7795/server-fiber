@@ -56,14 +56,19 @@ func OperationRecord(c *fiber.Ctx) error {
 		}
 		userId = id
 	}
+	pathURL := c.Path()
+	isBackend := system.Backend
+	if strings.Contains(pathURL, "/backend") {
+		isBackend = system.Frontend
+	}
 	record := system.SysOperationRecord{
 		Ip:       c.IP(),
 		Method:   c.Method(),
-		Path:     c.Path(),
+		Path:     pathURL,
 		Agent:    c.Get("User-Agent"),
 		Body:     string(body),
 		UserID:   userId,
-		TypePort: system.Backend,
+		TypePort: isBackend,
 	}
 	// 上传文件时候 中间件日志进行裁断操作
 	if strings.Contains(c.Get("Content-Type"), "multipart/form-data") {

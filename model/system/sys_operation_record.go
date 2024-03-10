@@ -8,6 +8,8 @@ import (
 	"server-fiber/model/frontend"
 )
 
+type PolicyType int
+
 // 如果含有time.Time 请自行import time包
 type SysOperationRecord struct {
 	global.MODEL
@@ -24,8 +26,6 @@ type SysOperationRecord struct {
 	User         SysUser       `json:"user"`
 	TypePort     PolicyType    `json:"type_port" form:"type_port" gorm:"column:type_port;comment:区别前后台"`
 }
-
-type PolicyType int
 
 const (
 	Backend  PolicyType = 0
