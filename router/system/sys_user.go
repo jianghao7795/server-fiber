@@ -2,6 +2,7 @@ package system
 
 import (
 	v1 "server-fiber/api/v1"
+	"server-fiber/middleware"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -9,7 +10,7 @@ import (
 type UserRouter struct{}
 
 func (s *UserRouter) InitUserRouter(Router fiber.Router) {
-	userRouter := Router.Group("user") ////.Use(middleware.OperationRecord)
+	userRouter := Router.Group("user").Use(middleware.OperationRecord)
 	userRouterWithoutRecord := Router.Group("user")
 	baseApi := v1.ApiGroupApp.SystemApiGroup.BaseApi
 	{

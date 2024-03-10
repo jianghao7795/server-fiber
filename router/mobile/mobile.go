@@ -2,6 +2,7 @@ package mobile
 
 import (
 	v1 "server-fiber/api/v1"
+	"server-fiber/middleware"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -9,14 +10,14 @@ import (
 type MobileLoginRouter struct{}
 
 func (m *MobileUserRouter) InitMobileLoginRouter(Router fiber.Router) {
-	moblieLoginRouter := Router.Group("") //.Use(middleware.JWTAuthMobileMiddleware())
+	moblieLoginRouter := Router.Group("").Use(middleware.JWTAuthMobileMiddleware())
 	var mobileLoginApi = v1.ApiGroupApp.MobileApiGroup.MobileLoginApi
 	var registerApi = v1.ApiGroupApp.MobileApiGroup.RegisterMobile
 	{
 		moblieLoginRouter.Post("login", mobileLoginApi.Login)
 		moblieLoginRouter.Post("register", registerApi.Register)
 	}
-	mobileGetUserApi := Router.Group("") //.Use(middleware.JWTAuthMobileMiddleware())
+	mobileGetUserApi := Router.Group("").Use(middleware.JWTAuthMobileMiddleware())
 	{
 		mobileGetUserApi.Get("getUserInfo", mobileLoginApi.GetUserInfo)
 		mobileGetUserApi.Put("updateUser", mobileLoginApi.UpdateMobileUser)

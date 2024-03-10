@@ -2,6 +2,7 @@ package app
 
 import (
 	v1 "server-fiber/api/v1"
+	"server-fiber/middleware"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -10,7 +11,7 @@ type TagRouter struct{}
 
 // InitTagRouter 初始化 Tag 路由信息
 func (s *TagRouter) InitTagRouter(Router fiber.Router) {
-	tagRouter := Router.Group("tag") //.Use(middleware.OperationRecord)
+	tagRouter := Router.Group("tag").Use(middleware.OperationRecord)
 	tagRouterWithoutRecord := Router.Group("tag")
 	var tagApi = v1.ApiGroupApp.AppApiGroup.TagApi
 	{

@@ -2,6 +2,7 @@ package example
 
 import (
 	v1 "server-fiber/api/v1"
+	"server-fiber/middleware"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -9,7 +10,7 @@ import (
 type FileUploadAndDownloadRouter struct{}
 
 func (e *FileUploadAndDownloadRouter) InitFileUploadAndDownloadRouter(Router fiber.Router) {
-	fileUploadAndDownloadRouter := Router.Group("fileUploadAndDownload")
+	fileUploadAndDownloadRouter := Router.Group("fileUploadAndDownload").Use(middleware.OperationRecord)
 	exaFileUploadAndDownloadApi := v1.ApiGroupApp.ExampleApiGroup.FileUploadAndDownloadApi
 	{
 		fileUploadAndDownloadRouter.Post("upload", exaFileUploadAndDownloadApi.UploadFile)                                 // 上传文件

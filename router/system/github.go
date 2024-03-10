@@ -2,6 +2,7 @@ package system
 
 import (
 	v1 "server-fiber/api/v1"
+	"server-fiber/middleware"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -9,7 +10,7 @@ import (
 type GithubRouter struct{}
 
 func (g *GithubRouter) InitGithubRouter(Router fiber.Router) {
-	githubRouter := Router.Group("github") //.Use(middleware.OperationRecord)
+	githubRouter := Router.Group("github").Use(middleware.OperationRecord)
 	githubRouterRecord := Router.Group("github")
 
 	githubRouterApi := v1.ApiGroupApp.SystemApiGroup.SystemGithubApi

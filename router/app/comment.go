@@ -2,6 +2,7 @@ package app
 
 import (
 	v1 "server-fiber/api/v1"
+	"server-fiber/middleware"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -11,7 +12,7 @@ type CommentRouter struct {
 
 // InitCommentRouter 初始化 Comment 路由信息
 func (s *CommentRouter) InitCommentRouter(Router fiber.Router) {
-	commentRouter := Router.Group("comment") //.Use(middleware.OperationRecord)
+	commentRouter := Router.Group("comment").Use(middleware.OperationRecord)
 	commentRouterWithoutRecord := Router.Group("comment")
 	var commentApi = v1.ApiGroupApp.AppApiGroup.CommentApi
 	{

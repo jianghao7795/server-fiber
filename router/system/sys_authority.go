@@ -2,6 +2,7 @@ package system
 
 import (
 	v1 "server-fiber/api/v1"
+	"server-fiber/middleware"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -9,7 +10,7 @@ import (
 type AuthorityRouter struct{}
 
 func (s *AuthorityRouter) InitAuthorityRouter(Router fiber.Router) {
-	authorityRouter := Router.Group("authority") //.Use(middleware.OperationRecord)
+	authorityRouter := Router.Group("authority").Use(middleware.OperationRecord)
 	authorityRouterWithoutRecord := Router.Group("authority")
 	authorityApi := v1.ApiGroupApp.SystemApiGroup.AuthorityApi
 	{

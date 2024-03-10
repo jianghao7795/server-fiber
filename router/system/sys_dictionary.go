@@ -2,6 +2,7 @@ package system
 
 import (
 	v1 "server-fiber/api/v1"
+	"server-fiber/middleware"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -9,7 +10,7 @@ import (
 type DictionaryRouter struct{}
 
 func (s *DictionaryRouter) InitSysDictionaryRouter(Router fiber.Router) {
-	sysDictionaryRouter := Router.Group("sysDictionary") //.Use(middleware.OperationRecord)
+	sysDictionaryRouter := Router.Group("sysDictionary").Use(middleware.OperationRecord)
 	sysDictionaryRouterWithoutRecord := Router.Group("sysDictionary")
 	sysDictionaryApi := v1.ApiGroupApp.SystemApiGroup.DictionaryApi
 	{

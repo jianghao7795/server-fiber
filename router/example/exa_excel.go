@@ -2,6 +2,7 @@ package example
 
 import (
 	v1 "server-fiber/api/v1"
+	"server-fiber/middleware"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -9,7 +10,7 @@ import (
 type ExcelRouter struct{}
 
 func (e *ExcelRouter) InitExcelRouter(Router fiber.Router) {
-	excelRouter := Router.Group("excel")
+	excelRouter := Router.Group("excel").Use(middleware.OperationRecord)
 	exaExcelApi := v1.ApiGroupApp.ExampleApiGroup.ExcelApi
 	{
 		excelRouter.Post("importExcel", exaExcelApi.ImportExcel)          // 导入文件

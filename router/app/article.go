@@ -2,6 +2,7 @@ package app
 
 import (
 	v1 "server-fiber/api/v1"
+	"server-fiber/middleware"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -10,7 +11,7 @@ type ArticltRouter struct{}
 
 // InitArticleRouter 初始化 article 路由信息
 func (s *ArticltRouter) InitArticleRouter(Router fiber.Router) {
-	articleRouter := Router.Group("article") //.Use(middleware.OperationRecord)
+	articleRouter := Router.Group("article").Use(middleware.OperationRecord)
 
 	var articleApi = v1.ApiGroupApp.AppApiGroup.ArticleApi
 	{

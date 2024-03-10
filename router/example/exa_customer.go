@@ -2,6 +2,7 @@ package example
 
 import (
 	v1 "server-fiber/api/v1"
+	"server-fiber/middleware"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -9,7 +10,7 @@ import (
 type CustomerRouter struct{}
 
 func (e *CustomerRouter) InitCustomerRouter(Router fiber.Router) {
-	customerRouter := Router.Group("customer") //.Use(middleware.OperationRecord)
+	customerRouter := Router.Group("customer").Use(middleware.OperationRecord)
 	customerRouterWithoutRecord := Router.Group("customer")
 	exaCustomerApi := v1.ApiGroupApp.ExampleApiGroup.CustomerApi
 	{

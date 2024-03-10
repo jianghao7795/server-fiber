@@ -2,6 +2,7 @@ package mobile
 
 import (
 	v1 "server-fiber/api/v1"
+	"server-fiber/middleware"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -9,7 +10,7 @@ import (
 type MobileUserRouter struct{}
 
 func (m *MobileUserRouter) InitMobileRouter(Router fiber.Router) {
-	moblieUserRouter := Router.Group("mobile") //.Use(middleware.OperationRecord)
+	moblieUserRouter := Router.Group("mobile").Use(middleware.OperationRecord)
 	moblieUserRouterWithoutRecord := Router.Group("mobile")
 	var mobileUserApi = v1.ApiGroupApp.MobileApiGroup.MobileUserApi
 	{
