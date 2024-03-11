@@ -10,7 +10,6 @@ import (
 	"server-fiber/utils"
 	"strconv"
 
-	"github.com/gin-gonic/gin"
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
 )
@@ -92,7 +91,7 @@ func (a *AuthorityMenuApi) GetMenuAuthority(c *fiber.Ctx) error {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithDetailed(systemRes.SysMenusResponse{Menus: menus}, "获取失败", c)
 	} else {
-		return response.OkWithDetailed(gin.H{"menus": menus}, "获取成功", c)
+		return response.OkWithDetailed(fiber.Map{"menus": menus}, "获取成功", c)
 	}
 }
 

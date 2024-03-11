@@ -7,7 +7,6 @@ import (
 	systemRes "server-fiber/model/system/response"
 	"server-fiber/utils"
 
-	"github.com/gin-gonic/gin"
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
 )
@@ -74,6 +73,6 @@ func (s *SystemApi) GetServerInfo(c *fiber.Ctx) error {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败", c)
 	} else {
-		return response.OkWithDetailed(gin.H{"server": server}, "获取成功", c)
+		return response.OkWithDetailed(fiber.Map{"server": server}, "获取成功", c)
 	}
 }

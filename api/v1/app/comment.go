@@ -8,7 +8,6 @@ import (
 	"server-fiber/model/common/response"
 	"server-fiber/service"
 
-	"github.com/gin-gonic/gin"
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
 )
@@ -114,7 +113,7 @@ func (commentApi *CommentApi) FindComment(c *fiber.Ctx) error {
 		global.LOG.Error("查询失败!", zap.Error(err))
 		return response.FailWithMessage("查询失败", c)
 	} else {
-		return response.OkWithData(gin.H{"recomment": recomment}, c)
+		return response.OkWithData(fiber.Map{"recomment": recomment}, c)
 	}
 }
 

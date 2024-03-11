@@ -7,7 +7,6 @@ import (
 	"server-fiber/model/system/request"
 	"server-fiber/utils"
 
-	"github.com/gin-gonic/gin"
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
 )
@@ -86,7 +85,7 @@ func (s *DictionaryApi) FindSysDictionary(c *fiber.Ctx) error {
 		global.LOG.Error("查询失败!", zap.Error(err))
 		return response.FailWithMessage("查询失败", c)
 	} else {
-		return response.OkWithDetailed(gin.H{"resysDictionary": sysDictionary}, "查询成功", c)
+		return response.OkWithDetailed(fiber.Map{"resysDictionary": sysDictionary}, "查询成功", c)
 	}
 }
 

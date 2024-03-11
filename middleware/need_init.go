@@ -4,7 +4,6 @@ import (
 	"server-fiber/global"
 	"server-fiber/model/common/response"
 
-	"github.com/gin-gonic/gin"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -12,7 +11,7 @@ import (
 
 func NeedInit(c *fiber.Ctx) error {
 	if global.DB == nil {
-		return response.OkWithDetailed(gin.H{
+		return response.OkWithDetailed(fiber.Map{
 			"needInit": true,
 		}, "前往初始化数据库", c)
 

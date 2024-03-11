@@ -9,7 +9,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/locales/en"
 	"github.com/go-playground/locales/zh"
 	ut "github.com/go-playground/universal-translator"
@@ -296,27 +295,26 @@ func regexpMatch(rule, matchStr string) bool {
 }
 
 func TransInit(local string) (err error) {
-	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
-		zhT := zh.New() //chinese
-		enT := en.New() //english
-		uni := ut.New(enT, zhT, enT)
+	v := validator.New()
+	zhT := zh.New() //chinese
+	enT := en.New() //english
+	uni := ut.New(enT, zhT, enT)
 
-		var o bool
-		global.Validate, o = uni.GetTranslator(local)
-		if !o {
-			return fmt.Errorf("uni.GetTranslator(%s) failed", local)
-		}
-		//register translate
-		// 注册翻译器
-		switch local {
-		case "en":
-			err = enTranslations.RegisterDefaultTranslations(v, global.Validate)
-		case "zh":
-			err = chTranslations.RegisterDefaultTranslations(v, global.Validate)
-		default:
-			err = enTranslations.RegisterDefaultTranslations(v, global.Validate)
-		}
-		return
+	var o bool
+	global.Validate, o = uni.GetTranslator(local)
+	if !o {
+		return fmt.Errorf("uni.GetTranslator(%s) failed", local)
+	}
+	//register translate
+	// 注册翻译器
+	switch local {
+	case "en":
+		err = enTranslations.RegisterDefaultTranslations(v, global.Validate)
+	case "zh":
+		err = chTranslations.RegisterDefaultTranslations(v, global.Validate)
+	default:
+		err = enTranslations.RegisterDefaultTranslations(v, global.Validate)
 	}
 	return
+
 }

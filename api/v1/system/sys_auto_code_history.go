@@ -6,7 +6,6 @@ import (
 	"server-fiber/model/common/response"
 	systemReq "server-fiber/model/system/request"
 
-	"github.com/gin-gonic/gin"
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
 )
@@ -29,7 +28,7 @@ func (a *AutoCodeHistoryApi) First(c *fiber.Ctx) error {
 	if err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
-	return response.OkWithDetailed(gin.H{"meta": data}, "获取成功", c)
+	return response.OkWithDetailed(fiber.Map{"meta": data}, "获取成功", c)
 }
 
 // Delete

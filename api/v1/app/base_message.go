@@ -8,7 +8,6 @@ import (
 	"server-fiber/service"
 	"strconv"
 
-	"github.com/gin-gonic/gin"
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
@@ -60,13 +59,13 @@ func (a *BaseMessageApi) FindBaseMessage(c *fiber.Ctx) error {
 			// respBaseMessage := baseMessageNotFound{message: "not found"}
 			str := "not found"
 			global.LOG.Error("查询失败!", zap.Error(errors.New(str)))
-			return response.OkWithData(gin.H{"error": str}, c)
+			return response.OkWithData(fiber.Map{"error": str}, c)
 		} else {
 			global.LOG.Error("查询失败!", zap.Error(err))
 			return response.FailWithMessage("查询失败", c)
 		}
 
 	} else {
-		return response.OkWithData(gin.H{"baseMessage": responseBaseMessage}, c)
+		return response.OkWithData(fiber.Map{"baseMessage": responseBaseMessage}, c)
 	}
 }

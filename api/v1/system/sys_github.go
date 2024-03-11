@@ -15,7 +15,6 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
 
@@ -151,6 +150,6 @@ func (g *SystemGithubApi) CreateGithub(c *fiber.Ctx) error {
 		global.LOG.Error("创建commit有错误!", zap.Error(err))
 		return response.FailWithMessage("创建commit有错误!", c)
 	} else {
-		return response.OkWithData(gin.H{"total": total}, c)
+		return response.OkWithData(fiber.Map{"total": total}, c)
 	}
 }

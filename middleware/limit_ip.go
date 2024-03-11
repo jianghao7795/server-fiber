@@ -49,7 +49,7 @@ func DefaultCheckOrMark(key string, expire int, limit int) (err error) {
 	return err
 }
 
-// func DefaultLimit() gin.HandlerFunc {
+// func DefaultLimit() fiber.MapandlerFunc {
 // 	return LimitConfig{
 // 		GenerationKey: DefaultGenerationKey,
 // 		CheckOrMark:   DefaultCheckOrMark,

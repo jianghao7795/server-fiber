@@ -66,7 +66,7 @@ package middleware
 // 	l.Print(layout)
 // }
 
-// func DefaultLogger() gin.HandlerFunc {
+// func DefaultLogger() fiber.MapandlerFunc {
 // 	return Logger{
 // 		Print: func(layout LogLayout) {
 // 			// 标准输出,k8s做收集

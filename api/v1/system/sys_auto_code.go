@@ -11,7 +11,6 @@ import (
 	"server-fiber/model/system"
 	"server-fiber/utils"
 
-	"github.com/gin-gonic/gin"
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
 	"golang.org/x/text/cases"
@@ -41,7 +40,7 @@ func (autoApi *AutoCodeApi) PreviewTemp(c *fiber.Ctx) error {
 		global.LOG.Error("预览失败!", zap.Error(err))
 		return response.FailWithMessage("预览失败", c)
 	} else {
-		return response.OkWithDetailed(gin.H{"autoCode": autoCode}, "预览成功", c)
+		return response.OkWithDetailed(fiber.Map{"autoCode": autoCode}, "预览成功", c)
 	}
 }
 
@@ -105,7 +104,7 @@ func (autoApi *AutoCodeApi) GetDB(c *fiber.Ctx) error {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败", c)
 	} else {
-		return response.OkWithDetailed(gin.H{"dbs": dbs}, "获取成功", c)
+		return response.OkWithDetailed(fiber.Map{"dbs": dbs}, "获取成功", c)
 	}
 }
 
@@ -124,7 +123,7 @@ func (autoApi *AutoCodeApi) GetTables(c *fiber.Ctx) error {
 		global.LOG.Error("查询table失败!", zap.Error(err))
 		return response.FailWithMessage("查询table失败", c)
 	} else {
-		return response.OkWithDetailed(gin.H{"tables": tables}, "获取成功", c)
+		return response.OkWithDetailed(fiber.Map{"tables": tables}, "获取成功", c)
 	}
 }
 
@@ -144,7 +143,7 @@ func (autoApi *AutoCodeApi) GetColumn(c *fiber.Ctx) error {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败", c)
 	} else {
-		return response.OkWithDetailed(gin.H{"columns": columns}, "获取成功", c)
+		return response.OkWithDetailed(fiber.Map{"columns": columns}, "获取成功", c)
 	}
 }
 
@@ -186,7 +185,7 @@ func (autoApi *AutoCodeApi) GetPackage(c *fiber.Ctx) error {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败", c)
 	} else {
-		return response.OkWithDetailed(gin.H{"pkgs": pkgs}, "获取成功", c)
+		return response.OkWithDetailed(fiber.Map{"pkgs": pkgs}, "获取成功", c)
 	}
 }
 

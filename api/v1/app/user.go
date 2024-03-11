@@ -10,7 +10,6 @@ import (
 	"server-fiber/service"
 	"strconv"
 
-	"github.com/gin-gonic/gin"
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
 )
@@ -124,7 +123,7 @@ func (userApi *UserApi) FindUser(c *fiber.Ctx) error {
 		global.LOG.Error("查询失败!", zap.Error(err))
 		return response.FailWithMessage("查询失败", c)
 	} else {
-		return response.OkWithData(gin.H{"reuser": reuser}, c)
+		return response.OkWithData(fiber.Map{"reuser": reuser}, c)
 	}
 }
 

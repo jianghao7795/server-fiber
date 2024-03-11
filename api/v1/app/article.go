@@ -9,7 +9,6 @@ import (
 	"server-fiber/service"
 	"strconv"
 
-	"github.com/gin-gonic/gin"
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
 )
@@ -130,7 +129,7 @@ func (*ArticleApi) FindArticle(c *fiber.Ctx) error {
 			"msg": err.Error(),
 		}, "查询失败", c)
 	} else {
-		return response.OkWithData(gin.H{"rearticle": rearticle}, c)
+		return response.OkWithData(fiber.Map{"rearticle": rearticle}, c)
 	}
 
 }
@@ -204,6 +203,6 @@ func (*ArticleApi) GetArticleReading(c *fiber.Ctx) error {
 			"msg": err.Error(),
 		}, "获取阅读量失败", c)
 	} else {
-		return response.OkWithDetailed(gin.H{"reading_quantity": count}, "获取成功", c)
+		return response.OkWithDetailed(fiber.Map{"reading_quantity": count}, "获取成功", c)
 	}
 }

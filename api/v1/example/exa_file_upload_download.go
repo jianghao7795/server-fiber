@@ -14,7 +14,6 @@ import (
 	exampleRes "server-fiber/model/example/response"
 	"strconv"
 
-	"github.com/gin-gonic/gin"
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
 )
@@ -97,7 +96,7 @@ func (u *FileUploadAndDownloadApi) DeleteFile(c *fiber.Ctx) error {
 	file.ID = uint(ids)
 	if err := fileUploadAndDownloadService.DeleteFile(file); err != nil {
 		global.LOG.Error("删除失败!", zap.Error(err))
-		return response.FailWithDetailed(gin.H{"msg": err.Error()}, "删除失败", c)
+		return response.FailWithDetailed(fiber.Map{"msg": err.Error()}, "删除失败", c)
 	}
 	return response.OkWithMessage("删除成功", c)
 }

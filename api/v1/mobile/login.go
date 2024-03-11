@@ -9,7 +9,6 @@ import (
 	"server-fiber/utils"
 	"strconv"
 
-	"github.com/gin-gonic/gin"
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
 )
@@ -82,7 +81,7 @@ func (*MobileLoginApi) UpdatePassword(c *fiber.Ctx) error {
 		global.LOG.Error("更新密码失败!", zap.Error(err))
 		return response.FailWithMessage("更新用户密码失败", c)
 	} else {
-		return response.OkWithDetailed(gin.H{
+		return response.OkWithDetailed(fiber.Map{
 			"password": data.NewPassword,
 		}, "更新成功", c)
 	}

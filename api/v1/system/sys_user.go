@@ -11,7 +11,6 @@ import (
 	systemRes "server-fiber/model/system/response"
 	"server-fiber/utils"
 
-	"github.com/gin-gonic/gin"
 	"github.com/gofiber/fiber/v2"
 	"github.com/redis/go-redis/v9"
 	"go.uber.org/zap"
@@ -332,7 +331,7 @@ func (b *BaseApi) GetUserInfo(c *fiber.Ctx) error {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败", c)
 	} else {
-		return response.OkWithDetailed(gin.H{"userInfo": ReqUser}, "获取成功", c)
+		return response.OkWithDetailed(fiber.Map{"userInfo": ReqUser}, "获取成功", c)
 	}
 }
 
@@ -366,11 +365,11 @@ func (b *BaseApi) GetUserCount(c *fiber.Ctx) error {
 		global.LOG.Error("获取总数失败!", zap.Error(err))
 		return response.FailWithMessage("获取总数失败"+err.Error(), c)
 	} else {
-		return response.OkWithDetailed(gin.H{"count": userCount}, "获取成功", c)
+		return response.OkWithDetailed(fiber.Map{"count": userCount}, "获取成功", c)
 	}
 }
 
 func (b *BaseApi) GetFlowmeter(c *fiber.Ctx) error {
 	receiveBytes, transmitBytes, _ := utils.TotalFlowByDevice("lo")
-	return response.OkWithDetailed(gin.H{"receiveBytes": receiveBytes, "transmitBytes": transmitBytes}, "获取成功", c)
+	return response.OkWithDetailed(fiber.Map{"receiveBytes": receiveBytes, "transmitBytes": transmitBytes}, "获取成功", c)
 }

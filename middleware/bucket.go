@@ -5,7 +5,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/gin-gonic/gin"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -44,7 +43,7 @@ func LimitHandler(c *fiber.Ctx) error {
 		lastToken: time.Now(),
 	}
 	if !tb.Allow() {
-		return response.FailWithDetailed(gin.H{"msg": "服务器需要休息一下，请等几分钟"}, "加载中", c)
+		return response.FailWithDetailed(fiber.Map{"msg": "服务器需要休息一下，请等几分钟"}, "加载中", c)
 	}
 	c.Next()
 	return nil

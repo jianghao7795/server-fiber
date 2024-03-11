@@ -7,7 +7,6 @@ import (
 	"server-fiber/model/frontend/request"
 	"strconv"
 
-	"github.com/gin-gonic/gin"
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
@@ -59,7 +58,7 @@ func (s *FrontendArticleApi) GetArticleDetail(c *fiber.Ctx) error {
 		return response.FailWithMessage("获取失败", c)
 
 	} else {
-		return response.OkWithData(gin.H{"article": articleDetail}, c)
+		return response.OkWithData(fiber.Map{"article": articleDetail}, c)
 	}
 }
 

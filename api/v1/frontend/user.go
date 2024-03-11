@@ -12,7 +12,6 @@ import (
 	systemReq "server-fiber/model/system/request"
 	systemRes "server-fiber/model/system/response"
 
-	"github.com/gin-gonic/gin"
 	"github.com/gofiber/fiber/v2"
 	"github.com/redis/go-redis/v9"
 	"go.uber.org/zap"
@@ -123,9 +122,9 @@ func (*FrontendUser) RegisterUser(c *fiber.Ctx) error {
 	err := frontendService.RegisterUser(userInfo)
 	if err != nil {
 		global.LOG.Error("注册失败!", zap.Error(err))
-		return response.FailWithDetailed(gin.H{}, err.Error(), c)
+		return response.FailWithDetailed(fiber.Map{}, err.Error(), c)
 	} else {
-		return response.OkWithDetailed(gin.H{}, "注册成功", c)
+		return response.OkWithDetailed(fiber.Map{}, "注册成功", c)
 	}
 }
 

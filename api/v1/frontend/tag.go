@@ -6,7 +6,6 @@ import (
 	"server-fiber/model/common/response"
 	"strconv"
 
-	"github.com/gin-gonic/gin"
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
 )
@@ -36,6 +35,6 @@ func (appTabApi *FrontendTagApi) GetTag(c *fiber.Ctx) error {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败", c)
 	} else {
-		return response.OkWithData(gin.H{"tag": tagArticles}, c)
+		return response.OkWithData(fiber.Map{"tag": tagArticles}, c)
 	}
 }
