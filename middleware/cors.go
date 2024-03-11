@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"net/http"
 	"server-fiber/config"
 	"server-fiber/global"
 
@@ -45,14 +46,14 @@ func CorsByRules(c *fiber.Ctx) error {
 	}
 
 	// 严格白名单模式且未通过检查，直接拒绝处理请求
-	// if whitelist == nil && global.CONFIG.Cors.Mode == "strict-whitelist" && !(c.Method() == "GET" && c.Path() == "/health") {
-	// 	c.AbortWithStatus(http.StatusForbidden)
-	// } else {
-	// 	// 非严格白名单模式，无论是否通过检查均放行所有 OPTIONS 方法
-	// 	if c.Method() == "OPTIONS" {
-	// 		c.AbortWithStatus(http.StatusNoContent)
-	// 	}
-	// }
+	if whitelist == nil && global.CONFIG.Cors.Mode == "strict-whitelist" && !(c.Method() == "GET" && c.Path() == "/health") {
+		c.Status(http.StatusForbidden)
+	} else {
+		// 非严格白名单模式，无论是否通过检查均放行所有 OPTIONS 方法
+		if c.Method() == "OPTIONS" {
+			c.Status(http.StatusNoContent)
+		}
+	}
 
 	// 处理请求
 	return c.Next()

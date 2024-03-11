@@ -24,11 +24,7 @@ func OperationRecord(c *fiber.Ctx) error {
 	var body []byte
 	var userId int
 	if c.Method() != "GET" {
-		// var err error
 		body = c.Request().Body()
-		// if err != nil {
-		// 	global.LOG.Error("read body from request error:", zap.Error(err))
-		// }
 	} else {
 		query := c.OriginalURL()
 		split := strings.Split(query, "?")

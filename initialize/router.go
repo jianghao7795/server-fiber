@@ -30,6 +30,8 @@ func Routers() *fiber.App {
 	Router.Static("/mobile/uploads/", "uploads/")  // 本地的mobile文件路由转化
 	Router.Static("/backend/form-generator", "resource/page")
 	Router.Static("/form-generator", "./resource/page")
+	// Router.Use(middleware.Cors())        // 直接放行全部跨域请求
+	Router.Use(middleware.CorsByRules) // 按照配置的规则放行跨域请求
 	{
 		backendRooterNotLogin := Router.Group("/backend")
 		systemRouter.InitBaseRouter(backendRooterNotLogin) // 注册基础功能路由 不做鉴权

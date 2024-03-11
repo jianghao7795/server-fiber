@@ -38,16 +38,16 @@ captcha:
 casbin:
   model-path: ./rbac_model.conf
 cors:
-  mode: whitelist
+  mode: allow-all # whitelist 白名单 allow-all允许全部
   whitelist:
-    - allow-origin: example1.com
+    - allow-origin: example1.com # 允许访问的域名
       allow-methods: GET, POST, PUT, DELETE, PATCH
       allow-headers: content-type
       expose-headers:
         Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers,
         Content-Type
       allow-credentials: true
-    - allow-origin: example2.com
+    - allow-origin: example2.com # 允许访问的域名
       allow-methods: GET, POST, PUT, DELETE
       allow-headers: content-type
       expose-headers:
