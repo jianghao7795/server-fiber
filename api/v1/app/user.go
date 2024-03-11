@@ -14,8 +14,7 @@ import (
 	"go.uber.org/zap"
 )
 
-type UserApi struct {
-}
+type UserApi struct{}
 
 var userService = service.ServiceGroupApp.AppServiceGroup.UserService
 

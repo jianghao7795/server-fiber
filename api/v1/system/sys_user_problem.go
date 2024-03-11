@@ -36,7 +36,7 @@ func (*UserProblem) GetProblemSetting(c *fiber.Ctx) error {
 }
 
 type UpdateProblemSettingData struct {
-	Data []problemReq.SysUserProblem `json:"data" binding:"required,dive,required"`
+	Data []problemReq.SysUserProblem `json:"data"`
 }
 
 func (*UserProblem) UpdateProblemSetting(c *fiber.Ctx) error {
@@ -72,7 +72,7 @@ func (*UserProblem) HasSetting(c *fiber.Ctx) error {
 }
 
 type VerifyProblemSettingData struct {
-	Data problemReq.SysUserProblem `json:"data" binding:"required,dive,required"`
+	Data problemReq.SysUserProblem `json:"data"`
 }
 
 func (*UserProblem) VerifyAnswer(c *fiber.Ctx) error {
