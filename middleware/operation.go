@@ -58,9 +58,17 @@ func OperationRecord(c *fiber.Ctx) error {
 	}
 	pathURL := c.Path()
 	isBackend := system.Backend
-	if strings.Contains(pathURL, "/backend") {
+	switch {
+	case strings.HasPrefix(pathURL, "/backend"):
+		isBackend = system.Backend
+	case strings.HasPrefix(pathURL, "/api"):
 		isBackend = system.Frontend
+	case strings.HasPrefix(pathURL, "/mobile"):
+		isBackend = system.Mobile
+	default:
+		isBackend = system.Backend
 	}
+
 	record := system.SysOperationRecord{
 		Ip:       c.IP(),
 		Method:   c.Method(),
