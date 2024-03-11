@@ -29,14 +29,13 @@ func Routers() *fiber.App {
 	Router.Static("/backend/uploads/", "uploads/") // 本地的backend文件路由转化
 	Router.Static("/mobile/uploads/", "uploads/")  // 本地的mobile文件路由转化
 	Router.Static("/backend/form-generator", "resource/page")
-	// Router.Use(middleware.LimitHandler)
+	Router.Static("/form-generator", "./resource/page")
 	{
 		backendRooterNotLogin := Router.Group("/backend")
 		systemRouter.InitBaseRouter(backendRooterNotLogin) // 注册基础功能路由 不做鉴权
 		systemRouter.InitInitRouter(backendRooterNotLogin) // 自动初始化相关
 
 		backendRooter := backendRooterNotLogin.Use(middleware.JWTAuth).Use(middleware.CasbinHandler) // casbin的拦截规则
-		// backendRooter := backendRooterNotLogin
 		{
 			systemRouter.InitApiRouter(backendRooter)                 // 注册功能api路由
 			systemRouter.InitJwtRouter(backendRooter)                 // jwt相关路由

@@ -21,6 +21,7 @@ func RunServer() {
 		global.DB = db
 	} else {
 		global.LOG.Error("数据库链接失败: " + err.Error())
+		panic(err)
 	}
 	initialize.Tasks() //定时 执行任务
 	utilsInit.TransInit("zh")
@@ -31,7 +32,10 @@ func RunServer() {
 		defer db.Close()
 	}
 	if global.CONFIG.System.UseMultipoint || global.CONFIG.System.UseRedis {
-		initialize.Redis()
+		err := initialize.Redis()
+		if err != nil {
+			panic(err)
+		}
 	}
 	Router := initialize.Routers()
 	Router.Static("/form-generator", "./resource/page")
