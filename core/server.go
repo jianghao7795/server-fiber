@@ -5,6 +5,7 @@ import (
 
 	"server-fiber/global"
 	"server-fiber/initialize"
+	"server-fiber/service/system"
 	utilsInit "server-fiber/utils"
 
 	"go.uber.org/zap"
@@ -26,6 +27,7 @@ func RunServer() {
 	initialize.Tasks() //定时 执行任务
 	utilsInit.TransInit("zh")
 	if global.DB != nil {
+		system.LoadAll() // 加载所有的 拉黑的jwt数据 避免盗用jwt
 		// initialize.RegisterTables(global.DB) // 初始化表
 		// 程序结束前关闭数据库链接
 		db, _ := global.DB.DB()
