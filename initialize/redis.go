@@ -9,7 +9,7 @@ import (
 	"go.uber.org/zap"
 )
 
-func Redis() error {
+func Redis() {
 	// 初始化时可以指定连接redis的读写超时时间，默认都是3s
 	redisCfg := global.CONFIG.Redis
 	client := redis.NewClient(&redis.Options{
@@ -20,9 +20,9 @@ func Redis() error {
 	pong, err := client.Ping(context.Background()).Result()
 	if err != nil {
 		global.LOG.Error("redis connect ping failed, err:", zap.Error(err))
+		panic(err)
 	} else {
 		global.LOG.Info("redis connect ping response:", zap.String("pong", pong))
 		global.REDIS = client
 	}
-	return err
 }

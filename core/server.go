@@ -35,10 +35,7 @@ func RunServer() {
 		defer db.Close()
 	}
 	if global.CONFIG.System.UseMultipoint || global.CONFIG.System.UseRedis {
-		err := initialize.Redis()
-		if err != nil {
-			panic(err)
-		}
+		initialize.Redis()
 	}
 	Router := initialize.Routers()
 	address := fmt.Sprintf(":%d", global.CONFIG.System.Addr)
