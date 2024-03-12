@@ -20,8 +20,9 @@ func RunServer() {
 	db, err := initialize.Gorm() // gorm连接数据库
 	if err == nil {
 		global.DB = db
+		global.LOG.Info("Database connection success", zap.String("port", global.CONFIG.Mysql.Port))
 	} else {
-		global.LOG.Error("数据库链接失败: " + err.Error())
+		global.LOG.Error("The database connection failed: " + err.Error())
 		panic(err)
 	}
 	initialize.Tasks() //定时 执行任务
@@ -42,6 +43,6 @@ func RunServer() {
 	Router := initialize.Routers()
 	address := fmt.Sprintf(":%d", global.CONFIG.System.Addr)
 	global.LOG.Info("server run success on ", zap.String("address", address))
-	fmt.Println(`欢迎使用 API接口`)
+	fmt.Println(`Welcome to Fiber API`)
 	global.LOG.Error(Router.Listen(address).Error())
 }
