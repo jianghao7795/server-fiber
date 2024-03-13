@@ -1,9 +1,10 @@
 package middleware
 
 import (
-	"server-fiber/model/common/response"
 	"sync"
 	"time"
+
+	"server-fiber/model/common/response"
 
 	"github.com/gofiber/fiber/v2"
 )
