@@ -16,6 +16,7 @@ func RunServer() {
 	global.LOG = Zap()   // 初始化zap日志库
 	// global.Logger = core.InitLogger() // 初始化 log 让log标准输出
 	zap.ReplaceGlobals(global.LOG) // 部署到全局
+	// log.Println("fiberconfig: ", global.CONFIG.FiberConfig.AppName)
 
 	db, err := initialize.Gorm() // gorm连接数据库
 	if err == nil {

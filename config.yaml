@@ -165,3 +165,13 @@ zap:
   encode-level: LowercaseColorLevelEncoder
   stacktrace-key: stacktrace
   log-in-console: true
+fiberconifg: # fiber config
+  prefork: false
+  server-header: ""
+  strict-routing: false # 严格路由
+  case-sensitive: true # 区分大小写
+	body-limit: 10485760 # Body 限制
+	app-name: sever-fiber
+  concurrency: 262144 # 并发
+  DisableStartupMessage: false #关闭启动信息
+  

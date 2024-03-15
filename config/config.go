@@ -1,5 +1,7 @@
 package config
 
+import "github.com/gofiber/fiber/v2"
+
 type Server struct {
 	JWT     JWT     `mapstructure:"jwt" json:"jwt" yaml:"jwt"`
 	Zap     Zap     `mapstructure:"zap" json:"zap" yaml:"zap"`
@@ -29,4 +31,6 @@ type Server struct {
 	Cors CORS `mapstructure:"cors" json:"cors" yaml:"cors"`
 	// 缓存
 	Cache Cache `mapstructure:"cache" json:"cache" yaml:"cache"`
+	// fiber config
+	FiberConfig fiber.Config `mapstructure:"fiberconifg" json:"fiberconifg" yaml:"fiberconifg"`
 }

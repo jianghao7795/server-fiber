@@ -7,6 +7,7 @@
 package initialize
 
 import (
+	"server-fiber/global"
 	"server-fiber/middleware"
 	"server-fiber/router"
 	"time"
@@ -17,11 +18,7 @@ import (
 // 初始化总路由
 
 func Routers() *fiber.App {
-	app := fiber.New(fiber.Config{
-		CaseSensitive: true,
-		BodyLimit:     10 * 1024 * 1024,
-		AppName:       "sever-fiber",
-	})
+	app := fiber.New(global.CONFIG.FiberConfig)
 	appRouter := router.RouterGroupApp.App
 	systemRouter := router.RouterGroupApp.System
 	exampleRouter := router.RouterGroupApp.Example
