@@ -29,7 +29,7 @@ var userService = service.ServiceGroupApp.AppServiceGroup.UserService
 // @Router /user/createUser [post]
 func (userApi *UserApi) CreateUser(c *fiber.Ctx) error {
 	var user app.User
-	_ = c.QueryParser(&user)
+	_ = c.BodyParser(&user)
 	if err := userService.CreateUser(user); err != nil {
 		global.LOG.Error(err.Error(), zap.Error(err))
 		return response.FailWithMessage(err.Error(), c)
@@ -96,7 +96,7 @@ func (userApi *UserApi) UpdateUser(c *fiber.Ctx) error {
 		global.LOG.Error("未找到，该用户!", zap.Error(errors.New("未找到，该用户")))
 		return response.FailWithMessage("未找到，该用户", c)
 	}
-	_ = c.QueryParser(&user)
+	_ = c.BodyParser(&user)
 	user.ID = uint(IDS)
 	if err := userService.UpdateUser(user); err != nil {
 		global.LOG.Error("更新失败!", zap.Error(err))

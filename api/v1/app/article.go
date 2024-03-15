@@ -29,7 +29,7 @@ var articleService = service.ServiceGroupApp.AppServiceGroup.ArticleService
 // @Router /Article/createArticle [post]
 func (a *ArticleApi) CreateArticle(c *fiber.Ctx) error {
 	var article app.Article
-	_ = c.QueryParser(&article)
+	_ = c.BodyParser(&article)
 	if err := articleService.CreateArticle(article); err != nil {
 		global.LOG.Error("创建失败!", zap.Error(err))
 		return response.FailWithDetailed(map[string]string{
@@ -97,7 +97,7 @@ func (a *ArticleApi) DeleteArticleByIds(c *fiber.Ctx) error {
 // @Router /article/updateArticle/:id [put]
 func (*ArticleApi) UpdateArticle(c *fiber.Ctx) error {
 	var article app.Article
-	_ = c.QueryParser(&article)
+	_ = c.BodyParser(&article)
 	ids := c.Params("id")
 	id, _ := strconv.Atoi(ids)
 	article.ID = uint(id)
@@ -175,7 +175,7 @@ func (*ArticleApi) GetArticleList(c *fiber.Ctx) error {
 // @Router /article/putArticleByIds [put]
 func (*ArticleApi) PutArticleByIds(c *fiber.Ctx) error {
 	var IDS request.IdsReq
-	_ = c.QueryParser(&IDS)
+	_ = c.BodyParser(&IDS)
 	if err := articleService.PutArticleByIds(IDS); err != nil {
 		global.LOG.Error("批量更新失败!", zap.Error(err))
 		return response.FailWithDetailed(map[string]string{

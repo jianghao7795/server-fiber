@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"log"
 	"strconv"
 	"strings"
 	"time"
@@ -89,7 +88,6 @@ func OperationRecord(c *fiber.Ctx) error {
 	record.Status = c.Response().StatusCode()
 	record.Latency = time.Since(time.Now())
 	record.Resp = string(c.Response().Body())
-	log.Println("body: ", string(c.Response().Body()))
 	go func() {
 		if err := operationRecordService.CreateSysOperationRecord(record); err != nil {
 			global.LOG.Error("create operation record error:", zap.Error(err))

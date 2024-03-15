@@ -24,7 +24,7 @@ type CustomerApi struct{}
 // @Router /customer/customer [post]
 func (e *CustomerApi) CreateExaCustomer(c *fiber.Ctx) error {
 	var customer example.ExaCustomer
-	_ = c.QueryParser(&customer)
+	_ = c.BodyParser(&customer)
 	if err := utils.Verify(customer, utils.CustomerVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
@@ -70,7 +70,7 @@ func (e *CustomerApi) DeleteExaCustomer(c *fiber.Ctx) error {
 // @Router /customer/customer [put]
 func (e *CustomerApi) UpdateExaCustomer(c *fiber.Ctx) error {
 	var customer example.ExaCustomer
-	_ = c.QueryParser(&customer)
+	_ = c.BodyParser(&customer)
 	if err := utils.Verify(customer.MODEL, utils.IdVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}

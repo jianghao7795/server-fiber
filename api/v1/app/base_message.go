@@ -21,7 +21,7 @@ var baseMessageService = service.ServiceGroupApp.AppServiceGroup.BaseMessageServ
 // CreateBaseMessage 创建base_message
 func (a *BaseMessageApi) CreateBaseMessage(c *fiber.Ctx) error {
 	var baseMessage app.BaseMessage
-	_ = c.QueryParser(&baseMessage)
+	_ = c.BodyParser(&baseMessage)
 	if err := baseMessageService.CreateBaseMessage(baseMessage); err != nil {
 		global.LOG.Error("创建失败!", zap.Error(err))
 		return response.FailWithMessage("创建失败", c)
@@ -38,7 +38,7 @@ func (a *BaseMessageApi) CreateBaseMessage(c *fiber.Ctx) error {
 
 func (a *BaseMessageApi) UpdateBaseMessage(c *fiber.Ctx) error {
 	var baseMessage app.BaseMessage
-	_ = c.QueryParser(&baseMessage)
+	_ = c.BodyParser(&baseMessage)
 	if err := baseMessageService.UpdateBaseMessage(baseMessage); err != nil {
 		global.LOG.Error("更新失败!", zap.Error(err))
 		return response.FailWithMessage("更新失败", c)

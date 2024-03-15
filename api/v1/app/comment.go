@@ -28,7 +28,7 @@ var commentService = service.ServiceGroupApp.AppServiceGroup.CommentService
 // @Router /comment/createComment [post]
 func (commentApi *CommentApi) CreateComment(c *fiber.Ctx) error {
 	var comment2 comment.Comment
-	_ = c.QueryParser(&comment2)
+	_ = c.BodyParser(&comment2)
 	if err := commentService.CreateComment(comment2); err != nil {
 		global.LOG.Error("创建失败!", zap.Error(err))
 		return response.FailWithMessage("创建失败", c)
@@ -88,7 +88,7 @@ func (commentApi *CommentApi) DeleteCommentByIds(c *fiber.Ctx) error {
 // @Router /comment/updateComment [put]
 func (commentApi *CommentApi) UpdateComment(c *fiber.Ctx) error {
 	var comment2 comment.Comment
-	_ = c.QueryParser(&comment2)
+	_ = c.BodyParser(&comment2)
 	if err := commentService.UpdateComment(comment2); err != nil {
 		global.LOG.Error("更新失败!", zap.Error(err))
 		return response.FailWithMessage("更新失败", c)
