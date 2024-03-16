@@ -23,7 +23,7 @@ type DictionaryApi struct{}
 // @Router /sysDictionary/createSysDictionary [post]
 func (s *DictionaryApi) CreateSysDictionary(c *fiber.Ctx) error {
 	var dictionary system.SysDictionary
-	_ = c.QueryParser(&dictionary)
+	_ = c.BodyParser(&dictionary)
 	if err := dictionaryService.CreateSysDictionary(dictionary); err != nil {
 		global.LOG.Error("创建失败!", zap.Error(err))
 		return response.FailWithMessage("创建失败", c)
@@ -61,7 +61,7 @@ func (s *DictionaryApi) DeleteSysDictionary(c *fiber.Ctx) error {
 // @Router /sysDictionary/updateSysDictionary [put]
 func (s *DictionaryApi) UpdateSysDictionary(c *fiber.Ctx) error {
 	var dictionary system.SysDictionary
-	_ = c.QueryParser(&dictionary)
+	_ = c.BodyParser(&dictionary)
 	if err := dictionaryService.UpdateSysDictionary(&dictionary); err != nil {
 		global.LOG.Error("更新失败!", zap.Error(err))
 		return response.FailWithMessage("更新失败", c)

@@ -61,7 +61,7 @@ func (a *AuthorityMenuApi) GetBaseMenuTree(c *fiber.Ctx) error {
 // @Router /menu/addMenuAuthority [post]
 func (a *AuthorityMenuApi) AddMenuAuthority(c *fiber.Ctx) error {
 	var authorityMenu systemReq.AddMenuAuthorityInfo
-	_ = c.QueryParser(&authorityMenu)
+	_ = c.BodyParser(&authorityMenu)
 	if err := utils.Verify(authorityMenu, utils.AuthorityIdVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
@@ -105,7 +105,7 @@ func (a *AuthorityMenuApi) GetMenuAuthority(c *fiber.Ctx) error {
 // @Router /menu/addBaseMenu [post]
 func (a *AuthorityMenuApi) AddBaseMenu(c *fiber.Ctx) error {
 	var menu system.SysBaseMenu
-	_ = c.QueryParser(&menu)
+	_ = c.BodyParser(&menu)
 	if err := utils.Verify(menu, utils.MenuVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
@@ -154,7 +154,7 @@ func (a *AuthorityMenuApi) DeleteBaseMenu(c *fiber.Ctx) error {
 // @Router /menu/updateBaseMenu [post]
 func (a *AuthorityMenuApi) UpdateBaseMenu(c *fiber.Ctx) error {
 	var menu system.SysBaseMenu
-	_ = c.QueryParser(&menu)
+	_ = c.BodyParser(&menu)
 	if err := utils.Verify(menu, utils.MenuVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}

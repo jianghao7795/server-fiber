@@ -26,7 +26,7 @@ type SystemApiApi struct{}
 // @Router /api/createApi [post]
 func (s *SystemApiApi) CreateApi(c *fiber.Ctx) error {
 	var api system.SysApi
-	_ = c.QueryParser(&api)
+	_ = c.BodyParser(&api)
 	if err := utils.Verify(api, utils.ApiVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
@@ -135,7 +135,7 @@ func (s *SystemApiApi) GetApiList(c *fiber.Ctx) error {
 // @Router /api/getApiById [post]
 func (s *SystemApiApi) GetApiById(c *fiber.Ctx) error {
 	var idInfo request.GetById
-	idInfo.ID, _ = strconv.Atoi(c.Params("id"))
+	idInfo.ID, _ = c.ParamsInt("id")
 	// fmt.Println(idInfo)
 	if err := utils.Verify(idInfo, utils.IdVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
@@ -159,7 +159,7 @@ func (s *SystemApiApi) GetApiById(c *fiber.Ctx) error {
 // @Router /api/updateApi [put]
 func (s *SystemApiApi) UpdateApi(c *fiber.Ctx) error {
 	var api system.SysApi
-	_ = c.QueryParser(&api)
+	_ = c.BodyParser(&api)
 	if err := utils.Verify(api, utils.ApiVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}

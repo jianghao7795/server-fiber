@@ -41,7 +41,7 @@ type UpdateProblemSettingData struct {
 
 func (*UserProblem) UpdateProblemSetting(c *fiber.Ctx) error {
 	var dataProblem UpdateProblemSettingData
-	err := c.QueryParser(&dataProblem)
+	err := c.BodyParser(&dataProblem)
 	if err != nil {
 		errs, ok := err.(validator.ValidationErrors)
 		if !ok {
@@ -77,7 +77,7 @@ type VerifyProblemSettingData struct {
 
 func (*UserProblem) VerifyAnswer(c *fiber.Ctx) error {
 	var dataProblem VerifyProblemSettingData
-	err := c.QueryParser(&dataProblem)
+	err := c.BodyParser(&dataProblem)
 	if err != nil {
 		errs, ok := err.(validator.ValidationErrors)
 		if !ok {

@@ -30,7 +30,7 @@ type AutoCodeApi struct{}
 // @Router /autoCode/preview [post]
 func (autoApi *AutoCodeApi) PreviewTemp(c *fiber.Ctx) error {
 	var a system.AutoCodeStruct
-	_ = c.QueryParser(&a)
+	_ = c.BodyParser(&a)
 	if err := utils.Verify(a, utils.AutoCodeVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
@@ -55,7 +55,7 @@ func (autoApi *AutoCodeApi) PreviewTemp(c *fiber.Ctx) error {
 // @Router /autoCode/createTemp [post]
 func (autoApi *AutoCodeApi) CreateTemp(c *fiber.Ctx) error {
 	var a system.AutoCodeStruct
-	_ = c.QueryParser(&a)
+	_ = c.BodyParser(&a)
 	if err := utils.Verify(a, utils.AutoCodeVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
@@ -73,17 +73,17 @@ func (autoApi *AutoCodeApi) CreateTemp(c *fiber.Ctx) error {
 	err := autoCodeService.CreateTemp(a, apiIds...)
 	if err != nil {
 		if errors.Is(err, system.ErrAutoMove) {
-			c.Set("success", "true")
-			c.Set("msg", url.QueryEscape(err.Error()))
+			c.Locals("success", "true")
+			c.Locals("msg", url.QueryEscape(err.Error()))
 		} else {
-			c.Set("success", "false")
-			c.Set("msg", url.QueryEscape(err.Error()))
+			c.Locals("success", "false")
+			c.Locals("msg", url.QueryEscape(err.Error()))
 			_ = os.Remove("./ginvueadmin.zip")
 		}
 	} else {
 		c.Set("Content-Disposition", fmt.Sprintf("attachment; filename=%s", "ginvueadmin.zip")) // fmt.Sprintf("attachment; filename=%s", filename)对下载的文件重命名
 		c.Set("Content-Type", "application/json")
-		c.Set("success", "true")
+		c.Locals("success", "true")
 		c.Download("./ginvueadmin.zip")
 		_ = os.Remove("./ginvueadmin.zip")
 	}

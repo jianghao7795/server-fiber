@@ -17,7 +17,7 @@ type MobileLoginApi struct{}
 
 func (*MobileLoginApi) Login(c *fiber.Ctx) error {
 	var l mobile.Login
-	_ = c.QueryParser(&l)
+	_ = c.BodyParser(&l)
 	// log.Println(l)
 	if err := utils.Verify(l, utils.MobileLoginVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
@@ -52,7 +52,7 @@ func (*MobileLoginApi) GetUserInfo(c *fiber.Ctx) error {
 
 func (*MobileLoginApi) UpdateMobileUser(c *fiber.Ctx) error {
 	var data request.MobileUpdate
-	_ = c.QueryParser(&data)
+	_ = c.BodyParser(&data)
 	authorization := c.Get("user_id")
 
 	if authorization == "" {
@@ -71,7 +71,7 @@ func (*MobileLoginApi) UpdateMobileUser(c *fiber.Ctx) error {
 
 func (*MobileLoginApi) UpdatePassword(c *fiber.Ctx) error {
 	var data request.MobileUpdatePassword
-	_ = c.QueryParser(&data)
+	_ = c.BodyParser(&data)
 
 	if err := utils.Verify(data, utils.MobileUpdatePasswordVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)

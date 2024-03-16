@@ -25,7 +25,7 @@ type AuthorityApi struct{}
 // @Router /authority/createAuthority [post]
 func (a *AuthorityApi) CreateAuthority(c *fiber.Ctx) error {
 	var authority system.SysAuthority
-	_ = c.QueryParser(&authority)
+	_ = c.BodyParser(&authority)
 	if err := utils.Verify(authority, utils.AuthorityVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
@@ -49,7 +49,7 @@ func (a *AuthorityApi) CreateAuthority(c *fiber.Ctx) error {
 // @Router /authority/copyAuthority [post]
 func (a *AuthorityApi) CopyAuthority(c *fiber.Ctx) error {
 	var copyInfo systemRes.SysAuthorityCopyResponse
-	_ = c.QueryParser(&copyInfo)
+	_ = c.BodyParser(&copyInfo)
 	if err := utils.Verify(copyInfo, utils.OldAuthorityVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
@@ -96,7 +96,7 @@ func (a *AuthorityApi) DeleteAuthority(c *fiber.Ctx) error {
 // @Router /authority/updateAuthority [post]
 func (a *AuthorityApi) UpdateAuthority(c *fiber.Ctx) error {
 	var auth system.SysAuthority
-	_ = c.QueryParser(&auth)
+	_ = c.BodyParser(&auth)
 	if err := utils.Verify(auth, utils.AuthorityVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
@@ -145,7 +145,7 @@ func (a *AuthorityApi) GetAuthorityList(c *fiber.Ctx) error {
 // @Router /authority/setDataAuthority [post]
 func (a *AuthorityApi) SetDataAuthority(c *fiber.Ctx) error {
 	var auth system.SysAuthority
-	_ = c.QueryParser(&auth)
+	_ = c.BodyParser(&auth)
 	if err := utils.Verify(auth, utils.AuthorityIdVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}

@@ -102,7 +102,7 @@ func (b *BaseApi) tokenNext(c *fiber.Ctx, user system.SysUser) error {
 // @Router /user/admin_register [post]
 func (b *BaseApi) Register(c *fiber.Ctx) error {
 	var r systemReq.Register
-	_ = c.QueryParser(&r)
+	_ = c.BodyParser(&r)
 	if err := utils.Verify(r, utils.RegisterVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
@@ -131,7 +131,7 @@ func (b *BaseApi) Register(c *fiber.Ctx) error {
 // @Router /user/changePassword [post]
 func (b *BaseApi) ChangePassword(c *fiber.Ctx) error {
 	var user systemReq.ChangePasswordStruct
-	_ = c.QueryParser(&user)
+	_ = c.BodyParser(&user)
 	if err := utils.Verify(user, utils.ChangePasswordVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
@@ -181,7 +181,7 @@ func (b *BaseApi) GetUserList(c *fiber.Ctx) error {
 // @Router /user/setUserAuthority [post]
 func (b *BaseApi) SetUserAuthority(c *fiber.Ctx) error {
 	var sua systemReq.SetUserAuth
-	_ = c.QueryParser(&sua)
+	_ = c.BodyParser(&sua)
 	if UserVerifyErr := utils.Verify(sua, utils.SetUserAuthorityVerify); UserVerifyErr != nil {
 		return response.FailWithMessage(UserVerifyErr.Error(), c)
 	}
@@ -216,7 +216,7 @@ func (b *BaseApi) SetUserAuthority(c *fiber.Ctx) error {
 // @Router /user/setUserAuthorities [post]
 func (b *BaseApi) SetUserAuthorities(c *fiber.Ctx) error {
 	var sua systemReq.SetUserAuthorities
-	_ = c.QueryParser(&sua)
+	_ = c.BodyParser(&sua)
 	if err := userService.SetUserAuthorities(sua.ID, sua.AuthorityIds); err != nil {
 		global.LOG.Error("修改失败!", zap.Error(err))
 		return response.FailWithMessage("修改失败", c)
@@ -261,7 +261,7 @@ func (b *BaseApi) DeleteUser(c *fiber.Ctx) error {
 // @Router /user/setUserInfo [put]
 func (b *BaseApi) SetUserInfo(c *fiber.Ctx) error {
 	var user systemReq.ChangeUserInfo
-	_ = c.QueryParser(&user)
+	_ = c.BodyParser(&user)
 	if err := utils.Verify(user, utils.IdVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
@@ -300,7 +300,7 @@ func (b *BaseApi) SetUserInfo(c *fiber.Ctx) error {
 // @Router /user/SetSelfInfo [put]
 func (b *BaseApi) SetSelfInfo(c *fiber.Ctx) error {
 	var user systemReq.ChangeUserInfo
-	_ = c.QueryParser(&user)
+	_ = c.BodyParser(&user)
 	user.ID = utils.GetUserID(c)
 	if err := userService.SetUserInfo(system.SysUser{
 		MODEL: global.MODEL{
@@ -344,7 +344,7 @@ func (b *BaseApi) GetUserInfo(c *fiber.Ctx) error {
 // @Router /user/resetPassword [post]
 func (b *BaseApi) ResetPassword(c *fiber.Ctx) error {
 	var user system.SysUser
-	_ = c.QueryParser(&user)
+	_ = c.BodyParser(&user)
 	if err := userService.ResetPassword(user.ID); err != nil {
 		global.LOG.Error("重置失败!", zap.Error(err))
 		return response.FailWithMessage("重置失败"+err.Error(), c)

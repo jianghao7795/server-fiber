@@ -23,7 +23,7 @@ type DictionaryDetailApi struct{}
 // @Router /sysDictionaryDetail/createSysDictionaryDetail [post]
 func (s *DictionaryDetailApi) CreateSysDictionaryDetail(c *fiber.Ctx) error {
 	var detail system.SysDictionaryDetail
-	_ = c.QueryParser(&detail)
+	_ = c.BodyParser(&detail)
 	if err := dictionaryDetailService.CreateSysDictionaryDetail(detail); err != nil {
 		global.LOG.Error("创建失败!", zap.Error(err))
 		return response.FailWithMessage("创建失败", c)
@@ -61,7 +61,7 @@ func (s *DictionaryDetailApi) DeleteSysDictionaryDetail(c *fiber.Ctx) error {
 // @Router /sysDictionaryDetail/updateSysDictionaryDetail [put]
 func (s *DictionaryDetailApi) UpdateSysDictionaryDetail(c *fiber.Ctx) error {
 	var detail system.SysDictionaryDetail
-	_ = c.QueryParser(&detail)
+	_ = c.BodyParser(&detail)
 	if err := dictionaryDetailService.UpdateSysDictionaryDetail(&detail); err != nil {
 		global.LOG.Error("更新失败!", zap.Error(err))
 		return response.FailWithMessage("更新失败", c)

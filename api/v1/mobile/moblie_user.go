@@ -29,7 +29,7 @@ var moblieUserService = service.ServiceGroupApp.MobileServiceGroup.MobileUserSer
 // @Router /moblieUser/createMoblieUser [post]
 func (mobileUserApi *MobileUserApi) CreateMoblieUser(c *fiber.Ctx) error {
 	var moblieUser mobile.MobileUser
-	_ = c.QueryParser(&moblieUser)
+	_ = c.BodyParser(&moblieUser)
 	if err := moblieUserService.CreateMoblieUser(moblieUser); err != nil {
 		global.LOG.Error("创建失败!", zap.Error(err))
 		return response.FailWithMessage("创建失败", c)
@@ -89,7 +89,7 @@ func (mobileUserApi *MobileUserApi) DeleteMoblieUserByIds(c *fiber.Ctx) error {
 // @Router /moblieUser/updateMoblieUser [put]
 func (mobileUserApi *MobileUserApi) UpdateMoblieUser(c *fiber.Ctx) error {
 	var moblieUser mobile.MobileUser
-	_ = c.QueryParser(&moblieUser)
+	_ = c.BodyParser(&moblieUser)
 	if err := moblieUserService.UpdateMoblieUser(moblieUser); err != nil {
 		global.LOG.Error("更新失败!", zap.Error(err))
 		return response.FailWithMessage("更新失败", c)

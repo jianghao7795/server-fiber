@@ -40,7 +40,7 @@ func (a *AuthorityBtnApi) GetAuthorityBtn(c *fiber.Ctx) error {
 // @Router /authorityBtn/setAuthorityBtn [post]
 func (a *AuthorityBtnApi) SetAuthorityBtn(c *fiber.Ctx) error {
 	var req request.SysAuthorityBtnReq
-	_ = c.QueryParser(&req)
+	_ = c.BodyParser(&req)
 	if err := authorityBtnService.SetAuthorityBtn(req); err != nil {
 		global.LOG.Error("分配失败!", zap.Error(err))
 		return response.FailWithMessage("分配失败", c)
