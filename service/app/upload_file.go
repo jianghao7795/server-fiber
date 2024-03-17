@@ -27,7 +27,7 @@ func (e *FileUploadService) UploadFile(header *multipart.FileHeader, noSave stri
 	oss := upload.NewOss()
 	filePath, key, uploadErr := oss.UploadFile(header)
 	if uploadErr != nil {
-		panic(err)
+		return app.FileUploadAndDownload{}, uploadErr
 	}
 	if noSave == "0" {
 		s := strings.Split(header.Filename, ".")
