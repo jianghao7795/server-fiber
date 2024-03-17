@@ -169,7 +169,7 @@ zap:
 fiberconifg: # fiber config
   prefork: false
   server-header: ""
-  strict-routing: false # 严格路由
+  strict-routing: true # 严格路由
   case-sensitive: true # 区分大小写#
   body-limit: 10485760 # Body 限制
   app-name: "sever-fiber"
