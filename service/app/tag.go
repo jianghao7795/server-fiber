@@ -54,7 +54,7 @@ func (tagService *TagService) GetTag(id uint) (tag app.Tag, err error) {
 
 // GetTagInfoList 分页获取Tag记录
 // Author [piexlmax](https://github.com/piexlmax)
-func (tagService *TagService) GetTagInfoList(info appReq.TagSearch) (list interface{}, total int64, err error) {
+func (tagService *TagService) GetTagInfoList(info appReq.TagSearch) (list []app.Tag, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	// 创建db

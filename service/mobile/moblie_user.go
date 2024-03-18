@@ -46,7 +46,7 @@ func (moblieUserService *MobileUserService) GetMoblieUser(id uint) (moblieUser m
 
 // GetMoblieUserInfoList 分页获取MoblieUser记录
 // Author [jianghao](https://github.com/JiangHaoCode)
-func (moblieUserService *MobileUserService) GetMoblieUserInfoList(info mobileReq.MoblieUserSearch) (list interface{}, total int64, err error) {
+func (moblieUserService *MobileUserService) GetMoblieUserInfoList(info mobileReq.MoblieUserSearch) (list []mobile.MobileUser, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	// 创建db
