@@ -24,7 +24,7 @@ type OperationRecordApi struct{}
 // @Router /sysOperationRecord/createSysOperationRecord [post]
 func (s *OperationRecordApi) CreateSysOperationRecord(c *fiber.Ctx) error {
 	var sysOperationRecord system.SysOperationRecord
-	_ = c.QueryParser(&sysOperationRecord)
+	_ = c.BodyParser(&sysOperationRecord)
 	if err := operationRecordService.CreateSysOperationRecord(sysOperationRecord); err != nil {
 		global.LOG.Error("创建失败!", zap.Error(err))
 		return response.FailWithMessage("创建失败", c)

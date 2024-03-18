@@ -158,7 +158,7 @@ func (autoApi *AutoCodeApi) GetColumn(c *fiber.Ctx) error {
 // @Router /autoCode/createPackage [post]
 func (autoApi *AutoCodeApi) CreatePackage(c *fiber.Ctx) error {
 	var a system.SysAutoCode
-	_ = c.QueryParser(&a)
+	_ = c.BodyParser(&a)
 	if err := utils.Verify(a, utils.AutoPackageVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
