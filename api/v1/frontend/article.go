@@ -5,7 +5,6 @@ import (
 	"server-fiber/global"
 	"server-fiber/model/common/response"
 	"server-fiber/model/frontend/request"
-	"strconv"
 
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
@@ -40,15 +39,13 @@ func (s *FrontendArticleApi) GetArticleList(c *fiber.Ctx) error {
 }
 
 func (s *FrontendArticleApi) GetArticleDetail(c *fiber.Ctx) error {
-	id := c.Params("id")
-	aritcleId, err := strconv.Atoi(id)
+	id, err := c.ParamsInt("id")
 	if err != nil {
 		global.LOG.Error("获取Id失败!", zap.Error(err))
 		return response.FailWithMessage("获取Id失败", c)
 
 	}
-
-	articleDetail, err := frontendService.FrontendArticle.GetAricleDetail(aritcleId, c)
+	articleDetail, err := frontendService.FrontendArticle.GetAricleDetail(id, c)
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return response.FailWithMessage("文章没有，请重新查询", c)
 
@@ -64,8 +61,7 @@ func (s *FrontendArticleApi) GetArticleDetail(c *fiber.Ctx) error {
 
 func (s *FrontendArticleApi) GetSearchArticle(c *fiber.Ctx) error {
 	var searchValue request.ArticleSearch
-	searchValue.Name = c.Params("name")
-	searchValue.Value = c.Params("value")
+	_ = c.ParamsParser(&searchValue)
 	searchValue.Sort = c.Query("sort")
 	if list, err := frontendService.GetSearchArticle(searchValue); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))

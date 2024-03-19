@@ -5,7 +5,6 @@ import (
 	"server-fiber/model/common/response"
 	problemReq "server-fiber/model/system"
 	"server-fiber/service"
-	"strconv"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
@@ -18,9 +17,8 @@ var userProblem = service.ServiceGroupApp.SystemServiceGroup.Problem
 
 func (*UserProblem) GetProblemSetting(c *fiber.Ctx) error {
 	var search problemReq.SysUserProblem
-	SysUserId := c.Params("id")
-	SysUserProblemId, err := strconv.Atoi(SysUserId)
-	search.SysUserId = SysUserProblemId
+	var err error
+	search.SysUserId, err = c.ParamsInt("id")
 	if err != nil {
 		global.LOG.Error("传参错误!", zap.Error(err))
 		return response.FailWithMessage("传错参数,请传user id", c)
@@ -61,8 +59,7 @@ func (*UserProblem) UpdateProblemSetting(c *fiber.Ctx) error {
 }
 
 func (*UserProblem) HasSetting(c *fiber.Ctx) error {
-	SysUserId := c.Params("uid")
-	SysUserProblemId, _ := strconv.Atoi(SysUserId)
+	SysUserProblemId, _ := c.ParamsInt("uid")
 	isSetting, err := userProblem.HasSetting(SysUserProblemId)
 	if err != nil {
 		global.LOG.Error("传参错误!", zap.Error(err))

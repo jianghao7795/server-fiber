@@ -7,7 +7,6 @@ import (
 	"server-fiber/model/common/response"
 	"server-fiber/model/example"
 	"server-fiber/utils"
-	"strconv"
 	"strings"
 	"time"
 
@@ -161,9 +160,8 @@ func (e *ExcelApi) GetFileList(c *fiber.Ctx) error {
 }
 
 func (e *ExcelApi) DeleteFile(c *fiber.Ctx) error {
-	id := c.Params("id")
-	fileId, _ := strconv.Atoi(id)
-	if err := excelService.DeleteFile(int64(fileId)); err != nil {
+	id, _ := c.ParamsInt("id")
+	if err := excelService.DeleteFile(int64(id)); err != nil {
 		global.LOG.Error("删除失败!", zap.Error(err))
 		return response.FailWithMessage("删除失败", c)
 	} else {

@@ -2,7 +2,6 @@ package app
 
 import (
 	"errors"
-	"strconv"
 
 	"server-fiber/global"
 	"server-fiber/model/app"
@@ -53,9 +52,8 @@ func (a *BaseMessageApi) UpdateBaseMessage(c *fiber.Ctx) error {
  * @return nil
  */
 func (a *BaseMessageApi) FindBaseMessage(c *fiber.Ctx) error {
-	id := c.Params("id")
-	ids, _ := strconv.Atoi(id)
-	if responseBaseMessage, err := baseMessageService.FindBaseMessage(uint(ids)); err != nil {
+	id, _ := c.ParamsInt("id")
+	if responseBaseMessage, err := baseMessageService.FindBaseMessage(uint(id)); err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			// respBaseMessage := baseMessageNotFound{message: "not found"}
 			str := "not found"

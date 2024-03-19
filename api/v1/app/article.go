@@ -1,8 +1,6 @@
 package app
 
 import (
-	"strconv"
-
 	"server-fiber/global"
 	"server-fiber/model/app"
 	appReq "server-fiber/model/app/request"
@@ -50,8 +48,7 @@ func (a *ArticleApi) CreateArticle(c *fiber.Ctx) error {
 // @Success 200 {string} string "{}"
 // @Router /article/deleteArticle/:id [delete]
 func (*ArticleApi) DeleteArticle(c *fiber.Ctx) error {
-	ids := c.Params("id")
-	id, _ := strconv.Atoi(ids)
+	id, _ := c.ParamsInt("id")
 	if err := articleService.DeleteArticle(uint(id)); err != nil {
 		global.LOG.Error("删除失败", zap.Error(err))
 		return response.FailWithDetailed(map[string]string{
@@ -98,8 +95,12 @@ func (a *ArticleApi) DeleteArticleByIds(c *fiber.Ctx) error {
 func (*ArticleApi) UpdateArticle(c *fiber.Ctx) error {
 	var article app.Article
 	_ = c.BodyParser(&article)
-	ids := c.Params("id")
-	id, _ := strconv.Atoi(ids)
+	id, err := c.ParamsInt("id")
+	if err != nil {
+		return response.FailWithDetailed(map[string]string{
+			"msg": err.Error(),
+		}, err.Error(), c)
+	}
 	article.ID = uint(id)
 	if err := articleService.UpdateArticle(article); err != nil {
 		global.LOG.Error("更新失败!", zap.Error(err))
@@ -122,8 +123,7 @@ func (*ArticleApi) UpdateArticle(c *fiber.Ctx) error {
 // @Success 200 {string} string "{"success":true, "msg":"获得成功"}"
 // @Router /article/findArticle/:id [get]
 func (*ArticleApi) FindArticle(c *fiber.Ctx) error {
-	ids := c.Params("id")
-	id, _ := strconv.Atoi(ids)
+	id, _ := c.ParamsInt("id")
 	if rearticle, err := articleService.GetArticle(uint(id)); err != nil {
 		global.LOG.Error("查询失败!", zap.Error(err))
 		return response.FailWithDetailed(map[string]string{

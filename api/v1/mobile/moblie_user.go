@@ -7,7 +7,6 @@ import (
 	"server-fiber/model/mobile"
 	mobileReq "server-fiber/model/mobile/request"
 	"server-fiber/service"
-	"strconv"
 
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
@@ -48,8 +47,7 @@ func (mobileUserApi *MobileUserApi) CreateMoblieUser(c *fiber.Ctx) error {
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
 // @Router /moblieUser/deleteMoblieUser [delete]
 func (mobileUserApi *MobileUserApi) DeleteMoblieUser(c *fiber.Ctx) error {
-	idString := c.Params("id")
-	id, _ := strconv.Atoi(idString)
+	id, _ := c.ParamsInt("id")
 	if err := moblieUserService.DeleteMoblieUser(uint(id)); err != nil {
 		global.LOG.Error("删除失败!", zap.Error(err))
 		return response.FailWithMessage("删除失败", c)
@@ -108,8 +106,7 @@ func (mobileUserApi *MobileUserApi) UpdateMoblieUser(c *fiber.Ctx) error {
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"查询成功"}"
 // @Router /moblieUser/findMoblieUser [get]
 func (mobileUserApi *MobileUserApi) FindMoblieUser(c *fiber.Ctx) error {
-	idString := c.Params("id")
-	id, _ := strconv.Atoi(idString)
+	id, _ := c.ParamsInt("id")
 	if remoblieUser, err := moblieUserService.GetMoblieUser(uint(id)); err != nil {
 		global.LOG.Error("查询失败!", zap.Error(err))
 		return response.FailWithMessage("查询失败", c)

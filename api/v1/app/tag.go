@@ -10,8 +10,6 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
-
-	"strconv"
 )
 
 type TagApi struct{}
@@ -48,8 +46,8 @@ func (TagApi *TagApi) CreateTag(c *fiber.Ctx) error {
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
 // @Router /appTab/deleteTag [delete]
 func (TagApi *TagApi) DeleteTag(c *fiber.Ctx) error {
-	idString := c.Params("id")
-	id, _ := strconv.Atoi(idString)
+	id, _ := c.ParamsInt("id")
+
 	if err := appTabService.DeleteTag(uint(id)); err != nil {
 		global.LOG.Error("删除失败!", zap.Error(err))
 		return response.FailWithMessage("删除失败", c)
@@ -108,8 +106,7 @@ func (TagApi *TagApi) UpdateTag(c *fiber.Ctx) error {
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"查询成功"}"
 // @Router /appTab/findTag [get]
 func (TagApi *TagApi) FindTag(c *fiber.Ctx) error {
-	idString := c.Params("id")
-	id, _ := strconv.Atoi(idString)
+	id, _ := c.ParamsInt("id")
 	if reappTab, err := appTabService.GetTag(uint(id)); err != nil {
 		global.LOG.Error("查询失败!", zap.Error(err))
 		return response.FailWithMessage("查询失败", c)

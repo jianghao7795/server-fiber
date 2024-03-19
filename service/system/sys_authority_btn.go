@@ -50,7 +50,7 @@ func (a *AuthorityBtnService) SetAuthorityBtn(req request.SysAuthorityBtnReq) (e
 	})
 }
 
-func (a *AuthorityBtnService) CanRemoveAuthorityBtn(ID string) (err error) {
+func (a *AuthorityBtnService) CanRemoveAuthorityBtn(ID int) (err error) {
 	fErr := global.DB.First(&system.SysAuthorityBtn{}, "sys_base_menu_btn_id = ?", ID).Error
 	if errors.Is(fErr, gorm.ErrRecordNotFound) {
 		return nil

@@ -4,7 +4,6 @@ import (
 	"server-fiber/global"
 	appReq "server-fiber/model/app/request"
 	"server-fiber/model/common/response"
-	"strconv"
 
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
@@ -26,12 +25,11 @@ func (appTabApi *FrontendTagApi) GetTagList(c *fiber.Ctx) error {
 }
 
 func (appTabApi *FrontendTagApi) GetTag(c *fiber.Ctx) error {
-	id := c.Params("id")
-	tagId, err := strconv.Atoi(id)
+	id, err := c.ParamsInt("id")
 	if err != nil {
 		return response.FailWithMessage("获取Ids失败", c)
 	}
-	if tagArticles, err := frontendService.FrontendTag.GetTagArticle(tagId, c); err != nil {
+	if tagArticles, err := frontendService.FrontendTag.GetTagArticle(id, c); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败", c)
 	} else {

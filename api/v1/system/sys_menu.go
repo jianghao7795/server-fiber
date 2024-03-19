@@ -8,7 +8,6 @@ import (
 	systemReq "server-fiber/model/system/request"
 	systemRes "server-fiber/model/system/response"
 	"server-fiber/utils"
-	"strconv"
 
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
@@ -131,8 +130,7 @@ func (a *AuthorityMenuApi) AddBaseMenu(c *fiber.Ctx) error {
 // @Router /menu/deleteBaseMenu [post]
 func (a *AuthorityMenuApi) DeleteBaseMenu(c *fiber.Ctx) error {
 	var menu request.GetById
-	id := c.Params("id")
-	menu.ID, _ = strconv.Atoi(id)
+	menu.ID, _ = c.ParamsInt("id")
 	if err := utils.Verify(menu, utils.IdVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
@@ -179,9 +177,7 @@ func (a *AuthorityMenuApi) UpdateBaseMenu(c *fiber.Ctx) error {
 // @Router /menu/getBaseMenuById [post]
 func (a *AuthorityMenuApi) GetBaseMenuById(c *fiber.Ctx) error {
 	var idInfo request.GetById
-	var id = c.Params("id")
-	ids, _ := strconv.ParseInt(id, 10, 64)
-	idInfo.ID = int(ids)
+	idInfo.ID, _ = c.ParamsInt("id")
 	if err := utils.Verify(idInfo, utils.IdVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}

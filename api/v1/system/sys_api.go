@@ -8,7 +8,6 @@ import (
 	systemReq "server-fiber/model/system/request"
 	systemRes "server-fiber/model/system/response"
 	"server-fiber/utils"
-	"strconv"
 
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
@@ -48,7 +47,7 @@ func (s *SystemApiApi) CreateApi(c *fiber.Ctx) error {
 // @Router /api/deleteApi [post]
 func (s *SystemApiApi) DeleteApi(c *fiber.Ctx) error {
 	var api system.SysApi
-	id, _ := strconv.Atoi(c.Params("id"))
+	id, _ := c.ParamsInt("id")
 	api.ID = uint(id)
 	if err := utils.Verify(api.MODEL, utils.IdVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)

@@ -91,9 +91,8 @@ func (u *FileUploadAndDownloadApi) EditFileName(c *fiber.Ctx) error {
 // @Router /fileUploadAndDownload/deleteFile [post]
 func (u *FileUploadAndDownloadApi) DeleteFile(c *fiber.Ctx) error {
 	var file example.ExaFileUploadAndDownload
-	id := c.Params("id")
-	ids, _ := strconv.Atoi(id)
-	file.ID = uint(ids)
+	id, _ := c.ParamsInt("id")
+	file.ID = uint(id)
 	if err := fileUploadAndDownloadService.DeleteFile(file); err != nil {
 		global.LOG.Error("删除失败!", zap.Error(err))
 		return response.FailWithDetailed(fiber.Map{"msg": err.Error()}, "删除失败", c)

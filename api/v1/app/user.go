@@ -8,7 +8,6 @@ import (
 	"server-fiber/model/common/request"
 	"server-fiber/model/common/response"
 	"server-fiber/service"
-	"strconv"
 
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
@@ -48,9 +47,8 @@ func (userApi *UserApi) CreateUser(c *fiber.Ctx) error {
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
 // @Router /user/deleteUser [delete]
 func (userApi *UserApi) DeleteUser(c *fiber.Ctx) error {
-	id := c.Params("id")
-	IDS, _ := strconv.Atoi(id)
-	if err := userService.DeleteUser(IDS); err != nil {
+	id, _ := c.ParamsInt("id")
+	if err := userService.DeleteUser(id); err != nil {
 		global.LOG.Error("删除失败!", zap.Error(err))
 		return response.FailWithMessage("删除失败", c)
 	} else {
@@ -89,15 +87,14 @@ func (userApi *UserApi) DeleteUserByIds(c *fiber.Ctx) error {
 // @Router /user/updateUser [put]
 func (userApi *UserApi) UpdateUser(c *fiber.Ctx) error {
 	var user app.User
-	ID := c.Params("id")
-	IDS, _ := strconv.Atoi(ID)
-	notFound := userService.FindIsUser(uint(IDS))
+	id, _ := c.ParamsInt("id")
+	notFound := userService.FindIsUser(uint(id))
 	if notFound {
 		global.LOG.Error("未找到，该用户!", zap.Error(errors.New("未找到，该用户")))
 		return response.FailWithMessage("未找到，该用户", c)
 	}
 	_ = c.BodyParser(&user)
-	user.ID = uint(IDS)
+	user.ID = uint(id)
 	if err := userService.UpdateUser(user); err != nil {
 		global.LOG.Error("更新失败!", zap.Error(err))
 		return response.FailWithMessage("更新失败", c)
@@ -116,9 +113,8 @@ func (userApi *UserApi) UpdateUser(c *fiber.Ctx) error {
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"查询成功"}"
 // @Router /user/findUser [get]
 func (userApi *UserApi) FindUser(c *fiber.Ctx) error {
-	ID := c.Params("id")
-	IDS, _ := strconv.Atoi(ID)
-	if reuser, err := userService.GetUser(uint(IDS)); err != nil {
+	id, _ := c.ParamsInt("id")
+	if reuser, err := userService.GetUser(uint(id)); err != nil {
 		global.LOG.Error("查询失败!", zap.Error(err))
 		return response.FailWithMessage("查询失败", c)
 	} else {

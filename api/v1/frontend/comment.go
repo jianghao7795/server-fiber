@@ -4,7 +4,6 @@ import (
 	"server-fiber/global"
 	"server-fiber/model/common/response"
 	"server-fiber/model/frontend"
-	"strconv"
 
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
@@ -15,8 +14,7 @@ type CommentApi struct{}
 var commentService = frontendService.Comment
 
 func (s *CommentApi) GetCommentByArticleId(c *fiber.Ctx) error {
-	articleId := c.Params("articleId")
-	id, err := strconv.Atoi(articleId)
+	id, err := c.ParamsInt("articleId")
 	if err != nil {
 		global.LOG.Error("获取articleId 失败!", zap.Error(err))
 		return response.FailWithMessage("获取articleId 失败", c)

@@ -57,7 +57,7 @@ func (a *AuthorityBtnApi) SetAuthorityBtn(c *fiber.Ctx) error {
 // @Success 200 {object} return response.Response{msg=string} "删除成功"
 // @Router /authorityBtn/canRemoveAuthorityBtn [post]
 func (a *AuthorityBtnApi) CanRemoveAuthorityBtn(c *fiber.Ctx) error {
-	id := c.Params("id")
+	id, _ := c.ParamsInt("id")
 	if err := authorityBtnService.CanRemoveAuthorityBtn(id); err != nil {
 		global.LOG.Error("删除失败!", zap.Error(err))
 		return response.FailWithMessage(err.Error(), c)
