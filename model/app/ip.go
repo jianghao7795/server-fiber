@@ -9,5 +9,5 @@ type Ip struct {
 }
 
 func (Ip) TableName() string {
-	return "ip"
+	return "ips"
 }

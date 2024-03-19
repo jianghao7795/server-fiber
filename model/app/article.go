@@ -22,5 +22,5 @@ type Article struct {
 
 // 表名
 func (Article) TableName() string {
-	return "article"
+	return "articles"
 }

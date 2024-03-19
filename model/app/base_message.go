@@ -20,5 +20,5 @@ type BaseMessage struct {
 }
 
 func (BaseMessage) TableName() string {
-	return "base_message"
+	return "base_messages"
 }

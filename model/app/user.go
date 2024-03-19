@@ -28,9 +28,9 @@ type UserFrontend struct {
 
 // TableName User 表名
 func (User) TableName() string {
-	return "user"
+	return "users"
 }
 
 func (UserFrontend) TableName() string {
-	return "user"
+	return "users"
 }

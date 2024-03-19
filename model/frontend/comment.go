@@ -17,5 +17,5 @@ type Comment struct {
 
 // TableName Comment 表名
 func (Comment) TableName() string {
-	return "comment"
+	return "comments"
 }

@@ -16,5 +16,5 @@ type Tag struct {
 
 // TableName AppTab 表名
 func (Tag) TableName() string {
-	return "tag"
+	return "tags"
 }

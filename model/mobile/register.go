@@ -11,5 +11,5 @@ type Register struct {
 }
 
 func (Register) TableName() string {
-	return "mobile_user"
+	return "mobile_users"
 }

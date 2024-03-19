@@ -23,5 +23,5 @@ type MobileUser struct {
 
 // TableName MoblieUser 表名
 func (MobileUser) TableName() string {
-	return "mobile_user"
+	return "mobile_users"
 }
