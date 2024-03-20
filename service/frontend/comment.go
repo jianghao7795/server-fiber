@@ -31,8 +31,7 @@ func (commentService *Comment) findChildrenComment(comment *frontend.Comment) (e
 	return err
 }
 
-func (c *Comment) CreatedComment(info frontend.Comment) (id uint, err error) {
+func (c *Comment) CreatedComment(info *frontend.Comment) (err error) {
 	err = global.DB.Create(&info).Error
-	id = info.ID
 	return
 }

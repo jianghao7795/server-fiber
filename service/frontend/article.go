@@ -3,6 +3,7 @@ package frontend
 import (
 	// "encoding/json"
 	"errors"
+	"net/url"
 	"strconv"
 	"strings"
 	"time"
@@ -149,11 +150,14 @@ func (s *FrontendArticle) GetSearchArticle(info frontendReq.ArticleSearch) (list
 	var sortField = make(map[string]string)
 	sortField["read"] = "reading_quantity"
 	sortField["time"] = "created_at"
-
+	text, err := url.QueryUnescape(info.Value)
+	if err != nil {
+		return nil, err
+	}
 	if info.Name == "tags" {
 		// 多对多关联 Association
 		var id uint
-		global.DB.Model(&frontend.Tag{}).Select("id").Where("name = ?", info.Value).First(&id)
+		global.DB.Model(&frontend.Tag{}).Select("id").Where("name = ?", text).First(&id)
 		dbTag := &frontend.Tag{MODEL: global.MODEL{ID: id}}
 		if info.Sort != "" {
 			err = global.DB.Model(dbTag).Preload("Tags").Order(sortField[info.Sort] + " desc").Association("Articles").Find(&list)
@@ -165,9 +169,9 @@ func (s *FrontendArticle) GetSearchArticle(info frontendReq.ArticleSearch) (list
 
 	if info.Name == "articles" {
 		if info.Sort != "" {
-			err = db.Where("title like ?", strings.Join([]string{"%", info.Value, "%"}, "")).Preload("Tags").Order(sortField[info.Sort] + " desc").Find(&list).Error
+			err = db.Where("title like ?", strings.Join([]string{"%", text, "%"}, "")).Preload("Tags").Order(sortField[info.Sort] + " desc").Find(&list).Error
 		} else {
-			err = db.Where("title like ?", strings.Join([]string{"%", info.Value, "%"}, "")).Preload("Tags").Order("created_at desc").Find(&list).Error
+			err = db.Where("title like ?", strings.Join([]string{"%", text, "%"}, "")).Preload("Tags").Order("created_at desc").Find(&list).Error
 		}
 	}
 
