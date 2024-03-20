@@ -63,6 +63,9 @@ func (s *FrontendArticleApi) GetSearchArticle(c *fiber.Ctx) error {
 	var searchValue request.ArticleSearch
 	_ = c.ParamsParser(&searchValue)
 	searchValue.Sort = c.Query("sort")
+	if searchValue.Name != "tags" && searchValue.Name != "articles" {
+		return response.FailWithMessage("查询的不是tag 或 article", c)
+	}
 	if list, err := frontendService.GetSearchArticle(searchValue); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败", c)
