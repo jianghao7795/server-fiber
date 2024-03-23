@@ -20,7 +20,7 @@ import (
 )
 
 // 读取配置 配置文件config.yaml
-func Viper(path ...string) *viper.Viper {
+func Viper(path ...string) (*viper.Viper, error) {
 	var config string
 	if len(path) == 0 {
 		flag.StringVar(&config, "c", "", "choose config file.")
@@ -46,7 +46,7 @@ func Viper(path ...string) *viper.Viper {
 	v.SetConfigType("yaml")
 	err := v.ReadInConfig()
 	if err != nil {
-		panic(fmt.Errorf("fatal error config file: %s", err))
+		return nil, err
 	}
 	v.WatchConfig()
 
@@ -59,25 +59,25 @@ func Viper(path ...string) *viper.Viper {
 		}
 	})
 	if err := v.Unmarshal(&global.CONFIG); err != nil {
-		fmt.Println(err)
+		return nil, err
 	}
 
 	publicKeyByte, err := os.ReadFile("./rsa_public_key.pem")
 	// global.Logger.Println("public key: ", err)
 	if err != nil {
-		fmt.Println(err)
+		return nil, err
 	}
 	publickey, err := jwt.ParseRSAPublicKeyFromPEM(publicKeyByte)
 	if err != nil {
-		fmt.Println(err)
+		return nil, err
 	}
 	privatekeyByte, err := os.ReadFile("./private_key.pem")
 	if err != nil {
-		fmt.Println(err)
+		return nil, err
 	}
 	privatekey, err := jwt.ParseRSAPrivateKeyFromPEM(privatekeyByte)
 	if err != nil {
-		fmt.Println(err)
+		return nil, err
 		// global.Logger.Println(err)
 	}
 	// jwt
@@ -101,7 +101,7 @@ func Viper(path ...string) *viper.Viper {
 		return ctx.Status(code).JSON(fiber.Map{"msg": "服务器错误，请稍后处理"})
 	}
 
-	return v
+	return v, nil
 }
 
 // func logHandle(w http.ResponseWriter, r *http.Request) {

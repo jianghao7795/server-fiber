@@ -2,6 +2,7 @@ package core
 
 import (
 	"fmt"
+	"log"
 
 	"server-fiber/global"
 	"server-fiber/initialize"
@@ -12,8 +13,13 @@ import (
 )
 
 func RunServer() {
-	global.VIP = Viper() // 初始化Viper 配置
-	global.LOG = Zap()   // 初始化zap日志库
+	var err error
+	global.VIP, err = Viper() // 初始化Viper 配置
+	if err != nil {
+		log.Println("配置错误：", err.Error())
+		return
+	}
+	global.LOG = Zap() // 初始化zap日志库
 	// global.Logger = core.InitLogger() // 初始化 log 让log标准输出
 	zap.ReplaceGlobals(global.LOG) // 部署到全局
 	// log.Println("fiberconfig: ", global.CONFIG.FiberConfig.AppName)
@@ -24,10 +30,13 @@ func RunServer() {
 		global.LOG.Info("Database connection success", zap.String("port", global.CONFIG.Mysql.Port))
 	} else {
 		global.LOG.Error("The database connection failed: " + err.Error())
-		panic(err)
+
 	}
 	initialize.Tasks() //定时 执行任务
-	utilsInit.TransInit("zh")
+	err = utilsInit.TransInit("zh")
+	if err != nil {
+		global.LOG.Error("翻译错误：" + err.Error())
+	}
 	if global.DB != nil {
 		system.LoadAll() // 加载所有的 拉黑的jwt数据 避免盗用jwt
 		// initialize.RegisterTables(global.DB) // 初始化表
@@ -36,7 +45,10 @@ func RunServer() {
 		defer db.Close()
 	}
 	if global.CONFIG.System.UseMultipoint || global.CONFIG.System.UseRedis {
-		initialize.Redis()
+		err = initialize.Redis()
+		if err != nil {
+			global.LOG.Error("Redis init failed: " + err.Error())
+		}
 	}
 	Router := initialize.Routers()
 	address := fmt.Sprintf(":%d", global.CONFIG.System.Addr)
