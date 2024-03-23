@@ -1,12 +1,25 @@
-dev:
-	go run .
+.PHONY: build dev start clean tool help
+
+all: build
+
+build:
+	go build -v .
+
 start:
 	air
-build:
-	go build main.go -c config.dev.yaml
-mod:
-	go mod tidy
-main:
-	go run main.go
-run:
+
+dev:
 	go run .
+
+tool:
+	go tool vet . |& grep -v vendor; true
+	gofmt -w .
+
+clean:
+	go clean -i .
+
+help:
+	@echo "make: compile packages and dependencies"
+	@echo "make tool: run specified go tool"
+	@echo "make dev: go run ."
+	@echo "make clean: remove object files and cached files"
