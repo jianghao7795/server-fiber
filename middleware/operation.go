@@ -23,7 +23,7 @@ var operationRecordService = service.ServiceGroupApp.SystemServiceGroup.Operatio
 func OperationRecord(c *fiber.Ctx) error {
 	var body []byte
 	var userId int
-	if c.Method() != "GET" {
+	if c.Method() != fiber.MethodGet {
 		body = c.Request().Body()
 	} else {
 		query := c.OriginalURL()
@@ -84,11 +84,11 @@ func OperationRecord(c *fiber.Ctx) error {
 	if err != nil {
 		return err
 	}
-	record.ErrorMessage = ""
-	record.Status = c.Response().StatusCode()
-	record.Latency = time.Since(time.Now())
-	record.Resp = string(c.Response().Body())
-	go func() {
+	defer func() {
+		record.ErrorMessage = string(c.Response().Body())
+		record.Status = c.Response().StatusCode()
+		record.Latency = time.Since(time.Now())
+		record.Resp = string(c.Response().Body())
 		if err := operationRecordService.CreateSysOperationRecord(record); err != nil {
 			global.LOG.Error("create operation record error:", zap.Error(err))
 		}
