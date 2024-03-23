@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"time"
 
+	"github.com/gofiber/fiber/v2"
 	jwt "github.com/golang-jwt/jwt/v5"
 	"github.com/songzhibin97/gkit/cache/local_cache"
 
@@ -88,6 +89,18 @@ func Viper(path ...string) *viper.Viper {
 	global.BlackCache = local_cache.NewCache(
 		local_cache.SetDefaultExpire(time.Second * time.Duration(global.CONFIG.JWT.ExpiresTime)),
 	)
+	global.CONFIG.FiberConfig.ErrorHandler = func(ctx *fiber.Ctx, err error) error {
+		// 状态代码默认为500
+		code := fiber.StatusInternalServerError
+
+		// 如果是fiber.*Error，则检索自定义状态代码。
+		if e, ok := err.(*fiber.Error); ok {
+			code = e.Code
+		}
+
+		return ctx.Status(code).JSON(fiber.Map{"msg": "服务器错误，请稍后处理"})
+	}
+
 	return v
 }
 

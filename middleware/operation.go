@@ -85,8 +85,12 @@ func OperationRecord(c *fiber.Ctx) error {
 		return err
 	}
 	defer func() {
-		record.ErrorMessage = string(c.Response().Body())
 		record.Status = c.Response().StatusCode()
+		if record.Status == fiber.StatusInternalServerError {
+			record.ErrorMessage = string(c.Response().Body())
+		} else {
+			record.ErrorMessage = ""
+		}
 		record.Latency = time.Since(time.Now())
 		record.Resp = string(c.Response().Body())
 		if err := operationRecordService.CreateSysOperationRecord(record); err != nil {
