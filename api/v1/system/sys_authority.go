@@ -145,11 +145,15 @@ func (a *AuthorityApi) GetAuthorityList(c *fiber.Ctx) error {
 // @Router /authority/setDataAuthority [post]
 func (a *AuthorityApi) SetDataAuthority(c *fiber.Ctx) error {
 	var auth system.SysAuthority
-	_ = c.BodyParser(&auth)
+	err := c.BodyParser(&auth)
+	if err != nil {
+		global.LOG.Error("获取数据失败!", zap.Error(err))
+		return response.FailWithMessage("获取数据失败", c)
+	}
 	if err := utils.Verify(auth, utils.AuthorityIdVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
-	if err := authorityService.SetDataAuthority(auth); err != nil {
+	if err := authorityService.SetDataAuthority(&auth); err != nil {
 		global.LOG.Error("设置失败!", zap.Error(err))
 		return response.FailWithMessage("设置失败"+err.Error(), c)
 	} else {

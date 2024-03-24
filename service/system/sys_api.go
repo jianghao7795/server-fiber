@@ -22,11 +22,11 @@ type ApiService struct{}
 
 var ApiServiceApp = new(ApiService)
 
-func (apiService *ApiService) CreateApi(api system.SysApi) (err error) {
+func (apiService *ApiService) CreateApi(api *system.SysApi) (err error) {
 	if !errors.Is(global.DB.Where("path = ? AND method = ?", api.Path, api.Method).First(&system.SysApi{}).Error, gorm.ErrRecordNotFound) {
 		return errors.New("存在相同api")
 	}
-	return global.DB.Create(&api).Error
+	return global.DB.Create(api).Error
 }
 
 //
@@ -140,26 +140,18 @@ func (apiService *ApiService) GetApiById(id int) (api system.SysApi, err error) 
 //@param: api model.SysApi
 //@return: err error
 
-func (apiService *ApiService) UpdateApi(api system.SysApi) (err error) {
+func (apiService *ApiService) UpdateApi(api *system.SysApi) (err error) {
 	var oldA system.SysApi
 	err = global.DB.Where("id = ?", api.ID).First(&oldA).Error
+	if err != nil {
+		return err
+	}
 	if oldA.Path != api.Path || oldA.Method != api.Method {
 		if !errors.Is(global.DB.Where("path = ? AND method = ?", api.Path, api.Method).First(&system.SysApi{}).Error, gorm.ErrRecordNotFound) {
 			return errors.New("存在相同api路径")
 		}
 	}
-	if err != nil {
-		return err
-	} else {
-		err = global.DB.Save(&api).Error
-		// err = CasbinServiceApp.UpdateCasbinApi(oldA.Path, api.Path, oldA.Method, api.Method)
-		// if err != nil {
-		// 	return err
-		// } else {
-
-		// }
-	}
-	return err
+	return global.DB.Save(api).Error
 }
 
 //

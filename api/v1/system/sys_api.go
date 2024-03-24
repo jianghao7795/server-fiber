@@ -23,17 +23,21 @@ type SystemApiApi struct{}
 // @Param data body system.SysApi true "api路径, api中文描述, api组, 方法"
 // @Success 200 {object} return response.Response{msg=string} "创建基础api"
 // @Router /api/createApi [post]
-func (s *SystemApiApi) CreateApi(c *fiber.Ctx) error {
+func (s *SystemApiApi) CreateApi(c *fiber.Ctx) (err error) {
 	var api system.SysApi
-	_ = c.BodyParser(&api)
-	if err := utils.Verify(api, utils.ApiVerify); err != nil {
+	err = c.BodyParser(&api)
+	if err != nil {
+		global.LOG.Error("获取数据失败!", zap.Error(err))
+		return response.FailWithMessage("获取数据失败", c)
+	}
+	if err = utils.Verify(api, utils.ApiVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
-	if err := apiService.CreateApi(api); err != nil {
+	if err = apiService.CreateApi(&api); err != nil {
 		global.LOG.Error("创建失败!", zap.Error(err))
 		return response.FailWithDetailed(map[string]string{"msg": err.Error()}, "创建失败", c)
 	} else {
-		return response.OkWithMessage("创建成功", c)
+		return response.OkWithId("创建成功", api.ID, c)
 	}
 }
 
@@ -158,11 +162,15 @@ func (s *SystemApiApi) GetApiById(c *fiber.Ctx) error {
 // @Router /api/updateApi [put]
 func (s *SystemApiApi) UpdateApi(c *fiber.Ctx) error {
 	var api system.SysApi
-	_ = c.BodyParser(&api)
+	err := c.BodyParser(&api)
+	if err != nil {
+		global.LOG.Error("获取数据失败!", zap.Error(err))
+		return response.FailWithMessage("获取数据失败", c)
+	}
 	if err := utils.Verify(api, utils.ApiVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
-	if err := apiService.UpdateApi(api); err != nil {
+	if err := apiService.UpdateApi(&api); err != nil {
 		global.LOG.Error("修改失败!", zap.Error(err))
 		return response.FailWithMessage("修改失败", c)
 	} else {

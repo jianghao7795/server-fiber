@@ -8,15 +8,13 @@ import (
 
 	"strings"
 	"time"
-
-	"gorm.io/gorm"
 )
 
 type ArticleService struct{}
 
 // CreateArticle
-func (*ArticleService) CreateArticle(article app.Article) (err error) {
-	err = global.DB.Create(&article).Error
+func (*ArticleService) CreateArticle(article *app.Article) (err error) {
+	err = global.DB.Create(article).Error
 	return
 }
 
@@ -34,30 +32,9 @@ func (*ArticleService) DeleteArticleByIds(ids request.IdsReq) (err error) {
 }
 
 // update
-func (*ArticleService) UpdateArticle(article app.Article) (err error) {
-	var articleDetail app.Article
-
-	err = global.DB.Where("id = ?", article.ID).First(&articleDetail).Error
-	if err != nil {
-		return
-	}
-	var tagCorrelation []app.ArticleTag
-	DB := global.DB.Model(&app.ArticleTag{})
-	err = DB.Where("article_id = ?", article.ID).Find(&tagCorrelation).Error
-	if err == gorm.ErrRecordNotFound {
-		err = DB.Delete("article_id = ?", article.ID).Error
-		if err != nil {
-			return err
-		}
-	} else if err != nil {
-		return err
-	}
-
-	err = global.DB.Save(&article).Error
-	if err != nil {
-		global.DB.Create(tagCorrelation)
-	}
-	return nil
+func (*ArticleService) UpdateArticle(article *app.Article) (err error) {
+	err = global.DB.Save(article).Error
+	return err
 }
 
 // getDetail by id

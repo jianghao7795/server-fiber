@@ -30,7 +30,6 @@ func RunServer() {
 		global.LOG.Info("Database connection success", zap.String("port", global.CONFIG.Mysql.Port))
 	} else {
 		global.LOG.Error("The database connection failed: " + err.Error())
-
 	}
 	initialize.Tasks() //定时 执行任务
 	err = utilsInit.TransInit("zh")

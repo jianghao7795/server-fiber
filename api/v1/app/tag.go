@@ -27,12 +27,16 @@ var appTabService = service.ServiceGroupApp.AppServiceGroup.TagService
 // @Router /appTab/createTag [post]
 func (TagApi *TagApi) CreateTag(c *fiber.Ctx) error {
 	var appTab app.Tag
-	_ = c.BodyParser(&appTab)
-	if err := appTabService.CreateTag(appTab); err != nil {
+	err := c.BodyParser(&appTab)
+	if err != nil {
+		global.LOG.Error("获取数据失败!", zap.Error(err))
+		return response.FailWithMessage("获取数据失败", c)
+	}
+	if err := appTabService.CreateTag(&appTab); err != nil {
 		global.LOG.Error("创建失败!", zap.Error(err))
 		return response.FailWithMessage("创建失败", c)
 	} else {
-		return response.OkWithMessage("创建成功", c)
+		return response.OkWithId("创建成功", appTab.ID, c)
 	}
 }
 
@@ -87,8 +91,12 @@ func (TagApi *TagApi) DeleteTagByIds(c *fiber.Ctx) error {
 // @Router /appTab/updateTag [put]
 func (TagApi *TagApi) UpdateTag(c *fiber.Ctx) error {
 	var appTab app.Tag
-	_ = c.BodyParser(&appTab)
-	if err := appTabService.UpdateTag(appTab); err != nil {
+	err := c.BodyParser(&appTab)
+	if err != nil {
+		global.LOG.Error("获取数据失败!", zap.Error(err))
+		return response.FailWithMessage("获取数据失败", c)
+	}
+	if err = appTabService.UpdateTag(appTab); err != nil {
 		global.LOG.Error("更新失败!", zap.Error(err))
 		return response.FailWithMessage("更新失败", c)
 	} else {

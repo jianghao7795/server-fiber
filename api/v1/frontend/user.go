@@ -163,9 +163,12 @@ func (u *FrontendUser) UpdatePassword(c *fiber.Ctx) error {
 
 func (u *FrontendUser) UpdateUserBackgroudImage(c *fiber.Ctx) error {
 	var user frontend.User
-	_ = c.BodyParser(&user)
-
-	err := frontendService.UpdateUserBackgroudImage(user)
+	var err error
+	err = c.BodyParser(&user)
+	if err != nil {
+		return response.FailWithMessage("获取数据失败", c)
+	}
+	err = frontendService.UpdateUserBackgroudImage(user)
 	if err != nil {
 		return response.FailWithMessage("更新失败："+err.Error(), c)
 	}
@@ -174,11 +177,15 @@ func (u *FrontendUser) UpdateUserBackgroudImage(c *fiber.Ctx) error {
 
 func (u *FrontendUser) UpdateUser(c *fiber.Ctx) error {
 	var user frontend.User
-	_ = c.BodyParser(&user)
-	if err := utils.Verify(user, utils.UpdateUserVerify); err != nil {
+	var err error
+	err = c.BodyParser(&user)
+	if err != nil {
+		return response.FailWithMessage("获取数据失败", c)
+	}
+	if err = utils.Verify(user, utils.UpdateUserVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
-	if err := frontendService.UpdateUser(user); err != nil {
+	if err = frontendService.UpdateUser(user); err != nil {
 		return response.FailWithDetailed(err.Error(), "更新失败", c)
 	}
 	return response.OkWithDetailed(nil, "更新成功", c)

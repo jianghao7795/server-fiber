@@ -12,8 +12,8 @@ type BaseMessageService struct{}
  * @param {app.BaseMessage} baseMessage
  * @return {*}
  */
-func (*BaseMessageService) CreateBaseMessage(baseMessage app.BaseMessage) (err error) {
-	err = global.DB.Create(&baseMessage).Error
+func (*BaseMessageService) CreateBaseMessage(baseMessage *app.BaseMessage) (err error) {
+	err = global.DB.Create(baseMessage).Error
 	return
 }
 
@@ -22,13 +22,7 @@ func (*BaseMessageService) CreateBaseMessage(baseMessage app.BaseMessage) (err e
  * @param {app.BaseMessage} baseMessage
  * @return {*}
  */
-func (*BaseMessageService) UpdateBaseMessage(baseMessage app.BaseMessage) (err error) {
-	var base app.BaseMessage
-	err = global.DB.Where("id = ?", baseMessage.ID).First(&base).Error
-	baseMessage.CreatedAt = base.CreatedAt
-	if err != nil {
-		return
-	}
+func (*BaseMessageService) UpdateBaseMessage(baseMessage *app.BaseMessage) (err error) {
 	err = global.DB.Save(baseMessage).Error
 	return
 }

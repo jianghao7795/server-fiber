@@ -27,9 +27,13 @@ var commentService = service.ServiceGroupApp.AppServiceGroup.CommentService
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
 // @Router /comment/createComment [post]
 func (commentApi *CommentApi) CreateComment(c *fiber.Ctx) error {
-	var comment2 comment.Comment
-	_ = c.BodyParser(&comment2)
-	if err := commentService.CreateComment(comment2); err != nil {
+	var commentData comment.Comment
+	err := c.BodyParser(&commentData)
+	if err != nil {
+		global.LOG.Error("获取数据失败!", zap.Error(err))
+		return response.FailWithMessage("获取数据失败", c)
+	}
+	if err := commentService.CreateComment(&commentData); err != nil {
 		global.LOG.Error("创建失败!", zap.Error(err))
 		return response.FailWithMessage("创建失败", c)
 	} else {
@@ -88,8 +92,12 @@ func (commentApi *CommentApi) DeleteCommentByIds(c *fiber.Ctx) error {
 // @Router /comment/updateComment [put]
 func (commentApi *CommentApi) UpdateComment(c *fiber.Ctx) error {
 	var comment2 comment.Comment
-	_ = c.BodyParser(&comment2)
-	if err := commentService.UpdateComment(comment2); err != nil {
+	err := c.BodyParser(&comment2)
+	if err != nil {
+		global.LOG.Error("获取数据失败!", zap.Error(err))
+		return response.FailWithMessage("获取数据失败", c)
+	}
+	if err = commentService.UpdateComment(&comment2); err != nil {
 		global.LOG.Error("更新失败!", zap.Error(err))
 		return response.FailWithMessage("更新失败", c)
 	} else {
@@ -129,7 +137,7 @@ func (commentApi *CommentApi) FindComment(c *fiber.Ctx) error {
 func (commentApi *CommentApi) GetCommentList(c *fiber.Ctx) error {
 	var pageInfo commentReq.CommentSearch
 	_ = c.QueryParser(&pageInfo)
-	if list, total, err := commentService.GetCommentInfoList(pageInfo); err != nil {
+	if list, total, err := commentService.GetCommentInfoList(&pageInfo); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败", c)
 	} else {
@@ -146,7 +154,7 @@ func (*CommentApi) GetCommentTreeList(c *fiber.Ctx) error {
 	var pageInfo commentReq.CommentSearch
 	_ = c.QueryParser(&pageInfo)
 
-	if list, total, err := commentService.GetCommentTreeList(pageInfo); err != nil {
+	if list, total, err := commentService.GetCommentTreeList(&pageInfo); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败", c)
 	} else {
@@ -164,10 +172,10 @@ func (*CommentApi) PutLikeItOrDislike(c *fiber.Ctx) error {
 	var likeIt comment.Praise
 	_ = c.QueryParser(&likeIt)
 
-	if praise, err := commentService.PutLikeItOrDislike(likeIt); err != nil {
+	if err := commentService.PutLikeItOrDislike(&likeIt); err != nil {
 		global.LOG.Error("点赞失败!", zap.Error(err))
 		return response.FailWithDetailed(err, "点赞失败", c)
 	} else {
-		return response.OkWithDetailed(praise, "点赞成功", c)
+		return response.OkWithDetailed(likeIt, "点赞成功", c)
 	}
 }

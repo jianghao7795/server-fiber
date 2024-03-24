@@ -13,8 +13,8 @@ type TagService struct {
 
 // CreateTag 创建Tag记录
 // Author [piexlmax](https://github.com/piexlmax)
-func (tagService *TagService) CreateTag(tag app.Tag) (err error) {
-	err = global.DB.Create(&tag).Error
+func (tagService *TagService) CreateTag(tag *app.Tag) (err error) {
+	err = global.DB.Create(tag).Error
 	return err
 }
 
@@ -34,14 +34,14 @@ func (tagService *TagService) DeleteTagByIds(ids request.IdsReq) (err error) {
 
 // UpdateTag 更新Tag记录
 // Author [piexlmax](https://github.com/piexlmax)
-func (tagService *TagService) UpdateTag(tag app.Tag) (err error) {
+func (tagService *TagService) UpdateTag(tag *app.Tag) (err error) {
 	var tagNew app.Tag
 	// var count int64
 	err = global.DB.Where("id = ?", tag.ID).First(&tagNew).Error
 	if err != nil {
 		return err
 	}
-	err = global.DB.Save(&tag).Error
+	err = global.DB.Save(tag).Error
 	return err
 }
 

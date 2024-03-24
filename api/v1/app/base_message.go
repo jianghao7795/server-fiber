@@ -20,12 +20,16 @@ var baseMessageService = service.ServiceGroupApp.AppServiceGroup.BaseMessageServ
 // CreateBaseMessage 创建base_message
 func (a *BaseMessageApi) CreateBaseMessage(c *fiber.Ctx) error {
 	var baseMessage app.BaseMessage
-	_ = c.BodyParser(&baseMessage)
-	if err := baseMessageService.CreateBaseMessage(baseMessage); err != nil {
+	err := c.BodyParser(&baseMessage)
+	if err != nil {
+		global.LOG.Error("获取数据失败!", zap.Error(err))
+		return response.FailWithMessage("获取数据失败", c)
+	}
+	if err := baseMessageService.CreateBaseMessage(&baseMessage); err != nil {
 		global.LOG.Error("创建失败!", zap.Error(err))
 		return response.FailWithMessage("创建失败", c)
 	} else {
-		return response.OkWithMessage("创建成功", c)
+		return response.OkWithId("创建成功", baseMessage.ID, c)
 	}
 }
 
@@ -37,8 +41,12 @@ func (a *BaseMessageApi) CreateBaseMessage(c *fiber.Ctx) error {
 
 func (a *BaseMessageApi) UpdateBaseMessage(c *fiber.Ctx) error {
 	var baseMessage app.BaseMessage
-	_ = c.BodyParser(&baseMessage)
-	if err := baseMessageService.UpdateBaseMessage(baseMessage); err != nil {
+	err := c.BodyParser(&baseMessage)
+	if err != nil {
+		global.LOG.Error("获取数据失败!", zap.Error(err))
+		return response.FailWithMessage("获取数据失败", c)
+	}
+	if err = baseMessageService.UpdateBaseMessage(&baseMessage); err != nil {
 		global.LOG.Error("更新失败!", zap.Error(err))
 		return response.FailWithMessage("更新失败", c)
 	} else {

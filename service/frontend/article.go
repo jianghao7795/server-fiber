@@ -129,7 +129,7 @@ func (s *FrontendArticle) GetAricleDetail(articleId int, c *fiber.Ctx) (articleD
 	// return
 }
 
-func (s *FrontendArticle) GetSearchArticle(info frontendReq.ArticleSearch) (list []frontend.Article, err error) {
+func (s *FrontendArticle) GetSearchArticle(info *frontendReq.ArticleSearch) (list []frontend.Article, err error) {
 	db := global.DB.Model(&frontend.Article{})
 	// Preload("Tags", func(dbg *gorm.DB) *gorm.DB {
 	// 	return dbg.Where("name = ?", info.Value)

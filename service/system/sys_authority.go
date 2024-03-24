@@ -183,7 +183,7 @@ func (authorityService *AuthorityService) GetAuthorityInfo(auth system.SysAuthor
 //@param: auth model.SysAuthority
 //@return: error
 
-func (authorityService *AuthorityService) SetDataAuthority(auth system.SysAuthority) error {
+func (authorityService *AuthorityService) SetDataAuthority(auth *system.SysAuthority) error {
 	var s system.SysAuthority
 	global.DB.Preload("DataAuthorityId").First(&s, "authority_id = ?", auth.AuthorityId)
 	err := global.DB.Model(&s).Association("DataAuthorityId").Replace(&auth.DataAuthorityId)

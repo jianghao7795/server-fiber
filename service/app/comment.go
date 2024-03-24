@@ -10,13 +10,12 @@ import (
 	"gorm.io/gorm"
 )
 
-type CommentService struct {
-}
+type CommentService struct{}
 
 // CreateComment 创建Comment记录
 // Author [piexlmax](https://github.com/piexlmax)
-func (commentService *CommentService) CreateComment(comment comment.Comment) (err error) {
-	err = global.DB.Create(&comment).Error
+func (commentService *CommentService) CreateComment(comment *comment.Comment) (err error) {
+	err = global.DB.Create(comment).Error
 	return err
 }
 
@@ -36,8 +35,8 @@ func (commentService *CommentService) DeleteCommentByIds(ids request.IdsReq) (er
 
 // UpdateComment 更新Comment记录
 // Author [piexlmax](https://github.com/piexlmax)
-func (commentService *CommentService) UpdateComment(comment comment.Comment) (err error) {
-	err = global.DB.Save(&comment).Error
+func (commentService *CommentService) UpdateComment(comment *comment.Comment) (err error) {
+	err = global.DB.Save(comment).Error
 	return err
 }
 
@@ -50,7 +49,7 @@ func (commentService *CommentService) GetComment(id uint) (comment comment.Comme
 
 // GetCommentInfoList 分页获取Comment记录
 // Author [piexlmax](https://github.com/piexlmax)
-func (commentService *CommentService) GetCommentInfoList(info commentReq.CommentSearch) (list []comment.Comment, total int64, err error) {
+func (commentService *CommentService) GetCommentInfoList(info *commentReq.CommentSearch) (list []comment.Comment, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	// 创建db
@@ -76,7 +75,7 @@ func (commentService *CommentService) GetCommentInfoList(info commentReq.Comment
 
 // GetCommentTreeList 分页获取Treelist
 
-func (commentService *CommentService) GetCommentTreeList(info commentReq.CommentSearch) (list []comment.Comment, total int64, err error) {
+func (commentService *CommentService) GetCommentTreeList(info *commentReq.CommentSearch) (list []comment.Comment, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	db := global.DB.Model(&comment.Comment{})
@@ -117,17 +116,17 @@ func (commentService *CommentService) findChildrenComment(comment *comment.Comme
 }
 
 // LikeIt 点赞一条记录
-func (*CommentService) PutLikeItOrDislike(info comment.Praise) (praise comment.Praise, err error) {
+func (*CommentService) PutLikeItOrDislike(info *comment.Praise) (err error) {
 	db := global.DB.Model(&comment.Praise{})
 
 	if info.ID == 0 {
 		var praise comment.Praise
 		err = db.Raw("Select id, comment_id, user_id, created_at, updated_at from praise where user_id = ? and comment_id = ? limit 1", info.UserId, info.CommentId).Scan(&praise).Error
 		if err != nil {
-			return praise, err
+			return err
 		}
 		if praise.ID == 0 {
-			err = db.Create(&info).Error
+			err = db.Create(info).Error
 		} else {
 			info.ID = praise.ID
 			info.CreatedAt = praise.CreatedAt
@@ -136,11 +135,11 @@ func (*CommentService) PutLikeItOrDislike(info comment.Praise) (praise comment.P
 
 		}
 	} else {
-		err = db.Where("id = ?", info.ID).Delete(&info).Error
+		err = db.Where("id = ?", info.ID).Delete(info).Error
 	}
 
 	// if err != nil {
 	// 	return err
 	// }
-	return info, err
+	return err
 }

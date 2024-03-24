@@ -27,15 +27,19 @@ var articleService = service.ServiceGroupApp.AppServiceGroup.ArticleService
 // @Router /Article/createArticle [post]
 func (a *ArticleApi) CreateArticle(c *fiber.Ctx) error {
 	var article app.Article
-	_ = c.BodyParser(&article)
-	if err := articleService.CreateArticle(article); err != nil {
+	err := c.BodyParser(&article)
+	if err != nil {
+		global.LOG.Error("获取数据失败!", zap.Error(err))
+		return response.FailWithMessage("获取数据失败", c)
+	}
+	if err := articleService.CreateArticle(&article); err != nil {
 		global.LOG.Error("创建失败!", zap.Error(err))
 		return response.FailWithDetailed(map[string]string{
 			"msg": err.Error(),
 		}, "创建失败", c)
 
 	}
-	return response.OkWithMessage("创建成功", c)
+	return response.OkWithId("创建成功", article.ID, c)
 }
 
 // DeleteArticle 删除Article
@@ -94,15 +98,20 @@ func (a *ArticleApi) DeleteArticleByIds(c *fiber.Ctx) error {
 // @Router /article/updateArticle/:id [put]
 func (*ArticleApi) UpdateArticle(c *fiber.Ctx) error {
 	var article app.Article
-	_ = c.BodyParser(&article)
-	id, err := c.ParamsInt("id")
+	err := c.BodyParser(&article)
+	if err != nil {
+		global.LOG.Error("获取数据失败!", zap.Error(err))
+		return response.FailWithMessage("获取数据失败", c)
+	}
+	var id int
+	id, err = c.ParamsInt("id")
 	if err != nil {
 		return response.FailWithDetailed(map[string]string{
 			"msg": err.Error(),
 		}, err.Error(), c)
 	}
 	article.ID = uint(id)
-	if err := articleService.UpdateArticle(article); err != nil {
+	if err = articleService.UpdateArticle(&article); err != nil {
 		global.LOG.Error("更新失败!", zap.Error(err))
 		return response.FailWithDetailed(map[string]string{
 			"msg": err.Error(),
