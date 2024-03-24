@@ -21,8 +21,8 @@ func (commentService *CommentService) CreateComment(comment *comment.Comment) (e
 
 // DeleteComment 删除Comment记录
 // Author [piexlmax](https://github.com/piexlmax)
-func (commentService *CommentService) DeleteComment(comment comment.Comment) (err error) {
-	err = global.DB.Delete(&comment).Error
+func (commentService *CommentService) DeleteComment(id uint) (err error) {
+	err = global.DB.Delete(&comment.Comment{}, id).Error
 	return err
 }
 

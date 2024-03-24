@@ -52,10 +52,10 @@ func (commentApi *CommentApi) CreateComment(c *fiber.Ctx) error {
 // @Router /comment/deleteComment [delete]
 func (commentApi *CommentApi) DeleteComment(c *fiber.Ctx) error {
 	var comment2 comment.Comment
-	_ = c.QueryParser(&comment2)
-	if err := commentService.DeleteComment(comment2); err != nil {
+	_ = c.BodyParser(&comment2)
+	if err := commentService.DeleteComment(comment2.ID); err != nil {
 		global.LOG.Error("删除失败!", zap.Error(err))
-		return response.FailWithMessage("删除失败", c)
+		return response.FailWithDetailed(fiber.Map{"msg": err.Error()}, "删除失败", c)
 	} else {
 		return response.OkWithMessage("删除成功", c)
 	}
@@ -72,7 +72,7 @@ func (commentApi *CommentApi) DeleteComment(c *fiber.Ctx) error {
 // @Router /comment/deleteCommentByIds [delete]
 func (commentApi *CommentApi) DeleteCommentByIds(c *fiber.Ctx) error {
 	var IDS request.IdsReq
-	_ = c.QueryParser(&IDS)
+	_ = c.BodyParser(&IDS)
 	if err := commentService.DeleteCommentByIds(IDS); err != nil {
 		global.LOG.Error("批量删除失败!", zap.Error(err))
 		return response.FailWithMessage("批量删除失败", c)

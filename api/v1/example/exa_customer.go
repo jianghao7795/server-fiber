@@ -30,11 +30,11 @@ func (e *CustomerApi) CreateExaCustomer(c *fiber.Ctx) error {
 	}
 	customer.SysUserID = utils.GetUserID(c)
 	customer.SysUserAuthorityID = utils.GetUserAuthorityId(c)
-	if err := customerService.CreateExaCustomer(customer); err != nil {
+	if err := customerService.CreateExaCustomer(&customer); err != nil {
 		global.LOG.Error("创建失败!", zap.Error(err))
 		return response.FailWithMessage("创建失败", c)
 	} else {
-		return response.OkWithMessage("创建成功", c)
+		return response.OkWithId("创建成功", customer.ID, c)
 	}
 }
 
@@ -52,7 +52,7 @@ func (e *CustomerApi) DeleteExaCustomer(c *fiber.Ctx) error {
 	if err := utils.Verify(customer.MODEL, utils.IdVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
-	if err := customerService.DeleteExaCustomer(customer); err != nil {
+	if err := customerService.DeleteExaCustomer(customer.ID); err != nil {
 		global.LOG.Error("删除失败!", zap.Error(err))
 		return response.FailWithMessage("删除失败", c)
 	} else {
@@ -122,7 +122,7 @@ func (e *CustomerApi) GetExaCustomerList(c *fiber.Ctx) error {
 	if err := utils.Verify(pageInfo, utils.PageInfoVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
-	customerList, total, err := customerService.GetCustomerInfoList(utils.GetUserAuthorityId(c), pageInfo)
+	customerList, total, err := customerService.GetCustomerInfoList(utils.GetUserAuthorityId(c), &pageInfo)
 	if err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败"+err.Error(), c)

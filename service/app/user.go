@@ -42,8 +42,8 @@ func (userService *UserService) DeleteUserByIds(ids request.IdsReq) (err error) 
 
 // UpdateUser 更新User记录
 // Author [piexlmax](https://github.com/piexlmax)
-func (userService *UserService) UpdateUser(user app.User) (err error) {
-	err = global.DB.Save(&user).Error
+func (userService *UserService) UpdateUser(user *app.User) (err error) {
+	err = global.DB.Save(user).Error
 	return err
 }
 
@@ -56,7 +56,7 @@ func (userService *UserService) GetUser(id uint) (user app.User, err error) {
 
 // GetUserInfoList 分页获取User记录
 // Author [piexlmax](https://github.com/piexlmax)
-func (userService *UserService) GetUserInfoList(info appReq.UserSearch) (list interface{}, total int64, err error) {
+func (userService *UserService) GetUserInfoList(info *appReq.UserSearch) (list interface{}, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	// 创建db

@@ -51,7 +51,6 @@ func (TagApi *TagApi) CreateTag(c *fiber.Ctx) error {
 // @Router /appTab/deleteTag [delete]
 func (TagApi *TagApi) DeleteTag(c *fiber.Ctx) error {
 	id, _ := c.ParamsInt("id")
-
 	if err := appTabService.DeleteTag(uint(id)); err != nil {
 		global.LOG.Error("删除失败!", zap.Error(err))
 		return response.FailWithMessage("删除失败", c)
@@ -71,7 +70,7 @@ func (TagApi *TagApi) DeleteTag(c *fiber.Ctx) error {
 // @Router /appTab/deleteTagByIds [delete]
 func (TagApi *TagApi) DeleteTagByIds(c *fiber.Ctx) error {
 	var IDS request.IdsReq
-	_ = c.QueryParser(&IDS)
+	_ = c.BodyParser(&IDS)
 	if err := appTabService.DeleteTagByIds(IDS); err != nil {
 		global.LOG.Error("批量删除失败!", zap.Error(err))
 		return response.FailWithMessage("批量删除失败", c)
@@ -135,7 +134,7 @@ func (TagApi *TagApi) FindTag(c *fiber.Ctx) error {
 func (TagApi *TagApi) GetTagList(c *fiber.Ctx) error {
 	var pageInfo appReq.TagSearch
 	_ = c.QueryParser(&pageInfo)
-	if list, total, err := appTabService.GetTagInfoList(pageInfo); err != nil {
+	if list, total, err := appTabService.GetTagInfoList(&pageInfo); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败", c)
 	} else {

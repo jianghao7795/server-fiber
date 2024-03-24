@@ -103,7 +103,7 @@ func (userApi *UserApi) UpdateUser(c *fiber.Ctx) error {
 		return response.FailWithMessage("获取数据失败", c)
 	}
 	user.ID = uint(id)
-	if err := userService.UpdateUser(user); err != nil {
+	if err := userService.UpdateUser(&user); err != nil {
 		global.LOG.Error("更新失败!", zap.Error(err))
 		return response.FailWithMessage("更新失败", c)
 	} else {
@@ -142,7 +142,7 @@ func (userApi *UserApi) FindUser(c *fiber.Ctx) error {
 func (userApi *UserApi) GetUserList(c *fiber.Ctx) error {
 	var pageInfo appReq.UserSearch
 	_ = c.QueryParser(&pageInfo)
-	if list, total, err := userService.GetUserInfoList(pageInfo); err != nil {
+	if list, total, err := userService.GetUserInfoList(&pageInfo); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败", c)
 	} else {

@@ -24,7 +24,7 @@ func (s *FrontendArticleApi) GetArticleList(c *fiber.Ctx) error {
 		pageInfo.PageSize = 10
 	}
 
-	if list, total, err := frontendService.FrontendArticle.GetArticleList(pageInfo, c); err != nil {
+	if list, total, err := frontendService.FrontendArticle.GetArticleList(&pageInfo, c); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败", c)
 	} else {

@@ -45,7 +45,7 @@ func (*ArticleService) GetArticle(id uint) (article app.Article, err error) {
 
 // getList
 
-func (*ArticleService) GetArticleInfoList(info appReq.ArticleSearch) (list []app.Article, total int64, err error) {
+func (*ArticleService) GetArticleInfoList(info *appReq.ArticleSearch) (list []app.Article, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	db := global.DB.Model(&app.Article{})

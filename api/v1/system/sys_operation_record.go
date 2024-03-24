@@ -105,7 +105,7 @@ func (s *OperationRecordApi) GetSysOperationRecordList(c *fiber.Ctx) error {
 	var pageInfo systemReq.SysOperationRecordSearch
 	_ = c.QueryParser(&pageInfo)
 	if pageInfo.TypePort == system.Backend {
-		if list, total, err := operationRecordService.GetSysOperationRecordInfoList(pageInfo); err != nil {
+		if list, total, err := operationRecordService.GetSysOperationRecordInfoList(&pageInfo); err != nil {
 			global.LOG.Error("获取失败!", zap.Error(err))
 			return response.FailWithMessage("获取失败", c)
 		} else {

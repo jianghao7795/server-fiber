@@ -56,7 +56,7 @@ func (u *FrontendUser) Login(data frontendRequest.LoginForm) (userInter frontend
 	return
 }
 
-func (u *FrontendUser) RegisterUser(data frontendRequest.RegisterUser) (err error) {
+func (u *FrontendUser) RegisterUser(data *frontendRequest.RegisterUser) (err error) {
 	user := app.User{
 		Name:         data.Name,
 		Introduction: data.Introduction,
@@ -65,7 +65,7 @@ func (u *FrontendUser) RegisterUser(data frontendRequest.RegisterUser) (err erro
 	}
 	// user.Password = utils.MD5V([]byte(data.Password))
 	if user.Header == "" {
-		user.Header = "uploads/file/2023/04/10/b53b3a3d6ab90ce0268229151c9bde11_162839.jpeg"
+		user.Header = "uploads/file/2023/04/10/b53b3a3d6ab90ce0268229151c9bde11_162839.jpeg" // 默认图片
 	}
 	var userLog frontend.User
 	err = global.DB.Where("name = ?", data.Name).First(&userLog).Error
@@ -94,17 +94,17 @@ func (u *FrontendUser) GetUserInfo(id uint) (frontend.User, error) {
 	return userInfo, err
 }
 
-func (u *FrontendUser) UpdateUserBackgroudImage(data frontend.User) (err error) {
+func (u *FrontendUser) UpdateUserBackgroudImage(data *frontend.User) (err error) {
 	err = global.DB.Model(&frontend.User{}).Where("id = ?", data.ID).Update("head_img", data.HeadImg).Error
 	return
 }
 
-func (u *FrontendUser) UpdateUser(data frontend.User) (err error) {
-	err = global.DB.Model(&data).Updates(map[string]interface{}{"header_img": data.HeaderImg, "introduction": data.Introduction, "content": data.Content}).Error
+func (u *FrontendUser) UpdateUser(data *frontend.User) (err error) {
+	err = global.DB.Model(data).Updates(map[string]interface{}{"header_img": data.HeaderImg, "introduction": data.Introduction, "content": data.Content}).Error
 	return
 }
 
-func (u *FrontendUser) ResetPassword(data frontend.ResetPassword) (err error) {
+func (u *FrontendUser) ResetPassword(data *frontend.ResetPassword) (err error) {
 	var userInfo frontend.User
 	err = global.DB.Where("id = ? and password = ?", data.ID, data.Password).First(&userInfo).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {

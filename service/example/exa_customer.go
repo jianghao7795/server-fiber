@@ -17,8 +17,8 @@ type CustomerService struct{}
 //@param: e model.ExaCustomer
 //@return: err error
 
-func (exa *CustomerService) CreateExaCustomer(e example.ExaCustomer) (err error) {
-	err = global.DB.Create(&e).Error
+func (exa *CustomerService) CreateExaCustomer(e *example.ExaCustomer) (err error) {
+	err = global.DB.Create(e).Error
 	return err
 }
 
@@ -28,8 +28,8 @@ func (exa *CustomerService) CreateExaCustomer(e example.ExaCustomer) (err error)
 //@param: e model.ExaCustomer
 //@return: err error
 
-func (exa *CustomerService) DeleteExaCustomer(e example.ExaCustomer) (err error) {
-	err = global.DB.Delete(&e).Error
+func (exa *CustomerService) DeleteExaCustomer(id uint) (err error) {
+	err = global.DB.Delete(&example.ExaCustomer{}, id).Error
 	return err
 }
 
@@ -61,7 +61,7 @@ func (exa *CustomerService) GetExaCustomer(id uint) (customer example.ExaCustome
 //@param: sysUserAuthorityID string, info request.PageInfo
 //@return: err error, list interface{}, total int64
 
-func (exa *CustomerService) GetCustomerInfoList(sysUserAuthorityID string, info request.SearchCustomerParams) (list interface{}, total int64, err error) {
+func (exa *CustomerService) GetCustomerInfoList(sysUserAuthorityID string, info *request.SearchCustomerParams) (list []example.ExaCustomer, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	db := global.DB.Model(&example.ExaCustomer{})

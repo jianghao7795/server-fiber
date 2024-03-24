@@ -21,7 +21,7 @@ import (
 
 type FrontendArticle struct{}
 
-func (s *FrontendArticle) GetArticleList(info frontendReq.ArticleSearch, c *fiber.Ctx) (list []frontend.Article, total int64, err error) {
+func (s *FrontendArticle) GetArticleList(info *frontendReq.ArticleSearch, c *fiber.Ctx) (list []frontend.Article, total int64, err error) {
 	var cacheTime = global.CONFIG.Cache.Time
 	var articleStr string
 	db := global.DB.Model(&frontend.Article{})

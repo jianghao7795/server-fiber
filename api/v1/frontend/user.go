@@ -119,7 +119,7 @@ func (*FrontendUser) RegisterUser(c *fiber.Ctx) error {
 		return response.FailWithMessage(err.Error(), c)
 	}
 
-	err := frontendService.RegisterUser(userInfo)
+	err := frontendService.RegisterUser(&userInfo)
 	if err != nil {
 		global.LOG.Error("注册失败!", zap.Error(err))
 		return response.FailWithDetailed(fiber.Map{}, err.Error(), c)
@@ -154,7 +154,7 @@ func (u *FrontendUser) UpdatePassword(c *fiber.Ctx) error {
 	// resetPassword.Password = utils.MD5V([]byte(resetPassword.Password))
 	// resetPassword.NewPassword = utils.MD5V([]byte(resetPassword.NewPassword))
 	// resetPassword.RepeatNewPassword = utils.MD5V([]byte(resetPassword.RepeatNewPassword))
-	if err := frontendService.ResetPassword(resetPassword); err != nil {
+	if err := frontendService.ResetPassword(&resetPassword); err != nil {
 		return response.FailWithMessage("重置密码失败："+err.Error(), c)
 	}
 
@@ -168,7 +168,7 @@ func (u *FrontendUser) UpdateUserBackgroudImage(c *fiber.Ctx) error {
 	if err != nil {
 		return response.FailWithMessage("获取数据失败", c)
 	}
-	err = frontendService.UpdateUserBackgroudImage(user)
+	err = frontendService.UpdateUserBackgroudImage(&user)
 	if err != nil {
 		return response.FailWithMessage("更新失败："+err.Error(), c)
 	}
@@ -185,7 +185,7 @@ func (u *FrontendUser) UpdateUser(c *fiber.Ctx) error {
 	if err = utils.Verify(user, utils.UpdateUserVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
-	if err = frontendService.UpdateUser(user); err != nil {
+	if err = frontendService.UpdateUser(&user); err != nil {
 		return response.FailWithDetailed(err.Error(), "更新失败", c)
 	}
 	return response.OkWithDetailed(nil, "更新成功", c)

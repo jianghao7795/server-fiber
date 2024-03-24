@@ -54,7 +54,7 @@ func (operationRecordService *OperationRecordService) GetSysOperationRecord(id u
 //@param: info systemReq.SysOperationRecordSearch
 //@return: err error, list interface{}, total int64
 
-func (operationRecordService *OperationRecordService) GetSysOperationRecordInfoList(info systemReq.SysOperationRecordSearch) (list []system.SysOperationRecord, total int64, err error) {
+func (operationRecordService *OperationRecordService) GetSysOperationRecordInfoList(info *systemReq.SysOperationRecordSearch) (list []system.SysOperationRecord, total int64, err error) {
 	// time.Sleep(3 * time.Second)
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)

@@ -119,7 +119,7 @@ func (exa *ExcelService) ImportExcel(data *example.FielUploadImport) error {
 	return global.DB.Create(data).Error
 }
 
-func (exa *ExcelService) GetFileList(pageInfo request.PageInfo) (lists []example.FielUploadImport, total int64, err error) {
+func (exa *ExcelService) GetFileList(pageInfo *request.PageInfo) (lists []example.FielUploadImport, total int64, err error) {
 	limit := pageInfo.PageSize
 	offset := pageInfo.PageSize * (pageInfo.Page - 1)
 	db := global.DB.Model(&example.FielUploadImport{})

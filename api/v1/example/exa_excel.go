@@ -145,7 +145,7 @@ func (e *ExcelApi) DownloadTemplate(c *fiber.Ctx) error {
 func (e *ExcelApi) GetFileList(c *fiber.Ctx) error {
 	var pageInfo request.PageInfo
 	_ = c.QueryParser(&pageInfo)
-	list, total, err := excelService.GetFileList(pageInfo)
+	list, total, err := excelService.GetFileList(&pageInfo)
 	if err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败", c)
