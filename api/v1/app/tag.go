@@ -96,7 +96,7 @@ func (TagApi *TagApi) UpdateTag(c *fiber.Ctx) error {
 		global.LOG.Error("获取数据失败!", zap.Error(err))
 		return response.FailWithMessage("获取数据失败", c)
 	}
-	if err = appTabService.UpdateTag(appTab); err != nil {
+	if err = appTabService.UpdateTag(&appTab); err != nil {
 		global.LOG.Error("更新失败!", zap.Error(err))
 		return response.FailWithMessage("更新失败", c)
 	} else {
