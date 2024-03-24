@@ -42,9 +42,9 @@ func (s *OperationRecordApi) CreateSysOperationRecord(c *fiber.Ctx) error {
 // @Success 200 {object} return response.Response{msg=string} "删除SysOperationRecord"
 // @Router /sysOperationRecord/deleteSysOperationRecord [delete]
 func (s *OperationRecordApi) DeleteSysOperationRecord(c *fiber.Ctx) error {
-	var sysOperationRecord system.SysOperationRecord
-	_ = c.QueryParser(&sysOperationRecord)
-	if err := operationRecordService.DeleteSysOperationRecord(sysOperationRecord); err != nil {
+	var operation system.SysOperationRecord
+	_ = c.BodyParser(&operation)
+	if err := operationRecordService.DeleteSysOperationRecord(operation.ID); err != nil {
 		global.LOG.Error("删除失败!", zap.Error(err))
 		return response.FailWithMessage("删除失败", c)
 	} else {

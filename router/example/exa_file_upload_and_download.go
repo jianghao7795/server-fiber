@@ -10,16 +10,16 @@ import (
 type FileUploadAndDownloadRouter struct{}
 
 func (e *FileUploadAndDownloadRouter) InitFileUploadAndDownloadRouter(Router fiber.Router) {
-	fileUploadAndDownloadRouter := Router.Group("fileUploadAndDownload").Use(middleware.OperationRecord)
+	fileUploadAndDownloadRouter := Router.Group("fileUploadAndDownload")
 	exaFileUploadAndDownloadApi := v1.ApiGroupApp.ExampleApiGroup.FileUploadAndDownloadApi
-	{
-		fileUploadAndDownloadRouter.Post("upload", exaFileUploadAndDownloadApi.UploadFile)                                 // 上传文件
-		fileUploadAndDownloadRouter.Get("getFileList", exaFileUploadAndDownloadApi.GetFileList)                            // 获取上传文件列表
-		fileUploadAndDownloadRouter.Delete("deleteFile/:id", exaFileUploadAndDownloadApi.DeleteFile)                       // 删除指定文件
-		fileUploadAndDownloadRouter.Put("editFileName", exaFileUploadAndDownloadApi.EditFileName)                          // 编辑文件名或者备注
-		fileUploadAndDownloadRouter.Post("breakpointContinue", exaFileUploadAndDownloadApi.BreakpointContinue)             // 断点续传
-		fileUploadAndDownloadRouter.Get("findFile", exaFileUploadAndDownloadApi.FindFile)                                  // 查询当前文件成功的切片
-		fileUploadAndDownloadRouter.Post("breakpointContinueFinish", exaFileUploadAndDownloadApi.BreakpointContinueFinish) // 切片传输完成
-		fileUploadAndDownloadRouter.Post("removeChunk", exaFileUploadAndDownloadApi.RemoveChunk)                           // 删除切片
-	}
+
+	fileUploadAndDownloadRouter.Post("upload", middleware.OperationRecord, exaFileUploadAndDownloadApi.UploadFile)                                 // 上传文件
+	fileUploadAndDownloadRouter.Get("getFileList", exaFileUploadAndDownloadApi.GetFileList)                                                        // 获取上传文件列表
+	fileUploadAndDownloadRouter.Delete("deleteFile/:id", middleware.OperationRecord, exaFileUploadAndDownloadApi.DeleteFile)                       // 删除指定文件
+	fileUploadAndDownloadRouter.Put("editFileName", middleware.OperationRecord, exaFileUploadAndDownloadApi.EditFileName)                          // 编辑文件名或者备注
+	fileUploadAndDownloadRouter.Post("breakpointContinue", middleware.OperationRecord, exaFileUploadAndDownloadApi.BreakpointContinue)             // 断点续传
+	fileUploadAndDownloadRouter.Get("findFile", middleware.OperationRecord, exaFileUploadAndDownloadApi.FindFile)                                  // 查询当前文件成功的切片
+	fileUploadAndDownloadRouter.Post("breakpointContinueFinish", middleware.OperationRecord, exaFileUploadAndDownloadApi.BreakpointContinueFinish) // 切片传输完成
+	fileUploadAndDownloadRouter.Post("removeChunk", middleware.OperationRecord, exaFileUploadAndDownloadApi.RemoveChunk)                           // 删除切片
+
 }

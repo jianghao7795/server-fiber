@@ -1,7 +1,6 @@
 package router
 
 import (
-	"server-fiber/middleware"
 	"server-fiber/plugin/email/api"
 
 	"github.com/gofiber/fiber/v2"
@@ -10,7 +9,7 @@ import (
 type EmailRouter struct{}
 
 func (s *EmailRouter) InitEmailRouter(Router fiber.Router) {
-	emailRouter := Router.Use(middleware.OperationRecord)
+	emailRouter := Router
 	EmailApi := api.ApiGroupApp.EmailApi.EmailTest
 	SendEmail := api.ApiGroupApp.EmailApi.SendEmail
 	{

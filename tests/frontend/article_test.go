@@ -6,7 +6,7 @@ import (
 
 func TestArtcile(t *testing.T) {
 	// articleServer := api.ApiGroupApp.FrontendApiGroup.FrontendArticleApi
-	if false {
+	if true {
 		t.Error("error")
 	}
 }

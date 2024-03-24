@@ -10,16 +10,14 @@ import (
 type CustomerRouter struct{}
 
 func (e *CustomerRouter) InitCustomerRouter(Router fiber.Router) {
-	customerRouter := Router.Group("customer").Use(middleware.OperationRecord)
-	customerRouterWithoutRecord := Router.Group("customer")
+	customerRouter := Router.Group("customer")
 	exaCustomerApi := v1.ApiGroupApp.ExampleApiGroup.CustomerApi
-	{
-		customerRouter.Post("customer", exaCustomerApi.CreateExaCustomer)   // 创建客户
-		customerRouter.Put("customer", exaCustomerApi.UpdateExaCustomer)    // 更新客户
-		customerRouter.Delete("customer", exaCustomerApi.DeleteExaCustomer) // 删除客户
-	}
-	{
-		customerRouterWithoutRecord.Get("customer", exaCustomerApi.GetExaCustomer)         // 获取单一客户信息
-		customerRouterWithoutRecord.Get("customerList", exaCustomerApi.GetExaCustomerList) // 获取客户列表
-	}
+
+	customerRouter.Post("customer", middleware.OperationRecord, exaCustomerApi.CreateExaCustomer)   // 创建客户
+	customerRouter.Put("customer", middleware.OperationRecord, exaCustomerApi.UpdateExaCustomer)    // 更新客户
+	customerRouter.Delete("customer", middleware.OperationRecord, exaCustomerApi.DeleteExaCustomer) // 删除客户
+
+	customerRouter.Get("customer", exaCustomerApi.GetExaCustomer)         // 获取单一客户信息
+	customerRouter.Get("customerList", exaCustomerApi.GetExaCustomerList) // 获取客户列表
+
 }

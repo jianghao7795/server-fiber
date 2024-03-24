@@ -18,16 +18,14 @@ type BaseMessageRouter struct{}
 
 // InitArticleRouter 初始化 base_message 路由信息
 func (r *BaseMessageRouter) InitBaseMessageRouter(c fiber.Router) {
-	baseMessageRouter := c.Group("base_message").Use(middleware.OperationRecord)
-	baseMessageRouterWithoutRecord := c.Group("base_message")
+	baseMessageRouter := c.Group("base_message")
 	var baseMessageApi = v1.ApiGroupApp.AppApiGroup.BaseMessageApi
 	var uploadFileApi = v1.ApiGroupApp.AppApiGroup.FileUploadAndDownloadApi
-	{
-		baseMessageRouter.Post("createBaseMessage", baseMessageApi.CreateBaseMessage)
-		baseMessageRouter.Put("updateBaseMessage", baseMessageApi.UpdateBaseMessage)
-		baseMessageRouter.Post("upload_file", uploadFileApi.UploadFile)
-	}
-	{
-		baseMessageRouterWithoutRecord.Get("getBaseMessage/:id", baseMessageApi.FindBaseMessage)
-	}
+
+	baseMessageRouter.Post("createBaseMessage", middleware.OperationRecord, baseMessageApi.CreateBaseMessage)
+	baseMessageRouter.Put("updateBaseMessage", middleware.OperationRecord, baseMessageApi.UpdateBaseMessage)
+	baseMessageRouter.Post("upload_file", middleware.OperationRecord, uploadFileApi.UploadFile)
+
+	baseMessageRouter.Get("getBaseMessage/:id", baseMessageApi.FindBaseMessage)
+
 }

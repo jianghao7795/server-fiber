@@ -34,8 +34,8 @@ func (operationRecordService *OperationRecordService) DeleteSysOperationRecordBy
 //@param: sysOperationRecord model.SysOperationRecord
 //@return: err error
 
-func (operationRecordService *OperationRecordService) DeleteSysOperationRecord(sysOperationRecord system.SysOperationRecord) (err error) {
-	err = global.DB.Delete(&sysOperationRecord).Error
+func (operationRecordService *OperationRecordService) DeleteSysOperationRecord(id uint) (err error) {
+	err = global.DB.Delete(&system.SysOperationRecord{}, id).Error
 	return err
 }
 
