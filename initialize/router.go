@@ -45,7 +45,7 @@ func Routers() *fiber.App {
 		MaxAge:        3600,
 	}) // 本地的mobile文件路由转化
 	app.Static("/backend/form-generator", "resource/page")
-	app.Static("/form-generator", "./resource/page")
+	// app.Static("/form-generator", "./resource/page") // 生成form组件的js代码
 	// Router.Use(middleware.Cors())        // 直接放行全部跨域请求
 	app.Use(middleware.CorsByRules) // 按照配置的规则放行跨域请求
 	{
