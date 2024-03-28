@@ -8,7 +8,6 @@ import (
 	"server-fiber/global"
 	"server-fiber/initialize"
 	"server-fiber/service/system"
-	utilsInit "server-fiber/utils"
 
 	"go.uber.org/zap"
 )
@@ -34,10 +33,10 @@ func RunServer() {
 		os.Exit(1)
 	}
 	initialize.Tasks() //定时 执行任务
-	err = utilsInit.TransInit("zh")
-	if err != nil {
-		global.LOG.Error("翻译错误：" + err.Error())
-	}
+	// err = utilsInit.TransInit("zh")
+	// if err != nil {
+	// 	global.LOG.Error("翻译错误：" + err.Error())
+	// }
 	if global.DB != nil {
 		system.LoadAll() // 加载所有的 拉黑的jwt数据 避免盗用jwt
 		// initialize.RegisterTables(global.DB) // 初始化表

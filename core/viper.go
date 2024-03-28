@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"time"
 
+	json "github.com/bytedance/sonic"
 	"github.com/fsnotify/fsnotify"
 	"github.com/gofiber/fiber/v2"
 	jwt "github.com/golang-jwt/jwt/v5" // jwt
@@ -87,16 +88,20 @@ func viperInit(path ...string) (*viper.Viper, error) {
 	global.BlackCache = local_cache.NewCache(
 		local_cache.SetDefaultExpire(time.Second * time.Duration(global.CONFIG.JWT.ExpiresTime)),
 	)
-	global.CONFIG.FiberConfig.ErrorHandler = func(ctx *fiber.Ctx, err error) error {
-		// 状态代码默认为500
-		code := fiber.StatusInternalServerError
+	{ // fiber 配置
+		global.CONFIG.FiberConfig.ErrorHandler = func(ctx *fiber.Ctx, err error) error {
+			// 状态代码默认为500
+			code := fiber.StatusInternalServerError
 
-		// 如果是fiber.*Error，则检索自定义状态代码。
-		if e, ok := err.(*fiber.Error); ok {
-			code = e.Code
+			// 如果是fiber.*Error，则检索自定义状态代码。
+			if e, ok := err.(*fiber.Error); ok {
+				code = e.Code
+			}
+
+			return ctx.Status(code).JSON(fiber.Map{"msg": "服务器错误，请稍后处理"})
 		}
-
-		return ctx.Status(code).JSON(fiber.Map{"msg": "服务器错误，请稍后处理"})
+		global.CONFIG.FiberConfig.JSONEncoder = json.Marshal   // 自定义JSON编码器/解码器
+		global.CONFIG.FiberConfig.JSONDecoder = json.Unmarshal // 自定义JSON编码器/解码器
 	}
 	return v, nil
 }

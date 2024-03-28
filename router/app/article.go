@@ -14,11 +14,11 @@ func (s *ArticltRouter) InitArticleRouter(Router fiber.Router) {
 	var articleApi = v1.ApiGroupApp.AppApiGroup.ArticleApi
 	articleRouter := Router.Group("article")
 
-	articleRouter.Post("createArticle", middleware.OperationRecord, articleApi.CreateArticle)             // 新建article
-	articleRouter.Delete("deleteArticle/:id", middleware.OperationRecord, articleApi.DeleteArticle)       // 删除article
-	articleRouter.Delete("deleteArticleByIds", middleware.OperationRecord, articleApi.DeleteArticleByIds) // 批量删除article
-	articleRouter.Put("updateArticle/:id", middleware.OperationRecord, articleApi.UpdateArticle)          // 更新article
-	articleRouter.Put("PutArticleByIds", middleware.OperationRecord, articleApi.PutArticleByIds)          // 批量更新 是否首页显示article
+	articleRouter.Post("createArticle", middleware.OperationRecord, articleApi.CreateArticle).Name("createArticle") // 新建article
+	articleRouter.Delete("deleteArticle/:id", middleware.OperationRecord, articleApi.DeleteArticle)                 // 删除article
+	articleRouter.Delete("deleteArticleByIds", middleware.OperationRecord, articleApi.DeleteArticleByIds)           // 批量删除article
+	articleRouter.Put("updateArticle/:id", middleware.OperationRecord, articleApi.UpdateArticle)                    // 更新article
+	articleRouter.Put("PutArticleByIds", middleware.OperationRecord, articleApi.PutArticleByIds)                    // 批量更新 是否首页显示article
 
 	articleRouter.Get("findArticle/:id", articleApi.FindArticle)         // 根据ID获取article
 	articleRouter.Get("getArticleList", articleApi.GetArticleList)       // 获取article列表
