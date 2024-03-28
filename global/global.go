@@ -31,7 +31,7 @@ var (
 	Validate   ut.Translator
 	// 缓存
 	// Cache config.Cache
-	// Logger *slog.Logger // 用处 打印log
+	// Logger log.AllLogger // 用处 打印log
 )
 
 // GetGlobalDBByDBName 通过名称获取db list中的db

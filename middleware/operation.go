@@ -97,7 +97,7 @@ func OperationRecord(c *fiber.Ctx) error {
 			global.LOG.Error("create operation record error:", zap.Error(err))
 		}
 	}()
-	return nil
+	return err
 }
 
 // func OperationRecordFrontend(c *fiber.Ctx) error {

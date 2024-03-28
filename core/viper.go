@@ -7,20 +7,18 @@ import (
 	"path/filepath"
 	"time"
 
+	"github.com/fsnotify/fsnotify"
 	"github.com/gofiber/fiber/v2"
-	jwt "github.com/golang-jwt/jwt/v5"
+	jwt "github.com/golang-jwt/jwt/v5" // jwt
 	"github.com/songzhibin97/gkit/cache/local_cache"
+	"github.com/spf13/viper" // viper配置文件读取
 
 	"server-fiber/global"
-	// _ "server-fiber/packfile"
 	"server-fiber/utils"
-
-	"github.com/fsnotify/fsnotify"
-	"github.com/spf13/viper" // 配置文件读取
 )
 
 // 读取配置 配置文件config.yaml
-func Viper(path ...string) (*viper.Viper, error) {
+func viperInit(path ...string) (*viper.Viper, error) {
 	var config string
 	if len(path) == 0 {
 		flag.StringVar(&config, "c", "", "choose config file.")
@@ -100,7 +98,6 @@ func Viper(path ...string) (*viper.Viper, error) {
 
 		return ctx.Status(code).JSON(fiber.Map{"msg": "服务器错误，请稍后处理"})
 	}
-
 	return v, nil
 }
 

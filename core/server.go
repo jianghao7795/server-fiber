@@ -3,6 +3,7 @@ package core
 import (
 	"fmt"
 	"log"
+	"os"
 
 	"server-fiber/global"
 	"server-fiber/initialize"
@@ -14,12 +15,12 @@ import (
 
 func RunServer() {
 	var err error
-	global.VIP, err = Viper() // 初始化Viper 配置
+	global.VIP, err = viperInit() // 初始化Viper 配置
 	if err != nil {
 		log.Println("配置错误：", err.Error())
-		return
+		os.Exit(1)
 	}
-	global.LOG = Zap() // 初始化zap日志库
+	global.LOG = zapInit() // 初始化zap日志库
 	// global.Logger = core.InitLogger() // 初始化 log 让log标准输出
 	zap.ReplaceGlobals(global.LOG) // 部署到全局
 	// log.Println("fiberconfig: ", global.CONFIG.FiberConfig.AppName)
@@ -30,6 +31,7 @@ func RunServer() {
 		global.LOG.Info("Database connection success", zap.String("port", global.CONFIG.Mysql.Port))
 	} else {
 		global.LOG.Error("The database connection failed: " + err.Error())
+		os.Exit(1)
 	}
 	initialize.Tasks() //定时 执行任务
 	err = utilsInit.TransInit("zh")
@@ -47,11 +49,12 @@ func RunServer() {
 		err = initialize.Redis()
 		if err != nil {
 			global.LOG.Error("Redis init failed: " + err.Error())
+			os.Exit(1)
 		}
 	}
-	Router := initialize.Routers()
+	router := initialize.Routers()
 	address := fmt.Sprintf(":%d", global.CONFIG.System.Addr)
 	global.LOG.Info("server run success on ", zap.String("address", address))
 	fmt.Println(`Welcome to Fiber API`)
-	global.LOG.Error(Router.Listen(address).Error())
+	global.LOG.Error(router.Listen(address).Error())
 }
