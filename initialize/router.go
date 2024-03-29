@@ -16,11 +16,19 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/logger"
 )
 
+func done(c *fiber.Ctx, logString []byte) {
+	if c.Response().StatusCode() != fiber.StatusOK {
+		global.LOG.Error(string(logString))
+	}
+}
+
 // 初始化总路由
 
 func Routers() *fiber.App {
 	app := fiber.New(global.CONFIG.FiberConfig)
-	app.Use(logger.New()) // 开启log 日志
+	app.Use(logger.New(logger.Config{
+		Done: done,
+	})) // 开启log 日志
 	appRouter := router.RouterGroupApp.App
 	systemRouter := router.RouterGroupApp.System
 	exampleRouter := router.RouterGroupApp.Example
