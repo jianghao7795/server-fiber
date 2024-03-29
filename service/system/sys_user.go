@@ -185,7 +185,7 @@ func (userService *UserService) GetUserInfo(uuid uuid.UUID) (user system.SysUser
 	return reqUser, err
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
+//@author: wuhao
 //@function: FindUserById
 //@description: 通过id获取用户信息
 //@param: id int
@@ -197,7 +197,7 @@ func (userService *UserService) FindUserById(id int) (user *system.SysUser, err 
 	return &u, err
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
+//@author: wuhao
 //@function: FindUserByUuid
 //@description: 通过uuid获取用户信息
 //@param: uuid string

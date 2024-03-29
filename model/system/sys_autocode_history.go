@@ -23,7 +23,7 @@ type SysAutoCodeHistory struct {
 }
 
 // ToRequestIds ApiIDs 转换 request.IdsReq
-// Author [SliverHorn](https://github.com/SliverHorn)
+// Author wuhao
 func (m *SysAutoCodeHistory) ToRequestIds() request.IdsReq {
 	if m.ApiIDs == "" {
 		return request.IdsReq{}

@@ -87,7 +87,7 @@ func (dictionaryService *DictionaryService) GetSysDictionary(Type string, Id uin
 }
 
 //
-//@author: [SliverHorn](https://github.com/SliverHorn)
+//@author: wuhao
 //@function: GetSysDictionaryInfoList
 //@description: 分页获取字典列表
 //@param: info request.SysDictionarySearch

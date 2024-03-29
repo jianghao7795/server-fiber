@@ -13,42 +13,42 @@ import (
 type CommentService struct{}
 
 // CreateComment 创建Comment记录
-// Author [piexlmax](https://github.com/piexlmax)
+// Author wuhao
 func (commentService *CommentService) CreateComment(comment *comment.Comment) (err error) {
 	err = global.DB.Create(comment).Error
 	return err
 }
 
 // DeleteComment 删除Comment记录
-// Author [piexlmax](https://github.com/piexlmax)
+// Author wuhao
 func (commentService *CommentService) DeleteComment(id uint) (err error) {
 	err = global.DB.Delete(&comment.Comment{}, id).Error
 	return err
 }
 
 // DeleteCommentByIds 批量删除Comment记录
-// Author [piexlmax](https://github.com/piexlmax)
+// Author wuhao
 func (commentService *CommentService) DeleteCommentByIds(ids request.IdsReq) (err error) {
 	err = global.DB.Delete(&[]comment.Comment{}, "id in ?", ids.Ids).Error
 	return err
 }
 
 // UpdateComment 更新Comment记录
-// Author [piexlmax](https://github.com/piexlmax)
+// Author wuhao
 func (commentService *CommentService) UpdateComment(comment *comment.Comment) (err error) {
 	err = global.DB.Save(comment).Error
 	return err
 }
 
 // GetComment 根据id获取Comment记录
-// Author [piexlmax](https://github.com/piexlmax)
+// Author wuhao
 func (commentService *CommentService) GetComment(id uint) (comment comment.Comment, err error) {
 	err = global.DB.Preload("Article").Where("id = ?", id).First(&comment).Error
 	return
 }
 
 // GetCommentInfoList 分页获取Comment记录
-// Author [piexlmax](https://github.com/piexlmax)
+// Author wuhao
 func (commentService *CommentService) GetCommentInfoList(info *commentReq.CommentSearch) (list []comment.Comment, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)

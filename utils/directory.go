@@ -9,7 +9,7 @@ import (
 	"go.uber.org/zap"
 )
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//@author: wuhao
 //@function: PathExists
 //@description: 文件目录是否存在
 //@param: path string
@@ -29,7 +29,7 @@ func PathExists(path string) (bool, error) {
 	return false, err
 }
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//@author: wuhao
 //@function: CreateDir
 //@description: 批量创建文件夹
 //@param: dirs ...string

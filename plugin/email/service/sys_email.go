@@ -6,7 +6,7 @@ import (
 
 type EmailService struct{}
 
-//@author: [maplepie](https://github.com/maplepie)
+//@author: wuhao
 //@function: EmailTest
 //@description: 发送邮件测试
 //@return: err error
@@ -18,7 +18,7 @@ func (e *EmailService) EmailTest() (err error) {
 	return err
 }
 
-//@author: [maplepie](https://github.com/maplepie)
+//@author: wuhao
 //@function: EmailTest
 //@description: 发送邮件测试
 //@return: err error

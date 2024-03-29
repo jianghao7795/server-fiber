@@ -12,5 +12,5 @@ type SysGithub struct {
 }
 
 func (SysGithub) TableName() string {
-	return "github"
+	return "githubs"
 }

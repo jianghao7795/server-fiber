@@ -15,8 +15,7 @@ var AutoCodePgsql = new(autoCodePgsql)
 type autoCodePgsql struct{}
 
 // GetDB 获取数据库的所有数据库名
-// Author
-// Author [SliverHorn](https://github.com/SliverHorn)
+// Author wuhao
 func (a *autoCodePgsql) GetDB() (data []response.Db, err error) {
 	var entities []response.Db
 	sql := `SELECT datname as database FROM pg_database WHERE datistemplate = false`
@@ -25,8 +24,7 @@ func (a *autoCodePgsql) GetDB() (data []response.Db, err error) {
 }
 
 // GetTables 获取数据库的所有表名
-// Author
-// Author [SliverHorn](https://github.com/SliverHorn)
+// Author wuhao
 func (a *autoCodePgsql) GetTables(dbName string) (data []response.Table, err error) {
 	var entities []response.Table
 	sql := `select table_name as table_name from information_schema.tables where table_catalog = ? and table_schema = ?`
@@ -39,8 +37,7 @@ func (a *autoCodePgsql) GetTables(dbName string) (data []response.Table, err err
 }
 
 // GetColumn 获取指定数据库和指定数据表的所有字段名,类型值等
-// Author
-// Author [SliverHorn](https://github.com/SliverHorn)
+// Author wuhao
 func (a *autoCodePgsql) GetColumn(tableName string, dbName string) (data []response.Column, err error) {
 	// todo 数据获取不全, 待完善sql
 	sql := `

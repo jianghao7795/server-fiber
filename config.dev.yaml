@@ -144,15 +144,15 @@ tencent-cos:
   base-url: http://localhost:8080
   path-prefix: server
 timer:
-  start: false
+  start: true
   spec: "@monthly"
-  detail:
-    - tableName: sys_operation_records
-      compareField: created_at
-      interval: 2160h
-    - tableName: jwt_blacklists
-      compareField: created_at
-      interval: 2160h
+  # detail:
+  #   - tableName: sys_operation_records
+  #     compareField: created_at
+  #     interval: 2160h
+  #   - tableName: jwt_blacklists
+  #     compareField: created_at
+  #     interval: 2160h
   tasks:
     - taskName: server1
       output: server run

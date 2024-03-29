@@ -139,7 +139,7 @@ type AutoCodeService struct{}
 
 var AutoCodeServiceApp = new(AutoCodeService)
 
-//@author: [songzhibin97](https://github.com/songzhibin97)
+//@author: wuhao
 //@function: PreviewTemp
 //@description: 预览创建代码
 //@param: model.AutoCodeStruct
@@ -218,7 +218,7 @@ func makeDictTypes(autoCode *system.AutoCodeStruct) {
 	}
 }
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//@author: wuhao
 //@function: CreateTemp
 //@description: 创建代码
 //@param: model.AutoCodeStruct
@@ -339,7 +339,7 @@ func (autoCodeService *AutoCodeService) CreateTemp(autoCode system.AutoCodeStruc
 	return nil
 }
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//@author: wuhao
 //@function: GetAllTplFile
 //@description: 获取 pathName 文件夹下所有 tpl 文件
 //@param: pathName string, fileList []string
@@ -362,7 +362,7 @@ func (autoCodeService *AutoCodeService) GetAllTplFile(pathName string, fileList 
 	return fileList, err
 }
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//@author: wuhao
 //@function: GetDB
 //@description: 获取指定数据库和指定数据表的所有字段名,类型值等
 //@param: tableName string, dbName string
@@ -372,8 +372,7 @@ func (autoCodeService *AutoCodeService) DropTable(tableName string) error {
 	return global.DB.Exec("DROP TABLE " + tableName).Error
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@author: [songzhibin97](https://github.com/songzhibin97)
+//@author: wuhao
 //@function: addAutoMoveFile
 //@description: 生成对应的迁移文件路径
 //@param: *tplData
@@ -417,8 +416,8 @@ func (autoCodeService *AutoCodeService) addAutoMoveFile(data *tplData) {
 	}
 }
 
-//@author: [piexlmax](https://github.com/piexlmax)
-//@author: [SliverHorn](https://github.com/SliverHorn)
+//@author: wuhao
+//@author: wuhao
 //@function: CreateApi
 //@description: 自动创建api数据,
 //@param: a *model.AutoCodeStruct

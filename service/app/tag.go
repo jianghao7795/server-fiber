@@ -12,28 +12,28 @@ type TagService struct {
 }
 
 // CreateTag 创建Tag记录
-// Author [piexlmax](https://github.com/piexlmax)
+// Author wuhao
 func (tagService *TagService) CreateTag(tag *app.Tag) (err error) {
 	err = global.DB.Create(tag).Error
 	return err
 }
 
 // DeleteTag 删除Tag记录
-// Author [piexlmax](https://github.com/piexlmax)
+// Author wuhao
 func (tagService *TagService) DeleteTag(id uint) (err error) {
 	err = global.DB.Delete(&app.Tag{}, id).Error
 	return err
 }
 
 // DeleteTagByIds 批量删除Tag记录
-// Author [piexlmax](https://github.com/piexlmax)
+// Author wuhao
 func (tagService *TagService) DeleteTagByIds(ids request.IdsReq) (err error) {
 	err = global.DB.Delete(&[]app.Tag{}, "id in ?", ids.Ids).Error
 	return err
 }
 
 // UpdateTag 更新Tag记录
-// Author [piexlmax](https://github.com/piexlmax)
+// Author wuhao
 func (tagService *TagService) UpdateTag(tag *app.Tag) (err error) {
 	var tagNew app.Tag
 	// var count int64
@@ -46,14 +46,14 @@ func (tagService *TagService) UpdateTag(tag *app.Tag) (err error) {
 }
 
 // GetTag 根据id获取Tag记录
-// Author [piexlmax](https://github.com/piexlmax)
+// Author wuhao
 func (tagService *TagService) GetTag(id uint) (tag app.Tag, err error) {
 	err = global.DB.Where("id = ?", id).First(&tag).Error
 	return
 }
 
 // GetTagInfoList 分页获取Tag记录
-// Author [piexlmax](https://github.com/piexlmax)
+// Author wuhao
 func (tagService *TagService) GetTagInfoList(info *appReq.TagSearch) (list []app.Tag, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)

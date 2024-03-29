@@ -17,7 +17,7 @@ import (
 
 type FileUploadService struct{}
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//@author: wuhao
 //@function: UploadFile
 //@description: 根据配置文件判断是文件上传到本地或者七牛云
 //@param: header *multipart.FileHeader, noSave string
@@ -42,7 +42,7 @@ func (e *FileUploadService) UploadFile(header *multipart.FileHeader, noSave stri
 	return
 }
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//@author: wuhao
 //@function: Upload
 //@description: 创建文件上传记录
 //@param: file model.ExaFileUploadAndDownload

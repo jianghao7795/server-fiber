@@ -40,7 +40,7 @@ func (i *InitDB) PgsqlEmptyDsn() string {
 }
 
 // ToMysqlConfig 转换 config.Mysql
-// Author [SliverHorn](https://github.com/SliverHorn)
+// Author wuhao
 func (i *InitDB) ToMysqlConfig() config.Mysql {
 	return config.Mysql{
 		Path:         i.Host,
@@ -56,7 +56,7 @@ func (i *InitDB) ToMysqlConfig() config.Mysql {
 }
 
 // ToPgsqlConfig 转换 config.Pgsql
-// Author [SliverHorn](https://github.com/SliverHorn)
+// Author wuhao
 func (i *InitDB) ToPgsqlConfig() config.Pgsql {
 	return config.Pgsql{
 		Path:         i.Host,

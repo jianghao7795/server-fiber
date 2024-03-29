@@ -13,13 +13,13 @@ type writer struct {
 }
 
 // NewWriter writer 构造函数
-// Author [SliverHorn](https://github.com/SliverHorn)
+// Author wuhao
 func NewWriter(w logger.Writer) *writer {
 	return &writer{Writer: w}
 }
 
 // Printf 格式化打印日志
-// Author [SliverHorn](https://github.com/SliverHorn)
+// Author wuhao
 func (w *writer) Printf(message string, data ...interface{}) {
 	var logZap bool
 	switch global.CONFIG.System.DbType {
