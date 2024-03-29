@@ -22,83 +22,6 @@ type SystemGithubApi struct{}
 
 var githubService = service.ServiceGroupApp.SystemServiceGroup.GithubService
 
-type GithubCommit struct {
-	URL         string `json:"url"`
-	Sha         string `json:"sha"`
-	NodeID      string `json:"node_id"`
-	HTMLURL     string `json:"html_url"`
-	CommentsURL string `json:"comments_url"`
-	Commit      struct {
-		URL    string `json:"url"`
-		Author struct {
-			Name  string    `json:"name"`
-			Email string    `json:"email"`
-			Date  time.Time `json:"date"`
-		} `json:"author"`
-		Committer struct {
-			Name  string    `json:"name"`
-			Email string    `json:"email"`
-			Date  time.Time `json:"date"`
-		} `json:"committer"`
-		Message string `json:"message"`
-		Tree    struct {
-			URL string `json:"url"`
-			Sha string `json:"sha"`
-		} `json:"tree"`
-		CommentCount int `json:"comment_count"`
-		Verification struct {
-			Verified  bool        `json:"verified"`
-			Reason    string      `json:"reason"`
-			Signature interface{} `json:"signature"`
-			Payload   interface{} `json:"payload"`
-		} `json:"verification"`
-	} `json:"commit"`
-	Author struct {
-		Login             string `json:"login"`
-		ID                int    `json:"id"`
-		NodeID            string `json:"node_id"`
-		AvatarURL         string `json:"avatar_url"`
-		GravatarID        string `json:"gravatar_id"`
-		URL               string `json:"url"`
-		HTMLURL           string `json:"html_url"`
-		FollowersURL      string `json:"followers_url"`
-		FollowingURL      string `json:"following_url"`
-		GistsURL          string `json:"gists_url"`
-		StarredURL        string `json:"starred_url"`
-		SubscriptionsURL  string `json:"subscriptions_url"`
-		OrganizationsURL  string `json:"organizations_url"`
-		ReposURL          string `json:"repos_url"`
-		EventsURL         string `json:"events_url"`
-		ReceivedEventsURL string `json:"received_events_url"`
-		Type              string `json:"type"`
-		SiteAdmin         bool   `json:"site_admin"`
-	} `json:"author"`
-	Committer struct {
-		Login             string `json:"login"`
-		ID                int    `json:"id"`
-		NodeID            string `json:"node_id"`
-		AvatarURL         string `json:"avatar_url"`
-		GravatarID        string `json:"gravatar_id"`
-		URL               string `json:"url"`
-		HTMLURL           string `json:"html_url"`
-		FollowersURL      string `json:"followers_url"`
-		FollowingURL      string `json:"following_url"`
-		GistsURL          string `json:"gists_url"`
-		StarredURL        string `json:"starred_url"`
-		SubscriptionsURL  string `json:"subscriptions_url"`
-		OrganizationsURL  string `json:"organizations_url"`
-		ReposURL          string `json:"repos_url"`
-		EventsURL         string `json:"events_url"`
-		ReceivedEventsURL string `json:"received_events_url"`
-		Type              string `json:"type"`
-		SiteAdmin         bool   `json:"site_admin"`
-	} `json:"committer"`
-	Parents []struct {
-		URL string `json:"url"`
-		Sha string `json:"sha"`
-	} `json:"parents"`
-}
-
 func (g *SystemGithubApi) GetGithubList(c *fiber.Ctx) error {
 	var searchInfo request.PageInfo
 	page := c.Query("page", "1")
@@ -136,7 +59,7 @@ func (g *SystemGithubApi) CreateGithub(c *fiber.Ctx) error {
 	}
 	body, _ := io.ReadAll(resp.Body)
 	// respData := new([]GithubCommit)
-	var respData []GithubCommit
+	var respData []system.GithubCommit
 	json.Unmarshal(body, &respData)
 	time.LoadLocation("Asia/Shanghai")
 	for _, val := range respData {
@@ -146,7 +69,7 @@ func (g *SystemGithubApi) CreateGithub(c *fiber.Ctx) error {
 		temp.Message = val.Commit.Message
 		data = append(data, temp)
 	}
-	if total, err := githubService.CreateApi(data); err != nil {
+	if total, err := githubService.CreateApi(&data); err != nil {
 		global.LOG.Error("创建commit有错误!", zap.Error(err))
 		return response.FailWithMessage("创建commit有错误!", c)
 	} else {

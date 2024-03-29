@@ -10,10 +10,10 @@ import (
 
 type GithubService struct{}
 
-func (g *GithubService) CreateApi(github []system.SysGithub) (total int, err error) {
+func (g *GithubService) CreateApi(github *[]system.SysGithub) (total int, err error) {
 	db := global.DB.Model(&system.SysGithub{})
 	var data []system.SysGithub
-	for _, item := range github {
+	for _, item := range *github {
 		if item.CommitTime != "" {
 			db = db.Or("commit_time = ?", item.CommitTime)
 		}
@@ -21,7 +21,7 @@ func (g *GithubService) CreateApi(github []system.SysGithub) (total int, err err
 	db.Order("id desc").Find(&data)
 	dataInsert := []system.SysGithub{}
 	var isExist = true
-	for _, item := range github {
+	for _, item := range *github {
 		for _, itemGithub := range data {
 			if itemGithub.CommitTime == item.CommitTime {
 				isExist = false

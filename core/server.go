@@ -32,7 +32,7 @@ func RunServer() {
 		global.LOG.Error("The database connection failed: " + err.Error())
 		os.Exit(1)
 	}
-	initialize.Tasks() //定时 执行任务
+	initialize.Timer() //定时 执行任务
 	// err = utilsInit.TransInit("zh")
 	// if err != nil {
 	// 	global.LOG.Error("翻译错误：" + err.Error())
