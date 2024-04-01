@@ -62,21 +62,38 @@ func UpdateTable(db *gorm.DB, tableName string, compareField string, interval st
 	}()
 	if err != nil {
 		global.LOG.Error("请求Commit错误", zap.Error(err))
+		return err
 	}
 
-	body, _ := io.ReadAll(resp.Body)
-	// respData := new([]GithubCommit)
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		global.LOG.Error("转化失败：", zap.Error(err))
+		return err
+	}
 	var respData []system.GithubCommit
 	json.Unmarshal(body, &respData)
 	time.LoadLocation("Asia/Shanghai")
-
+	db = db.Model(&system.SysGithub{})
+	var lastGithub system.SysGithub
+	db.Order("id desc").First(&lastGithub)
 	for _, val := range respData {
 		var temp system.SysGithub
-		temp.Author = val.Commit.Author.Name
+		if val.Commit.Author.Name == "" {
+			break
+		}
 		temp.CommitTime = val.Commit.Author.Date.Add(8 * time.Hour).Format("2006-01-02 15:04:05")
-		temp.Message = val.Commit.Message
-		data = append(data, temp)
+		tCurrent, _ := time.Parse("2006-01-02 15:04:05", temp.CommitTime)
+		tRecord, _ := time.Parse("2006-01-02 15:04:05", lastGithub.CommitTime)
+		if tCurrent.After(tRecord) {
+			temp.Author = val.Commit.Author.Name
+			temp.Message = val.Commit.Message
+			data = append(data, temp)
+		}
+
+	}
+	if len(data) > 0 {
+		return db.Create(&data).Error
 	}
 
-	return db.Model(&system.SysGithub{}).Create(&data).Error
+	return nil
 }
