@@ -122,9 +122,9 @@ func (*FrontendUser) RegisterUser(c *fiber.Ctx) error {
 	err := frontendService.RegisterUser(&userInfo)
 	if err != nil {
 		global.LOG.Error("注册失败!", zap.Error(err))
-		return response.FailWithDetailed(fiber.Map{}, err.Error(), c)
+		return response.FailWithDetailed(nil, err.Error(), c)
 	} else {
-		return response.OkWithDetailed(fiber.Map{}, "注册成功", c)
+		return response.OkWithDetailed(nil, "注册成功", c)
 	}
 }
 
