@@ -11,16 +11,12 @@ import (
 func JWTAuthMobileMiddleware() func(c *fiber.Ctx) error {
 	return func(c *fiber.Ctx) error {
 		authHeader := c.Get("Authorization")
-		if authHeader == "" {
-			return response.FailWithMessage401("token 失效", c)
-		}
-
-		parts := strings.SplitN(authHeader, " ", 2)
-		if !(len(parts) == 2 && parts[0] == "Bearer") {
-			return response.FailWithMessage401("token 不正确", c)
+		token := strings.Replace(authHeader, "Bearer", "", 1)
+		if token == "" {
+			return response.FailWithMessage401("token 失效， 请重新登录", c)
 		}
 		j := utils.NewJWT()
-		user, err := j.ParseTokenMobile(parts[1])
+		user, err := j.ParseTokenMobile(token)
 		if err != nil {
 			return response.FailWithMessage401("token 失效， 请重新登录", c)
 		}

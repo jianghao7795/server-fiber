@@ -21,8 +21,10 @@ type JwtApi struct{}
 // @Router /jwt/jsonInBlacklist [post]
 func (j *JwtApi) JsonInBlacklist(c *fiber.Ctx) error {
 	tokenString := c.Get("Authorization")
-	tokenValue := strings.Split(tokenString, " ")
-	token := tokenValue[1]
+	token := strings.Replace(tokenString, "Bearer", "", 1)
+	if token == "" {
+		return response.FailWithMessage401("token 失效， 请重新登录", c)
+	}
 	jwt := system.JwtBlacklist{Jwt: token}
 	if err := jwtService.JsonInBlacklist(jwt); err != nil {
 		global.LOG.Error("jwt作废失败!", zap.Error(err))

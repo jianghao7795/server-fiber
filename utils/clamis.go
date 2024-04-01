@@ -1,8 +1,8 @@
 package utils
 
 import (
-	"errors"
 	"server-fiber/global"
+	"server-fiber/model/common/response"
 	systemReq "server-fiber/model/system/request"
 	"strings"
 
@@ -12,11 +12,10 @@ import (
 
 func GetClaims(c *fiber.Ctx) (*systemReq.CustomClaims, error) {
 	tokenString := c.Get("Authorization")
-	tokenValue := strings.Split(tokenString, " ")
-	if tokenValue[0] != "Bearer" {
-		return nil, errors.New("token 错误")
+	token := strings.Replace(tokenString, "Bearer", "", 1)
+	if token == "" {
+		return nil, response.FailWithMessage401("token 失效， 请重新登录", c)
 	}
-	token := tokenValue[1]
 	j := NewJWT()
 	claims, err := j.ParseToken(token)
 	if err != nil {

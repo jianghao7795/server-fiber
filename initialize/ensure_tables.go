@@ -7,11 +7,13 @@ import (
 	"gorm.io/gorm"
 )
 
+// 初始化数据库
+
 const initOrderEnsureTables = system.InitOrderExternal - 1
 
 type ensureTables struct{}
 
-// auto run
+// auto run 初始化数据库
 func init() {
 	system.RegisterInit(initOrderEnsureTables, &ensureTables{})
 }

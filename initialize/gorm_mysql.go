@@ -16,7 +16,7 @@ import (
 func GormMysql() (*gorm.DB, error) {
 	m := global.CONFIG.Mysql
 	if m.Dbname == "" {
-		return nil, errors.New("没设置数据库名")
+		return nil, errors.New("no database")
 	}
 	mysqlConfig := mysql.Config{
 		DSN:                       m.Dsn(), // DSN data source name
