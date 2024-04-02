@@ -1,6 +1,7 @@
 package initialize
 
 import (
+	"log"
 	"server-fiber/config"
 	"server-fiber/global"
 	"server-fiber/utils"
@@ -9,13 +10,14 @@ import (
 )
 
 func Timer() {
+	log.Println("timer: ", global.CONFIG.Timer.Detail)
 	if global.CONFIG.Timer.Start {
 		for i := range global.CONFIG.Timer.Detail {
 			go func(detail config.Detail) {
 				global.Timer.AddTaskByFunc("UpdateGithub", global.CONFIG.Timer.Spec, func() {
 					err := utils.UpdateTable(global.DB, detail.TableName, detail.CompareField, detail.Interval)
 					if err != nil {
-						global.LOG.Error("更新Github错误：", zap.Error(err))
+						global.LOG.Error("新增Github记录错误：", zap.Error(err))
 					}
 				})
 			}(global.CONFIG.Timer.Detail[i])

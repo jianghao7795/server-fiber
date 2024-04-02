@@ -145,7 +145,7 @@ tencent-cos:
   path-prefix: server
 timer:
   start: true
-  spec: "@hourly" #"@daily"
+  spec: "@every 24h"
   detail:
     # - tableName: sys_operation_records
     #   compareField: created_at
@@ -153,7 +153,7 @@ timer:
     # - tableName: jwt_blacklists
     #   compareField: created_at
     #   interval: 2160h
-    - taskName: githubs
+    - tableName: githubs
       compareField: created_at
       interval: 1s
 zap:

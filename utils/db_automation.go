@@ -51,7 +51,6 @@ func UpdateTable(db *gorm.DB, tableName string, compareField string, interval st
 	if duration < 0 {
 		return errors.New("parse duration < 0")
 	}
-	data := make([]system.SysGithub, 1)
 
 	page := "1"
 	per_page := "5"
@@ -75,6 +74,7 @@ func UpdateTable(db *gorm.DB, tableName string, compareField string, interval st
 	time.LoadLocation("Asia/Shanghai")
 	db = db.Model(&system.SysGithub{})
 	var lastGithub system.SysGithub
+	data := make([]system.SysGithub, 0)
 	db.Order("id desc").First(&lastGithub)
 	for _, val := range respData {
 		var temp system.SysGithub
