@@ -11,7 +11,7 @@ import (
 func JWTAuthMobileMiddleware() func(c *fiber.Ctx) error {
 	return func(c *fiber.Ctx) error {
 		authHeader := c.Get("Authorization")
-		token := strings.Replace(authHeader, "Bearer", "", 1)
+		token := strings.Replace(authHeader, "Bearer ", "", 1)
 		if token == "" {
 			return response.FailWithMessage401("token 失效， 请重新登录", c)
 		}

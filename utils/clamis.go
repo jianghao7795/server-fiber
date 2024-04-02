@@ -12,7 +12,7 @@ import (
 
 func GetClaims(c *fiber.Ctx) (*systemReq.CustomClaims, error) {
 	tokenString := c.Get("Authorization")
-	token := strings.Replace(tokenString, "Bearer", "", 1)
+	token := strings.Replace(tokenString, "Bearer ", "", 1)
 	if token == "" {
 		return nil, response.FailWithMessage401("token 失效， 请重新登录", c)
 	}

@@ -25,11 +25,7 @@ func JWTAuth(c *fiber.Ctx) error {
 	if tokenString == "" {
 		return response.FailWithDetailed(fiber.Map{"reload": true}, "未登录或非法访问", c)
 	}
-	tokenValue := strings.Split(tokenString, " ")
-	if len(tokenValue) == 1 || tokenValue[0] != "Bearer" {
-		return response.FailWithDetailed(fiber.Map{"reload": true}, "未登录或非法访问", c)
-	}
-	token := tokenValue[1]
+	token := strings.Replace(tokenString, "Bearer ", "", 1)
 	if token == "" {
 		return response.FailWithDetailed(fiber.Map{"reload": true}, "未登录或非法访问", c)
 	}
