@@ -17,8 +17,13 @@ import (
 )
 
 func done(c *fiber.Ctx, logString []byte) {
+
 	if c.Response().StatusCode() >= fiber.StatusBadRequest {
-		global.LOG.Error(string(logString))
+		if c.Response().StatusCode() == 404 {
+			global.LOG.Error(string(logString))
+		} else {
+			global.LOG.Warn(string(logString))
+		}
 	}
 }
 
