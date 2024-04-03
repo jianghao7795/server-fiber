@@ -4,7 +4,6 @@ import (
 	"server-fiber/global"
 	"server-fiber/model/common/response"
 	problemReq "server-fiber/model/system"
-	"server-fiber/service"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
@@ -12,8 +11,6 @@ import (
 )
 
 type UserProblem struct{}
-
-var userProblem = service.ServiceGroupApp.SystemServiceGroup.Problem
 
 func (*UserProblem) GetProblemSetting(c *fiber.Ctx) error {
 	var search problemReq.SysUserProblem

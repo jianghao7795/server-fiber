@@ -37,4 +37,6 @@ var (
 	autoCodeHistoryService  = service.ServiceGroupApp.SystemServiceGroup.AutoCodeHistoryService
 	dictionaryDetailService = service.ServiceGroupApp.SystemServiceGroup.DictionaryDetailService
 	authorityBtnService     = service.ServiceGroupApp.SystemServiceGroup.AuthorityBtnService
+	githubService           = service.ServiceGroupApp.SystemServiceGroup.GithubService
+	userProblem             = service.ServiceGroupApp.SystemServiceGroup.Problem
 )

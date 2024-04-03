@@ -5,8 +5,6 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-var ExamplePlugin = new(pluginExample)
-
 type pluginExample struct{}
 
 func NewPluginExample() *pluginExample {

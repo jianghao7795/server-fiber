@@ -8,9 +8,9 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-var FileRotatelogs = new(fileRotatelogs)
-
 type fileRotatelogs struct{}
+
+var FileRotatelogs = new(fileRotatelogs)
 
 // GetWriteSyncer 获取 zapcore.WriteSyncer
 // Author wuhao

@@ -11,7 +11,6 @@ import (
 	"server-fiber/model/common/request"
 	"server-fiber/model/common/response"
 	"server-fiber/model/system"
-	"server-fiber/service"
 	"strconv"
 	"time"
 
@@ -19,8 +18,6 @@ import (
 )
 
 type SystemGithubApi struct{}
-
-var githubService = service.ServiceGroupApp.SystemServiceGroup.GithubService
 
 func (g *SystemGithubApi) GetGithubList(c *fiber.Ctx) error {
 	var searchInfo request.PageInfo
