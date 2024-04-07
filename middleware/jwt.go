@@ -10,14 +10,14 @@ import (
 
 	"server-fiber/model/common/response"
 	"server-fiber/model/system"
-	"server-fiber/service"
+	systemService "server-fiber/service/system"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"
 	"go.uber.org/zap"
 )
 
-var jwtService = service.ServiceGroupApp.SystemServiceGroup.JwtService
+var jwtService = new(systemService.JwtService)
 
 func JWTAuth(c *fiber.Ctx) error {
 	// 我们这里jwt鉴权取头部信息 Authorization 登录时回返回token信息 这里前端需要把token存储到cookie或者本地localStorage中 不过需要跟后端协商过期时间 可以约定刷新令牌或者重新登录

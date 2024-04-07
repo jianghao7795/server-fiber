@@ -1,7 +1,7 @@
 package example
 
 import (
-	v1 "server-fiber/api/v1"
+	v1 "server-fiber/api/v1/example"
 	"server-fiber/middleware"
 
 	"github.com/gofiber/fiber/v2"
@@ -11,7 +11,7 @@ type CustomerRouter struct{}
 
 func (e *CustomerRouter) InitCustomerRouter(Router fiber.Router) {
 	customerRouter := Router.Group("customer")
-	exaCustomerApi := v1.ApiGroupApp.ExampleApiGroup.CustomerApi
+	exaCustomerApi := new(v1.CustomerApi)
 
 	customerRouter.Post("customer", middleware.OperationRecord, exaCustomerApi.CreateExaCustomer)   // 创建客户
 	customerRouter.Put("customer", middleware.OperationRecord, exaCustomerApi.UpdateExaCustomer)    // 更新客户

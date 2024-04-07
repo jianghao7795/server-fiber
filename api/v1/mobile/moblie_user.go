@@ -6,7 +6,7 @@ import (
 	"server-fiber/model/common/response"
 	"server-fiber/model/mobile"
 	mobileReq "server-fiber/model/mobile/request"
-	"server-fiber/service"
+	mobileServer "server-fiber/service/mobile"
 
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
@@ -15,7 +15,7 @@ import (
 type MobileUserApi struct {
 }
 
-var moblieUserService = service.ServiceGroupApp.MobileServiceGroup.MobileUserService
+var moblieUserService = new(mobileServer.MobileUserService)
 
 // CreateMoblieUser 创建MoblieUser
 // @Tags MoblieUser

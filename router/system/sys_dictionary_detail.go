@@ -1,7 +1,7 @@
 package system
 
 import (
-	v1 "server-fiber/api/v1"
+	v1 "server-fiber/api/v1/system"
 	"server-fiber/middleware"
 
 	"github.com/gofiber/fiber/v2"
@@ -10,16 +10,14 @@ import (
 type DictionaryDetailRouter struct{}
 
 func (s *DictionaryDetailRouter) InitSysDictionaryDetailRouter(Router fiber.Router) {
-	dictionaryDetailRouter := Router.Group("sysDictionaryDetail").Use(middleware.OperationRecord)
-	dictionaryDetailRouterWithoutRecord := Router.Group("sysDictionaryDetail")
-	sysDictionaryDetailApi := v1.ApiGroupApp.SystemApiGroup.DictionaryDetailApi
-	{
-		dictionaryDetailRouter.Post("createSysDictionaryDetail", sysDictionaryDetailApi.CreateSysDictionaryDetail)   // 新建SysDictionaryDetail
-		dictionaryDetailRouter.Delete("deleteSysDictionaryDetail", sysDictionaryDetailApi.DeleteSysDictionaryDetail) // 删除SysDictionaryDetail
-		dictionaryDetailRouter.Put("updateSysDictionaryDetail", sysDictionaryDetailApi.UpdateSysDictionaryDetail)    // 更新SysDictionaryDetail
-	}
-	{
-		dictionaryDetailRouterWithoutRecord.Get("findSysDictionaryDetail", sysDictionaryDetailApi.FindSysDictionaryDetail)       // 根据ID获取SysDictionaryDetail
-		dictionaryDetailRouterWithoutRecord.Get("getSysDictionaryDetailList", sysDictionaryDetailApi.GetSysDictionaryDetailList) // 获取SysDictionaryDetail列表
-	}
+	dictionaryDetailRouter := Router.Group("sysDictionaryDetail")
+	sysDictionaryDetailApi := new(v1.DictionaryDetailApi)
+
+	dictionaryDetailRouter.Post("createSysDictionaryDetail", middleware.OperationRecord, sysDictionaryDetailApi.CreateSysDictionaryDetail)   // 新建SysDictionaryDetail
+	dictionaryDetailRouter.Delete("deleteSysDictionaryDetail", middleware.OperationRecord, sysDictionaryDetailApi.DeleteSysDictionaryDetail) // 删除SysDictionaryDetail
+	dictionaryDetailRouter.Put("updateSysDictionaryDetail", middleware.OperationRecord, sysDictionaryDetailApi.UpdateSysDictionaryDetail)    // 更新SysDictionaryDetail
+
+	dictionaryDetailRouter.Get("findSysDictionaryDetail", sysDictionaryDetailApi.FindSysDictionaryDetail)       // 根据ID获取SysDictionaryDetail
+	dictionaryDetailRouter.Get("getSysDictionaryDetailList", sysDictionaryDetailApi.GetSysDictionaryDetailList) // 获取SysDictionaryDetail列表
+
 }

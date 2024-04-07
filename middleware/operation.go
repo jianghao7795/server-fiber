@@ -10,13 +10,13 @@ import (
 
 	"server-fiber/global"
 	"server-fiber/model/system"
-	"server-fiber/service"
+	systemService "server-fiber/service/system"
 	"server-fiber/utils"
 
 	"go.uber.org/zap"
 )
 
-var operationRecordService = service.ServiceGroupApp.SystemServiceGroup.OperationRecordService
+var operationRecordService = new(systemService.OperationRecordService)
 
 // 写入操作历史
 

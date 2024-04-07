@@ -1,7 +1,7 @@
 package app
 
 import (
-	v1 "server-fiber/api/v1"
+	v1 "server-fiber/api/v1/app"
 	"server-fiber/middleware"
 
 	"github.com/gofiber/fiber/v2"
@@ -13,7 +13,7 @@ type CommentRouter struct {
 // InitCommentRouter 初始化 Comment 路由信息
 func (s *CommentRouter) InitCommentRouter(Router fiber.Router) {
 	commentRouter := Router.Group("comment")
-	var commentApi = v1.ApiGroupApp.AppApiGroup.CommentApi
+	var commentApi = new(v1.CommentApi)
 
 	commentRouter.Post("createComment", middleware.OperationRecord, commentApi.CreateComment)             // 新建Comment
 	commentRouter.Delete("DeleteComment", middleware.OperationRecord, commentApi.DeleteComment)           // 删除Comment

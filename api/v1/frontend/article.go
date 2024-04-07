@@ -5,6 +5,7 @@ import (
 	"server-fiber/global"
 	"server-fiber/model/common/response"
 	"server-fiber/model/frontend/request"
+	frontend "server-fiber/service/frontend"
 
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
@@ -12,6 +13,8 @@ import (
 )
 
 type FrontendArticleApi struct{}
+
+var frontendArtileService = new(frontend.FrontendArticle)
 
 func (s *FrontendArticleApi) GetArticleList(c *fiber.Ctx) error {
 	var pageInfo request.ArticleSearch
@@ -24,7 +27,7 @@ func (s *FrontendArticleApi) GetArticleList(c *fiber.Ctx) error {
 		pageInfo.PageSize = 10
 	}
 
-	if list, total, err := frontendService.FrontendArticle.GetArticleList(&pageInfo, c); err != nil {
+	if list, total, err := frontendArtileService.GetArticleList(&pageInfo, c); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败", c)
 	} else {
@@ -45,7 +48,7 @@ func (s *FrontendArticleApi) GetArticleDetail(c *fiber.Ctx) error {
 		return response.FailWithMessage("获取Id失败", c)
 
 	}
-	articleDetail, err := frontendService.FrontendArticle.GetAricleDetail(id, c)
+	articleDetail, err := frontendArtileService.GetAricleDetail(id, c)
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return response.FailWithMessage("文章没有，请重新查询", c)
 
@@ -70,7 +73,7 @@ func (s *FrontendArticleApi) GetSearchArticle(c *fiber.Ctx) error {
 	if searchValue.Name != "tags" && searchValue.Name != "articles" {
 		return response.FailWithMessage("查询的不是tag 或 article", c)
 	}
-	if list, err := frontendService.GetSearchArticle(&searchValue); err != nil {
+	if list, err := frontendArtileService.GetSearchArticle(&searchValue); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败", c)
 	} else {

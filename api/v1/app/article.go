@@ -2,11 +2,11 @@ package app
 
 import (
 	"server-fiber/global"
-	"server-fiber/model/app"
+	app "server-fiber/model/app"
 	appReq "server-fiber/model/app/request"
 	"server-fiber/model/common/request"
 	"server-fiber/model/common/response"
-	"server-fiber/service"
+	appService "server-fiber/service/app"
 
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
@@ -14,7 +14,7 @@ import (
 
 type ArticleApi struct{}
 
-var articleService = service.ServiceGroupApp.AppServiceGroup.ArticleService
+var articleService = new(appService.ArticleService)
 
 // CreateArticle 创建Article
 // @Tags Article

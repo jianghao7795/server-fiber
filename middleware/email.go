@@ -7,7 +7,7 @@ import (
 	"server-fiber/global"
 	"server-fiber/model/system"
 	"server-fiber/plugin/email/utils"
-	"server-fiber/service"
+	systemService "server-fiber/service/system"
 	utils2 "server-fiber/utils"
 	"strconv"
 	"time"
@@ -16,7 +16,7 @@ import (
 	"go.uber.org/zap"
 )
 
-var userService = service.ServiceGroupApp.SystemServiceGroup.UserService
+var userService = new(systemService.UserService)
 
 func ErrorToEmail(c *fiber.Ctx) error {
 	var username string

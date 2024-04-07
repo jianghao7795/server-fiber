@@ -2,13 +2,13 @@ package middleware
 
 import (
 	"server-fiber/model/common/response"
-	"server-fiber/service"
+	service "server-fiber/service/system"
 	"server-fiber/utils"
 
 	"github.com/gofiber/fiber/v2"
 )
 
-var casbinService = service.ServiceGroupApp.SystemServiceGroup.CasbinService
+var casbinService = new(service.CasbinService)
 
 // 拦截器
 func CasbinHandler(c *fiber.Ctx) error {

@@ -1,7 +1,7 @@
 package system
 
 import (
-	v1 "server-fiber/api/v1"
+	v1 "server-fiber/api/v1/system"
 	"server-fiber/middleware"
 
 	"github.com/gofiber/fiber/v2"
@@ -10,15 +10,12 @@ import (
 type AuthorityBtnRouter struct{}
 
 func (s *AuthorityBtnRouter) InitAuthorityBtnRouterRouter(Router fiber.Router) {
-	authorityRouter := Router.Group("authorityBtn").Use(middleware.OperationRecord)
-	authorityRouterWithoutRecord := Router.Group("authorityBtn")
-	authorityBtnApi := v1.ApiGroupApp.SystemApiGroup.AuthorityBtnApi
-	{
-		authorityRouter.Post("setAuthorityBtn", authorityBtnApi.SetAuthorityBtn)
-		authorityRouter.Delete("canRemoveAuthorityBtn/:id", authorityBtnApi.CanRemoveAuthorityBtn)
-	}
-	{
-		authorityRouterWithoutRecord.Get("getAuthorityBtn", authorityBtnApi.GetAuthorityBtn)
+	authorityRouter := Router.Group("authorityBtn")
+	authorityBtnApi := new(v1.AuthorityBtnApi)
 
-	}
+	authorityRouter.Post("setAuthorityBtn", middleware.OperationRecord, authorityBtnApi.SetAuthorityBtn)
+	authorityRouter.Delete("canRemoveAuthorityBtn/:id", middleware.OperationRecord, authorityBtnApi.CanRemoveAuthorityBtn)
+
+	authorityRouter.Get("getAuthorityBtn", authorityBtnApi.GetAuthorityBtn)
+
 }

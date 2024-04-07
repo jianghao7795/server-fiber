@@ -1,7 +1,7 @@
 package mobile
 
 import (
-	v1 "server-fiber/api/v1"
+	v1 "server-fiber/api/v1/mobile"
 	"server-fiber/middleware"
 
 	"github.com/gofiber/fiber/v2"
@@ -11,7 +11,7 @@ type MobileUserRouter struct{}
 
 func (m *MobileUserRouter) InitMobileRouter(Router fiber.Router) {
 	moblieUserRouterWithoutRecord := Router.Group("mobile")
-	var mobileUserApi = v1.ApiGroupApp.MobileApiGroup.MobileUserApi
+	var mobileUserApi = new(v1.MobileUserApi)
 
 	moblieUserRouterWithoutRecord.Post("createMobileUser", middleware.OperationRecord, mobileUserApi.CreateMoblieUser)             // 新建MoblieUser
 	moblieUserRouterWithoutRecord.Delete("deleteMobileUser/:id", middleware.OperationRecord, mobileUserApi.DeleteMoblieUser)       // 删除MoblieUser

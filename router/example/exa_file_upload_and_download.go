@@ -1,7 +1,7 @@
 package example
 
 import (
-	v1 "server-fiber/api/v1"
+	v1 "server-fiber/api/v1/example"
 	"server-fiber/middleware"
 
 	"github.com/gofiber/fiber/v2"
@@ -11,7 +11,7 @@ type FileUploadAndDownloadRouter struct{}
 
 func (e *FileUploadAndDownloadRouter) InitFileUploadAndDownloadRouter(Router fiber.Router) {
 	fileUploadAndDownloadRouter := Router.Group("fileUploadAndDownload")
-	exaFileUploadAndDownloadApi := v1.ApiGroupApp.ExampleApiGroup.FileUploadAndDownloadApi
+	exaFileUploadAndDownloadApi := new(v1.FileUploadAndDownloadApi)
 
 	fileUploadAndDownloadRouter.Post("upload", middleware.OperationRecord, exaFileUploadAndDownloadApi.UploadFile)                                 // 上传文件
 	fileUploadAndDownloadRouter.Get("getFileList", exaFileUploadAndDownloadApi.GetFileList)                                                        // 获取上传文件列表

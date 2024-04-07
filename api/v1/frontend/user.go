@@ -7,18 +7,28 @@ import (
 	"server-fiber/model/frontend"
 	loginRequest "server-fiber/model/frontend/request"
 	"server-fiber/model/system"
+	frontendServer "server-fiber/service/frontend"
+	systemService "server-fiber/service/system"
 	"server-fiber/utils"
 
 	systemReq "server-fiber/model/system/request"
 	systemRes "server-fiber/model/system/response"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/mojocn/base64Captcha"
 	"github.com/redis/go-redis/v9"
 	"go.uber.org/zap"
 )
 
 type FrontendUser struct{}
 
+var userService = new(systemService.UserService)
+var jwtService = new(systemService.JwtService)
+var frontendService = new(frontendServer.FrontendUser)
+var store = base64Captcha.DefaultMemStore
+
+// var userService = service.ServiceGroupApp.SystemServiceGroup.UserService
+// var jwtService = service.ServiceGroupApp.SystemServiceGroup.JwtService
 // func (u *FrontendUser) Login(c *fiber.Ctx) error {
 // 	var user loginRequest.LoginForm
 // 	_ = c.QueryParser(&user)

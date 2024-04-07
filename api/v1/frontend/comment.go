@@ -4,6 +4,7 @@ import (
 	"server-fiber/global"
 	"server-fiber/model/common/response"
 	"server-fiber/model/frontend"
+	service "server-fiber/service/frontend"
 
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
@@ -11,7 +12,7 @@ import (
 
 type CommentApi struct{}
 
-var commentService = frontendService.Comment
+var commentService = new(service.Comment)
 
 func (s *CommentApi) GetCommentByArticleId(c *fiber.Ctx) error {
 	id, err := c.ParamsInt("articleId")

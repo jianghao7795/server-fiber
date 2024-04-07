@@ -11,7 +11,7 @@ import (
 	"server-fiber/global"
 	"server-fiber/model/app"
 	"server-fiber/model/common/response"
-	"server-fiber/service"
+	appService "server-fiber/service/app"
 
 	responseUplodFile "server-fiber/model/app/response"
 
@@ -21,7 +21,7 @@ import (
 
 type FileUploadAndDownloadApi struct{}
 
-var fileUploadService = service.ServiceGroupApp.AppServiceGroup.FileUploadService
+var fileUploadService = new(appService.FileUploadService)
 
 // UploadFile @Tags UploadFile ExaFileUploadAndDownload
 // @Summary 上传文件示例

@@ -1,7 +1,8 @@
 package frontend
 
 import (
-	v1 "server-fiber/api/v1"
+	fileUpload "server-fiber/api/v1/app"
+	v1 "server-fiber/api/v1/frontend"
 	"server-fiber/middleware"
 
 	"github.com/gofiber/fiber/v2"
@@ -11,23 +12,23 @@ type FrontendRouter struct{}
 
 func (s *FrontendRouter) InitFrontendRouter(Router fiber.Router) {
 	frontend := Router.Group("")
-	var frontendTagApi = v1.ApiGroupApp.FrontendApiGroup.FrontendTagApi
+	var frontendTagApi = new(v1.FrontendTagApi)
 	{
 		frontend.Get("getTagList", frontendTagApi.GetTagList)
 		frontend.Get("getTagArticleList/:id", frontendTagApi.GetTag)
 	}
-	var frontendArticleApi = v1.ApiGroupApp.FrontendApiGroup.FrontendArticleApi
+	var frontendArticleApi = new(v1.FrontendArticleApi)
 	{
 		frontend.Get("getArticleList", frontendArticleApi.GetArticleList)
 		frontend.Get("getArticle/:id", frontendArticleApi.GetArticleDetail)
 		frontend.Get("getSearchArticle/:name/:value", frontendArticleApi.GetSearchArticle)
 	}
-	var frontendCommentApi = v1.ApiGroupApp.FrontendApiGroup.CommentApi
+	var frontendCommentApi = new(v1.CommentApi)
 	{
 		frontend.Get("getArticleComment/:articleId", frontendCommentApi.GetCommentByArticleId)
 		frontend.Post("createdComment", middleware.OperationRecord, frontendCommentApi.CreatedComment)
 	}
-	var frontendUserApi = v1.ApiGroupApp.FrontendApiGroup.FrontendUser
+	var frontendUserApi = new(v1.FrontendUser)
 	{
 		frontend.Get("getImages", middleware.JWTAuth, frontendUserApi.GetImages)
 		frontend.Post("login", frontendUserApi.Login)
@@ -37,7 +38,7 @@ func (s *FrontendRouter) InitFrontendRouter(Router fiber.Router) {
 		frontend.Post("register", middleware.JWTAuth, frontendUserApi.RegisterUser)
 		frontend.Put("updateUser", middleware.JWTAuth, middleware.OperationRecord, frontendUserApi.UpdateUser)
 	}
-	var frontendUploadApi = v1.ApiGroupApp.AppApiGroup.FileUploadAndDownloadApi
+	var frontendUploadApi = new(fileUpload.FileUploadAndDownloadApi)
 	{
 		frontend.Post("upload", frontendUploadApi.UploadFile)
 	}

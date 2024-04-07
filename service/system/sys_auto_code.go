@@ -21,7 +21,6 @@ import (
 
 	"server-fiber/global"
 	"server-fiber/model/system"
-	"server-fiber/resource/template/subcontract"
 	"server-fiber/utils"
 
 	"golang.org/x/text/cases"
@@ -578,15 +577,15 @@ func (autoCodeService *AutoCodeService) CreatePackageTemp(packageName string) er
 	pendingTemp := []autoPackage{{
 		path: packageService,
 		name: packageServiceName,
-		temp: string(subcontract.Server),
+		temp: "",
 	}, {
 		path: packageRouter,
 		name: packageRouterName,
-		temp: string(subcontract.Router),
+		temp: "",
 	}, {
 		path: packageAPI,
 		name: packageAPIName,
-		temp: string(subcontract.API),
+		temp: "",
 	}}
 	for i, s := range pendingTemp {
 		pendingTemp[i].path = filepath.Join(global.CONFIG.AutoCode.Root, global.CONFIG.AutoCode.Server, filepath.Clean(fmt.Sprintf(s.path, packageName)))

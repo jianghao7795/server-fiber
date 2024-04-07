@@ -2,18 +2,23 @@ package mobile
 
 import (
 	"errors"
+	"strconv"
+
 	"server-fiber/global"
 	"server-fiber/model/common/response"
 	"server-fiber/model/mobile"
 	"server-fiber/model/mobile/request"
+	mobileServer "server-fiber/service/mobile"
 	"server-fiber/utils"
-	"strconv"
 
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
 )
 
 type MobileLoginApi struct{}
+
+var mobileService = new(mobileServer.MobileLoginService)
+var mobileRegisterService = new(mobileServer.MobileRegisterService)
 
 func (*MobileLoginApi) Login(c *fiber.Ctx) error {
 	var l mobile.Login

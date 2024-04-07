@@ -6,7 +6,7 @@ import (
 	"server-fiber/global"
 	"server-fiber/model/app"
 	"server-fiber/model/common/response"
-	"server-fiber/service"
+	appService "server-fiber/service/app"
 
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
@@ -15,7 +15,7 @@ import (
 
 type BaseMessageApi struct{}
 
-var baseMessageService = service.ServiceGroupApp.AppServiceGroup.BaseMessageService
+var baseMessageService = new(appService.BaseMessageService)
 
 // CreateBaseMessage 创建base_message
 func (a *BaseMessageApi) CreateBaseMessage(c *fiber.Ctx) error {

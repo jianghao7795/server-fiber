@@ -6,7 +6,7 @@ import (
 	appReq "server-fiber/model/app/request"
 	"server-fiber/model/common/request"
 	"server-fiber/model/common/response"
-	"server-fiber/service"
+	appService "server-fiber/service/app"
 
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
@@ -14,7 +14,7 @@ import (
 
 type TagApi struct{}
 
-var appTabService = service.ServiceGroupApp.AppServiceGroup.TagService
+var appTabService = new(appService.TagService)
 
 // CreateTag 创建Tag
 // @Tags Tag

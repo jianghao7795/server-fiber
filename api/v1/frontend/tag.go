@@ -4,6 +4,7 @@ import (
 	"server-fiber/global"
 	appReq "server-fiber/model/app/request"
 	"server-fiber/model/common/response"
+	"server-fiber/service/frontend"
 
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
@@ -11,10 +12,12 @@ import (
 
 type FrontendTagApi struct{}
 
+var tagService = new(frontend.FrontendTag)
+
 func (appTabApi *FrontendTagApi) GetTagList(c *fiber.Ctx) error {
 	var pageInfo appReq.TagSearch
 	_ = c.QueryParser(&pageInfo)
-	if list, err := frontendService.FrontendTag.GetTagList(c); err != nil {
+	if list, err := tagService.GetTagList(c); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败", c)
 	} else {
@@ -29,7 +32,7 @@ func (appTabApi *FrontendTagApi) GetTag(c *fiber.Ctx) error {
 	if err != nil {
 		return response.FailWithMessage("获取Ids失败", c)
 	}
-	if tagArticles, err := frontendService.FrontendTag.GetTagArticle(id, c); err != nil {
+	if tagArticles, err := tagService.GetTagArticle(id, c); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败", c)
 	} else {

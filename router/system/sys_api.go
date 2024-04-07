@@ -1,7 +1,7 @@
 package system
 
 import (
-	v1 "server-fiber/api/v1"
+	v1 "server-fiber/api/v1/system"
 	"server-fiber/middleware"
 
 	"github.com/gofiber/fiber/v2"
@@ -12,7 +12,7 @@ type ApiRouter struct{}
 func (s *ApiRouter) InitApiRouter(Router fiber.Router) {
 	apiRouter := Router.Group("api").Use(middleware.OperationRecord)
 	apiRouterWithoutRecord := Router.Group("api")
-	apiRouterApi := v1.ApiGroupApp.SystemApiGroup.SystemApiApi
+	apiRouterApi := new(v1.SystemApiApi)
 	{
 		apiRouter.Post("createApi", apiRouterApi.CreateApi)               // 创建Api
 		apiRouter.Delete("DeleteApi/:id", apiRouterApi.DeleteApi)         // 删除Api

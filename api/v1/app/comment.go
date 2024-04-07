@@ -6,7 +6,7 @@ import (
 	commentReq "server-fiber/model/app/request"
 	"server-fiber/model/common/request"
 	"server-fiber/model/common/response"
-	"server-fiber/service"
+	appService "server-fiber/service/app"
 
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
@@ -15,7 +15,7 @@ import (
 type CommentApi struct {
 }
 
-var commentService = service.ServiceGroupApp.AppServiceGroup.CommentService
+var commentService = new(appService.CommentService)
 
 // CreateComment 创建Comment
 // @Tags Comment

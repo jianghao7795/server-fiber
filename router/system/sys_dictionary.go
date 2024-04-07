@@ -1,7 +1,7 @@
 package system
 
 import (
-	v1 "server-fiber/api/v1"
+	v1 "server-fiber/api/v1/system"
 	"server-fiber/middleware"
 
 	"github.com/gofiber/fiber/v2"
@@ -10,16 +10,14 @@ import (
 type DictionaryRouter struct{}
 
 func (s *DictionaryRouter) InitSysDictionaryRouter(Router fiber.Router) {
-	sysDictionaryRouter := Router.Group("sysDictionary").Use(middleware.OperationRecord)
-	sysDictionaryRouterWithoutRecord := Router.Group("sysDictionary")
-	sysDictionaryApi := v1.ApiGroupApp.SystemApiGroup.DictionaryApi
-	{
-		sysDictionaryRouter.Post("createSysDictionary", sysDictionaryApi.CreateSysDictionary)   // 新建SysDictionary
-		sysDictionaryRouter.Delete("deleteSysDictionary", sysDictionaryApi.DeleteSysDictionary) // 删除SysDictionary
-		sysDictionaryRouter.Put("updateSysDictionary", sysDictionaryApi.UpdateSysDictionary)    // 更新SysDictionary
-	}
-	{
-		sysDictionaryRouterWithoutRecord.Get("findSysDictionary", sysDictionaryApi.FindSysDictionary)       // 根据ID获取SysDictionary
-		sysDictionaryRouterWithoutRecord.Get("getSysDictionaryList", sysDictionaryApi.GetSysDictionaryList) // 获取SysDictionary列表
-	}
+	sysDictionaryRouter := Router.Group("sysDictionary")
+	sysDictionaryApi := new(v1.DictionaryApi)
+
+	sysDictionaryRouter.Post("createSysDictionary", middleware.OperationRecord, sysDictionaryApi.CreateSysDictionary)   // 新建SysDictionary
+	sysDictionaryRouter.Delete("deleteSysDictionary", middleware.OperationRecord, sysDictionaryApi.DeleteSysDictionary) // 删除SysDictionary
+	sysDictionaryRouter.Put("updateSysDictionary", middleware.OperationRecord, sysDictionaryApi.UpdateSysDictionary)    // 更新SysDictionary
+
+	sysDictionaryRouter.Get("findSysDictionary", sysDictionaryApi.FindSysDictionary)       // 根据ID获取SysDictionary
+	sysDictionaryRouter.Get("getSysDictionaryList", sysDictionaryApi.GetSysDictionaryList) // 获取SysDictionary列表
+
 }

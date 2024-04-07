@@ -6,6 +6,7 @@ import (
 	"server-fiber/model/example"
 	"server-fiber/model/example/request"
 	exampleRes "server-fiber/model/example/response"
+	exampleServer "server-fiber/service/example"
 	"server-fiber/utils"
 
 	"github.com/gofiber/fiber/v2"
@@ -13,6 +14,8 @@ import (
 )
 
 type CustomerApi struct{}
+
+var customerService = new(exampleServer.CustomerService)
 
 // @Tags ExaCustomer
 // @Summary 创建客户
