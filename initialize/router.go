@@ -17,23 +17,11 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/logger"
 )
 
-func done(c *fiber.Ctx, logString []byte) {
-	if c.Response().StatusCode() >= fiber.StatusBadRequest {
-		if c.Response().StatusCode() == 404 {
-			global.LOG.Error(string(logString))
-		} else {
-			global.LOG.Warn(string(logString))
-		}
-	}
-}
-
 // 初始化总路由
 
 func Routers() *fiber.App {
 	app := fiber.New(global.CONFIG.FiberConfig)
-	app.Use(logger.New(logger.Config{
-		Done: done,
-	})) // 开启log 日志
+	app.Use(logger.New(global.CONFIG.FiberLogger)) //log 日志配置
 	appRouter := router.AppRouter
 	systemRouter := router.SystemRouter
 	exampleRouter := router.ExampleRouter

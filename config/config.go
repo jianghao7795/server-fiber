@@ -1,6 +1,9 @@
 package config
 
-import "github.com/gofiber/fiber/v2"
+import (
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/logger"
+)
 
 type Server struct {
 	JWT     JWT     `mapstructure:"jwt" json:"jwt" yaml:"jwt"`
@@ -33,4 +36,6 @@ type Server struct {
 	Cache Cache `mapstructure:"cache" json:"cache" yaml:"cache"`
 	// fiber config
 	FiberConfig fiber.Config `mapstructure:"fiberconifg" json:"fiberconifg" yaml:"fiberconifg"`
+	// fiber logger
+	FiberLogger logger.Config `mapstructure:"fiberlogger" json:"fiberlogger" yaml:"fiberlogger"`
 }

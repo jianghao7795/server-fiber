@@ -175,3 +175,7 @@ fiberconifg: # fiber config
   concurrency: 262144 # 并发
   disable_startup_message: false #关闭启动信息
   enable_splitting_on_parsers: true
+fiberlogger:
+  Format: "[${time}] ${ip} ${status} - ${latency} ${method} ${path} ${error}\n" #格式
+  TimeFormat: "15:04:05" # 时间格式
+  TimeZone: "Local" #时区

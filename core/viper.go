@@ -104,7 +104,20 @@ func viperInit(path ...string) (*viper.Viper, error) {
 		global.CONFIG.FiberConfig.JSONEncoder = json.Marshal   // 自定义JSON编码器/解码器
 		global.CONFIG.FiberConfig.JSONDecoder = json.Unmarshal // 自定义JSON编码器/解码器
 	}
+	{ // fiber logger
+		global.CONFIG.FiberLogger.Done = done
+	}
 	return v, nil
+}
+
+func done(c *fiber.Ctx, logString []byte) {
+	if c.Response().StatusCode() >= fiber.StatusBadRequest {
+		if c.Response().StatusCode() == 404 {
+			global.LOG.Error(string(logString))
+		} else {
+			global.LOG.Warn(string(logString))
+		}
+	}
 }
 
 // func logHandle(w http.ResponseWriter, r *http.Request) {
