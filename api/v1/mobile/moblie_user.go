@@ -12,8 +12,7 @@ import (
 	"go.uber.org/zap"
 )
 
-type MobileUserApi struct {
-}
+type MobileUserApi struct{}
 
 var moblieUserService = new(mobileServer.MobileUserService)
 

@@ -10,18 +10,12 @@ package app
 import (
 	"server-fiber/global"
 	"server-fiber/model/app"
-	"server-fiber/model/common/response"
-	appService "server-fiber/service/app"
-
 	responseUplodFile "server-fiber/model/app/response"
+	"server-fiber/model/common/response"
 
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
 )
-
-type FileUploadAndDownloadApi struct{}
-
-var fileUploadService = new(appService.FileUploadService)
 
 // UploadFile @Tags UploadFile ExaFileUploadAndDownload
 // @Summary 上传文件示例

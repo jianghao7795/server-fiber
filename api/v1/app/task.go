@@ -7,8 +7,6 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-type TaskNameApi struct{}
-
 // StartTasking start Tasking
 // @Tags start Tasking
 // @Summary start Tasking

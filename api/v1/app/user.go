@@ -7,15 +7,10 @@ import (
 	appReq "server-fiber/model/app/request"
 	"server-fiber/model/common/request"
 	"server-fiber/model/common/response"
-	appService "server-fiber/service/app"
 
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
 )
-
-type UserApi struct{}
-
-var userService = new(appService.UserService)
 
 // CreateUser 创建User
 // @Tags User
