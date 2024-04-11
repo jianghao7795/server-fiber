@@ -10,14 +10,10 @@ import (
 type GithubRouter struct{}
 
 func (g *GithubRouter) InitGithubRouter(Router fiber.Router) {
-	githubRouter := Router.Group("github").Use(middleware.OperationRecord)
-	githubRouterRecord := Router.Group("github")
-
+	githubRouter := Router.Group("github")
 	githubRouterApi := new(v1.SystemGithubApi)
-	{
-		githubRouter.Get("createGithub", githubRouterApi.CreateGithub) // 创建github
-	}
-	{
-		githubRouterRecord.Get("getGithubList", githubRouterApi.GetGithubList)
-	}
+
+	githubRouter.Get("createGithub", middleware.OperationRecord, githubRouterApi.CreateGithub) // 创建github
+	githubRouter.Get("getGithubList", githubRouterApi.GetGithubList)
+
 }

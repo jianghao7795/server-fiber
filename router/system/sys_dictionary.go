@@ -19,5 +19,4 @@ func (s *DictionaryRouter) InitSysDictionaryRouter(Router fiber.Router) {
 
 	sysDictionaryRouter.Get("findSysDictionary", sysDictionaryApi.FindSysDictionary)       // 根据ID获取SysDictionary
 	sysDictionaryRouter.Get("getSysDictionaryList", sysDictionaryApi.GetSysDictionaryList) // 获取SysDictionary列表
-
 }

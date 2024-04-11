@@ -40,6 +40,6 @@ func (s *FrontendRouter) InitFrontendRouter(Router fiber.Router) {
 	}
 	var frontendUploadApi = new(fileUpload.FileUploadAndDownloadApi)
 	{
-		frontend.Post("upload", frontendUploadApi.UploadFile)
+		frontend.Post("upload", middleware.OperationRecord, frontendUploadApi.UploadFile)
 	}
 }

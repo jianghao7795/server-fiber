@@ -14,5 +14,4 @@ func (s *InitRouter) InitInitRouter(Router fiber.Router) {
 
 	initRouter.Post("initdb", dbApi.InitDB)  // 创建Api
 	initRouter.Get("checkdb", dbApi.CheckDB) // 检查是否初始化
-
 }
