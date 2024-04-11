@@ -1,7 +1,6 @@
 package initialize
 
 import (
-	"log"
 	"server-fiber/config"
 	"server-fiber/global"
 	"server-fiber/utils"
@@ -10,7 +9,6 @@ import (
 )
 
 func Timer() {
-	log.Println("timer: ", global.CONFIG.Timer.Detail)
 	if global.CONFIG.Timer.Start {
 		for i := range global.CONFIG.Timer.Detail {
 			go func(detail config.Detail) {
