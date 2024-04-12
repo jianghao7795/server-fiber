@@ -7,6 +7,7 @@
 package initialize
 
 import (
+	"log"
 	"time"
 
 	"server-fiber/global"
@@ -19,9 +20,37 @@ import (
 
 // 初始化总路由
 
+func configuration() fiber.Config {
+	var configura fiber.Config
+	configura.Prefork = global.CONFIG.FiberConfig.Prefork
+	configura.ServerHeader = global.CONFIG.FiberConfig.ServerHeader
+	configura.StrictRouting = global.CONFIG.FiberConfig.StrictRouting
+	configura.CaseSensitive = global.CONFIG.FiberConfig.CaseSensitive
+	configura.BodyLimit = global.CONFIG.FiberConfig.BodyLimit
+	configura.AppName = global.CONFIG.FiberConfig.AppName
+	configura.Concurrency = global.CONFIG.FiberConfig.Concurrency
+	configura.DisableStartupMessage = global.CONFIG.FiberConfig.DisableStartupMessage
+	configura.JSONEncoder = global.CONFIG.FiberConfig.JSONEncoder
+	configura.JSONDecoder = global.CONFIG.FiberConfig.JSONDecoder
+	configura.ErrorHandler = global.CONFIG.FiberConfig.ErrorHandler
+	return configura
+}
+
+func configLogger() logger.Config {
+	var logger logger.Config
+	logger.Done = global.CONFIG.FiberLogger.Done
+	logger.Format = global.CONFIG.FiberLogger.Format
+	logger.TimeFormat = global.CONFIG.FiberLogger.TimeFormat
+	logger.TimeZone = global.CONFIG.FiberLogger.TimeZone
+	return logger
+}
+
 func Routers() *fiber.App {
-	app := fiber.New(global.CONFIG.FiberConfig)
-	app.Use(logger.New(global.CONFIG.FiberLogger)) //log 日志配置
+	app := fiber.New(configuration())
+	log.Println("logger is: ", global.CONFIG.FiberLogger.IsOpen)
+	if global.CONFIG.FiberLogger.IsOpen {
+		app.Use(logger.New(configLogger())) //log 日志配置
+	}
 	appRouter := router.AppRouter
 	systemRouter := router.SystemRouter
 	exampleRouter := router.ExampleRouter
