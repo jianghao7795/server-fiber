@@ -38,16 +38,16 @@ captcha:
 casbin:
   model-path: ./rbac_model.conf
 cors:
-  mode: whitelist
+  mode: allow-all # whitelist 白名单 allow-all允许全部
   whitelist:
-    - allow-origin: example1.com
+    - allow-origin: example1.com # 允许访问的域名
       allow-methods: GET, POST, PUT, DELETE, PATCH
       allow-headers: content-type
       expose-headers:
         Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers,
         Content-Type
       allow-credentials: true
-    - allow-origin: example2.com
+    - allow-origin: example2.com # 允许访问的域名
       allow-methods: GET, POST, PUT, DELETE
       allow-headers: content-type
       expose-headers:
@@ -86,16 +86,16 @@ hua-wei-obs:
   secret-key: you-secret-key
 jwt:
   signing-key: 519fb1f4-4321-446a-bb7b-bfb13b68b960
-  expires-time: 24 # jwt token 过期时间
+  expires-time: 24
   buffer-time: 60
   issuer: jianghao
 local:
   path: uploads/file
 mysql:
-  path: 127.0.0.1
+  path: 192.168.159.128
   port: "3306"
   config: charset=utf8mb4&parseTime=True&loc=Local
-  db-name: server
+  db-name: server-fiber
   username: root
   password: "123456"
   max-idle-conns: 100
@@ -124,9 +124,10 @@ qiniu:
   use-cdn-domains: false
 redis:
   db: 0
-  addr: 127.0.0.1:6379
+  addr: 192.168.159.128:6379
   password: ""
 system:
+  domain: localhost
   env: develop
   addr: 3100
   db-type: mysql
@@ -143,18 +144,17 @@ tencent-cos:
   base-url: http://localhost:8080
   path-prefix: server
 timer:
-  start: false
-  spec: "@monthly"
+  start: true
+  spec: "@every 24h"
   detail:
-    - tableName: sys_operation_records
+    # - tableName: sys_operation_records
+    #   compareField: created_at
+    #   interval: 2160h
+    # - tableName: jwt_blacklists
+    #   compareField: created_at
+    #   interval: 2160h
+    - tableName: githubs
       compareField: created_at
-      interval: 2160h
-    - tableName: jwt_blacklists
-      compareField: created_at
-      interval: 2160h
-  tasks:
-    - taskName: server1
-      output: server run
       interval: 1s
 zap:
   level: info
@@ -173,10 +173,10 @@ fiberconifg: # fiber config
   body_limit: 10485760 # Body 限制
   app_name: "sever-fiber"
   concurrency: 262144 # 并发
-  disable_startup_message: false #关闭启动信息
+  disable_startup_message: true #关闭启动信息
   enable_splitting_on_parsers: true
 fiberlogger:
   format: "server-[${time}] ${ip} ${status} ${latency} ${method} ${path} ${error}\n" #格式
   time_format: "15:04:05" # 时间格式
   time_zone: "Local" #时区
-  is_open: true
+  is_open: false

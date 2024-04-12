@@ -4,11 +4,11 @@ import "github.com/gofiber/fiber/v2"
 
 type FiberConfig struct {
 	Prefork               bool   `mapstructure:"prefork" json:"prefork" yaml:"prefork"`
-	ServerHeader          string `mapstructure:"server-header" json:"server-header" yaml:"server-header"`
-	StrictRouting         bool   `mapstructure:"strict-routing" json:"strict-routing" yaml:"strict-routing"`
-	CaseSensitive         bool   `mapstructure:"case-sensitive" json:"case-sensitive" yaml:"case-sensitive"`
-	BodyLimit             int    `mapstructure:"body-limit" json:"body-limit" yaml:"body-limit"`
-	AppName               string `mapstructure:"app-name" json:"app-name" yaml:"app-name"`
+	ServerHeader          string `mapstructure:"server_header" json:"server_header" yaml:"server_header"`
+	StrictRouting         bool   `mapstructure:"strict_routing" json:"strict_routing" yaml:"strict_routing"`
+	CaseSensitive         bool   `mapstructure:"case_sensitive" json:"case_sensitive" yaml:"case_sensitive"`
+	BodyLimit             int    `mapstructure:"body_limit" json:"body_limit" yaml:"body_limit"`
+	AppName               string `mapstructure:"app_name" json:"app_name" yaml:"app_name"`
 	Concurrency           int    `mapstructure:"concurrency" json:"concurrency" yaml:"concurrency"`
 	DisableStartupMessage bool   `mapstructure:"DisableStartupMessage" json:"DisableStartupMessage" yaml:"DisableStartupMessage"`
 	JSONEncoder           func(val interface{}) ([]byte, error)

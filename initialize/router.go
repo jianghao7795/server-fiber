@@ -7,7 +7,6 @@
 package initialize
 
 import (
-	"log"
 	"time"
 
 	"server-fiber/global"
@@ -47,7 +46,6 @@ func configLogger() logger.Config {
 
 func Routers() *fiber.App {
 	app := fiber.New(configuration())
-	log.Println("logger is: ", global.CONFIG.FiberLogger.IsOpen)
 	if global.CONFIG.FiberLogger.IsOpen {
 		app.Use(logger.New(configLogger())) //log 日志配置
 	}
