@@ -92,7 +92,7 @@ jwt:
 local:
   path: uploads/file
 mysql:
-  path: 192.168.159.128
+  path: 127.0.0.1
   port: "3306"
   config: charset=utf8mb4&parseTime=True&loc=Local
   db-name: server-fiber
@@ -124,7 +124,7 @@ qiniu:
   use-cdn-domains: false
 redis:
   db: 0
-  addr: 192.168.159.128:6379
+  addr: 127.0.0.1:6379
   password: ""
 system:
   domain: localhost
@@ -173,7 +173,7 @@ fiberconifg: # fiber config
   body_limit: 10485760 # Body 限制
   app_name: "sever-fiber"
   concurrency: 262144 # 并发
-  disable_startup_message: false #关闭启动信息
+  disable_startup_message: true #关闭启动信息
   enable_splitting_on_parsers: true
 fiberlogger:
   format: "server-[${time}] ${ip} ${status} ${latency} ${method} ${path} ${error}\n" #格式
