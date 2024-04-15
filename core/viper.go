@@ -7,9 +7,7 @@ import (
 	"path/filepath"
 	"time"
 
-	json "github.com/bytedance/sonic"
 	"github.com/fsnotify/fsnotify"
-	"github.com/gofiber/fiber/v2"
 	jwt "github.com/golang-jwt/jwt/v5" // jwt
 	"github.com/songzhibin97/gkit/cache/local_cache"
 	"github.com/spf13/viper" // viper配置文件读取
@@ -88,36 +86,7 @@ func viperInit(path ...string) (*viper.Viper, error) {
 	global.BlackCache = local_cache.NewCache(
 		local_cache.SetDefaultExpire(time.Second * time.Duration(global.CONFIG.JWT.ExpiresTime)),
 	)
-	{ // fiber 配置
-		global.CONFIG.FiberConfig.ErrorHandler = func(ctx *fiber.Ctx, err error) error {
-			// 状态代码默认为500
-			code := fiber.StatusInternalServerError
-			var message string
-			// 如果是fiber.*Error，则检索自定义状态代码。
-			if e, ok := err.(*fiber.Error); ok {
-				code = e.Code
-				message = e.Message
-			}
-
-			return ctx.Status(code).JSON(fiber.Map{"msg": message})
-		}
-		global.CONFIG.FiberConfig.JSONEncoder = json.Marshal   // 自定义JSON编码器/解码器
-		global.CONFIG.FiberConfig.JSONDecoder = json.Unmarshal // 自定义JSON编码器/解码器
-	}
-	{ // fiber logger
-		global.CONFIG.FiberLogger.Done = done
-	}
 	return v, nil
-}
-
-func done(c *fiber.Ctx, logString []byte) {
-	if c.Response().StatusCode() >= fiber.StatusBadRequest {
-		if c.Response().StatusCode() == 404 {
-			global.LOG.Error(string(logString))
-		} else {
-			global.LOG.Warn(string(logString))
-		}
-	}
 }
 
 // func logHandle(w http.ResponseWriter, r *http.Request) {

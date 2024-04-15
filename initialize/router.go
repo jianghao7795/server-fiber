@@ -13,6 +13,7 @@ import (
 	"server-fiber/middleware"
 	"server-fiber/router"
 
+	json "github.com/bytedance/sonic"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 )
@@ -29,15 +30,36 @@ func configuration() fiber.Config {
 	configura.AppName = global.CONFIG.FiberConfig.AppName
 	configura.Concurrency = global.CONFIG.FiberConfig.Concurrency
 	configura.DisableStartupMessage = global.CONFIG.FiberConfig.DisableStartupMessage
-	configura.JSONEncoder = global.CONFIG.FiberConfig.JSONEncoder
-	configura.JSONDecoder = global.CONFIG.FiberConfig.JSONDecoder
-	configura.ErrorHandler = global.CONFIG.FiberConfig.ErrorHandler
+	configura.JSONEncoder = json.Marshal   // 自定义JSON编码器/解码器
+	configura.JSONDecoder = json.Unmarshal // 自定义JSON编码器/解码器
+	configura.ErrorHandler = func(ctx *fiber.Ctx, err error) error {
+		// 状态代码默认为500
+		code := fiber.StatusInternalServerError
+		var message string
+		// 如果是fiber.*Error，则检索自定义状态代码。
+		if e, ok := err.(*fiber.Error); ok {
+			code = e.Code
+			message = e.Message
+		}
+
+		return ctx.Status(code).JSON(fiber.Map{"msg": message})
+	}
 	return configura
+}
+
+func done(c *fiber.Ctx, logString []byte) {
+	if c.Response().StatusCode() >= fiber.StatusBadRequest {
+		if c.Response().StatusCode() == 404 {
+			global.LOG.Error(string(logString))
+		} else {
+			global.LOG.Warn(string(logString))
+		}
+	}
 }
 
 func configLogger() logger.Config {
 	var logger logger.Config
-	logger.Done = global.CONFIG.FiberLogger.Done
+	logger.Done = done
 	logger.Format = global.CONFIG.FiberLogger.Format
 	logger.TimeFormat = global.CONFIG.FiberLogger.TimeFormat
 	logger.TimeZone = global.CONFIG.FiberLogger.TimeZone

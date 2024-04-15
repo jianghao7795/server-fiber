@@ -11,9 +11,6 @@ type FiberConfig struct {
 	AppName               string `mapstructure:"app_name" json:"app_name" yaml:"app_name"`
 	Concurrency           int    `mapstructure:"concurrency" json:"concurrency" yaml:"concurrency"`
 	DisableStartupMessage bool   `mapstructure:"DisableStartupMessage" json:"DisableStartupMessage" yaml:"DisableStartupMessage"`
-	JSONEncoder           func(val interface{}) ([]byte, error)
-	JSONDecoder           func(buf []byte, val interface{}) error
-	ErrorHandler          func(ctx *fiber.Ctx, err error) error
 }
 
 type FiberLogger struct {
