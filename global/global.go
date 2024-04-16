@@ -6,6 +6,7 @@ import (
 	"server-fiber/utils/timer"
 
 	ut "github.com/go-playground/universal-translator"
+	"github.com/gofiber/fiber/v2"
 	"github.com/redis/go-redis/v9"
 	"github.com/songzhibin97/gkit/cache/local_cache"
 	"github.com/spf13/viper"
@@ -32,6 +33,16 @@ var (
 	// Cache config.Cache
 	Logger *slog.Logger // 用处 打印log
 )
+
+func Done(c *fiber.Ctx, logString []byte) {
+	if c.Response().StatusCode() >= fiber.StatusBadRequest {
+		if c.Response().StatusCode() == 404 {
+			LOG.Error(string(logString))
+		} else {
+			LOG.Warn(string(logString))
+		}
+	}
+}
 
 // GetGlobalDBByDBName 通过名称获取db list中的db
 // func GetGlobalDBByDBName(dbname string) *gorm.DB {

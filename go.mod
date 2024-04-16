@@ -1,6 +1,6 @@
 module server-fiber
 
-go 1.22
+go 1.20
 
 require (
 	github.com/aliyun/aliyun-oss-go-sdk v2.1.6+incompatible
@@ -12,7 +12,7 @@ require (
 	github.com/go-playground/universal-translator v0.18.1
 	github.com/go-playground/validator/v10 v10.14.0
 	github.com/go-sql-driver/mysql v1.6.0
-	github.com/gofiber/fiber/v2 v2.52.4
+	github.com/gofiber/fiber/v2 v2.52.2
 	github.com/golang-jwt/jwt/v5 v5.1.0
 	github.com/gookit/color v1.3.1
 	github.com/huaweicloud/huaweicloud-sdk-go-obs v3.21.8+incompatible
