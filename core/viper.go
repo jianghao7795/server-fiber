@@ -50,7 +50,6 @@ func viperInit(path ...string) (*viper.Viper, error) {
 	v.WatchConfig()
 
 	v.OnConfigChange(func(e fsnotify.Event) {
-		fmt.Println("config file changed:", e.Name)
 		if err := v.Unmarshal(&global.CONFIG); err != nil {
 			fmt.Println(err)
 		} else {
@@ -93,7 +92,7 @@ func viperInit(path ...string) (*viper.Viper, error) {
 		global.CONFIG.FiberConfig.ErrorHandler = func(ctx *fiber.Ctx, err error) error {
 			// 状态代码默认为500
 			code := fiber.StatusInternalServerError
-			var message string
+			var message string = "服务器错误"
 			// 如果是fiber.*Error，则检索自定义状态代码。
 			if e, ok := err.(*fiber.Error); ok {
 				code = e.Code

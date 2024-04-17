@@ -36,7 +36,7 @@ func (z *_zap) GetEncoderConfig() zapcore.EncoderConfig {
 		EncodeLevel:    global.CONFIG.Zap.ZapEncodeLevel(),
 		EncodeTime:     z.CustomTimeEncoder,
 		EncodeDuration: zapcore.SecondsDurationEncoder,
-		EncodeCaller:   zapcore.FullCallerEncoder,
+		EncodeCaller:   zapcore.FullCallerEncoder, // FullCallerEncoder
 	}
 }
 

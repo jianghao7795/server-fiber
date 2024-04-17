@@ -100,9 +100,9 @@ mysql:
   password: "123456"
   max-idle-conns: 100
   max-open-conns: 1000
-  log-mode: silent
+  log-mode: error # silent
   log-zap: true
-  debug: true
+  debug: false
 pgsql:
   path: ""
   port: ""
@@ -162,7 +162,7 @@ zap:
   prefix: "[server]-"
   director: log
   show-line: true
-  encode-level: LowercaseColorLevelEncoder
+  encode-level: LowercaseLevelEncoder # LowercaseColorLevelEncoder
   stacktrace-key: stacktrace
   log-in-console: true
 fiberconifg: # fiber config

@@ -28,7 +28,7 @@ func (g *_gorm) Config() *gorm.Config {
 	_default := logger.New(NewWriter(log.New(os.Stdout, "\n", log.LstdFlags)), logger.Config{
 		SlowThreshold: 200 * time.Millisecond,
 		LogLevel:      logger.Warn,
-		Colorful:      true,
+		Colorful:      false,
 	})
 	var logMode DBBASE
 	switch global.CONFIG.System.DbType {
