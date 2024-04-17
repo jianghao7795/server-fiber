@@ -10,7 +10,7 @@ import (
 
 type GithubService struct{}
 
-func (g *GithubService) CreateApi(github *[]system.SysGithub) (total int, err error) {
+func (g *GithubService) CreateGithub(github *[]system.SysGithub) (total int, err error) {
 	db := global.DB.Model(&system.SysGithub{})
 	var data []system.SysGithub
 	for _, item := range *github {

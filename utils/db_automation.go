@@ -5,9 +5,11 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"server-fiber/global"
 	"server-fiber/model/system"
+	"sort"
 	"time"
 
 	"go.uber.org/zap"
@@ -53,7 +55,7 @@ func UpdateTable(db *gorm.DB, tableName string, compareField string, interval st
 	}
 
 	page := "1"
-	per_page := "5"
+	per_page := "20"
 	resp, err := http.Get("https://api.github.com/repos/JiangHaoCode/server-fiber/commits?page=" + page + "&per_page=" + per_page)
 	defer func() {
 		_ = resp.Body.Close()
@@ -73,27 +75,61 @@ func UpdateTable(db *gorm.DB, tableName string, compareField string, interval st
 	json.Unmarshal(body, &respData)
 	time.LoadLocation("Asia/Shanghai")
 	db = db.Model(&system.SysGithub{})
-	var lastGithub system.SysGithub
 	data := make([]system.SysGithub, 0)
-	db.Order("id desc").First(&lastGithub)
+	log.Println("github commit: ", len(respData))
 	for _, val := range respData {
 		var temp system.SysGithub
-		if val.Commit.Author.Name == "" {
-			break
-		}
+		temp.Author = val.Commit.Author.Name
 		temp.CommitTime = val.Commit.Author.Date.Add(8 * time.Hour).Format("2006-01-02 15:04:05")
-		tCurrent, _ := time.Parse("2006-01-02 15:04:05", temp.CommitTime)
-		tRecord, _ := time.Parse("2006-01-02 15:04:05", lastGithub.CommitTime)
-		if tCurrent.After(tRecord) {
-			temp.Author = val.Commit.Author.Name
-			temp.Message = val.Commit.Message
-			data = append(data, temp)
+		temp.Message = val.Commit.Message
+		data = append(data, temp)
+	}
+	log.Println("data: 1111111", len(data))
+	var dataGithub []system.SysGithub
+	for _, item := range data {
+		if item.CommitTime != "" {
+			db = db.Or("commit_time = ?", item.CommitTime)
 		}
-
 	}
-	if len(data) > 0 {
-		return db.Create(&data).Error
-	}
+	db.Limit(20).Order("id desc").Find(&dataGithub)
+	dataInsert := []system.SysGithub{}
+	var isExist = true
+	for _, item := range data {
+		for _, itemGithub := range dataGithub {
+			if itemGithub.CommitTime == item.CommitTime {
+				isExist = false
+				break
+			} else {
+				isExist = true
+			}
 
-	return nil
+		}
+		if isExist {
+			dataInsert = append(dataInsert, item)
+			isExist = true
+		}
+	}
+	insertNumber := 0
+	if len(dataInsert) != 0 {
+		sort.Slice(dataInsert, func(i, j int) bool {
+			return timeStrTime(dataInsert[i].CommitTime) < timeStrTime(dataInsert[j].CommitTime)
+		})
+		for _, item := range dataInsert {
+			dataItem := item
+			if dataItem.CommitTime != "" {
+				insertNumber++
+				err = db.Create(&dataItem).Error
+			}
+		}
+	}
+	global.LOG.Info(fmt.Sprintf("github 插入 %d 条", insertNumber))
+
+	return err
+}
+
+func timeStrTime(valueStr string) int64 {
+	loc := time.Local
+	fmtStr := "2006-01-02 15:04:05"
+	t, _ := time.ParseInLocation(fmtStr, valueStr, loc)
+	return t.Unix()
 }

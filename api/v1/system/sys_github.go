@@ -66,7 +66,7 @@ func (g *SystemGithubApi) CreateGithub(c *fiber.Ctx) error {
 		temp.Message = val.Commit.Message
 		data = append(data, temp)
 	}
-	if total, err := githubService.CreateApi(&data); err != nil {
+	if total, err := githubService.CreateGithub(&data); err != nil {
 		global.LOG.Error("创建commit有错误!", zap.Error(err))
 		return response.FailWithMessage("创建commit有错误!", c)
 	} else {
