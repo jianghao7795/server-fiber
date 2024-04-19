@@ -115,7 +115,7 @@ func (commentApi *CommentApi) FindComment(c *fiber.Ctx) error {
 		global.LOG.Error("查询失败!", zap.Error(err))
 		return response.FailWithMessage("查询失败", c)
 	} else {
-		return response.OkWithData(fiber.Map{"recomment": recomment}, c)
+		return response.OkWithData(fiber.Map{"comment": recomment}, c)
 	}
 }
 

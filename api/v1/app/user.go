@@ -121,7 +121,7 @@ func (userApi *UserApi) FindUser(c *fiber.Ctx) error {
 		global.LOG.Error("查询失败!", zap.Error(err))
 		return response.FailWithMessage("查询失败", c)
 	} else {
-		return response.OkWithData(fiber.Map{"reuser": reuser}, c)
+		return response.OkWithData(fiber.Map{"user": reuser}, c)
 	}
 }
 

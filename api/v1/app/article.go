@@ -134,7 +134,7 @@ func (*ArticleApi) FindArticle(c *fiber.Ctx) error {
 			"msg": err.Error(),
 		}, "查询失败", c)
 	} else {
-		return response.OkWithData(fiber.Map{"rearticle": rearticle}, c)
+		return response.OkWithData(fiber.Map{"article": rearticle}, c)
 	}
 
 }

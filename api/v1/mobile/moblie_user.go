@@ -110,7 +110,7 @@ func (mobileUserApi *MobileUserApi) FindMoblieUser(c *fiber.Ctx) error {
 		global.LOG.Error("查询失败!", zap.Error(err))
 		return response.FailWithMessage("查询失败", c)
 	} else {
-		return response.OkWithData(fiber.Map{"remoblieUser": remoblieUser}, c)
+		return response.OkWithData(fiber.Map{"moblieUser": remoblieUser}, c)
 	}
 }
 
