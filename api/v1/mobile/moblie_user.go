@@ -22,7 +22,7 @@ var moblieUserService = new(mobileServer.MobileUserService)
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body mobile.MoblieUser true "创建MoblieUser"
+// @Param data body mobile.MobileUser true "创建MoblieUser"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
 // @Router /moblieUser/createMoblieUser [post]
 func (mobileUserApi *MobileUserApi) CreateMoblieUser(c *fiber.Ctx) error {
@@ -42,7 +42,7 @@ func (mobileUserApi *MobileUserApi) CreateMoblieUser(c *fiber.Ctx) error {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body mobile.MoblieUser true "删除MoblieUser"
+// @Param data body mobile.MobileUser true "删除MoblieUser"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
 // @Router /moblieUser/deleteMoblieUser [delete]
 func (mobileUserApi *MobileUserApi) DeleteMoblieUser(c *fiber.Ctx) error {
@@ -81,7 +81,7 @@ func (mobileUserApi *MobileUserApi) DeleteMoblieUserByIds(c *fiber.Ctx) error {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body mobile.MoblieUser true "更新MoblieUser"
+// @Param data body mobile.MobileUser true "更新MoblieUser"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"更新成功"}"
 // @Router /moblieUser/updateMoblieUser [put]
 func (mobileUserApi *MobileUserApi) UpdateMoblieUser(c *fiber.Ctx) error {
@@ -101,7 +101,7 @@ func (mobileUserApi *MobileUserApi) UpdateMoblieUser(c *fiber.Ctx) error {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data query mobile.MoblieUser true "用id查询MoblieUser"
+// @Param data query mobile.MobileUser true "用id查询MoblieUser"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"查询成功"}"
 // @Router /moblieUser/findMoblieUser [get]
 func (mobileUserApi *MobileUserApi) FindMoblieUser(c *fiber.Ctx) error {

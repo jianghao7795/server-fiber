@@ -26,7 +26,7 @@ var fileUploadAndDownloadService = new(exampleServer.FileUploadAndDownloadServic
 // @accept multipart/form-data
 // @Produce  application/json
 // @Param file formData file true "an example for breakpoint resume, 断点续传示例"
-// @Success 200 {object} return response.Response{msg=string} "断点续传到服务器"
+// @Success 200 {object} response.Response{msg=string} "断点续传到服务器"
 // @Router /fileUploadAndDownload/breakpointContinue [post]
 func (u *FileUploadAndDownloadApi) BreakpointContinue(c *fiber.Ctx) error {
 	fileMd5 := c.FormValue("fileMd5")
@@ -79,7 +79,7 @@ func (u *FileUploadAndDownloadApi) BreakpointContinue(c *fiber.Ctx) error {
 // @accept multipart/form-data
 // @Produce  application/json
 // @Param file formData file true "Find the file, 查找文件"
-// @Success 200 {object} return response.Response{data=exampleRes.FileResponse,msg=string} "查找文件,返回包括文件详情"
+// @Success 200 {object} response.Response{data=exampleRes.FileResponse,msg=string} "查找文件,返回包括文件详情"
 // @Router /fileUploadAndDownload/findFile [get]
 func (u *FileUploadAndDownloadApi) FindFile(c *fiber.Ctx) error {
 	fileMd5 := c.Query("fileMd5")
@@ -100,7 +100,7 @@ func (u *FileUploadAndDownloadApi) FindFile(c *fiber.Ctx) error {
 // @accept multipart/form-data
 // @Produce  application/json
 // @Param file formData file true "上传文件完成"
-// @Success 200 {object} return response.Response{data=exampleRes.FilePathResponse,msg=string} "创建文件,返回包括文件路径"
+// @Success 200 {object} response.Response{data=exampleRes.FilePathResponse,msg=string} "创建文件,返回包括文件路径"
 // @Router /fileUploadAndDownload/findFile [post]
 func (b *FileUploadAndDownloadApi) BreakpointContinueFinish(c *fiber.Ctx) error {
 	fileMd5 := c.Query("fileMd5")
@@ -120,7 +120,7 @@ func (b *FileUploadAndDownloadApi) BreakpointContinueFinish(c *fiber.Ctx) error 
 // @accept multipart/form-data
 // @Produce  application/json
 // @Param file formData file true "删除缓存切片"
-// @Success 200 {object} return response.Response{msg=string} "删除切片"
+// @Success 200 {object} response.Response{msg=string} "删除切片"
 // @Router /fileUploadAndDownload/removeChunk [post]
 func (u *FileUploadAndDownloadApi) RemoveChunk(c *fiber.Ctx) error {
 	var file example.ExaFile

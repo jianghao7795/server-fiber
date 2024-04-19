@@ -17,13 +17,13 @@ import (
 	"go.uber.org/zap"
 )
 
-// UploadFile @Tags UploadFile ExaFileUploadAndDownload
+// @Tags UploadFile ExaFileUploadAndDownload
 // @Summary 上传文件示例
 // @Security ApiKeyAuth
 // @accept multipart/form-data
 // @Produce  application/json
 // @Param file formData file true "上传文件示例"
-// @Success 200 {object} return response.Response{data=string,msg=string} "上传文件示例,返回包括文件详情"
+// @Success 200 {object} response.Response{data=string,msg=string} "上传文件示例,返回包括文件详情"
 // @Router /fileUploadAndDownload/upload [post]
 func (u *FileUploadAndDownloadApi) UploadFile(c *fiber.Ctx) error {
 	var file app.FileUploadAndDownload

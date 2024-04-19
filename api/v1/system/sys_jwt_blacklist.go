@@ -17,7 +17,7 @@ type JwtApi struct{}
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Success 200 {object} return response.Response{msg=string} "jwt加入黑名单"
+// @Success 200 {object} response.Response{msg=string} "jwt加入黑名单"
 // @Router /jwt/jsonInBlacklist [post]
 func (j *JwtApi) JsonInBlacklist(c *fiber.Ctx) error {
 	tokenString := c.Get("Authorization")

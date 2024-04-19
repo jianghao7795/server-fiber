@@ -21,7 +21,7 @@ type SystemApiApi struct{}
 // @accept application/json
 // @Produce application/json
 // @Param data body system.SysApi true "api路径, api中文描述, api组, 方法"
-// @Success 200 {object} return response.Response{msg=string} "创建基础api"
+// @Success 200 {object} response.Response{msg=string} "创建基础api"
 // @Router /api/createApi [post]
 func (s *SystemApiApi) CreateApi(c *fiber.Ctx) (err error) {
 	var api system.SysApi
@@ -47,7 +47,7 @@ func (s *SystemApiApi) CreateApi(c *fiber.Ctx) (err error) {
 // @accept application/json
 // @Produce application/json
 // @Param data body system.SysApi true "ID"
-// @Success 200 {object} return response.Response{msg=string} "删除api"
+// @Success 200 {object} response.Response{msg=string} "删除api"
 // @Router /api/deleteApi [post]
 func (s *SystemApiApi) DeleteApi(c *fiber.Ctx) error {
 	var api system.SysApi
@@ -70,7 +70,7 @@ func (s *SystemApiApi) DeleteApi(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data body systemReq.SearchApiParams true "分页获取API列表"
-// @Success 200 {object} return response.Response{data=return response.PageResult,msg=string} "分页获取API列表,返回包括列表,总数,页码,每页数量"
+// @Success 200 {object} response.Response{data=response.PageResult,msg=string} "分页获取API列表,返回包括列表,总数,页码,每页数量"
 // @Router /api/getApiList [get]
 func (s *SystemApiApi) GetApiList(c *fiber.Ctx) error {
 	var pageInfo systemReq.SearchApiParams
@@ -134,7 +134,7 @@ func (s *SystemApiApi) GetApiList(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data body request.GetById true "根据id获取api"
-// @Success 200 {object} return response.Response{data=systemRes.SysAPIResponse} "根据id获取api,返回包括api详情"
+// @Success 200 {object} response.Response{data=systemRes.SysAPIResponse} "根据id获取api,返回包括api详情"
 // @Router /api/getApiById [post]
 func (s *SystemApiApi) GetApiById(c *fiber.Ctx) error {
 	var idInfo request.GetById
@@ -158,7 +158,7 @@ func (s *SystemApiApi) GetApiById(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data body system.SysApi true "api路径, api中文描述, api组, 方法"
-// @Success 200 {object} return response.Response{msg=string} "修改基础api"
+// @Success 200 {object} response.Response{msg=string} "修改基础api"
 // @Router /api/updateApi [put]
 func (s *SystemApiApi) UpdateApi(c *fiber.Ctx) error {
 	var api system.SysApi
@@ -183,7 +183,7 @@ func (s *SystemApiApi) UpdateApi(c *fiber.Ctx) error {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Success 200 {object} return response.Response{data=systemRes.SysAPIListResponse,msg=string} "获取所有的Api 不分页,返回包括api列表"
+// @Success 200 {object} response.Response{data=systemRes.SysAPIListResponse,msg=string} "获取所有的Api 不分页,返回包括api列表"
 // @Router /api/getAllApis [get]
 func (s *SystemApiApi) GetAllApis(c *fiber.Ctx) error {
 	if apis, err := apiService.GetAllApis(); err != nil {
@@ -200,7 +200,7 @@ func (s *SystemApiApi) GetAllApis(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data body request.IdsReq true "ID"
-// @Success 200 {object} return response.Response{msg=string} "删除选中Api"
+// @Success 200 {object} response.Response{msg=string} "删除选中Api"
 // @Router /api/deleteApisByIds [delete]
 func (s *SystemApiApi) DeleteApisByIds(c *fiber.Ctx) error {
 	var ids request.IdsReq

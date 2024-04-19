@@ -65,7 +65,7 @@ func (e *ExcelApi) ExportExcel(c *fiber.Ctx) error {
 // @accept multipart/form-data
 // @Produce  application/json
 // @Param file formData file true "导入Excel文件"
-// @Success 200 {object} return response.Response{msg=string} "导入Excel文件"
+// @Success 200 {object} response.Response{msg=string} "导入Excel文件"
 // @Router /excel/importExcel [post]
 func (e *ExcelApi) ImportExcel(c *fiber.Ctx) error {
 	header, err := c.FormFile("file")
@@ -105,7 +105,7 @@ func (e *ExcelApi) ImportExcel(c *fiber.Ctx) error {
 // @Summary 加载Excel数据
 // @Security ApiKeyAuth
 // @Produce  application/json
-// @Success 200 {object} return response.Response{data=return response.PageResult,msg=string} "加载Excel数据,返回包括列表,总数,页码,每页数量"
+// @Success 200 {object} response.Response{data=response.PageResult,msg=string} "加载Excel数据,返回包括列表,总数,页码,每页数量"
 // @Router /excel/loadExcel [get]
 func (e *ExcelApi) LoadExcel(c *fiber.Ctx) error {
 	menus, err := excelService.ParseExcel2InfoList()

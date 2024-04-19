@@ -23,7 +23,7 @@ var customerService = new(exampleServer.CustomerService)
 // @accept application/json
 // @Produce application/json
 // @Param data body example.ExaCustomer true "客户用户名, 客户手机号码"
-// @Success 200 {object} return response.Response{msg=string} "创建客户"
+// @Success 200 {object} response.Response{msg=string} "创建客户"
 // @Router /customer/customer [post]
 func (e *CustomerApi) CreateExaCustomer(c *fiber.Ctx) error {
 	var customer example.ExaCustomer
@@ -47,7 +47,7 @@ func (e *CustomerApi) CreateExaCustomer(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data body example.ExaCustomer true "客户ID"
-// @Success 200 {object} return response.Response{msg=string} "删除客户"
+// @Success 200 {object} response.Response{msg=string} "删除客户"
 // @Router /customer/customer [delete]
 func (e *CustomerApi) DeleteExaCustomer(c *fiber.Ctx) error {
 	var customer example.ExaCustomer
@@ -69,7 +69,7 @@ func (e *CustomerApi) DeleteExaCustomer(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data body example.ExaCustomer true "客户ID, 客户信息"
-// @Success 200 {object} return response.Response{msg=string} "更新客户信息"
+// @Success 200 {object} response.Response{msg=string} "更新客户信息"
 // @Router /customer/customer [put]
 func (e *CustomerApi) UpdateExaCustomer(c *fiber.Ctx) error {
 	var customer example.ExaCustomer
@@ -94,7 +94,7 @@ func (e *CustomerApi) UpdateExaCustomer(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data query example.ExaCustomer true "客户ID"
-// @Success 200 {object} return response.Response{data=exampleRes.ExaCustomerResponse,msg=string} "获取单一客户信息,返回包括客户详情"
+// @Success 200 {object} response.Response{data=exampleRes.ExaCustomerResponse,msg=string} "获取单一客户信息,返回包括客户详情"
 // @Router /customer/customer [get]
 func (e *CustomerApi) GetExaCustomer(c *fiber.Ctx) error {
 	var customer example.ExaCustomer
@@ -117,7 +117,7 @@ func (e *CustomerApi) GetExaCustomer(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data query request.PageInfo true "页码, 每页大小"
-// @Success 200 {object} return response.Response{data=return response.PageResult,msg=string} "分页获取权限客户列表,返回包括列表,总数,页码,每页数量"
+// @Success 200 {object} response.Response{data=response.PageResult,msg=string} "分页获取权限客户列表,返回包括列表,总数,页码,每页数量"
 // @Router /customer/customerList [get]
 func (e *CustomerApi) GetExaCustomerList(c *fiber.Ctx) error {
 	var pageInfo request.SearchCustomerParams

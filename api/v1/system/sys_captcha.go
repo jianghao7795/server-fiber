@@ -22,7 +22,7 @@ type BaseApi struct{}
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Success 200 {object} return response.Response{data=systemRes.SysCaptchaResponse,msg=string} "生成验证码,返回包括随机数id,base64,验证码长度"
+// @Success 200 {object} response.Response{data=systemRes.SysCaptchaResponse,msg=string} "生成验证码,返回包括随机数id,base64,验证码长度"
 // @Router /base/captcha [get]
 func (b *BaseApi) Captcha(c *fiber.Ctx) error {
 	// 字符,公式,验证码配置

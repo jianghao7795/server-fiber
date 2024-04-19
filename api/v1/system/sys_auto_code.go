@@ -26,7 +26,7 @@ type AutoCodeApi struct{}
 // @accept application/json
 // @Produce application/json
 // @Param data body system.AutoCodeStruct true "预览创建代码"
-// @Success 200 {object} return response.Response{data=map[string]interface{},msg=string} "预览创建后的代码"
+// @Success 200 {object} response.Response{data=map[string]interface{},msg=string} "预览创建后的代码"
 // @Router /autoCode/preview [post]
 func (autoApi *AutoCodeApi) PreviewTemp(c *fiber.Ctx) error {
 	var a system.AutoCodeStruct
@@ -96,7 +96,7 @@ func (autoApi *AutoCodeApi) CreateTemp(c *fiber.Ctx) error {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Success 200 {object} return response.Response{data=map[string]interface{},msg=string} "获取当前所有数据库"
+// @Success 200 {object} response.Response{data=map[string]interface{},msg=string} "获取当前所有数据库"
 // @Router /autoCode/getDatabase [get]
 func (autoApi *AutoCodeApi) GetDB(c *fiber.Ctx) error {
 	dbs, err := autoCodeService.Database().GetDB()
@@ -114,7 +114,7 @@ func (autoApi *AutoCodeApi) GetDB(c *fiber.Ctx) error {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Success 200 {object} return response.Response{data=map[string]interface{},msg=string} "获取当前数据库所有表"
+// @Success 200 {object} response.Response{data=map[string]interface{},msg=string} "获取当前数据库所有表"
 // @Router /autoCode/getTables [get]
 func (autoApi *AutoCodeApi) GetTables(c *fiber.Ctx) error {
 	dbName := c.Query("dbName", global.CONFIG.Mysql.Dbname)
@@ -133,7 +133,7 @@ func (autoApi *AutoCodeApi) GetTables(c *fiber.Ctx) error {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Success 200 {object} return response.Response{data=map[string]interface{},msg=string} "获取当前表所有字段"
+// @Success 200 {object} response.Response{data=map[string]interface{},msg=string} "获取当前表所有字段"
 // @Router /autoCode/getColumn [get]
 func (autoApi *AutoCodeApi) GetColumn(c *fiber.Ctx) error {
 	dbName := c.Query("dbName", global.CONFIG.Mysql.Dbname)
@@ -154,7 +154,7 @@ func (autoApi *AutoCodeApi) GetColumn(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data body system.SysAutoCode true "创建package"
-// @Success 200 {object} return response.Response{data=map[string]interface{},msg=string} "创建package成功"
+// @Success 200 {object} response.Response{data=map[string]interface{},msg=string} "创建package成功"
 // @Router /autoCode/createPackage [post]
 func (autoApi *AutoCodeApi) CreatePackage(c *fiber.Ctx) error {
 	var a system.SysAutoCode
@@ -177,7 +177,7 @@ func (autoApi *AutoCodeApi) CreatePackage(c *fiber.Ctx) error {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Success 200 {object} return response.Response{data=map[string]interface{},msg=string} "创建package成功"
+// @Success 200 {object} response.Response{data=map[string]interface{},msg=string} "创建package成功"
 // @Router /autoCode/getPackage [post]
 func (autoApi *AutoCodeApi) GetPackage(c *fiber.Ctx) error {
 	pkgs, err := autoCodeService.GetPackage()
@@ -196,7 +196,7 @@ func (autoApi *AutoCodeApi) GetPackage(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data body system.SysAutoCode true "创建package"
-// @Success 200 {object} return response.Response{data=map[string]interface{},msg=string} "删除package成功"
+// @Success 200 {object} response.Response{data=map[string]interface{},msg=string} "删除package成功"
 // @Router /autoCode/delPackage [post]
 func (autoApi *AutoCodeApi) DelPackage(c *fiber.Ctx) error {
 	var a system.SysAutoCode

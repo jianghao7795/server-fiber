@@ -13,6 +13,7 @@ import (
 	"server-fiber/middleware"
 	"server-fiber/router"
 
+	"github.com/gofiber/contrib/swagger"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 )
@@ -20,7 +21,16 @@ import (
 // 初始化总路由
 
 func Routers() *fiber.App {
+	cfg := swagger.Config{
+		Next:     nil,
+		BasePath: "/",
+		FilePath: "./swagger.json",
+		Path:     "docs",
+		Title:    "Fiber API documentation",
+		CacheAge: 3600, // Default to 1 hour
+	}
 	app := fiber.New(global.CONFIG.FiberConfig)
+	app.Use(swagger.New(cfg)) // 异常捕获
 	app.Use(logger.New(logger.Config{
 		Done: global.Done,
 	})) //log 日志配置

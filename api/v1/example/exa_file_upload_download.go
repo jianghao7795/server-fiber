@@ -26,7 +26,7 @@ type FileUploadAndDownloadApi struct{}
 // @accept multipart/form-data
 // @Produce  application/json
 // @Param file formData file true "上传文件示例"
-// @Success 200 {object} return response.Response{data=exampleRes.ExaFileResponse,msg=string} "上传文件示例,返回包括文件详情"
+// @Success 200 {object} response.Response{data=exampleRes.ExaFileResponse,msg=string} "上传文件示例,返回包括文件详情"
 // @Router /fileUploadAndDownload/upload [post]
 func (u *FileUploadAndDownloadApi) UploadFile(c *fiber.Ctx) error {
 	var file example.ExaFileUploadAndDownload
@@ -87,7 +87,7 @@ func (u *FileUploadAndDownloadApi) EditFileName(c *fiber.Ctx) error {
 // @Security ApiKeyAuth
 // @Produce  application/json
 // @Param data body example.ExaFileUploadAndDownload true "传入文件里面id即可"
-// @Success 200 {object} return response.Response{msg=string} "删除文件"
+// @Success 200 {object} response.Response{msg=string} "删除文件"
 // @Router /fileUploadAndDownload/deleteFile [post]
 func (u *FileUploadAndDownloadApi) DeleteFile(c *fiber.Ctx) error {
 	var file example.ExaFileUploadAndDownload
@@ -106,7 +106,7 @@ func (u *FileUploadAndDownloadApi) DeleteFile(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data body request.PageInfo true "页码, 每页大小"
-// @Success 200 {object} return response.Response{data=return response.PageResult,msg=string} "分页文件列表,返回包括列表,总数,页码,每页数量"
+// @Success 200 {object} response.Response{data=response.PageResult,msg=string} "分页文件列表,返回包括列表,总数,页码,每页数量"
 // @Router /fileUploadAndDownload/getFileList [post]
 func (u *FileUploadAndDownloadApi) GetFileList(c *fiber.Ctx) error {
 	var pageInfo request.PageInfo
