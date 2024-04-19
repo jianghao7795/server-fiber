@@ -24,13 +24,13 @@ func Routers() *fiber.App {
 	cfg := swagger.Config{
 		Next:     nil,
 		BasePath: "/",
-		FilePath: "./swagger.json",
-		Path:     "docs",
-		Title:    "Fiber API documentation",
+		FilePath: "./docs/swagger.json",
+		Path:     "./docs",
+		Title:    "Server-Fiber API documentation",
 		CacheAge: 3600, // Default to 1 hour
 	}
 	app := fiber.New(global.CONFIG.FiberConfig)
-	app.Use(swagger.New(cfg)) // 异常捕获
+	app.Use(swagger.New(cfg)) // swagger文档配置
 	app.Use(logger.New(logger.Config{
 		Done: global.Done,
 	})) //log 日志配置
