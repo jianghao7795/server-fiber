@@ -214,6 +214,76 @@ definitions:
         description: 图片宽度
         type: integer
     type: object
+  frontend.Article:
+    properties:
+      content:
+        type: string
+      createdAt:
+        description: 创建时间
+        type: string
+      desc:
+        type: string
+      id:
+        description: 主键ID
+        type: integer
+      is_important:
+        type: integer
+      reading_quantity:
+        type: integer
+      state:
+        type: integer
+      tags:
+        items:
+          $ref: '#/definitions/frontend.Tag'
+        type: array
+      title:
+        type: string
+      updatedAt:
+        description: 更新时间
+        type: string
+      user:
+        $ref: '#/definitions/frontend.ArticleUser'
+      user_id:
+        type: integer
+    type: object
+  frontend.ArticleUser:
+    properties:
+      createdAt:
+        description: 创建时间
+        type: string
+      headerImg:
+        type: string
+      id:
+        description: 主键ID
+        type: integer
+      nickName:
+        type: string
+      updatedAt:
+        description: 更新时间
+        type: string
+      userName:
+        type: string
+    type: object
+  frontend.Tag:
+    properties:
+      aritcles:
+        items:
+          $ref: '#/definitions/frontend.Article'
+        type: array
+      createdAt:
+        description: 创建时间
+        type: string
+      id:
+        description: 主键ID
+        type: integer
+      name:
+        type: string
+      status:
+        type: integer
+      updatedAt:
+        description: 更新时间
+        type: string
+    type: object
   mobile.MobileUser:
     properties:
       avatar:
@@ -2989,6 +3059,75 @@ paths:
       summary: 上传文件示例
       tags:
       - ExaFileUploadAndDownload
+  /getArticle/:id:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: get单个Article
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/frontend.Article'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true, "msg":"获得成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: get单个Article
+      tags:
+      - Article
+  /getArticleList:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Get Article
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/frontend.Article'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true, "msg":"获得成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Get Article
+      tags:
+      - Article
+  /getSearchArticle/:name/:value:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Serach Artcle
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/frontend.Article'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true, "msg":"获得成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: get单个Article
+      tags:
+      - Article
   /init/checkdb:
     post:
       produces:
