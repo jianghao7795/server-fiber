@@ -16,6 +16,16 @@ type FrontendArticleApi struct{}
 
 var frontendArtileService = new(frontend.FrontendArticle)
 
+// GetArticleList 分页获取article列表
+// FindArticle Get Article
+// @Tags Article
+// @Summary Get Article
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param data body frontend.Article true "Get Article"
+// @Success 200 {string} string "{"success":true, "msg":"获得成功"}"
+// @Router /getArticleList [get]
 func (s *FrontendArticleApi) GetArticleList(c *fiber.Ctx) error {
 	var pageInfo request.ArticleSearch
 	_ = c.QueryParser(&pageInfo)
@@ -41,6 +51,15 @@ func (s *FrontendArticleApi) GetArticleList(c *fiber.Ctx) error {
 	}
 }
 
+// FindArticle get单个Article
+// @Tags Article
+// @Summary get单个Article
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param data body frontend.Article true "get单个Article"
+// @Success 200 {string} string "{"success":true, "msg":"获得成功"}"
+// @Router /getArticle/:id [get]
 func (s *FrontendArticleApi) GetArticleDetail(c *fiber.Ctx) error {
 	id, err := c.ParamsInt("id")
 	if err != nil {
@@ -62,6 +81,15 @@ func (s *FrontendArticleApi) GetArticleDetail(c *fiber.Ctx) error {
 	}
 }
 
+// FindArticle get单个Article
+// @Tags Article
+// @Summary get单个Article
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param data body frontend.Article true "Serach Artcle"
+// @Success 200 {string} string "{"success":true, "msg":"获得成功"}"
+// @Router /getSearchArticle/:name/:value [get]
 func (s *FrontendArticleApi) GetSearchArticle(c *fiber.Ctx) error {
 	var searchValue request.ArticleSearch
 	err := c.ParamsParser(&searchValue)
