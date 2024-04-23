@@ -29,6 +29,7 @@ func Routers() *fiber.App {
 		Title:    "Server-Fiber API documentation",
 		CacheAge: 3600, // Default to 1 hour
 	}
+
 	app := fiber.New(global.CONFIG.FiberConfig)
 	app.Use(swagger.New(cfg)) // swagger文档配置
 	app.Use(logger.New(logger.Config{
