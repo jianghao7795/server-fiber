@@ -58,12 +58,12 @@ func (dictionaryDetailService *DictionaryDetailService) GetSysDictionaryDetail(i
 //@param: info request.SysDictionaryDetailSearch
 //@return: err error, list interface{}, total int64
 
-func (dictionaryDetailService *DictionaryDetailService) GetSysDictionaryDetailInfoList(info request.SysDictionaryDetailSearch) (list interface{}, total int64, err error) {
+func (dictionaryDetailService *DictionaryDetailService) GetSysDictionaryDetailInfoList(info request.SysDictionaryDetailSearch) (list []system.SysDictionaryDetail, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	// 创建db
 	db := global.DB.Model(&system.SysDictionaryDetail{})
-	var sysDictionaryDetails []system.SysDictionaryDetail
+	// utils.MergeQuery(db, info, "label", "value", "status", "sysDictionaryID")
 	// 如果有条件搜索 下方会自动创建搜索语句
 	if info.Label != "" {
 		db = db.Where("label LIKE ?", "%"+info.Label+"%")
@@ -81,6 +81,6 @@ func (dictionaryDetailService *DictionaryDetailService) GetSysDictionaryDetailIn
 	if err != nil {
 		return
 	}
-	err = db.Limit(limit).Offset(offset).Find(&sysDictionaryDetails).Error
-	return sysDictionaryDetails, total, err
+	err = db.Limit(limit).Offset(offset).Find(&list).Error
+	return list, total, err
 }

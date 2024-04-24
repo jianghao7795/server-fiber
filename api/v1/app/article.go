@@ -152,6 +152,8 @@ func (*ArticleApi) FindArticle(c *fiber.Ctx) error {
 func (*ArticleApi) GetArticleList(c *fiber.Ctx) error {
 	var pageInfo appReq.ArticleSearch
 	_ = c.QueryParser(&pageInfo)
+	IsImportant := c.QueryInt("is_important")
+	pageInfo.IsImportant = IsImportant
 	if list, total, err := articleService.GetArticleInfoList(&pageInfo); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithDetailed(map[string]string{

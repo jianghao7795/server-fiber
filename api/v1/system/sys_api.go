@@ -75,46 +75,8 @@ func (s *SystemApiApi) DeleteApi(c *fiber.Ctx) error {
 func (s *SystemApiApi) GetApiList(c *fiber.Ctx) error {
 	var pageInfo systemReq.SearchApiParams
 	_ = c.QueryParser(&pageInfo)
-	// log.Println(pageInfo.OrderKey)
-	// var path = c.Query("path")
-	// var description = c.Query("description")
-	// var page = c.DefaultQuery("page", "1")
-	// var pageSize = c.DefaultQuery("pageSize", "10")
-	// var apiGroup = c.Query("apiGroup")
-	// var method = c.Query("method")
-	// var ascDesc = c.DefaultQuery("desc", "false")
-	// var order = c.Query("orderKey")
-	// log.Println(order)
-	// var boolItem = false
-	// _ = c.BindQuery(&pageInfo)
-	// if ascDesc == "true" {
-	// 	boolItem = true
-	// }
-	// pageInfo.Page, _ = strconv.Atoi(page)
-	// pageInfo.PageSize, _ = strconv.Atoi(pageSize)
-	// if path != "" {
-	// 	pageInfo.Path = path
-	// }
-	// if description != "" {
-	// 	pageInfo.Description = description
-	// }
-	// if apiGroup != "" {
-	// 	pageInfo.ApiGroup = apiGroup
-	// }
-	// if method != "" {
-	// 	pageInfo.Method = method
-	// }
-	// if order != "" {
-	// 	pageInfo.OrderKey = order
-	// }
-	// fmt.Println("ApiGroup.desc: ", pageInfo.Desc)
-	// if err := utils.Verify(pageInfo.PageInfo, utils.PageInfoVerify); err != nil {
-	// 	fmt.Println(err)
-	// 	return response.FailWithMessage(err.Error(), c)
-	// 	return
-	// }
 
-	if list, total, err := apiService.GetAPIInfoList(pageInfo); err != nil {
+	if list, total, err := apiService.GetAPIInfoList(&pageInfo); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败", c)
 	} else {

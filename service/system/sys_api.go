@@ -3,11 +3,13 @@ package system
 import (
 	"errors"
 	"fmt"
+	"log"
 
 	"server-fiber/global"
 	"server-fiber/model/common/request"
 	"server-fiber/model/system"
 	systemReq "server-fiber/model/system/request"
+	"server-fiber/utils"
 
 	"gorm.io/gorm"
 )
@@ -47,31 +49,18 @@ func (apiService *ApiService) DeleteApi(api system.SysApi) (err error) {
 //@param: api model.SysApi, info request.PageInfo, order string, desc bool
 //@return: err error
 
-func (apiService *ApiService) GetAPIInfoList(info systemReq.SearchApiParams) (list []system.SysApi, total int64, err error) {
+func (apiService *ApiService) GetAPIInfoList(info *systemReq.SearchApiParams) (list []system.SysApi, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
+	log.Println("info path", info.Path)
 	db := global.DB.Model(&system.SysApi{})
-	var apiList []system.SysApi
-
-	if info.Path != "" {
-		db = db.Where("path LIKE ?", "%"+info.Path+"%")
-	}
-
-	if info.Description != "" {
-		db = db.Where("description LIKE ?", "%"+info.Description+"%")
-	}
-
-	if info.Method != "" {
-		db = db.Where("method = ?", info.Method)
-	}
-
-	if info.ApiGroup != "" {
-		db = db.Where("api_group = ?", info.ApiGroup)
+	err = utils.MergeQuery(db, info, "apiGroup", "path", "method", "description")
+	if err != nil {
+		return list, total, err
 	}
 	err = db.Count(&total).Error
-
 	if err != nil {
-		return apiList, total, err
+		return list, total, err
 	} else {
 		db = db.Limit(limit).Offset(offset)
 		var sort = "api_group"
@@ -83,34 +72,9 @@ func (apiService *ApiService) GetAPIInfoList(info systemReq.SearchApiParams) (li
 			}
 
 		}
-		err = db.Order(sort).Find(&apiList).Error
-		// if order != "" {
-		// 	var OrderStr string
-		// 	// 设置有效排序key 防止sql注入
-		// 	// 感谢 Tom4t0 提交漏洞信息
-		// 	orderMap := make(map[string]bool, 5)
-		// 	orderMap["id"] = true
-		// 	orderMap["path"] = true
-		// 	orderMap["api_group"] = true
-		// 	orderMap["description"] = true
-		// 	orderMap["method"] = true
-		// 	if orderMap[order] {
-		// 		if desc {
-		// 			OrderStr = order + " desc"
-		// 		} else {
-		// 			OrderStr = order
-		// 		}
-
-		// 	} else { // didn't matched any order key in `orderMap`
-		// 		err = fmt.Errorf("非法的排序字段: %v", order)
-		// 		return apiList, total, err
-		// 	}
-		// err = db.Order(OrderStr).Find(&apiList).Error
-		// } else {
-		// 	// err = db.Order("api_group").Find(&apiList).Error
-		// }
+		err = db.Order(sort).Find(&list).Error
 	}
-	return apiList, total, err
+	return
 }
 
 //
