@@ -11,13 +11,13 @@ type Response struct {
 }
 
 const (
-	ERROR   = 7
-	SUCCESS = 0
+	ERROR   = fiber.StatusBadRequest // 错误返回的code 数据
+	SUCCESS = fiber.StatusOK         // 成功返回的code
 )
 
 func Result(code int, data interface{}, msg string, c *fiber.Ctx) error {
-	// 开始时间
-	return c.Status(fiber.StatusOK).JSON(Response{
+	// 返回的最终结果
+	return c.Status(code).JSON(Response{
 		code,
 		data,
 		msg,
@@ -68,8 +68,7 @@ func FailWithMessage400(message string, c *fiber.Ctx) error {
 }
 
 func Result400(code int, data interface{}, msg string, c *fiber.Ctx) error {
-	// 开始时间
-	return c.Status(fiber.StatusOK).JSON(Response{
+	return c.Status(code).JSON(Response{
 		code,
 		data,
 		msg,
