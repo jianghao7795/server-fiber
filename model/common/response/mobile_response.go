@@ -32,7 +32,7 @@ func FailWithMessage401(message string, c *fiber.Ctx) error {
 	return Result400(ERROR401, map[string]interface{}{}, message, c)
 }
 
-func Result4001(code int, data interface{}, msg string, c *fiber.Ctx) {
+func Result401(code int, data interface{}, msg string, c *fiber.Ctx) {
 	// 开始时间
 	c.Status(fiber.StatusOK).JSON(ResponseMobile{
 		code,
