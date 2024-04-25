@@ -17,14 +17,14 @@ func JWTAuth(c *fiber.Ctx) error {
 	// 我们这里jwt鉴权取头部信息 Authorization 登录时回返回token信息 这里前端需要把token存储到cookie或者本地localStorage中 不过需要跟后端协商过期时间 可以约定刷新令牌或者重新登录
 	tokenString := c.Get("Authorization")
 	if tokenString == "" {
-		return response.FailWithDetailed(fiber.Map{"reload": true}, "未登录或非法访问", c)
+		return response.FailWithDetailed401(fiber.Map{"reload": true}, "未登录或非法访问", c)
 	}
 	token := strings.Replace(tokenString, "Bearer ", "", 1)
 	if token == "" {
-		return response.FailWithDetailed(fiber.Map{"reload": true}, "未登录或非法访问", c)
+		return response.FailWithDetailed401(fiber.Map{"reload": true}, "未登录或非法访问", c)
 	}
 	if jwtService.IsBlacklist(token) {
-		return response.FailWithDetailed(fiber.Map{"reload": true}, "您的帐户异地登陆或令牌失效", c)
+		return response.FailWithDetailed401(fiber.Map{"reload": true}, "您的帐户异地登陆或令牌失效", c)
 	}
 	j := utils.NewJWT()
 	// parseToken 解析token包含的信息
@@ -32,14 +32,14 @@ func JWTAuth(c *fiber.Ctx) error {
 	// global.Logger.Info(err.Error(), claims)
 	if err != nil {
 		if err == utils.ErrTokenExpired {
-			return response.FailWithDetailed(fiber.Map{"reload": true}, "授权已过期", c)
+			return response.FailWithDetailed401(fiber.Map{"reload": true}, "授权已过期", c)
 		}
-		return response.FailWithDetailed(fiber.Map{"reload": true}, err.Error(), c)
+		return response.FailWithDetailed401(fiber.Map{"reload": true}, err.Error(), c)
 	}
 	// 用户被删除的逻辑 需要优化 此处比较消耗性能 如果需要 请自行打开
 	//if err, _ = userService.FindUserByUuid(claims.UUID.String()); err != nil {
 	//	_ = jwtService.JsonInBlacklist(system.JwtBlacklist{Jwt: token})
-	//	response.FailWithDetailed(fiber.Map{"reload": true}, err.Error(), c)
+	//	response.FailWithDetailed401(fiber.Map{"reload": true}, err.Error(), c)
 	//	c.Abort()
 	//}
 	// log.Println("claims: ", time.Now().Unix()-claims.NotBefore.Unix(), claims.ExpiresAt)
