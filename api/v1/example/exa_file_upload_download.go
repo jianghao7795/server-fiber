@@ -66,6 +66,8 @@ func (u *FileUploadAndDownloadApi) UploadFile(c *fiber.Ctx) error {
 			global.LOG.Error("修改数据库链接失败!", zap.Error(err))
 			return response.FailWithMessage("修改数据库链接失败", c)
 		}
+
+		defer reader.Close()
 	}
 
 	return response.OkWithDetailed(exampleRes.ExaFileResponse{File: file}, "上传成功", c)
