@@ -1,7 +1,6 @@
 package timer
 
 import (
-	"fmt"
 	"testing"
 	"time"
 
@@ -18,7 +17,6 @@ func (job mockJob) Run() {
 
 func mockFunc() {
 	time.Sleep(time.Second)
-	fmt.Println("1s...")
 }
 
 func TestNewTimerTask(t *testing.T) {

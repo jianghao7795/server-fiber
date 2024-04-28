@@ -42,7 +42,6 @@ func OperationRecord(c *fiber.Ctx) error {
 
 	}
 	claims, _ := utils.GetClaims(c)
-	// log.Println("middleware: ", claims)
 	if claims.BaseClaims.ID != 0 {
 		userId = int(claims.BaseClaims.ID)
 	} else {

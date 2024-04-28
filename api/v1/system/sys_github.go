@@ -51,8 +51,6 @@ func (g *SystemGithubApi) CreateGithub(c *fiber.Ctx) error {
 	if err != nil {
 		global.LOG.Error("请求Commit错误", zap.Error(err))
 		return response.FailWithMessage("请求Commit错误", c)
-		// log.Println(resp.Body)
-
 	}
 	body, _ := io.ReadAll(resp.Body)
 	// respData := new([]GithubCommit)

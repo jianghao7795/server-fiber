@@ -99,9 +99,6 @@ func (commentService *CommentService) GetCommentTreeList(info *commentReq.Commen
 			err = commentService.findChildrenComment(&commentList[comment])
 		}
 	}
-
-	// log.Println("err1: ", err)
-
 	return commentList, total, err
 }
 

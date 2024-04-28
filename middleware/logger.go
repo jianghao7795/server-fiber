@@ -71,7 +71,6 @@ package middleware
 // 		Print: func(layout LogLayout) {
 // 			// 标准输出,k8s做收集
 // 			v, _ := json.Marshal(layout)
-// 			fmt.Println(string(v))
 // 		},
 // 		Source: "SERVER",
 // 	}.SetLoggerMiddleware()

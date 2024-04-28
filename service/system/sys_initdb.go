@@ -9,6 +9,7 @@ import (
 	"server-fiber/model/system/request"
 	"sort"
 
+	"go.uber.org/zap"
 	"gorm.io/gorm"
 )
 
@@ -140,7 +141,7 @@ func createDatabase(dsn string, driver string, createSql string) error {
 	defer func(db *sql.DB) {
 		err = db.Close()
 		if err != nil {
-			fmt.Println(err)
+			global.LOG.Error("关闭数据库连接失败: %v", zap.Error(err))
 		}
 	}(db)
 	if err = db.Ping(); err != nil {

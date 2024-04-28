@@ -23,8 +23,6 @@ func (*TaskNameApi) StartTasking(c *fiber.Ctx) error {
 	}
 	_, status := global.Timer.FindCron(tasking)
 
-	// log.Println(task)
-
 	if !status {
 		global.LOG.Error("开启失败!")
 		return response.FailWithMessage("开启失败，没有这个任务", c)
@@ -41,8 +39,6 @@ func (*TaskNameApi) StopTasking(c *fiber.Ctx) error {
 		return response.FailWithMessage("请传入任务名", c)
 	}
 	_, status := global.Timer.FindCron(tasking)
-
-	// log.Println(task)
 
 	if !status {
 		global.LOG.Error("关闭失败!")

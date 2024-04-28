@@ -89,7 +89,6 @@ func (e *ExcelApi) ImportExcel(c *fiber.Ctx) error {
 		global.LOG.Error("导入失败!", zap.Error(err))
 		return response.FailWithMessage("导入失败", c)
 	}
-	// log.Println(importExcel)
 	mkdirErr := os.MkdirAll(global.CONFIG.Excel.Dir+filepath_time, os.ModePerm)
 	if mkdirErr != nil {
 		global.LOG.Error("创建目录失败：", zap.Any("err", mkdirErr.Error()))

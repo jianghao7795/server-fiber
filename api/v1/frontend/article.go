@@ -41,7 +41,6 @@ func (s *FrontendArticleApi) GetArticleList(c *fiber.Ctx) error {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败", c)
 	} else {
-		// log.Println("total is ", total)
 		return response.OkWithDetailed(response.PageResult{
 			List:     list,
 			Total:    total,

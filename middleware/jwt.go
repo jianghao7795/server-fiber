@@ -42,7 +42,6 @@ func JWTAuth(c *fiber.Ctx) error {
 	//	response.FailWithDetailed401(fiber.Map{"reload": true}, err.Error(), c)
 	//	c.Abort()
 	//}
-	// log.Println("claims: ", time.Now().Unix()-claims.NotBefore.Unix(), claims.ExpiresAt)
 	// 重新携带new-token 让前端重新设置
 	// if time.Now().Unix()-claims.NotBefore.Unix() > claims.BufferTime*60 {
 	// 	claims.ExpiresAt = jwt.NewNumericDate(time.Now().Add(time.Duration(global.CONFIG.JWT.ExpiresTime) * time.Hour))

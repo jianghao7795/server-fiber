@@ -14,7 +14,6 @@ func LoadTls(c *fiber.Ctx) error {
 	// err := middleware.Process(c.Response(), c.Request())
 	// if err != nil {
 	// 	// 如果出现错误，请不要继续
-	// 	fmt.Println(err)
 	// 	return nil
 	// }
 	// 继续往下处理

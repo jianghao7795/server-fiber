@@ -72,26 +72,22 @@ func (autoCodeHistoryService *AutoCodeHistoryService) RollBack(info *systemReq.R
 	// 删除文件
 
 	for _, path := range strings.Split(md.AutoCodePath, ";") {
-
 		// 增加安全判断补丁:
 		_path, err := filepath.Abs(path)
 		if err != nil || _path != path {
 			continue
 		}
-
 		// 迁移
 		nPath := filepath.Join(global.CONFIG.AutoCode.Root,
 			"rm_file", time.Now().Format("20060102"), filepath.Base(filepath.Dir(filepath.Dir(path))), filepath.Base(filepath.Dir(path)), filepath.Base(path))
 		// 判断目标文件是否存在
 		for utils.FileExist(nPath) {
-			fmt.Println("文件已存在:", nPath)
 			nPath += fmt.Sprintf("_%d", time.Now().Nanosecond())
 		}
 		err = utils.FileMove(path, nPath)
 		if err != nil {
-			fmt.Println(">>>>>>>>>>>>>>>>>>>", err)
+			global.LOG.Error("文件迁移失败: ", zap.Error(err))
 		}
-		//_ = utils.DeLFile(path)
 	}
 	// 清除注入
 	for _, v := range strings.Split(md.InjectionMeta, ";") {

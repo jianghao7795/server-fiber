@@ -3,7 +3,6 @@ package system
 import (
 	"errors"
 	"fmt"
-	"log"
 
 	"server-fiber/global"
 	"server-fiber/model/common/request"
@@ -52,7 +51,6 @@ func (apiService *ApiService) DeleteApi(api system.SysApi) (err error) {
 func (apiService *ApiService) GetAPIInfoList(info *systemReq.SearchApiParams) (list []system.SysApi, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
-	log.Println("info path", info.Path)
 	db := global.DB.Model(&system.SysApi{})
 	err = utils.MergeQuery(db, info, "apiGroup", "path", "method", "description")
 	if err != nil {

@@ -13,6 +13,7 @@ import (
 	jwt "github.com/golang-jwt/jwt/v5" // jwt
 	"github.com/songzhibin97/gkit/cache/local_cache"
 	"github.com/spf13/viper" // viper配置文件读取
+	"go.uber.org/zap"
 
 	"server-fiber/global"
 	"server-fiber/utils"
@@ -51,9 +52,7 @@ func viperInit(path ...string) (*viper.Viper, error) {
 
 	v.OnConfigChange(func(e fsnotify.Event) {
 		if err := v.Unmarshal(&global.CONFIG); err != nil {
-			fmt.Println(err)
-		} else {
-			fmt.Println(global.CONFIG)
+			global.LOG.Error("config change error: ", zap.Error(err))
 		}
 	})
 	if err := v.Unmarshal(&global.CONFIG); err != nil {
@@ -61,7 +60,6 @@ func viperInit(path ...string) (*viper.Viper, error) {
 	}
 
 	publicKeyByte, err := os.ReadFile("./rsa_public_key.pem")
-	// global.Logger.Println("public key: ", err)
 	if err != nil {
 		return nil, err
 	}

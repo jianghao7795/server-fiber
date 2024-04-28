@@ -70,13 +70,11 @@ func loadPlugin(path string, f fs.FileInfo) error {
 		// 加载插件
 		p, err := plugin.Open(fPath)
 		if err != nil {
-			fmt.Println("loadPlugin err ", err)
 			return err
 		}
 		// 判断是否满足协议
 		// 要满足 OnlyFuncName && 实现 Plugin 接口
 		if v, err := p.Lookup(OnlyFuncName); err != nil {
-			fmt.Println("loadPlugin err ", err)
 			return err
 		} else if _, ok := v.(Plugin); !ok {
 			fmt.Println("loadPlugin err ", fmt.Sprintf("path:%s 没有实现 %s 接口", filepath.Base(fPath), OnlyFuncName))

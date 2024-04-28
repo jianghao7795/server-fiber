@@ -32,7 +32,6 @@ var store = base64Captcha.DefaultMemStore
 // func (u *FrontendUser) Login(c *fiber.Ctx) error {
 // 	var user loginRequest.LoginForm
 // 	_ = c.QueryParser(&user)
-// 	log.Println("user: ", user)
 // 	if err := utils.Verify(user, utils.LoginVerifyFrontend); err != nil {
 // 		return response.FailWithMessage(err.Error(), c)
 // 		return
@@ -140,7 +139,6 @@ func (*FrontendUser) RegisterUser(c *fiber.Ctx) error {
 
 func (u *FrontendUser) GetCurrent(c *fiber.Ctx) error {
 	uuid := utils.GetUserUuid(c)
-	// log.Println(uuid)
 	if ReqUser, err := userService.GetUserInfo(uuid); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败", c)

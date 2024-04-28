@@ -93,7 +93,6 @@ var (
 func (casbinService *CasbinService) Casbin() *casbin.SyncedEnforcer {
 	once.Do(func() {
 		a, _ := gormadapter.NewAdapterByDB(global.DB)
-		// log.Println("model_path: ", global.CONFIG.Casbin.ModelPath, "a: ", a)
 		syncedEnforcer, _ = casbin.NewSyncedEnforcer(global.CONFIG.Casbin.ModelPath, a)
 	})
 	_ = syncedEnforcer.LoadPolicy()

@@ -101,7 +101,6 @@ func (s *SystemApiApi) GetApiList(c *fiber.Ctx) error {
 func (s *SystemApiApi) GetApiById(c *fiber.Ctx) error {
 	var idInfo request.GetById
 	idInfo.ID, _ = c.ParamsInt("id")
-	// fmt.Println(idInfo)
 	if err := utils.Verify(idInfo, utils.IdVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}

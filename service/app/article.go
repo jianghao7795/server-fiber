@@ -1,7 +1,6 @@
 package app
 
 import (
-	"log"
 	"server-fiber/global"
 	"server-fiber/model/app"
 	appReq "server-fiber/model/app/request"
@@ -50,7 +49,6 @@ func (*ArticleService) GetArticleInfoList(info *appReq.ArticleSearch) (list []ap
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	db := global.DB.Model(&app.Article{})
-	log.Println("info is_important", info.IsImportant)
 	err = utils.MergeQuery(db, info, "title", "is_important")
 	if err != nil {
 		return

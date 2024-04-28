@@ -33,7 +33,6 @@ func (s *FrontendArticle) GetArticleList(info *frontendReq.ArticleSearch, c *fib
 		articleStr, err = global.REDIS.Get(c.Context(), "article-list-home").Result()
 	} else {
 		articleStr, err = global.REDIS.Get(c.Context(), "article-list"+strconv.Itoa(info.Page)).Result()
-		// log.Println("article: ", global.REDIS.Get(c.Context(), "article-list"+strconv.Itoa(info.Page)))
 	}
 
 	if err == redis.Nil {

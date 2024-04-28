@@ -1,15 +1,13 @@
 package example
 
 import (
-	"fmt"
 	ioutil "io"
 	"mime/multipart"
 	"strconv"
 
-	"server-fiber/model/example"
-
 	"server-fiber/global"
 	"server-fiber/model/common/response"
+	"server-fiber/model/example"
 	exampleRes "server-fiber/model/example/response"
 	exampleServer "server-fiber/service/example"
 	"server-fiber/utils"
@@ -47,7 +45,7 @@ func (u *FileUploadAndDownloadApi) BreakpointContinue(c *fiber.Ctx) error {
 	defer func(f multipart.File) {
 		err := f.Close()
 		if err != nil {
-			fmt.Println(err)
+			global.LOG.Error("文件关闭失败!", zap.Error(err))
 		}
 	}(f)
 	cen, _ := ioutil.ReadAll(f)

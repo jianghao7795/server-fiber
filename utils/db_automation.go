@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"server-fiber/global"
 	"server-fiber/model/system"
@@ -76,7 +75,6 @@ func UpdateTable(db *gorm.DB, tableName string, compareField string, interval st
 	time.LoadLocation("Asia/Shanghai")
 	db = db.Model(&system.SysGithub{})
 	data := make([]system.SysGithub, 0)
-	log.Println("github commit: ", len(respData))
 	for _, val := range respData {
 		var temp system.SysGithub
 		temp.Author = val.Commit.Author.Name
@@ -84,7 +82,6 @@ func UpdateTable(db *gorm.DB, tableName string, compareField string, interval st
 		temp.Message = val.Commit.Message
 		data = append(data, temp)
 	}
-	log.Println("data: 1111111", len(data))
 	var dataGithub []system.SysGithub
 	for _, item := range data {
 		if item.CommitTime != "" {

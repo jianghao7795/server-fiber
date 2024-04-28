@@ -29,9 +29,7 @@ func (j *JWT) MakeToken(data mobile.Login, id uint) (tokenString string, expires
 		}}
 	// token := jwt.NewWithClaims(jwt.SigningMethodHS256, claim) // 使用HS256算法
 	token := jwt.NewWithClaims(jwt.SigningMethodRS256, claim) // 使用RS256算法
-	// global.Logger.Println(j.PrivateKey)
 	tokenString, err = token.SignedString(j.PrivateKey)
-	// global.Logger.Println(err)
 	return tokenString, claim.ExpiresAt.Unix(), err
 }
 

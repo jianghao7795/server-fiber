@@ -23,7 +23,6 @@ var mobileRegisterService = new(mobileServer.MobileRegisterService)
 func (*MobileLoginApi) Login(c *fiber.Ctx) error {
 	var l mobile.Login
 	_ = c.BodyParser(&l)
-	// log.Println(l)
 	if err := utils.Verify(l, utils.MobileLoginVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
@@ -39,8 +38,6 @@ func (*MobileLoginApi) Login(c *fiber.Ctx) error {
 
 func (*MobileLoginApi) GetUserInfo(c *fiber.Ctx) error {
 	authorization := c.Get("user_id")
-	// global.Logger.Println(authorization, err1)
-	// global.Logger.Info("authorization is %T\n", authorization)
 	if authorization == "" {
 		global.LOG.Error("获取user_id失败!", zap.Error(errors.New("失败")))
 		return response.FailWithMessage400("获取失败", c)

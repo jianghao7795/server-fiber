@@ -2,7 +2,6 @@ package core
 
 import (
 	"fmt"
-	"log"
 	"os"
 
 	"server-fiber/global"
@@ -16,13 +15,12 @@ func RunServer() {
 	var err error
 	global.VIP, err = viperInit() // 初始化Viper 配置
 	if err != nil {
-		log.Println("配置错误：", err.Error())
+		global.LOG.Error("配置错误：", zap.Error(err))
 		os.Exit(1)
 	}
 	global.LOG = zapInit()         // 初始化zap日志库
 	global.Logger = InitLogger()   // 初始化 log 让log标准输出
 	zap.ReplaceGlobals(global.LOG) // 配置部署到全局
-	// log.Println("fiberconfig: ", global.CONFIG.FiberConfig.AppName)
 
 	db, err := initialize.Gorm() // gorm连接数据库
 	if err == nil {

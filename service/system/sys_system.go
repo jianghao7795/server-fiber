@@ -1,7 +1,6 @@
 package system
 
 import (
-	"log"
 	"server-fiber/config"
 	"server-fiber/global"
 	"server-fiber/model/system"
@@ -18,7 +17,6 @@ import (
 type SystemConfigService struct{}
 
 func (systemConfigService *SystemConfigService) GetSystemConfig() (conf config.Server, err error) {
-	log.Println(global.CONFIG)
 	return global.CONFIG, nil
 }
 
