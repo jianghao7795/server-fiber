@@ -31,7 +31,8 @@ func Routers() *fiber.App {
 	}
 
 	app := fiber.New(global.CONFIG.FiberConfig)
-	routers := app.Use(swagger.New(cfg)) // swagger文档配置
+	routers := app.Use(middleware.DefaultLimit)
+	routers = routers.Use(swagger.New(cfg)) // swagger文档配置
 	routers = routers.Use(logger.New(logger.Config{
 		Done: global.Done,
 	})) //log 日志配置

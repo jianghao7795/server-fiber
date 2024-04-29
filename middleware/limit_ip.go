@@ -49,14 +49,14 @@ func DefaultCheckOrMark(key string, expire int, limit int) (err error) {
 	return err
 }
 
-// func DefaultLimit() fiber.MapandlerFunc {
-// 	return LimitConfig{
-// 		GenerationKey: DefaultGenerationKey,
-// 		CheckOrMark:   DefaultCheckOrMark,
-// 		Expire:        global.CONFIG.System.LimitTimeIP,
-// 		Limit:         global.CONFIG.System.LimitCountIP,
-// 	}.LimitWithTime()
-// }
+func DefaultLimit(c *fiber.Ctx) error {
+	return LimitConfig{
+		GenerationKey: DefaultGenerationKey,
+		CheckOrMark:   DefaultCheckOrMark,
+		Expire:        global.CONFIG.System.LimitTimeIP,
+		Limit:         global.CONFIG.System.LimitCountIP,
+	}.LimitWithTime(c)
+}
 
 // SetLimitWithTime 设置访问次数
 func SetLimitWithTime(key string, limit int, expiration time.Duration) error {
