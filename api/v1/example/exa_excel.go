@@ -55,8 +55,7 @@ func (e *ExcelApi) ExportExcel(c *fiber.Ctx) error {
 		return response.FailWithMessage("转换Excel失败", c)
 	}
 	c.Set("success", "true")
-	file, _ := c.FormFile(filePath)
-	return c.SaveFile(file, filePath)
+	return c.SendFile(filePath)
 }
 
 // @Tags excel
