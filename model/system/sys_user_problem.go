@@ -13,5 +13,5 @@ type SysUserProblem struct {
 
 // TableName Comment 表名
 func (SysUserProblem) TableName() string {
-	return "sys_user_problem"
+	return "sys_user_problems"
 }
