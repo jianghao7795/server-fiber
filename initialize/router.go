@@ -7,6 +7,7 @@
 package initialize
 
 import (
+	"log"
 	"time"
 
 	"server-fiber/global"
@@ -31,21 +32,21 @@ func Routers() *fiber.App {
 	}
 
 	app := fiber.New(global.CONFIG.FiberConfig)
-	routers := app.Use(middleware.DefaultLimit)
-	routers = routers.Use(swagger.New(cfg)) // swagger文档配置
-	routers = routers.Use(logger.New(logger.Config{
-		Done: global.Done,
-	})) //log 日志配置
 	appRouter := router.AppRouter
 	systemRouter := router.SystemRouter
 	exampleRouter := router.ExampleRouter
 	mobile := router.MobileRouter
+	routers := app.Use(swagger.New(cfg)) // swagger文档配置
 	routers = routers.Static("/api/uploads/", "uploads/", fiber.Static{
 		Compress:      true,
 		ByteRange:     true,
 		Browse:        true,
 		CacheDuration: 100 * time.Second,
 		MaxAge:        3600,
+		ModifyResponse: func(ctx *fiber.Ctx) error {
+			log.Println("bug is ", ctx.Response().StatusCode())
+			return ctx.Status(fiber.StatusNotFound).SendFile("404.html")
+		},
 	}) // 本地的frontend api文件路由转化
 	routers = routers.Static("/backend/uploads/", "uploads/", fiber.Static{
 		Compress:      true,
@@ -61,7 +62,12 @@ func Routers() *fiber.App {
 		CacheDuration: 100 * time.Second,
 		MaxAge:        3600,
 	}) // 本地的mobile文件路由转化
+	routers = routers.Use(logger.New(logger.Config{
+		Done: global.Done,
+	})) //log 日志配置
 	routers = routers.Static("/backend/form-generator", "resource/page")
+	routers = routers.Use(middleware.DefaultLimit)
+
 	// app.Static("/form-generator", "./resource/page") // 生成form组件的js代码
 	// Router.Use(middleware.Cors())        // 直接放行全部跨域请求
 	routers = routers.Use(middleware.CorsByRules) // 按照配置的规则放行跨域请求
