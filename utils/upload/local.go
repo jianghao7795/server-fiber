@@ -75,6 +75,16 @@ func (*Local) UploadFile(file *multipart.FileHeader) (string, string, error) {
 
 func (*Local) DeleteFile(key string) error {
 	if strings.Contains(key, global.CONFIG.Local.Path) {
+		_, err := os.Stat(key)
+		if err != nil {
+			if os.IsNotExist(err) {
+				global.LOG.Error("本地文件删除失败, err: 文件不存在 ", zap.String("err", err.Error()))
+				return nil
+			} else {
+				return err
+			}
+		}
+
 		if err := os.Remove(key); err != nil {
 			return errors.New("本地文件删除失败, err:" + err.Error())
 		}
