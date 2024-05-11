@@ -9,16 +9,11 @@ import (
 	"server-fiber/model/common/request"
 	"server-fiber/model/common/response"
 	"server-fiber/model/example"
-	exampleServer "server-fiber/service/example"
 	"server-fiber/utils"
 
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
 )
-
-type ExcelApi struct{}
-
-var excelService = new(exampleServer.ExcelService)
 
 // /excel/importExcel 接口，与upload接口作用类似，只是把文件存到resource/excel目录下，用于导入Excel时存放Excel文件(ExcelImport.xlsx)
 // /excel/loadExcel接口，用于读取resource/excel目录下的文件((ExcelImport.xlsx)并加载为[]model.SysBaseMenu类型的示例数据

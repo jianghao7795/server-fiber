@@ -111,16 +111,16 @@ func InitDisk() (d Disk, err error) {
 		d.TotalGB = int(u.Total) / GB
 		percent = percent + int(u.UsedPercent)
 	}
-	if u, err := disk.Usage("/home"); err != nil {
-		return d, err
-	} else {
-		d.UsedMB = d.UsedMB + int(u.Used)/MB
-		d.UsedGB = d.UsedGB + int(u.Used)/GB
-		d.TotalMB = d.TotalMB + int(u.Total)/MB
-		d.TotalGB = d.TotalGB + int(u.Total)/GB
-		percent = percent + int(u.UsedPercent)
-	}
-	percent = percent / 2
+	// if u, err := disk.Usage("/home"); err != nil {
+	// 	return d, err
+	// } else {
+	// 	d.UsedMB = d.UsedMB + int(u.Used)/MB
+	// 	d.UsedGB = d.UsedGB + int(u.Used)/GB
+	// 	d.TotalMB = d.TotalMB + int(u.Total)/MB
+	// 	d.TotalGB = d.TotalGB + int(u.Total)/GB
+	// 	percent = percent + int(u.UsedPercent)
+	// }
+	// percent = percent / 2
 	d.UsedPercent = percent
 	return d, nil
 }

@@ -9,14 +9,12 @@ import (
 	"server-fiber/model/common/response"
 	"server-fiber/model/example"
 	exampleRes "server-fiber/model/example/response"
-	exampleServer "server-fiber/service/example"
+
 	"server-fiber/utils"
 
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
 )
-
-var fileUploadAndDownloadService = new(exampleServer.FileUploadAndDownloadService)
 
 // @Tags ExaFileUploadAndDownload
 // @Summary 断点续传到服务器

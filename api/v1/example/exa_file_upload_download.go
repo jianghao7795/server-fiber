@@ -18,8 +18,6 @@ import (
 	"go.uber.org/zap"
 )
 
-type FileUploadAndDownloadApi struct{}
-
 // @Tags ExaFileUploadAndDownload
 // @Summary 上传文件示例
 // @Security ApiKeyAuth
