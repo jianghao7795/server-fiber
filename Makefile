@@ -11,6 +11,9 @@ start:
 dev:
 	go run .
 
+local:
+	go run . -c config.yaml
+
 tool:
 	go tool vet . |& grep -v vendor; true
 	gofmt -w .
