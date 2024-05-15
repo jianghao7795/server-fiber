@@ -35,8 +35,8 @@ func (u *FileUploadAndDownloadApi) UploadFile(c *fiber.Ctx) error {
 	}
 	file, err = fileUploadService.UploadFile(header, noSave) // 文件上传后拿到文件路径
 	if err != nil {
-		global.LOG.Error("修改数据库链接失败!", zap.Error(err))
-		return response.FailWithMessage("修改数据库链接失败", c)
+		global.LOG.Error("上传更新失败!", zap.Error(err))
+		return response.FailWithMessage("上传更新失败", c)
 	}
 	return response.OkWithDetailed(responseUplodFile.ResponseUploadFile{File: file}, "上传成功", c)
 }
