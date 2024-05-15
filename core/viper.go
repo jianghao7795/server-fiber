@@ -34,7 +34,7 @@ func viperInit(path ...string) (*viper.Viper, error) {
 				fmt.Printf("您正在使用CONFIG环境变量,config的路径为%v\n", config)
 			}
 		} else {
-			fmt.Printf("您正在使用命令行的-c参数传递的值,config的路径为%v\n", config)
+			fmt.Printf("您正在使用命令行的-c参数传递的值,config的路径为%v\n", config) // server-fiber -c config.yaml
 		}
 	} else {
 		config = path[0]
