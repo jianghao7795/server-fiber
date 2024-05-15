@@ -23,7 +23,7 @@ import (
 func viperInit(path ...string) (*viper.Viper, error) {
 	var config string
 	if len(path) == 0 {
-		flag.StringVar(&config, "c", "", "choose config file.")
+		flag.StringVar(&config, "c", "config.yaml", "choose config file.")
 		flag.Parse()
 		if config == "" { // 优先级: 命令行 > 环境变量 > 默认值
 			if configEnv := os.Getenv(utils.ConfigEnv); configEnv == "" {
