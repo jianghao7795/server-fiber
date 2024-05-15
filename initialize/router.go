@@ -7,7 +7,6 @@
 package initialize
 
 import (
-	"log"
 	"time"
 
 	"server-fiber/global"
@@ -43,10 +42,6 @@ func Routers() *fiber.App {
 		Browse:        true,
 		CacheDuration: 100 * time.Second,
 		MaxAge:        3600,
-		ModifyResponse: func(ctx *fiber.Ctx) error {
-			log.Println("bug is ", ctx.Response().StatusCode())
-			return ctx.Status(fiber.StatusNotFound).SendFile("404.html")
-		},
 	}) // 本地的frontend api文件路由转化
 	routers = routers.Static("/backend/uploads/", "uploads/", fiber.Static{
 		Compress:      true,
