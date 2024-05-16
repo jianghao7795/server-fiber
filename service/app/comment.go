@@ -42,7 +42,7 @@ func (commentService *CommentService) UpdateComment(comment *comment.Comment) (e
 
 // GetComment 根据id获取Comment记录
 // Author wuhao
-func (commentService *CommentService) GetComment(id uint) (comment comment.Comment, err error) {
+func (commentService *CommentService) GetComment(id int) (comment comment.Comment, err error) {
 	err = global.DB.Preload("Article").Where("id = ?", id).First(&comment).Error
 	return
 }

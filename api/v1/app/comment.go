@@ -45,9 +45,8 @@ func (commentApi *CommentApi) CreateComment(c *fiber.Ctx) error {
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
 // @Router /comment/deleteComment [delete]
 func (commentApi *CommentApi) DeleteComment(c *fiber.Ctx) error {
-	var comment2 comment.Comment
-	_ = c.BodyParser(&comment2)
-	if err := commentService.DeleteComment(comment2.ID); err != nil {
+	id, _ := c.ParamsInt("id", 0)
+	if err := commentService.DeleteComment(uint(id)); err != nil {
 		global.LOG.Error("删除失败!", zap.Error(err))
 		return response.FailWithDetailed(fiber.Map{"msg": err.Error()}, "删除失败", c)
 	} else {
@@ -83,9 +82,11 @@ func (commentApi *CommentApi) DeleteCommentByIds(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data body comment.Comment true "更新Comment"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"更新成功"}"
-// @Router /comment/updateComment [put]
+// @Router /comment/updateComment/:id [put]
 func (commentApi *CommentApi) UpdateComment(c *fiber.Ctx) error {
 	var comment2 comment.Comment
+	id, _ := c.ParamsInt("id", 0)
+	comment2.ID = uint(id)
 	err := c.BodyParser(&comment2)
 	if err != nil {
 		global.LOG.Error("获取数据失败!", zap.Error(err))
@@ -107,11 +108,14 @@ func (commentApi *CommentApi) UpdateComment(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data query comment.Comment true "用id查询Comment"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"查询成功"}"
-// @Router /comment/findComment [get]
+// @Router /comment/getComment/:id [get]
 func (commentApi *CommentApi) FindComment(c *fiber.Ctx) error {
-	var comment2 comment.Comment
-	_ = c.QueryParser(&comment2)
-	if recomment, err := commentService.GetComment(comment2.ID); err != nil {
+	id, err := c.ParamsInt("id", 0)
+	if err != nil {
+		global.LOG.Error("未获取到id参数!", zap.Error(err))
+		return response.FailWithMessage("未获取到id参数", c)
+	}
+	if recomment, err := commentService.GetComment(id); err != nil {
 		global.LOG.Error("查询失败!", zap.Error(err))
 		return response.FailWithMessage("查询失败", c)
 	} else {
