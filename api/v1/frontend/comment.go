@@ -30,7 +30,7 @@ func (s *CommentApi) GetCommentByArticleId(c *fiber.Ctx) error {
 
 func (s *CommentApi) CreatedComment(c *fiber.Ctx) error {
 	var comment frontend.Comment
-	_ = c.QueryParser(&comment)
+	_ = c.BodyParser(&comment)
 	if err := commentService.CreatedComment(&comment); err != nil {
 		global.LOG.Error("创建失败!", zap.Error(err))
 		return response.FailWithMessage("创建失败", c)

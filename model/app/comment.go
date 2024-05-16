@@ -20,8 +20,8 @@ type Comment struct {
 	Article   Article        `json:"article" gorm:"foreignKey:ArticleId"`
 	ParentId  int            `json:"parent_id" form:"parent_id" gorm:"column:parent_id;comment:上级;size:10;"`
 	Content   string         `json:"content" form:"content" gorm:"column:content;comment:内容;"`
-	UserId    int            `json:"user_id" form:"user_id" gorm:"column:user_id;comment:用户id;"`
-	User      system.SysUser `json:"user" form:"user" gorm:"foreignKey:UserId"` // foreignKey是管联UserId的SysUser的表
+	UserId    int            `json:"user_id" form:"user_id" gorm:"column:user_id;comment:用户id;"` // 作为外键 关联User
+	User      system.SysUser `json:"user" form:"user" gorm:"foreignKey:UserId"`                  // foreignKey是管联UserId的SysUser的表
 	Children  []Comment      `json:"children" form:"children" gorm:"foreignKey:ParentId;"`
 	// User       User             `json:"user" form:"user" gorm:"foreignKey:user_id"`
 }
