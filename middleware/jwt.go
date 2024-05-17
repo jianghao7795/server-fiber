@@ -14,8 +14,14 @@ import (
 var jwtService = new(systemService.JwtService)
 
 func JWTAuth(c *fiber.Ctx) error {
+	// 解决访问文件的401问题
+	if strings.Contains(c.Get("Accept"), "image/") {
+		code := c.Response().StatusCode()
+		return c.Status(code).SendFile(strings.Join(strings.Split(c.Path(), "/")[2:], "/"))
+	}
 	// 我们这里jwt鉴权取头部信息 Authorization 登录时回返回token信息 这里前端需要把token存储到cookie或者本地localStorage中 不过需要跟后端协商过期时间 可以约定刷新令牌或者重新登录
 	tokenString := c.Get("Authorization")
+
 	if tokenString == "" {
 		return response.FailWithDetailed401(fiber.Map{"reload": true}, "未登录或非法访问", c)
 	}

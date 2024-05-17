@@ -74,3 +74,7 @@ func Result400(code int, data interface{}, msg string, c *fiber.Ctx) error {
 		msg,
 	})
 }
+
+func FailWithMessage404(message string, c *fiber.Ctx) error {
+	return Result400(ERROR, map[string]interface{}{}, message, c)
+}
