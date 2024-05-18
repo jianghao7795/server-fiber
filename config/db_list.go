@@ -2,8 +2,8 @@ package config
 
 type DB struct {
 	Disable      bool   `mapstructure:"disable" json:"disable" yaml:"disable"`
-	Type         string `mapstructure:"type" json:"type" yaml:"type"`
-	AliasName    string `mapstructure:"alias-name" json:"alias-name" yaml:"alias-name"`
+	Type         string `mapstructure:"type" json:"type" yaml:"type"`                               // db 类型
+	AliasName    string `mapstructure:"alias-name" json:"alias-name" yaml:"alias-name"`             // 佚名
 	Path         string `mapstructure:"path" json:"path" yaml:"path"`                               // 服务器地址:端口
 	Port         string `mapstructure:"port" json:"port" yaml:"port"`                               //:端口
 	Config       string `mapstructure:"config" json:"config" yaml:"config"`                         // 高级配置

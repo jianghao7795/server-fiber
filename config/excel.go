@@ -1,5 +1,5 @@
 package config
 
 type Excel struct {
-	Dir string `mapstructure:"dir" json:"dir" yaml:"dir"`
+	Dir string `mapstructure:"dir" json:"dir" yaml:"dir"` // 文件路径
 }
