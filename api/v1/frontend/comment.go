@@ -32,10 +32,10 @@ func (s *CommentApi) CreatedComment(c *fiber.Ctx) error {
 	var comment frontend.Comment
 	_ = c.BodyParser(&comment)
 	if err := commentService.CreatedComment(&comment); err != nil {
-		global.LOG.Error("创建失败!", zap.Error(err))
-		return response.FailWithMessage("创建失败", c)
+		global.LOG.Error("评论失败!", zap.Error(err))
+		return response.FailWithMessage("评论失败", c)
 	} else {
-		return response.OkWithId("创建成功", comment.ID, c)
+		return response.OkWithId("评论成功", comment.ID, c)
 	}
 
 }
