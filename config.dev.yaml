@@ -92,7 +92,7 @@ jwt:
 local:
   path: uploads/file
 mysql:
-  path: 127.0.0.1
+  path: 192.168.1.2
   port: "3306"
   config: charset=utf8mb4&parseTime=True&loc=Local
   db-name: server-fiber
@@ -124,7 +124,7 @@ qiniu:
   use-cdn-domains: false
 redis:
   db: 0
-  addr: 127.0.0.1:6379
+  addr: 192.168.1.2:6379
   password: ""
 system:
   domain: localhost

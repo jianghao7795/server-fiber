@@ -9,6 +9,12 @@ import (
 )
 
 func JWTAuthMiddleware(c *fiber.Ctx) error {
+	// 解决访问文件的401问题
+	if strings.Contains(c.Get("Accept"), "image/") {
+		code := c.Response().StatusCode()
+		return c.Status(code).SendFile(strings.Join(strings.Split(c.Path(), "/")[2:], "/"))
+	}
+
 	authHeader := c.Get("Authorization")
 	token := strings.Replace(authHeader, "Bearer ", "", 1)
 	if token == "" {
