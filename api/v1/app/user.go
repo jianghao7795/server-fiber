@@ -49,7 +49,7 @@ func (userApi *UserApi) DeleteUser(c *fiber.Ctx) error {
 	id, _ := c.ParamsInt("id")
 	if err := userService.DeleteUser(id); err != nil {
 		global.LOG.Error("删除失败!", zap.Error(err))
-		return response.FailWithMessage("删除失败", c)
+		return response.FailWithMessage("删除失败"+err.Error(), c)
 	} else {
 		return response.OkWithMessage("删除成功", c)
 	}
@@ -69,7 +69,7 @@ func (userApi *UserApi) DeleteUserByIds(c *fiber.Ctx) error {
 	_ = c.QueryParser(&IDS)
 	if err := userService.DeleteUserByIds(IDS); err != nil {
 		global.LOG.Error("批量删除失败!", zap.Error(err))
-		return response.FailWithMessage("批量删除失败", c)
+		return response.FailWithMessage("批量删除失败"+err.Error(), c)
 	} else {
 		return response.OkWithMessage("批量删除成功", c)
 	}
@@ -95,12 +95,12 @@ func (userApi *UserApi) UpdateUser(c *fiber.Ctx) error {
 	err := c.BodyParser(&user)
 	if err != nil {
 		global.LOG.Error("获取数据失败!", zap.Error(err))
-		return response.FailWithMessage("获取数据失败", c)
+		return response.FailWithMessage("获取数据失败"+err.Error(), c)
 	}
 	user.ID = uint(id)
 	if err := userService.UpdateUser(&user); err != nil {
 		global.LOG.Error("更新失败!", zap.Error(err))
-		return response.FailWithMessage("更新失败", c)
+		return response.FailWithMessage("更新失败"+err.Error(), c)
 	} else {
 		return response.OkWithMessage("更新成功", c)
 	}
@@ -119,7 +119,7 @@ func (userApi *UserApi) FindUser(c *fiber.Ctx) error {
 	id, _ := c.ParamsInt("id")
 	if reuser, err := userService.GetUser(uint(id)); err != nil {
 		global.LOG.Error("查询失败!", zap.Error(err))
-		return response.FailWithMessage("查询失败", c)
+		return response.FailWithMessage("查询失败"+err.Error(), c)
 	} else {
 		return response.OkWithData(fiber.Map{"user": reuser}, c)
 	}
@@ -139,7 +139,7 @@ func (userApi *UserApi) GetUserList(c *fiber.Ctx) error {
 	_ = c.QueryParser(&pageInfo)
 	if list, total, err := userService.GetUserInfoList(&pageInfo); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
-		return response.FailWithMessage("获取失败", c)
+		return response.FailWithMessage("获取失败"+err.Error(), c)
 	} else {
 		return response.OkWithDetailed(response.PageResult{
 			List:     list,

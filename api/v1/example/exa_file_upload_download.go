@@ -62,7 +62,7 @@ func (u *FileUploadAndDownloadApi) UploadFile(c *fiber.Ctx) error {
 		file, err = fileUploadAndDownloadService.UploadFile(fileImages, noSave, fileDimension, isCropper) // 文件上传后拿到文件路径
 		if err != nil {
 			global.LOG.Error("修改数据库链接失败!", zap.Error(err))
-			return response.FailWithMessage("修改数据库链接失败", c)
+			return response.FailWithMessage("修改数据库链接失败"+err.Error(), c)
 		}
 
 		defer reader.Close()
@@ -77,7 +77,7 @@ func (u *FileUploadAndDownloadApi) EditFileName(c *fiber.Ctx) error {
 	_ = c.QueryParser(&file)
 	if err := fileUploadAndDownloadService.EditFileName(file); err != nil {
 		global.LOG.Error("编辑失败!", zap.Error(err))
-		return response.FailWithMessage("编辑失败", c)
+		return response.FailWithMessage("编辑失败"+err.Error(), c)
 	}
 	return response.OkWithMessage("编辑成功", c)
 }
@@ -114,7 +114,7 @@ func (u *FileUploadAndDownloadApi) GetFileList(c *fiber.Ctx) error {
 	list, total, err := fileUploadAndDownloadService.GetFileRecordInfoList(pageInfo)
 	if err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
-		return response.FailWithMessage("获取失败", c)
+		return response.FailWithMessage("获取失败"+err.Error(), c)
 	} else {
 		return response.OkWithDetailed(response.PageResult{
 			List:     list,

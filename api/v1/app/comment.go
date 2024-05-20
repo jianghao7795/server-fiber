@@ -29,7 +29,7 @@ func (commentApi *CommentApi) CreateComment(c *fiber.Ctx) error {
 	}
 	if err := commentService.CreateComment(&commentData); err != nil {
 		global.LOG.Error("创建失败!", zap.Error(err))
-		return response.FailWithMessage("创建失败", c)
+		return response.FailWithMessage("创建失败"+err.Error(), c)
 	} else {
 		return response.OkWithMessage("创建成功", c)
 	}
@@ -94,7 +94,7 @@ func (commentApi *CommentApi) UpdateComment(c *fiber.Ctx) error {
 	}
 	if err = commentService.UpdateComment(&comment2); err != nil {
 		global.LOG.Error("更新失败!", zap.Error(err))
-		return response.FailWithMessage("更新失败", c)
+		return response.FailWithMessage("更新失败"+err.Error(), c)
 	} else {
 		return response.OkWithMessage("更新成功", c)
 	}
@@ -117,7 +117,7 @@ func (commentApi *CommentApi) FindComment(c *fiber.Ctx) error {
 	}
 	if recomment, err := commentService.GetComment(id); err != nil {
 		global.LOG.Error("查询失败!", zap.Error(err))
-		return response.FailWithMessage("查询失败", c)
+		return response.FailWithMessage("查询失败"+err.Error(), c)
 	} else {
 		return response.OkWithData(fiber.Map{"comment": recomment}, c)
 	}
@@ -137,7 +137,7 @@ func (commentApi *CommentApi) GetCommentList(c *fiber.Ctx) error {
 	_ = c.QueryParser(&pageInfo)
 	if list, total, err := commentService.GetCommentInfoList(&pageInfo); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
-		return response.FailWithMessage("获取失败", c)
+		return response.FailWithMessage("获取失败"+err.Error(), c)
 	} else {
 		return response.OkWithDetailed(response.PageResult{
 			List:     list,
@@ -154,7 +154,7 @@ func (*CommentApi) GetCommentTreeList(c *fiber.Ctx) error {
 
 	if list, total, err := commentService.GetCommentTreeList(&pageInfo); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
-		return response.FailWithMessage("获取失败", c)
+		return response.FailWithMessage("获取失败"+err.Error(), c)
 	} else {
 		return response.OkWithDetailed(response.PageResult{
 			List:     list,
