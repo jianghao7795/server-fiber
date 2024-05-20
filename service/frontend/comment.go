@@ -22,12 +22,7 @@ func (commentService *Comment) GetCommentByArticleId(articleId int) (list []fron
 }
 
 func (commentService *Comment) findChildrenComment(comment *frontend.Comment) (err error) {
-	err = global.DB.Where("parent_id = ?", comment.ID).Preload("User").Order("id desc").Find(&comment.Children).Error
-	if len(comment.Children) > 0 {
-		for k := range comment.Children {
-			err = commentService.findChildrenComment(&comment.Children[k])
-		}
-	}
+	err = global.DB.Where("parent_id = ?", comment.ID).Preload("User").Preload("ToUser").Order("user_id desc").Find(&comment.Children).Error
 	return err
 }
 

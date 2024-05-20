@@ -23,7 +23,8 @@ type Comment struct {
 	UserId    int            `json:"user_id" form:"user_id" gorm:"column:user_id;comment:用户id;"` // 作为外键 关联User
 	User      system.SysUser `json:"user" form:"user" gorm:"foreignKey:UserId"`                  // foreignKey是管联UserId的SysUser的表
 	Children  []Comment      `json:"children" form:"children" gorm:"foreignKey:ParentId;"`
-	// User       User             `json:"user" form:"user" gorm:"foreignKey:user_id"`
+	ToUser    system.SysUser `json:"to_user" form:"to_user" gorm:"foreignKey:ToUserId"`
+	ToUserId  int            `json:"to_user_id" form:"to_user_id" gorm:"column:to_user_id;comment:通知用户id;"` // 作为外键 关联User
 }
 
 // TableName Comment 表名

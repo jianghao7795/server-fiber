@@ -6,8 +6,6 @@ import (
 	commentReq "server-fiber/model/app/request"
 	"server-fiber/model/common/request"
 	"strings"
-
-	"gorm.io/gorm"
 )
 
 type CommentService struct{}
@@ -53,9 +51,7 @@ func (commentService *CommentService) GetCommentInfoList(info *commentReq.Commen
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	// 创建db
-	db := global.DB.Model(&comment.Comment{}).Preload("Article", func(db *gorm.DB) *gorm.DB {
-		return db.Preload("User")
-	}).Preload("Praise")
+	db := global.DB.Model(&comment.Comment{}).Preload("Article").Preload("User").Preload("ToUser").Preload("Praise")
 	if info.ArticleId != 0 {
 		db = db.Where("article_id = ?", info.ArticleId)
 	}
@@ -103,12 +99,7 @@ func (commentService *CommentService) GetCommentTreeList(info *commentReq.Commen
 }
 
 func (commentService *CommentService) findChildrenComment(comment *comment.Comment) (err error) {
-	err = global.DB.Where("parent_id = ?", comment.ID).Preload("User").Find(&comment.Children).Error
-	if len(comment.Children) > 0 {
-		for k := range comment.Children {
-			err = commentService.findChildrenComment(&comment.Children[k])
-		}
-	}
+	err = global.DB.Where("parent_id = ?", comment.ID).Preload("User").Preload("ToUser").Order("user_id desc").Find(&comment.Children).Error
 	return err
 }
 
