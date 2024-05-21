@@ -19,10 +19,6 @@ import (
 //@param: api model.SysApi
 //@return: err error
 
-type ApiService struct{}
-
-var ApiServiceApp = new(ApiService)
-
 func (apiService *ApiService) CreateApi(api *system.SysApi) (err error) {
 	if !errors.Is(global.DB.Where("path = ? AND method = ?", api.Path, api.Method).First(&system.SysApi{}).Error, gorm.ErrRecordNotFound) {
 		return errors.New("存在相同api")

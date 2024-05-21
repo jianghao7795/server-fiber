@@ -16,10 +16,6 @@ import (
 //@param: authorityId string
 //@return: err error, treeMap map[string][]model.SysMenu
 
-type MenuService struct{}
-
-var MenuServiceApp = new(MenuService)
-
 func (menuService *MenuService) getMenuTreeMap(authorityId string) (treeMap map[string][]system.SysMenu, err error) {
 	var allMenus []system.SysMenu
 	var btns []system.SysAuthorityBtn

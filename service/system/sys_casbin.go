@@ -18,10 +18,6 @@ import (
 //@param: authorityId string, casbinInfos []request.CasbinInfo
 //@return: error
 
-type CasbinService struct{}
-
-var CasbinServiceApp = new(CasbinService)
-
 func (casbinService *CasbinService) UpdateCasbin(authorityId string, casbinInfos []request.CasbinInfo) error {
 	casbinService.ClearCasbin(0, authorityId)
 	rules := [][]string{}

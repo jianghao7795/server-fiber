@@ -8,8 +8,6 @@ import (
 	"time"
 )
 
-type GithubService struct{}
-
 func (g *GithubService) CreateGithub(github *[]system.SysGithub) (total int, err error) {
 	db := global.DB.Model(&system.SysGithub{})
 	var data []system.SysGithub

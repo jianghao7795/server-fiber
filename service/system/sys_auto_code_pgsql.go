@@ -10,10 +10,6 @@ import (
 	"gorm.io/gorm/logger"
 )
 
-var AutoCodePgsql = new(autoCodePgsql)
-
-type autoCodePgsql struct{}
-
 // GetDB 获取数据库的所有数据库名
 // Author wuhao
 func (a *autoCodePgsql) GetDB() (data []response.Db, err error) {

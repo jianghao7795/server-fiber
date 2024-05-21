@@ -7,8 +7,6 @@ import (
 	"strconv"
 )
 
-type Problem struct{}
-
 func (*Problem) GetUserProblemList(info *system.SysUserProblem) (list interface{}, err error) {
 	db := global.DB.Model(&system.SysUserProblem{})
 	var problemList []response.SysUserProblem

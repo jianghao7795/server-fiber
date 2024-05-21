@@ -5,10 +5,6 @@ import (
 	"server-fiber/model/system/response"
 )
 
-var AutoCodeMysql = new(autoCodeMysql)
-
-type autoCodeMysql struct{}
-
 // GetDB 获取数据库的所有数据库名
 // Author wuhao
 func (s *autoCodeMysql) GetDB() (data []response.Db, err error) {

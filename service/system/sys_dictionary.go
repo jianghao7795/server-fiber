@@ -16,8 +16,6 @@ import (
 //@param: sysDictionary model.SysDictionary
 //@return: err error
 
-type DictionaryService struct{}
-
 func (dictionaryService *DictionaryService) CreateSysDictionary(sysDictionary system.SysDictionary) (err error) {
 	if (!errors.Is(global.DB.First(&system.SysDictionary{}, "type = ?", sysDictionary.Type).Error, gorm.ErrRecordNotFound)) {
 		return errors.New("存在相同的type，不允许创建")

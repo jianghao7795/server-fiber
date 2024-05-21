@@ -19,8 +19,6 @@ import (
 	"gorm.io/gorm"
 )
 
-type PgsqlInitHandler struct{}
-
 func NewPgsqlInitHandler() *PgsqlInitHandler {
 	return &PgsqlInitHandler{}
 }

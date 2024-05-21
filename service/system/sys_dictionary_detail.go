@@ -12,8 +12,6 @@ import (
 //@param: sysDictionaryDetail model.SysDictionaryDetail
 //@return: err error
 
-type DictionaryDetailService struct{}
-
 func (dictionaryDetailService *DictionaryDetailService) CreateSysDictionaryDetail(sysDictionaryDetail system.SysDictionaryDetail) (err error) {
 	err = global.DB.Create(&sysDictionaryDetail).Error
 	return err

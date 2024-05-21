@@ -9,8 +9,6 @@ import (
 	"gorm.io/gorm"
 )
 
-type BaseMenuService struct{}
-
 //
 //@function: DeleteBaseMenu
 //@description: 删除基础路由

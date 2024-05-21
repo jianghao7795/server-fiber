@@ -20,10 +20,6 @@ import (
 
 var ErrRepeat = errors.New("重复创建")
 
-type AutoCodeHistoryService struct{}
-
-var AutoCodeHistoryServiceApp = new(AutoCodeHistoryService)
-
 // CreateAutoCodeHistory 创建代码生成器历史记录
 // RouterPath : RouterPath@RouterString;RouterPath2@RouterString2
 func (autoCodeHistoryService *AutoCodeHistoryService) CreateAutoCodeHistory(meta, structName, structCNName, autoCodePath string, injectionMeta string, tableName string, apiIds string, Package string) error {

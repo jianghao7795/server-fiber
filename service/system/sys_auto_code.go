@@ -134,10 +134,6 @@ type tplData struct {
 	autoMoveFilePath string
 }
 
-type AutoCodeService struct{}
-
-var AutoCodeServiceApp = new(AutoCodeService)
-
 //@author: wuhao
 //@function: PreviewTemp
 //@description: 预览创建代码

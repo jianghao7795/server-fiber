@@ -14,8 +14,6 @@ import (
 //@description: 读取配置文件
 //@return: err error, conf config.Server
 
-type SystemConfigService struct{}
-
 func (systemConfigService *SystemConfigService) GetSystemConfig() (conf config.Server, err error) {
 	return global.CONFIG, nil
 }

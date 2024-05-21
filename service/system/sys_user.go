@@ -19,8 +19,6 @@ import (
 //@param: u model.SysUser
 //@return: err error, userInter model.SysUser
 
-type UserService struct{}
-
 func (userService *UserService) Register(u system.SysUser) (userInter system.SysUser, err error) {
 	var user system.SysUser
 	if !errors.Is(global.DB.Where("username = ?", u.Username).First(&user).Error, gorm.ErrRecordNotFound) { // 判断用户名是否注册

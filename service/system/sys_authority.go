@@ -18,10 +18,6 @@ import (
 //@param: auth model.SysAuthority
 //@return: err error, authority model.SysAuthority
 
-type AuthorityService struct{}
-
-var AuthorityServiceApp = new(AuthorityService)
-
 func (authorityService *AuthorityService) CreateAuthority(auth system.SysAuthority) (authority system.SysAuthority, err error) {
 	var authorityBox system.SysAuthority
 	if !errors.Is(global.DB.Where("authority_id = ?", auth.AuthorityId).First(&authorityBox).Error, gorm.ErrRecordNotFound) {

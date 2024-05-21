@@ -10,8 +10,6 @@ import (
 	"gorm.io/gorm"
 )
 
-type AuthorityBtnService struct{}
-
 func (a *AuthorityBtnService) GetAuthorityBtn(req request.SysAuthorityBtnReq) (res response.SysAuthorityBtnRes, err error) {
 	var authorityBtn []system.SysAuthorityBtn
 	err = global.DB.Find(&authorityBtn, "authority_id = ? and sys_menu_id = ?", req.AuthorityId, req.MenuID).Error

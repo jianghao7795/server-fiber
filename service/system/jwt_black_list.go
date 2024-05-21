@@ -10,8 +10,6 @@ import (
 	"server-fiber/model/system"
 )
 
-type JwtService struct{}
-
 //@author: wuhao
 //@function: JsonInBlacklist
 //@description: 拉黑jwt
