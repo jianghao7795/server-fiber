@@ -46,7 +46,11 @@ func (u *FileUploadAndDownloadApi) BreakpointContinue(c *fiber.Ctx) error {
 			global.LOG.Error("文件关闭失败!", zap.Error(err))
 		}
 	}(f)
-	cen, _ := ioutil.ReadAll(f)
+	cen, err := ioutil.ReadAll(f)
+	if err != nil {
+		global.LOG.Error("文件分段读取失败!", zap.Error(err))
+		return response.FailWithMessage("文件分段读取失败", c)
+	}
 	if !utils.CheckMd5(cen, chunkMd5) {
 		global.LOG.Error("检查md5失败!", zap.Error(err))
 		return response.FailWithMessage("检查md5失败", c)
