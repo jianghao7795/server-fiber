@@ -78,7 +78,7 @@ func (*Local) DeleteFile(key string) error {
 		_, err := os.Stat(key)
 		if err != nil {
 			if os.IsNotExist(err) {
-				global.LOG.Error("本地文件删除失败, err: 文件不存在 ", zap.String("err", err.Error()))
+				global.LOG.Error("本地文件删除失败, err: 文件不存在 ", zap.Error(err))
 				return nil
 			} else {
 				return err

@@ -77,9 +77,13 @@ func (u *FileUploadAndDownloadApi) UploadFile(c *fiber.Ctx) error {
 
 // EditFileName 编辑文件名或者备注
 func (u *FileUploadAndDownloadApi) EditFileName(c *fiber.Ctx) error {
-	var file example.ExaFileUploadAndDownload
-	_ = c.QueryParser(&file)
-	if err := fileUploadAndDownloadService.EditFileName(file); err != nil {
+	var data example.ExaFileUploadAndDownload
+	err := c.BodyParser(&data)
+	if err != nil {
+		global.LOG.Error("获取文件失败!", zap.Error(err))
+		return response.FailWithMessage("获取文件失败"+err.Error(), c)
+	}
+	if err := fileUploadAndDownloadService.EditFileName(&data); err != nil {
 		global.LOG.Error("编辑失败!", zap.Error(err))
 		return response.FailWithMessage("编辑失败"+err.Error(), c)
 	}
@@ -92,12 +96,14 @@ func (u *FileUploadAndDownloadApi) EditFileName(c *fiber.Ctx) error {
 // @Produce  application/json
 // @Param data body example.ExaFileUploadAndDownload true "传入文件里面id即可"
 // @Success 200 {object} response.Response{msg=string} "删除文件"
-// @Router /fileUploadAndDownload/deleteFile [post]
+// @Router /fileUploadAndDownload/deleteFile [delete]
 func (u *FileUploadAndDownloadApi) DeleteFile(c *fiber.Ctx) error {
-	var file example.ExaFileUploadAndDownload
-	id, _ := c.ParamsInt("id")
-	file.ID = uint(id)
-	if err := fileUploadAndDownloadService.DeleteFile(file); err != nil {
+	id, err := c.ParamsInt("id")
+	if err != nil {
+		global.LOG.Error("获取id失败!", zap.Error(err))
+		return response.FailWithMessage("获取id失败"+err.Error(), c)
+	}
+	if err := fileUploadAndDownloadService.DeleteFile(uint(id)); err != nil {
 		global.LOG.Error("删除失败!", zap.Error(err))
 		return response.FailWithDetailed(fiber.Map{"msg": err.Error()}, "删除失败", c)
 	}
@@ -111,11 +117,11 @@ func (u *FileUploadAndDownloadApi) DeleteFile(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data body request.PageInfo true "页码, 每页大小"
 // @Success 200 {object} response.Response{data=response.PageResult,msg=string} "分页文件列表,返回包括列表,总数,页码,每页数量"
-// @Router /fileUploadAndDownload/getFileList [post]
+// @Router /fileUploadAndDownload/getFileList [get]
 func (u *FileUploadAndDownloadApi) GetFileList(c *fiber.Ctx) error {
 	var pageInfo request.PageInfo
 	_ = c.QueryParser(&pageInfo)
-	list, total, err := fileUploadAndDownloadService.GetFileRecordInfoList(pageInfo)
+	list, total, err := fileUploadAndDownloadService.GetFileRecordInfoList(&pageInfo)
 	if err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败"+err.Error(), c)

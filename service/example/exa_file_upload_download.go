@@ -40,9 +40,9 @@ func (e *FileUploadAndDownloadService) FindFile(id uint) (example.ExaFileUploadA
 //@param: file model.ExaFileUploadAndDownload
 //@return: err error
 
-func (e *FileUploadAndDownloadService) DeleteFile(file example.ExaFileUploadAndDownload) (err error) {
+func (e *FileUploadAndDownloadService) DeleteFile(id uint) (err error) {
 	var fileFromDb example.ExaFileUploadAndDownload
-	fileFromDb, err = e.FindFile(file.ID)
+	fileFromDb, err = e.FindFile(id)
 	if err != nil {
 		return
 	}
@@ -50,14 +50,13 @@ func (e *FileUploadAndDownloadService) DeleteFile(file example.ExaFileUploadAndD
 	if err = oss.DeleteFile(fileFromDb.Url); err != nil {
 		return errors.New("文件删除失败 " + err.Error())
 	}
-	err = global.DB.Where("id = ?", file.ID).Unscoped().Delete(&file).Error
+	err = global.DB.Delete(&fileFromDb, id).Error
 	return err
 }
 
 // EditFileName 编辑文件名或者备注
-func (e *FileUploadAndDownloadService) EditFileName(file example.ExaFileUploadAndDownload) (err error) {
-	var fileFromDb example.ExaFileUploadAndDownload
-	return global.DB.Where("id = ?", file.ID).First(&fileFromDb).Update("name", file.Name).Error
+func (e *FileUploadAndDownloadService) EditFileName(file *example.ExaFileUploadAndDownload) (err error) {
+	return global.DB.Where("id = ?", file.ID).Update("name", file.Name).Error
 }
 
 //@author: wuhao
@@ -66,7 +65,7 @@ func (e *FileUploadAndDownloadService) EditFileName(file example.ExaFileUploadAn
 //@param: info request.PageInfo
 //@return: err error, list interface{}, total int64
 
-func (e *FileUploadAndDownloadService) GetFileRecordInfoList(info request.PageInfo) (list interface{}, total int64, err error) {
+func (e *FileUploadAndDownloadService) GetFileRecordInfoList(info *request.PageInfo) (list interface{}, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	keyword := info.Keyword
