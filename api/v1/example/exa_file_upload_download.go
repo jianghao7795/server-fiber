@@ -45,7 +45,7 @@ func (u *FileUploadAndDownloadApi) UploadFile(c *fiber.Ctx) error {
 		fileDimension.Height = 2
 		fileDimension.Width = 1
 		fileDimension.Proportion = 2.00
-		file, err = fileUploadAndDownloadService.UploadFile(fileImages, noSave, fileDimension, isCropper) // 文件上传后拿到文件路径
+		file, err = fileUploadAndDownloadService.UploadFile(fileImages, noSave, &fileDimension, isCropper) // 文件上传后拿到文件路径
 		if err != nil {
 			global.LOG.Error("修改数据库链接失败!", zap.Error(err))
 			return response.FailWithMessage("修改数据库链接失败", c)
@@ -63,7 +63,7 @@ func (u *FileUploadAndDownloadApi) UploadFile(c *fiber.Ctx) error {
 		fileDimension.Width = fileCtx.Dx()
 		fileDimension.Proportion = float64(fileCtx.Dx()) / float64(fileCtx.Dy())
 
-		file, err = fileUploadAndDownloadService.UploadFile(fileImages, noSave, fileDimension, isCropper) // 文件上传后拿到文件路径
+		file, err = fileUploadAndDownloadService.UploadFile(fileImages, noSave, &fileDimension, isCropper) // 文件上传后拿到文件路径
 		if err != nil {
 			global.LOG.Error("修改数据库链接失败!", zap.Error(err))
 			return response.FailWithMessage("修改数据库链接失败"+err.Error(), c)

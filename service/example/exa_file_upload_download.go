@@ -96,7 +96,7 @@ func (e *FileUploadAndDownloadService) GetFileRecordInfoList(info *request.PageI
 //@param: header *multipart.FileHeader, noSave string
 //@return: err error, file model.ExaFileUploadAndDownload
 
-func (e *FileUploadAndDownloadService) UploadFile(header *multipart.FileHeader, noSave string, fileDimension fileDimensionReq.FileDimension, isCropper int) (file example.ExaFileUploadAndDownload, err error) {
+func (e *FileUploadAndDownloadService) UploadFile(header *multipart.FileHeader, noSave string, fileDimension *fileDimensionReq.FileDimension, isCropper int) (file example.ExaFileUploadAndDownload, err error) {
 	oss := upload.NewOss()
 	filePath, key, uploadErr := oss.UploadFile(header)
 	if uploadErr != nil {
