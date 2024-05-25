@@ -10,7 +10,6 @@ import (
 	"go/parser"
 	"go/token"
 	ioutil "io"
-	"log"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -782,7 +781,7 @@ func ImportReference(filepath, importCode, structName, packageName, groupName st
 	buffer := bytes.NewBuffer(output)
 	err = format.Node(buffer, fSet, fParser)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	// 写回数据
 	return os.WriteFile(filepath, buffer.Bytes(), 0o600)

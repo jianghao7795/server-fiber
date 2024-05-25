@@ -125,7 +125,7 @@ func (b *FileUploadAndDownloadApi) BreakpointContinueFinish(c *fiber.Ctx) error 
 // @Router /fileUploadAndDownload/removeChunk [delete]
 func (u *FileUploadAndDownloadApi) RemoveChunk(c *fiber.Ctx) error {
 	var file example.ExaFile
-	c.QueryParser(&file)
+	c.BodyParser(&file)
 	err := utils.RemoveChunk(file.FileMd5)
 	if err != nil {
 		global.LOG.Error("缓存切片删除失败!", zap.Error(err))

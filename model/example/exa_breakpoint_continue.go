@@ -15,10 +15,18 @@ type ExaFile struct {
 	IsFinish     bool
 }
 
+func (ExaFile) TableName() string {
+	return "exa_files"
+}
+
 // file chunk struct, 切片结构体
 type ExaFileChunk struct {
 	global.MODEL
 	ExaFileID       uint
 	FileChunkNumber int
 	FileChunkPath   string
+}
+
+func (ExaFileChunk) TableName() string {
+	return "exa_file_chunks"
 }

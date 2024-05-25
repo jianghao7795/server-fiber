@@ -89,7 +89,11 @@ func MakeFile(fileName string, FileMd5 string) (string, error) {
 		content, _ := os.ReadFile(breakpointDir + FileMd5 + "/" + fileName + "_" + strconv.Itoa(k))
 		_, err = fd.Write(content)
 		if err != nil {
-			_ = os.Remove(finishDir + fileName)
+			// log.Println("log", err.Error())
+			err = os.Remove(finishDir + fileName)
+			if err != nil {
+				return "", err
+			}
 			return finishDir + fileName, err
 		}
 	}
