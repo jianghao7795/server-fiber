@@ -38,8 +38,9 @@ func BreakPointContinue(content []byte, fileName string, contentNumber int, cont
 //@return: CanUpload bool
 
 func CheckMd5(content []byte, chunkMd5 string) (CanUpload bool) {
-	// fileMd5 := MD5V(content)
-	if string(content) == chunkMd5 {
+	fileMd5 := MD5V(content)
+	// log.Println("content: ", fileMd5, chunkMd5)
+	if fileMd5 == chunkMd5 {
 		return true // 可以继续上传
 	} else {
 		return false // 切片不完整，废弃

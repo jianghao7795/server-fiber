@@ -2,7 +2,6 @@ package example
 
 import (
 	ioutil "io"
-	"log"
 	"mime/multipart"
 	"strconv"
 
@@ -29,7 +28,7 @@ func (u *FileUploadAndDownloadApi) BreakpointContinue(c *fiber.Ctx) error {
 	fileMd5 := c.FormValue("fileMd5")
 	fileName := c.FormValue("fileName")
 	chunkMd5 := c.FormValue("chunkMd5")
-	log.Println("fileMd5:", fileMd5, "fileName:", fileName, "chunkMd5:", chunkMd5)
+	// log.Println("fileMd5:", fileMd5, "fileName:", fileName, "chunkMd5:", chunkMd5)
 	chunkNumber, _ := strconv.Atoi(c.FormValue("chunkNumber"))
 	chunkTotal, _ := strconv.Atoi(c.FormValue("chunkTotal"))
 	FileHeader, err := c.FormFile("file")
@@ -53,7 +52,6 @@ func (u *FileUploadAndDownloadApi) BreakpointContinue(c *fiber.Ctx) error {
 		global.LOG.Error("文件分段读取失败!", zap.Error(err))
 		return response.FailWithMessage("文件分段读取失败", c)
 	}
-	log.Println("cem: ", cen, chunkMd5)
 	if !utils.CheckMd5(cen, chunkMd5) {
 		global.LOG.Error("检查md5失败!", zap.Error(err))
 		return response.FailWithMessage("检查md5失败", c)
