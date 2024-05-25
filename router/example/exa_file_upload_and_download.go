@@ -20,6 +20,6 @@ func (e *FileUploadAndDownloadRouter) InitFileUploadAndDownloadRouter(Router fib
 	fileUploadAndDownloadRouter.Post("breakpointContinue", middleware.OperationRecord, exaFileUploadAndDownloadApi.BreakpointContinue)             // 断点续传
 	fileUploadAndDownloadRouter.Get("findFile", middleware.OperationRecord, exaFileUploadAndDownloadApi.FindFile)                                  // 查询当前文件成功的切片
 	fileUploadAndDownloadRouter.Post("breakpointContinueFinish", middleware.OperationRecord, exaFileUploadAndDownloadApi.BreakpointContinueFinish) // 切片传输完成
-	fileUploadAndDownloadRouter.Post("removeChunk", middleware.OperationRecord, exaFileUploadAndDownloadApi.RemoveChunk)                           // 删除切片
+	fileUploadAndDownloadRouter.Delete("removeChunk", middleware.OperationRecord, exaFileUploadAndDownloadApi.RemoveChunk)                         // 删除切片
 
 }

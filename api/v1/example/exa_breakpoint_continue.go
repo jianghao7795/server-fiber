@@ -8,6 +8,7 @@ import (
 	"server-fiber/global"
 	"server-fiber/model/common/response"
 	"server-fiber/model/example"
+	"server-fiber/model/example/request"
 	exampleRes "server-fiber/model/example/response"
 
 	"server-fiber/utils"
@@ -104,9 +105,9 @@ func (u *FileUploadAndDownloadApi) FindFile(c *fiber.Ctx) error {
 // @Success 200 {object} response.Response{data=exampleRes.FilePathResponse,msg=string} "创建文件,返回包括文件路径"
 // @Router /fileUploadAndDownload/findFile [post]
 func (b *FileUploadAndDownloadApi) BreakpointContinueFinish(c *fiber.Ctx) error {
-	fileMd5 := c.Query("fileMd5")
-	fileName := c.Query("fileName")
-	filePath, err := utils.MakeFile(fileName, fileMd5)
+	var file request.BreakPoint
+	c.BodyParser(&file)
+	filePath, err := utils.MakeFile(file.FileName, file.FileMd5)
 	if err != nil {
 		global.LOG.Error("文件创建失败!", zap.Error(err))
 		return response.FailWithDetailed(exampleRes.FilePathResponse{FilePath: filePath}, "文件创建失败", c)
