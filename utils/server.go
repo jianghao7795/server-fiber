@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"os"
 	"runtime"
 	"time"
 
@@ -133,3 +134,12 @@ func InitDisk() (d Disk, err error) {
 // net：网络相关；
 // process：进程相关；
 // winservices：Windows 服务相关。
+
+// 判断文件是否存在
+func IsExistFile(pathFile string) bool {
+	_, err := os.Stat(pathFile)
+	if err == nil {
+		return true
+	}
+	return false
+}

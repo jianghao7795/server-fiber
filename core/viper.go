@@ -28,17 +28,33 @@ func viperInit(path ...string) (*viper.Viper, error) {
 		if config == "" { // 优先级: 命令行 > 环境变量 > 默认值
 			if configEnv := os.Getenv(utils.ConfigEnv); configEnv == "" {
 				config = utils.ConfigFile
-				fmt.Printf("您正在使用config的默认值,config的路径为%v\n", utils.ConfigFile)
+				if utils.IsExistFile(config) {
+					fmt.Printf("您正在使用config的默认值,config的路径为%v\n", utils.ConfigFile)
+				} else {
+					panic("请检查配置文件是否存在: " + config)
+				}
 			} else {
 				config = configEnv
-				fmt.Printf("您正在使用CONFIG环境变量,config的路径为%v\n", config)
+				if utils.IsExistFile(config) {
+					fmt.Printf("您正在使用CONFIG环境变量,config的路径为%v\n", config)
+				} else {
+					panic("请检查配置文件是否存在: " + config)
+				}
 			}
 		} else {
-			fmt.Printf("您正在使用命令行的-c参数传递的值,config的路径为%v\n", config) // server-fiber -c config.yaml
+			if utils.IsExistFile(config) {
+				fmt.Printf("您正在使用命令行的-c参数传递的值,config的路径为%v\n", config) // server-fiber -c config.yaml
+			} else {
+				panic("请检查配置文件是否存在: " + config)
+			}
 		}
 	} else {
 		config = path[0]
-		fmt.Printf("您正在使用func Viper()传递的值,config的路径为%v\n", config)
+		if utils.IsExistFile(config) {
+			fmt.Printf("您正在使用func Viper()传递的值,config的路径为%v\n", config)
+		} else {
+			panic("请检查配置文件是否存在: " + config)
+		}
 	}
 
 	v := viper.New()
