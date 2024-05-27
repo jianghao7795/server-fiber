@@ -110,7 +110,7 @@ func MakeFile(fileName string, FileMd5 string) (string, error) {
 //@return: error
 
 func RemoveChunk(FileMd5 string) error {
-	err := os.RemoveAll(breakpointDir + FileMd5)
+	err := os.RemoveAll(breakpointDir + FileMd5) //RemoveAll删除path指定的文件，或目录及它包含的任何下级对象。它会尝试删除所有东西，除非遇到错误并返回。如果path指定的对象不存在，RemoveAll会返回nil而不返回错误。
 	return err
 }
 

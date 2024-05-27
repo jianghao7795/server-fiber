@@ -133,14 +133,14 @@ func (u *FileUploadAndDownloadApi) RemoveChunk(c *fiber.Ctx) error {
 	c.BodyParser(&file)
 	err := utils.RemoveChunk(file.FileMd5)
 	if err != nil {
-		global.LOG.Error("缓存切片删除失败!", zap.Error(err))
-		return err
+		global.LOG.Error("缓存切片文件删除失败!", zap.Error(err))
+		return response.FailWithDetailed(err, "缓存切片文件删除失败", c)
 	}
 	err = fileUploadAndDownloadService.DeleteFileChunk(file.FileMd5, file.FileName, file.FilePath)
 	if err != nil {
 		global.LOG.Error(err.Error(), zap.Error(err))
 		return response.FailWithMessage(err.Error(), c)
 	} else {
-		return response.OkWithMessage("缓存切片删除成功", c)
+		return response.OkWithMessage("表缓存切片删除成功", c)
 	}
 }
