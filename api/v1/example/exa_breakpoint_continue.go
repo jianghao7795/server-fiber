@@ -35,12 +35,12 @@ func (u *FileUploadAndDownloadApi) BreakpointContinue(c *fiber.Ctx) error {
 	FileHeader, err := c.FormFile("file")
 	if err != nil {
 		global.LOG.Error("接收文件失败!", zap.Error(err))
-		return response.FailWithMessage("接收文件失败", c)
+		return response.FailWithMessage("接收文件失败: "+err.Error(), c)
 	}
 	f, err := FileHeader.Open()
 	if err != nil {
 		global.LOG.Error("文件读取失败!", zap.Error(err))
-		return response.FailWithMessage("文件读取失败", c)
+		return response.FailWithMessage("文件读取失败"+err.Error(), c)
 	}
 	defer func(f multipart.File) {
 		err := f.Close()
@@ -65,12 +65,12 @@ func (u *FileUploadAndDownloadApi) BreakpointContinue(c *fiber.Ctx) error {
 	pathc, err := utils.BreakPointContinue(cen, fileName, chunkNumber, chunkTotal, fileMd5)
 	if err != nil {
 		global.LOG.Error("断点续传失败!", zap.Error(err))
-		return response.FailWithMessage("断点续传失败", c)
+		return response.FailWithMessage("断点续传失败: "+err.Error(), c)
 	}
 
 	if err = fileUploadAndDownloadService.CreateFileChunk(file.ID, pathc, chunkNumber); err != nil {
 		global.LOG.Error("创建文件记录失败!", zap.Error(err))
-		return response.FailWithMessage("创建文件记录失败", c)
+		return response.FailWithMessage("创建文件记录失败: "+err.Error(), c)
 	}
 	return response.OkWithMessage("切片创建成功", c)
 }
@@ -90,7 +90,7 @@ func (u *FileUploadAndDownloadApi) FindFile(c *fiber.Ctx) error {
 	file, err := fileUploadAndDownloadService.FindOrCreateFile(fileMd5, fileName, chunkTotal)
 	if err != nil {
 		global.LOG.Error("查找失败!", zap.Error(err))
-		return response.FailWithMessage("查找失败", c)
+		return response.FailWithMessage("查找失败: "+err.Error(), c)
 	} else {
 		return response.OkWithDetailed(exampleRes.FileResponse{File: file}, "查找成功", c)
 	}
@@ -106,7 +106,11 @@ func (u *FileUploadAndDownloadApi) FindFile(c *fiber.Ctx) error {
 // @Router /fileUploadAndDownload/findFile [post]
 func (b *FileUploadAndDownloadApi) BreakpointContinueFinish(c *fiber.Ctx) error {
 	var file request.BreakPoint
-	c.BodyParser(&file)
+	err := c.BodyParser(&file)
+	if err != nil {
+		global.LOG.Error("获取文件信息错误", zap.Error(err))
+		return response.FailWithMessage("获取文件信息错误: "+err.Error(), c)
+	}
 	filePath, err := utils.MakeFile(file.FileName, file.FileMd5)
 	if err != nil {
 		global.LOG.Error("文件创建失败!", zap.Error(err))

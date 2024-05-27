@@ -136,10 +136,7 @@ func InitDisk() (d Disk, err error) {
 // winservices：Windows 服务相关。
 
 // 判断文件是否存在
-func IsExistFile(pathFile string) bool {
+func IsExistFile(pathFile string) (bool, error) {
 	_, err := os.Stat(pathFile)
-	if err == nil {
-		return true
-	}
-	return false
+	return err == nil, err
 }

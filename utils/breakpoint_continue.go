@@ -1,6 +1,8 @@
 package utils
 
 import (
+	ioutil "io"
+	"math"
 	"os"
 	"strconv"
 )
@@ -79,6 +81,7 @@ func MakeFile(fileName string, FileMd5 string) (string, error) {
 	if err != nil {
 		return finishDir + fileName, err
 	}
+	// if os.IsExist()
 	_ = os.MkdirAll(finishDir, os.ModePerm)
 	fd, err := os.OpenFile(finishDir+fileName, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0o644)
 	if err != nil {
@@ -109,4 +112,68 @@ func MakeFile(fileName string, FileMd5 string) (string, error) {
 func RemoveChunk(FileMd5 string) error {
 	err := os.RemoveAll(breakpointDir + FileMd5)
 	return err
+}
+
+// 文件分为多个片，每个片的大小为1M，每个片都有一个唯一的编号，编号从1开始，编号为0表示整个文件。
+// 客户端上传文件时，会先将文件切分为多个片，并将每个片的编号、大小、MD5值等信息记录在服务器端。
+// 当客户端断点续传时，会将已上传的片的编号、大小、MD5值等信息记录在客户端，并将这些信息发送给服务器端。
+// 服务器端收到客户端的断点续传信息后，会根据这些信息判断客户端是否已经上传了完整的文件。
+// 如果客户端已经上传了完整的文件，则服务器端会将该文件从断点续传目录移动到文件目录，并返回文件完整路径。
+// 如果客户端未上传完整的文件，则服务器端会将该文件从断点续传目录删除，并返回错误信息。
+func FileSeparateMerge(file_path string, chunk_size ...int) error {
+	const chunkSize = 1 << (10 * 2)
+	var chunk_num = chunkSize
+	if len(chunk_size) > 0 {
+		chunk_num = chunk_size[0]
+	}
+
+	fileInfo, err := os.Stat(file_path)
+	if err != nil {
+		panic(err)
+	}
+
+	num := math.Ceil(float64(fileInfo.Size()) / float64(chunk_num))
+
+	fi, err := os.OpenFile("cbd.mp4", os.O_RDONLY, os.ModePerm)
+	if err != nil {
+		return err
+	}
+	b := make([]byte, chunkSize)
+	var i int64 = 1
+	for ; i <= int64(num); i++ {
+		fi.Seek((i-1)*int64(chunk_num), 0)
+		if len(b) > int(fileInfo.Size()-(i-1)*int64(chunk_num)) {
+			b = make([]byte, fileInfo.Size()-(i-1)*int64(chunk_num))
+		}
+		fi.Read(b)
+
+		f, err := os.OpenFile("./"+strconv.Itoa(int(i))+".db", os.O_CREATE|os.O_WRONLY, os.ModePerm)
+		if err != nil {
+			panic(err)
+		}
+		f.Write(b)
+		f.Close()
+	}
+	fi.Close()
+
+	fii, err := os.OpenFile("all.mp4", os.O_CREATE|os.O_WRONLY|os.O_APPEND, os.ModePerm)
+	if err != nil {
+
+		return err
+	}
+	for i := 1; i <= int(num); i++ {
+		f, err := os.OpenFile("./"+strconv.Itoa(int(i))+".db", os.O_RDONLY, os.ModePerm)
+		if err != nil {
+
+			return err
+		}
+		b, err := ioutil.ReadAll(f)
+		if err != nil {
+
+			return err
+		}
+		fii.Write(b)
+		f.Close()
+	}
+	return nil
 }
