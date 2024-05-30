@@ -11,9 +11,10 @@ type Response struct {
 }
 
 const (
-	ERROR         = fiber.StatusBadRequest // 错误返回的code 数据
-	SUCCESS       = fiber.StatusOK         // 成功返回的code
-	ERRORNotFound = fiber.StatusNotFound   // 404错误
+	ERROR             = fiber.StatusBadRequest   // 错误返回的code 数据
+	SUCCESS           = fiber.StatusOK           // 成功返回的code
+	ERRORNotFound     = fiber.StatusNotFound     // 404错误
+	ERRORUnauthorized = fiber.StatusUnauthorized // 401错误
 )
 
 func Result(code int, data interface{}, msg string, c *fiber.Ctx) error {

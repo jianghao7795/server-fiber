@@ -2,6 +2,7 @@ package example
 
 import (
 	"errors"
+	"os"
 
 	"server-fiber/global"
 	"server-fiber/model/example"
@@ -63,4 +64,35 @@ func (e *FileUploadAndDownloadService) DeleteFileChunk(fileMd5 string, fileName 
 	}
 	err = global.DB.Where("exa_file_id = ?", file.ID).Delete(&chunks).Unscoped().Error
 	return err
+}
+
+// @author: wuhao
+// @function: DeleteFileBreakpoint
+// @description: 删除断点上传文件
+// @param: id uint
+// @return: error
+func (e *FileUploadAndDownloadService) DeleteFileBreakpoint(id int) error {
+	var file example.ExaFile
+	err := global.DB.Where("id = ?", id).Delete(&file).Error
+	if err != nil {
+		return err
+	}
+	err = os.Remove(file.FilePath)
+	if err != nil {
+		global.DB.Where("id = ?", id).First(&file).Update("deleted_at = ?", nil)
+	}
+	return err
+}
+
+// @author: wuhao
+// @function: FindFileBreakpoint
+// @description: 断点上传文件列表
+// @param: info request.Empty
+// @return: []example.ExaFile, error
+func (e *FileUploadAndDownloadService) FindFileBreakpoint(page int, pageSize int) ([]example.ExaFile, int64, error) {
+	var files []example.ExaFile
+	offset := pageSize * (page - 1)
+	var total int64
+	err := global.DB.Offset(offset).Limit(pageSize).Find(&files).Count(&total).Error
+	return files, total, err
 }

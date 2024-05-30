@@ -5,7 +5,6 @@ import (
 	"server-fiber/model/app"
 	appReq "server-fiber/model/app/request"
 	"server-fiber/model/common/request"
-	"server-fiber/utils"
 
 	"time"
 )
@@ -49,14 +48,15 @@ func (*ArticleService) GetArticleInfoList(info *appReq.ArticleSearch) (list []ap
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	db := global.DB.Model(&app.Article{})
-	err = utils.MergeQuery(db, info, "title", "is_important")
-	if err != nil {
-		return
-	}
-
 	err = db.Count(&total).Error
 	if err != nil {
 		return
+	}
+	if info.Title != "" {
+		db = db.Where("title like ?", "%"+info.Title+"%")
+	}
+	if info.IsImportant != 0 {
+		db = db.Where("is_important = ?", info.IsImportant)
 	}
 	//
 	err = db.Limit(limit).Offset(offset).Order("id desc").Preload("User").Preload("Tags").Find(&list).Error

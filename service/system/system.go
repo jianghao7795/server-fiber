@@ -73,3 +73,4 @@ var ProblemApp = new(Problem)
 type UserService struct{}
 
 var UserServiceApp = new(UserService)
+var InitDBServiceApp = new(InitDBService)

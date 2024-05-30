@@ -22,7 +22,7 @@ func GormMysql() (*gorm.DB, error) {
 		DSN:                       m.Dsn(), // DSN data source name
 		DefaultStringSize:         191,     // string 类型字段的默认长度
 		SkipInitializeWithVersion: false,   // 根据版本自动配置
-		// SkipDefaultTransaction:    true,
+		// SkipDefaultTransaction:    true,  // 禁用默认事务
 	}
 	if db, err := gorm.Open(mysql.New(mysqlConfig), internal.Gorm.Config()); err != nil {
 		return nil, err

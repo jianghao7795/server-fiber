@@ -4,20 +4,20 @@ import systemServer "server-fiber/service/system"
 
 // service 端的服务
 
-var apiService = new(systemServer.ApiService)
-var authorityBtnService = new(systemServer.AuthorityBtnService)
-var authorityService = new(systemServer.AuthorityService)
-var menuService = new(systemServer.MenuService)
-var casbinService = new(systemServer.CasbinService)
-var autoCodeHistoryService = new(systemServer.AutoCodeHistoryService)
-var autoCodeService = new(systemServer.AutoCodeService)
-var dictionaryDetailService = new(systemServer.DictionaryDetailService)
-var dictionaryService = new(systemServer.DictionaryService)
-var githubService = new(systemServer.GithubService)
-var initDBService = new(systemServer.InitDBService)
-var jwtService = new(systemServer.JwtService)
-var baseMenuService = new(systemServer.BaseMenuService)
-var operationRecordService = new(systemServer.OperationRecordService)
-var systemConfigService = new(systemServer.SystemConfigService)
-var userProblem = new(systemServer.Problem)
-var userService = new(systemServer.UserService)
+var apiService = systemServer.ApiServiceApp
+var authorityBtnService = systemServer.AuthorityBtnServiceApp
+var authorityService = systemServer.AuthorityServiceApp
+var menuService = systemServer.MenuServiceApp
+var casbinService = systemServer.CasbinServiceApp
+var autoCodeHistoryService = systemServer.AutoCodeHistoryServiceApp
+var autoCodeService = systemServer.AutoCodeServiceApp
+var dictionaryDetailService = systemServer.DictionaryDetailServiceApp
+var dictionaryService = systemServer.DictionaryServiceApp
+var githubService = systemServer.GithubServiceApp
+var initDBService = systemServer.InitDBServiceApp
+var jwtService = systemServer.JwtServiceApp
+var baseMenuService = systemServer.BaseMenuServiceApp
+var operationRecordService = systemServer.OperationRecordServiceApp
+var systemConfigService = systemServer.SystemConfigServiceApp
+var userProblem = systemServer.ProblemApp
+var userService = systemServer.UserServiceApp

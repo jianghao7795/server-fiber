@@ -2,7 +2,7 @@ package app
 
 import (
 	"server-fiber/global"
-	app "server-fiber/model/app"
+	"server-fiber/model/app"
 	appReq "server-fiber/model/app/request"
 	"server-fiber/model/common/request"
 	"server-fiber/model/common/response"
@@ -128,13 +128,13 @@ func (*ArticleApi) UpdateArticle(c *fiber.Ctx) error {
 // @Router /article/findArticle/:id [get]
 func (*ArticleApi) FindArticle(c *fiber.Ctx) error {
 	id, _ := c.ParamsInt("id")
-	if rearticle, err := articleService.GetArticle(uint(id)); err != nil {
+	if articles, err := articleService.GetArticle(uint(id)); err != nil {
 		global.LOG.Error("查询失败!", zap.Error(err))
 		return response.FailWithDetailed(map[string]string{
 			"msg": err.Error(),
 		}, "查询失败", c)
 	} else {
-		return response.OkWithData(fiber.Map{"article": rearticle}, c)
+		return response.OkWithData(fiber.Map{"article": articles}, c)
 	}
 
 }

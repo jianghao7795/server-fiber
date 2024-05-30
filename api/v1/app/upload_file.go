@@ -17,7 +17,7 @@ import (
 	"go.uber.org/zap"
 )
 
-// @Tags UploadFile ExaFileUploadAndDownload
+// UploadFile @Tags ExaFileUploadAndDownload
 // @Summary 上传文件示例
 // @Security ApiKeyAuth
 // @accept multipart/form-data

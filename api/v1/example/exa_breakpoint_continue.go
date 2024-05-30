@@ -17,7 +17,7 @@ import (
 	"go.uber.org/zap"
 )
 
-// @Tags ExaFileUploadAndDownload
+// BreakpointContinue @Tags ExaFileUploadAndDownload
 // @Summary 断点续传到服务器
 // @Security ApiKeyAuth
 // @accept multipart/form-data
@@ -142,5 +142,37 @@ func (u *FileUploadAndDownloadApi) RemoveChunk(c *fiber.Ctx) error {
 		return response.FailWithMessage(err.Error(), c)
 	} else {
 		return response.OkWithMessage("表缓存切片删除成功", c)
+	}
+}
+
+func (u *FileUploadAndDownloadApi) FindFileBreakpoint(c *fiber.Ctx) error {
+	page, _ := strconv.Atoi(c.Query("page"))
+	pageSize, _ := strconv.Atoi(c.Query("pageSize"))
+	file, total, err := fileUploadAndDownloadService.FindFileBreakpoint(page, pageSize)
+	if err != nil {
+		global.LOG.Error("查找失败!", zap.Error(err))
+		return response.FailWithMessage("获取失败: "+err.Error(), c)
+	} else {
+		return response.OkWithDetailed(response.PageResult{
+			List:     file,
+			Total:    total,
+			Page:     page,
+			PageSize: pageSize,
+		}, "查找成功", c)
+	}
+}
+
+func (u *FileUploadAndDownloadApi) DeleteFileBreakpoint(c *fiber.Ctx) error {
+	id, err := c.ParamsInt("id")
+	if err != nil {
+		global.LOG.Error("获取id失败!", zap.Error(err))
+		return response.FailWithMessage("获取id失败: "+err.Error(), c)
+	}
+	err = fileUploadAndDownloadService.DeleteFileBreakpoint(id)
+	if err != nil {
+		global.LOG.Error("删除失败!", zap.Error(err))
+		return response.FailWithMessage("删除失败: "+err.Error(), c)
+	} else {
+		return response.OkWithMessage("删除失败", c)
 	}
 }

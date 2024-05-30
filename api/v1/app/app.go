@@ -4,35 +4,35 @@ import (
 	appService "server-fiber/service/app"
 )
 
-// article
+// ArticleApi article
 type ArticleApi struct{}
 
 var articleService = new(appService.ArticleService)
 
-// base message
+// BaseMessageApi base message
 type BaseMessageApi struct{}
 
 var baseMessageService = new(appService.BaseMessageService)
 
-// comment
+// CommentApi comment
 type CommentApi struct{}
 
 var commentService = new(appService.CommentService)
 
-// tag
+// TagApi tag
 type TagApi struct{}
 
 var appTabService = new(appService.TagService)
 
-// task
+// TaskNameApi task
 type TaskNameApi struct{}
 
-// fileupload
+// FileUploadAndDownloadApi fileupload
 type FileUploadAndDownloadApi struct{}
 
 var fileUploadService = new(appService.FileUploadService)
 
-// user
+// UserApi user
 type UserApi struct{}
 
 var userService = new(appService.UserService)

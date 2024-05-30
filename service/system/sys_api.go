@@ -3,14 +3,11 @@ package system
 import (
 	"errors"
 	"fmt"
-
+	"gorm.io/gorm"
 	"server-fiber/global"
 	"server-fiber/model/common/request"
 	"server-fiber/model/system"
 	systemReq "server-fiber/model/system/request"
-	"server-fiber/utils"
-
-	"gorm.io/gorm"
 )
 
 //
@@ -48,26 +45,32 @@ func (apiService *ApiService) GetAPIInfoList(info *systemReq.SearchApiParams) (l
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	db := global.DB.Model(&system.SysApi{})
-	err = utils.MergeQuery(db, info, "apiGroup", "path", "method", "description")
-	if err != nil {
-		return list, total, err
+	if info.Path != "" {
+		db = db.Where("path like ?", "%"+info.Path+"%")
+	}
+	if info.Description != "" {
+		db = db.Where("description like ?", "%"+info.Description+"%")
+	}
+	if info.ApiGroup != "" {
+		db = db.Where("api_group like ?", "%"+info.ApiGroup+"%")
+	}
+	if info.Method != "" {
+		db = db.Where("api_group = ?", info.Method)
 	}
 	err = db.Count(&total).Error
 	if err != nil {
 		return list, total, err
-	} else {
-		db = db.Limit(limit).Offset(offset)
-		var sort = "api_group"
-		if info.OrderKey != "" {
-			if info.Desc == "true" {
-				sort = fmt.Sprintf("%s %s", info.OrderKey, "desc")
-			} else {
-				sort = info.OrderKey
-			}
-
-		}
-		err = db.Order(sort).Find(&list).Error
 	}
+	var sort = "id"
+	if info.OrderKey != "" {
+		if info.Desc == "true" {
+			sort = fmt.Sprintf("%s %s", info.OrderKey, "desc")
+		} else {
+			sort = info.OrderKey
+		}
+
+	}
+	err = db.Limit(limit).Offset(offset).Order(sort).Find(&list).Error
 	return
 }
 

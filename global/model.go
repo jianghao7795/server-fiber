@@ -12,3 +12,9 @@ type MODEL struct {
 	UpdatedAt time.Time      // 更新时间
 	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"` // 删除时间
 }
+
+type SearchValue struct {
+	Name       string
+	Value      string
+	SearchType string
+}

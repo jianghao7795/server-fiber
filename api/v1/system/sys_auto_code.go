@@ -37,8 +37,8 @@ func (autoApi *AutoCodeApi) PreviewTemp(c *fiber.Ctx) error {
 	a.PackageT = cases.Title(language.Dutch).String(a.Package)
 	autoCode, err := autoCodeService.PreviewTemp(a)
 	if err != nil {
-		global.LOG.Error("预览失败!", zap.Error(err))
-		return response.FailWithMessage("预览失败", c)
+		global.LOG.Error("预览失败", zap.Error(err))
+		return response.FailWithMessage("预览失败： "+err.Error(), c)
 	} else {
 		return response.OkWithDetailed(fiber.Map{"autoCode": autoCode}, "预览成功", c)
 	}
@@ -87,7 +87,7 @@ func (autoApi *AutoCodeApi) CreateTemp(c *fiber.Ctx) error {
 		c.Download("./ginvueadmin.zip")
 		_ = os.Remove("./ginvueadmin.zip")
 	}
-	return nil
+	return response.OkWithMessage("文件生成成功", c)
 }
 
 // GetDB

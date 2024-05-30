@@ -12,7 +12,10 @@ var casbinService = new(service.CasbinService)
 
 // 拦截器
 func CasbinHandler(c *fiber.Ctx) error {
-	waitUse, _ := utils.GetClaims(c)
+	waitUse, err := utils.GetClaims(c)
+	if err != nil {
+		return response.FailWithMessage401("token 错误", c)
+	}
 	// 获取请求的PATH
 	obj := c.Path()
 	// 获取请求方法
@@ -31,6 +34,6 @@ func CasbinHandler(c *fiber.Ctx) error {
 			return response.FailWithDetailed400(nil, "权限不足", c)
 
 		}
-		return response.FailWithDetailed(nil, "权限不足", c)
+		return response.FailWithMessage401("权限不足", c)
 	}
 }

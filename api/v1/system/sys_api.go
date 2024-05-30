@@ -64,7 +64,7 @@ func (s *SystemApiApi) DeleteApi(c *fiber.Ctx) error {
 	}
 }
 
-// @Tags SysApi
+// GetApiList @Tags SysApi
 // @Summary 分页获取API列表
 // @Security ApiKeyAuth
 // @accept application/json
@@ -75,7 +75,6 @@ func (s *SystemApiApi) DeleteApi(c *fiber.Ctx) error {
 func (s *SystemApiApi) GetApiList(c *fiber.Ctx) error {
 	var pageInfo systemReq.SearchApiParams
 	_ = c.QueryParser(&pageInfo)
-
 	if list, total, err := apiService.GetAPIInfoList(&pageInfo); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败", c)
@@ -89,7 +88,7 @@ func (s *SystemApiApi) GetApiList(c *fiber.Ctx) error {
 	}
 }
 
-// todo
+// GetApiById todo
 // @Tags SysApi
 // @Summary 根据id获取api
 // @Security ApiKeyAuth
@@ -113,7 +112,7 @@ func (s *SystemApiApi) GetApiById(c *fiber.Ctx) error {
 	}
 }
 
-// @Tags SysApi
+// UpdateApi @Tags SysApi
 // @Summary 修改基础api
 // @Security ApiKeyAuth
 // @accept application/json
