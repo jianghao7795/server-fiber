@@ -71,17 +71,18 @@ func (e *FileUploadAndDownloadService) DeleteFileChunk(fileMd5 string, fileName 
 // @description: 删除断点上传文件
 // @param: id uint
 // @return: error
-func (e *FileUploadAndDownloadService) DeleteFileBreakpoint(id int) error {
+func (e *FileUploadAndDownloadService) DeleteFileBreakpoint(id int) (err error) {
 	var file example.ExaFile
-	err := global.DB.Where("id = ?", id).Delete(&file).Error
-	if err != nil {
-		return err
+	db := global.DB.Where("id = ?", id).First(&file)
+	if file.IsFinish {
+		err := os.Remove(file.FilePath)
+		if err != nil {
+			return err
+		}
 	}
-	err = os.Remove(file.FilePath)
-	if err != nil {
-		global.DB.Where("id = ?", id).First(&file).Update("deleted_at = ?", nil)
-	}
-	return err
+
+	err = db.Delete(&file).Error
+	return
 }
 
 // @author: wuhao
@@ -93,6 +94,8 @@ func (e *FileUploadAndDownloadService) FindFileBreakpoint(page int, pageSize int
 	var files []example.ExaFile
 	offset := pageSize * (page - 1)
 	var total int64
-	err := global.DB.Offset(offset).Limit(pageSize).Find(&files).Count(&total).Error
+	db := global.DB.Model(&example.ExaFile{})
+	db = db.Count(&total)
+	err := db.Offset(offset).Limit(pageSize).Find(&files).Error
 	return files, total, err
 }
