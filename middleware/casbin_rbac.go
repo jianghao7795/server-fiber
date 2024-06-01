@@ -34,6 +34,6 @@ func CasbinHandler(c *fiber.Ctx) error {
 			return response.FailWithDetailed400(nil, "权限不足", c)
 
 		}
-		return response.FailWithMessage401("权限不足", c)
+		return response.FailWithMessage403("权限不足", c)
 	}
 }
