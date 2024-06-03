@@ -62,13 +62,13 @@ func (u *FileUploadAndDownloadApi) BreakpointContinue(c *fiber.Ctx) error {
 		global.LOG.Error("查找或创建记录失败!", zap.Error(err))
 		return response.FailWithMessage("查找或创建记录失败", c)
 	}
-	pathc, err := utils.BreakPointContinue(cen, fileName, chunkNumber, chunkTotal, fileMd5)
+	paths, err := utils.BreakPointContinue(cen, fileName, chunkNumber, chunkTotal, fileMd5)
 	if err != nil {
 		global.LOG.Error("断点续传失败!", zap.Error(err))
 		return response.FailWithMessage("断点续传失败: "+err.Error(), c)
 	}
 
-	if err = fileUploadAndDownloadService.CreateFileChunk(file.ID, pathc, chunkNumber); err != nil {
+	if err = fileUploadAndDownloadService.CreateFileChunk(file.ID, paths, chunkNumber); err != nil {
 		global.LOG.Error("创建文件记录失败!", zap.Error(err))
 		return response.FailWithMessage("创建文件记录失败: "+err.Error(), c)
 	}
