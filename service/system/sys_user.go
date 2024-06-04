@@ -3,6 +3,7 @@ package system
 import (
 	"errors"
 	"fmt"
+	"log"
 
 	"server-fiber/global"
 	"server-fiber/model/system"
@@ -49,6 +50,31 @@ func (userService *UserService) Login(u *system.SysUser) (userInter *system.SysU
 		var am system.SysMenu
 		ferr := global.DB.First(&am, "name = ? AND authority_id = ?", user.Authority.DefaultRouter, user.AuthorityId).Error
 		if errors.Is(ferr, gorm.ErrRecordNotFound) {
+			user.Authority.DefaultRouter = "404"
+		}
+	}
+	return &user, err
+}
+
+//@author: [jianghao](https://github.com/JiangHaoCode)
+//@function: LoginToken md5 加密
+//@description: 用户登录
+//@param: u *model.SysUser
+//@return: err error, userInter *model.SysUser
+
+func (userService *UserService) LoginToken(u *system.SysUser) (userInter *system.SysUser, err error) {
+	if nil == global.DB {
+		return nil, fmt.Errorf("db not init")
+	}
+
+	var user system.SysUser
+	log.Println("user: ", u.Username, u.Password)
+	// u.Password = utils.MD5V([]byte(u.Password))
+	err = global.DB.Where("username = ? AND password = ?", u.Username, utils.MD5V([]byte(u.Password))).Preload("Authorities").Preload("Authority").First(&user).Error
+	if err == nil {
+		var am system.SysMenu
+		ferry := global.DB.First(&am, "name = ? AND authority_id = ?", user.Authority.DefaultRouter, user.AuthorityId).Error
+		if errors.Is(ferry, gorm.ErrRecordNotFound) {
 			user.Authority.DefaultRouter = "404"
 		}
 	}

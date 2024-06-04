@@ -16,4 +16,5 @@ func (s *BaseRouter) InitBaseRouter(Router fiber.Router) {
 	baseRouter.Post("login", baseApi.Login)
 	baseRouter.Get("captcha", middleware.NeedInit, baseApi.Captcha)
 	baseRouter.Get("captcha/img", baseApi.CaptchaImg)
+	baseRouter.Post("getToken/login", baseApi.LoginToken)
 }

@@ -41,6 +41,27 @@ func (b *BaseApi) Login(c *fiber.Ctx) error {
 	}
 }
 
+// @Tags Base
+// @Summary 用户登录 获取token
+// @Produce  application/json
+// @Param data body systemReq.Login true "用户名, 密码"
+// @Success 200 {object} response.Response{data=systemRes.LoginResponse,msg=string} "返回包括用户信息,token,过期时间"
+// @Router /base/getToken/login [post]
+func (b *BaseApi) LoginToken(c *fiber.Ctx) error {
+	var l systemReq.LoginToken
+	_ = c.BodyParser(&l)
+	if err := utils.Verify(l, utils.TokenLoginVerify); err != nil {
+		return response.FailWithMessage(err.Error(), c)
+	}
+	u := &system.SysUser{Username: l.Username, Password: l.Password}
+	if user, err := userService.LoginToken(u); err != nil {
+		global.LOG.Error("登陆失败! 用户名不存在或者密码错误!", zap.Error(err))
+		return response.FailWithMessage("用户名不存在或者密码错误", c)
+	} else {
+		return b.tokenNext(c, *user)
+	}
+}
+
 // 登录以后签发jwt
 func (b *BaseApi) tokenNext(c *fiber.Ctx, user system.SysUser) error {
 	j := &utils.JWT{PrivateKey: global.CONFIG.JWT.PrivateKey} // 唯一签名

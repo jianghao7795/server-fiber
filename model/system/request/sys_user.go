@@ -25,6 +25,12 @@ type Login struct {
 	CaptchaId string `json:"captchaId"` // 验证码ID
 }
 
+// get token login struct
+type LoginToken struct {
+	Username string `json:"username" form:"username" binding:"required"`
+	Password string `json:"password" form:"password" binding:"required"`
+}
+
 // Modify password structure
 type ChangePasswordStruct struct {
 	Username    string `json:"username"`    // 用户名
