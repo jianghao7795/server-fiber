@@ -18,7 +18,7 @@ import (
 // @accept application/json
 // @Produce application/json
 // @Param data body comment.Comment true "创建Comment"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
+// @Success 200 {string} {"id": 1} "{"success":true,"data":{},"msg":"获取成功"}"
 // @Router /comment/createComment [post]
 func (commentApi *CommentApi) CreateComment(c *fiber.Ctx) error {
 	var commentData comment.Comment
