@@ -4,7 +4,7 @@ import (
 	"server-fiber/global"
 )
 
-// MoblieUser 结构体
+// MobileUser 结构体
 // 如果含有time.Time 请自行import time包
 type MobileUser struct {
 	global.MODEL
@@ -21,7 +21,7 @@ type MobileUser struct {
 	Phone    string `json:"phone" form:"phone" gorm:"column:phone;comment:电话;"`
 }
 
-// TableName MoblieUser 表名
+// TableName MobileUser 表名
 func (MobileUser) TableName() string {
 	return "mobile_users"
 }

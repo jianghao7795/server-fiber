@@ -14,21 +14,21 @@ import (
 
 type MobileUserApi struct{}
 
-var moblieUserService = new(mobileServer.MobileUserService)
+var mobileUserService = new(mobileServer.MobileUserService)
 
-// CreateMoblieUser 创建MoblieUser
-// @Tags MoblieUser
-// @Summary 创建MoblieUser
+// CreateMobileUser 创建MobileUser
+// @Tags MobileUser
+// @Summary 创建MobileUser
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body mobile.MobileUser true "创建MoblieUser"
+// @Param data body mobile.MobileUser true "创建MobileUser"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /moblieUser/createMoblieUser [post]
-func (mobileUserApi *MobileUserApi) CreateMoblieUser(c *fiber.Ctx) error {
-	var moblieUser mobile.MobileUser
-	_ = c.BodyParser(&moblieUser)
-	if err := moblieUserService.CreateMoblieUser(moblieUser); err != nil {
+// @Router /mobileUser/createMobileUser [post]
+func (mobileUserApi *MobileUserApi) CreateMobileUser(c *fiber.Ctx) error {
+	var mobileUser mobile.MobileUser
+	_ = c.BodyParser(&mobileUser)
+	if err := mobileUserService.CreateMobileUser(mobileUser); err != nil {
 		global.LOG.Error("创建失败!", zap.Error(err))
 		return response.FailWithMessage("创建失败", c)
 	} else {
@@ -36,18 +36,18 @@ func (mobileUserApi *MobileUserApi) CreateMoblieUser(c *fiber.Ctx) error {
 	}
 }
 
-// DeleteMoblieUser 删除MoblieUser
-// @Tags MoblieUser
-// @Summary 删除MoblieUser
+// DeleteMobileUser 删除MobileUser
+// @Tags MobileUser
+// @Summary 删除MobileUser
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body mobile.MobileUser true "删除MoblieUser"
+// @Param data body mobile.MobileUser true "删除MobileUser"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
-// @Router /moblieUser/deleteMoblieUser [delete]
-func (mobileUserApi *MobileUserApi) DeleteMoblieUser(c *fiber.Ctx) error {
+// @Router /mobileUser/deleteMobileUser [delete]
+func (mobileUserApi *MobileUserApi) DeleteMobileUser(c *fiber.Ctx) error {
 	id, _ := c.ParamsInt("id")
-	if err := moblieUserService.DeleteMoblieUser(uint(id)); err != nil {
+	if err := mobileUserService.DeleteMobileUser(uint(id)); err != nil {
 		global.LOG.Error("删除失败!", zap.Error(err))
 		return response.FailWithMessage("删除失败", c)
 	} else {
@@ -55,19 +55,19 @@ func (mobileUserApi *MobileUserApi) DeleteMoblieUser(c *fiber.Ctx) error {
 	}
 }
 
-// DeleteMoblieUserByIds 批量删除MoblieUser
-// @Tags MoblieUser
-// @Summary 批量删除MoblieUser
+// DeleteMobileUserByIds 批量删除MobileUser
+// @Tags MobileUser
+// @Summary 批量删除MobileUser
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body request.IdsReq true "批量删除MoblieUser"
+// @Param data body request.IdsReq true "批量删除MobileUser"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"批量删除成功"}"
-// @Router /moblieUser/deleteMoblieUserByIds [delete]
-func (mobileUserApi *MobileUserApi) DeleteMoblieUserByIds(c *fiber.Ctx) error {
+// @Router /mobileUser/deleteMobileUserByIds [delete]
+func (mobileUserApi *MobileUserApi) DeleteMobileUserByIds(c *fiber.Ctx) error {
 	var IDS request.IdsReq
 	_ = c.QueryParser(&IDS)
-	if err := moblieUserService.DeleteMoblieUserByIds(IDS); err != nil {
+	if err := mobileUserService.DeleteMobileUserByIds(IDS); err != nil {
 		global.LOG.Error("批量删除失败!", zap.Error(err))
 		return response.FailWithMessage("批量删除失败", c)
 	} else {
@@ -75,19 +75,19 @@ func (mobileUserApi *MobileUserApi) DeleteMoblieUserByIds(c *fiber.Ctx) error {
 	}
 }
 
-// UpdateMoblieUser 更新MoblieUser
-// @Tags MoblieUser
-// @Summary 更新MoblieUser
+// UpdateMobileUser 更新MobileUser
+// @Tags MobileUser
+// @Summary 更新MobileUser
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body mobile.MobileUser true "更新MoblieUser"
+// @Param data body mobile.MobileUser true "更新MobileUser"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"更新成功"}"
-// @Router /moblieUser/updateMoblieUser [put]
-func (mobileUserApi *MobileUserApi) UpdateMoblieUser(c *fiber.Ctx) error {
-	var moblieUser mobile.MobileUser
-	_ = c.BodyParser(&moblieUser)
-	if err := moblieUserService.UpdateMoblieUser(moblieUser); err != nil {
+// @Router /mobileUser/updateMobileUser [put]
+func (mobileUserApi *MobileUserApi) UpdateMobileUser(c *fiber.Ctx) error {
+	var mobileUser mobile.MobileUser
+	_ = c.BodyParser(&mobileUser)
+	if err := mobileUserService.UpdateMobileUser(mobileUser); err != nil {
 		global.LOG.Error("更新失败!", zap.Error(err))
 		return response.FailWithMessage("更新失败", c)
 	} else {
@@ -95,38 +95,38 @@ func (mobileUserApi *MobileUserApi) UpdateMoblieUser(c *fiber.Ctx) error {
 	}
 }
 
-// FindMoblieUser 用id查询MoblieUser
-// @Tags MoblieUser
-// @Summary 用id查询MoblieUser
+// FindMobileUser 用id查询MobileUser
+// @Tags MobileUser
+// @Summary 用id查询MobileUser
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data query mobile.MobileUser true "用id查询MoblieUser"
+// @Param data query mobile.MobileUser true "用id查询MobileUser"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"查询成功"}"
-// @Router /moblieUser/findMoblieUser [get]
-func (mobileUserApi *MobileUserApi) FindMoblieUser(c *fiber.Ctx) error {
+// @Router /mobileUser/findMobileUser [get]
+func (mobileUserApi *MobileUserApi) FindMobileUser(c *fiber.Ctx) error {
 	id, _ := c.ParamsInt("id")
-	if remoblieUser, err := moblieUserService.GetMoblieUser(uint(id)); err != nil {
+	if mobileUser, err := mobileUserService.GetMobileUser(uint(id)); err != nil {
 		global.LOG.Error("查询失败!", zap.Error(err))
 		return response.FailWithMessage("查询失败", c)
 	} else {
-		return response.OkWithData(fiber.Map{"moblieUser": remoblieUser}, c)
+		return response.OkWithData(mobileUser, c)
 	}
 }
 
-// GetMoblieUserList 分页获取MoblieUser列表
-// @Tags MoblieUser
-// @Summary 分页获取MoblieUser列表
+// GetMobileUserList 分页获取MobileUser列表
+// @Tags MobileUser
+// @Summary 分页获取MobileUser列表
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data query mobileReq.MoblieUserSearch true "分页获取MoblieUser列表"
+// @Param data query mobileReq.MobileUserSearch true "分页获取MobileUser列表"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /moblieUser/getMoblieUserList [get]
-func (mobileUserApi *MobileUserApi) GetMoblieUserList(c *fiber.Ctx) error {
-	var pageInfo mobileReq.MoblieUserSearch
+// @Router /mobileUser/getMobileUserList [get]
+func (mobileUserApi *MobileUserApi) GetMobileUserList(c *fiber.Ctx) error {
+	var pageInfo mobileReq.MobileUserSearch
 	_ = c.QueryParser(&pageInfo)
-	if list, total, err := moblieUserService.GetMoblieUserInfoList(pageInfo); err != nil {
+	if list, total, err := mobileUserService.GetMobileUserInfoList(pageInfo); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败", c)
 	} else {

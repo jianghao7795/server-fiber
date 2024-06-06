@@ -13,6 +13,14 @@ import (
 )
 
 // CreateBaseMessage 创建base_message
+// @Tags BaseMessage
+// @Summary 创建BaseMessage
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param data body app.BaseMessage true "创建base_message"
+// @Success 200 {object} response.Response{msg=string,data=object,code=number} "创建base_message"
+// @Router /base_message/createBaseMessage [post]
 func (a *BaseMessageApi) CreateBaseMessage(c *fiber.Ctx) error {
 	var baseMessage app.BaseMessage
 	err := c.BodyParser(&baseMessage)
@@ -28,12 +36,14 @@ func (a *BaseMessageApi) CreateBaseMessage(c *fiber.Ctx) error {
 	}
 }
 
-/**
- * @description: update base message
- * @param {*fiber.Ctx} c
- * @return {*}
- */
-
+// @Tags BaseMessage
+// @Summary 更新 base_message
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param data body app.BaseMessage true "创建base_message"
+// @Success 200 {object} response.Response{msg=string,code=number} "查找base message"
+// @Router /base_message/updateBaseMessage [put]
 func (a *BaseMessageApi) UpdateBaseMessage(c *fiber.Ctx) error {
 	var baseMessage app.BaseMessage
 	err := c.BodyParser(&baseMessage)
@@ -49,11 +59,14 @@ func (a *BaseMessageApi) UpdateBaseMessage(c *fiber.Ctx) error {
 	}
 }
 
-/**
- * @description: find base message
- * @param {*fiber.Ctx} c
- * @return nil
- */
+// @Tags BaseMessage
+// @Summary 查找base message
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param id path number true "查找base message"
+// @Success 200 {object} response.Response{msg=string,data=app.BaseMessage,code=number} "查找base message"
+// @Router /base_message/getBaseMessage/:id [get]
 func (a *BaseMessageApi) FindBaseMessage(c *fiber.Ctx) error {
 	id, _ := c.ParamsInt("id")
 	if responseBaseMessage, err := baseMessageService.FindBaseMessage(uint(id)); err != nil {
@@ -61,13 +74,12 @@ func (a *BaseMessageApi) FindBaseMessage(c *fiber.Ctx) error {
 			// respBaseMessage := baseMessageNotFound{message: "not found"}
 			str := "not found"
 			global.LOG.Error("查询失败!", zap.Error(errors.New(str)))
-			return response.OkWithData(fiber.Map{"error": str}, c)
+			return response.OkWithData(str, c)
 		} else {
 			global.LOG.Error("查询失败!", zap.Error(err))
 			return response.FailWithMessage("查询失败", c)
 		}
-
 	} else {
-		return response.OkWithData(fiber.Map{"baseMessage": responseBaseMessage}, c)
+		return response.OkWithDetailed(responseBaseMessage, "查询成功", c)
 	}
 }

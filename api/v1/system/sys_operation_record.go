@@ -89,7 +89,7 @@ func (s *OperationRecordApi) FindSysOperationRecord(c *fiber.Ctx) error {
 		global.LOG.Error("查询失败!", zap.Error(err))
 		return response.FailWithMessage("查询失败", c)
 	} else {
-		return response.OkWithDetailed(fiber.Map{"resysOperationRecord": resysOperationRecord}, "查询成功", c)
+		return response.OkWithDetailed(resysOperationRecord, "查询成功", c)
 	}
 }
 

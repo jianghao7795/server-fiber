@@ -14,11 +14,11 @@ import (
 
 type FrontendArticleApi struct{}
 
-var frontendArtileService = new(frontend.FrontendArticle)
+var frontendArticleService = new(frontend.FrontendArticle)
 
 // GetArticleList 分页获取article列表
 // FindArticle Get Article
-// @Tags Article
+// @Tags Frontend Article
 // @Summary Get Article
 // @Security ApiKeyAuth
 // @accept application/json
@@ -37,7 +37,7 @@ func (s *FrontendArticleApi) GetArticleList(c *fiber.Ctx) error {
 		pageInfo.PageSize = 10
 	}
 
-	if list, total, err := frontendArtileService.GetArticleList(&pageInfo, c); err != nil {
+	if list, total, err := frontendArticleService.GetArticleList(&pageInfo, c); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败", c)
 	} else {
@@ -51,7 +51,7 @@ func (s *FrontendArticleApi) GetArticleList(c *fiber.Ctx) error {
 }
 
 // FindArticle get单个Article
-// @Tags Article
+// @Tags Frontend Article
 // @Summary get单个Article
 // @Security ApiKeyAuth
 // @accept application/json
@@ -66,7 +66,7 @@ func (s *FrontendArticleApi) GetArticleDetail(c *fiber.Ctx) error {
 		return response.FailWithMessage("获取Id失败", c)
 
 	}
-	articleDetail, err := frontendArtileService.GetAricleDetail(id, c)
+	articleDetail, err := frontendArticleService.GetAricleDetail(id, c)
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return response.FailWithMessage("文章没有，请重新查询", c)
 
@@ -76,18 +76,18 @@ func (s *FrontendArticleApi) GetArticleDetail(c *fiber.Ctx) error {
 		return response.FailWithMessage("获取失败", c)
 
 	} else {
-		return response.OkWithData(fiber.Map{"article": articleDetail}, c)
+		return response.OkWithData(articleDetail, c)
 	}
 }
 
 // FindArticle get单个Article
-// @Tags Article
+// @Tags Frontend Article
 // @Summary get单个Article
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body frontend.Article true "Serach Artcle"
-// @Success 200 {string} string "{"success":true, "msg":"获得成功"}"
+// @Param data query frontend.Article true "Serach Artcle"
+// @Success 200 {object} response.Response{list=[]frontend.Article} "获得成功"
 // @Router /getSearchArticle/:name/:value [get]
 func (s *FrontendArticleApi) GetSearchArticle(c *fiber.Ctx) error {
 	var searchValue request.ArticleSearch
@@ -100,7 +100,7 @@ func (s *FrontendArticleApi) GetSearchArticle(c *fiber.Ctx) error {
 	if searchValue.Name != "tags" && searchValue.Name != "articles" {
 		return response.FailWithMessage("查询的不是tag 或 article", c)
 	}
-	if list, err := frontendArtileService.GetSearchArticle(&searchValue); err != nil {
+	if list, err := frontendArticleService.GetSearchArticle(&searchValue); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败", c)
 	} else {

@@ -18,11 +18,11 @@ definitions:
       state:
         type: integer
       tags:
+        description: 多对多 article_tag
         items:
           $ref: '#/definitions/app.Tag'
         type: array
       title:
-        description: TagId   int    `json:"tag_id" form:"tag_id" gorm:"column:tag_id;comment:标签ID;"`
         type: string
       updatedAt:
         description: 更新时间
@@ -32,11 +32,37 @@ definitions:
       user_id:
         type: integer
     type: object
+  app.BaseMessage:
+    properties:
+      copyright:
+        type: string
+      createdAt:
+        description: 创建时间
+        type: string
+      head_img:
+        type: string
+      id:
+        description: 主键ID
+        type: integer
+      introduction:
+        type: string
+      link:
+        type: string
+      record_info:
+        type: string
+      title:
+        type: string
+      updatedAt:
+        description: 更新时间
+        type: string
+      user_id:
+        type: integer
+    type: object
   app.Comment:
     properties:
       article:
         $ref: '#/definitions/app.Article'
-      articleId:
+      article_id:
         type: integer
       children:
         items:
@@ -50,7 +76,12 @@ definitions:
       id:
         description: 主键ID
         type: integer
-      parentId:
+      parent_id:
+        type: integer
+      to_user:
+        $ref: '#/definitions/system.SysUser'
+      to_user_id:
+        description: 作为外键 关联User
         type: integer
       updatedAt:
         description: 更新时间
@@ -59,6 +90,47 @@ definitions:
         allOf:
         - $ref: '#/definitions/system.SysUser'
         description: foreignKey是管联UserId的SysUser的表
+      user_id:
+        description: 作为外键 关联User
+        type: integer
+    type: object
+  app.FileUploadAndDownload:
+    properties:
+      createdAt:
+        description: 创建时间
+        type: string
+      id:
+        description: 主键ID
+        type: integer
+      key:
+        description: 编号
+        type: string
+      name:
+        description: 文件名
+        type: string
+      tag:
+        description: 文件标签
+        type: string
+      updatedAt:
+        description: 更新时间
+        type: string
+      url:
+        description: 文件地址
+        type: string
+    type: object
+  app.Praise:
+    properties:
+      comment_id:
+        type: integer
+      createdAt:
+        description: 创建时间
+        type: string
+      id:
+        description: 主键ID
+        type: integer
+      updatedAt:
+        description: 更新时间
+        type: string
       user_id:
         type: integer
     type: object
@@ -136,25 +208,26 @@ definitions:
     type: object
   example.ExaFile:
     properties:
-      chunkTotal:
+      chunk_total:
         type: integer
       createdAt:
         description: 创建时间
         type: string
-      exaFileChunk:
+      exa_file_chunk:
+        description: 切片结构体
         items:
           $ref: '#/definitions/example.ExaFileChunk'
         type: array
-      fileMd5:
+      file_md5:
         type: string
-      fileName:
+      file_name:
         type: string
-      filePath:
+      file_path:
         type: string
       id:
         description: 主键ID
         type: integer
-      isFinish:
+      is_finish:
         type: boolean
       updatedAt:
         description: 更新时间
@@ -359,6 +432,13 @@ definitions:
         type: string
     type: object
   request.Empty:
+    properties:
+      page:
+        description: 页码
+        type: integer
+      pageSize:
+        description: 每页大小
+        type: integer
     type: object
   request.GetAuthorityId:
     properties:
@@ -464,7 +544,7 @@ definitions:
     type: object
   request.SearchApiParams:
     properties:
-      apiGroup:
+      api_group:
         description: api组
         type: string
       createdAt:
@@ -606,6 +686,11 @@ definitions:
       data: {}
       msg:
         type: string
+    type: object
+  response.ResponseUploadFile:
+    properties:
+      file:
+        $ref: '#/definitions/app.FileUploadAndDownload'
     type: object
   response.SysAPIListResponse:
     properties:
@@ -778,7 +863,7 @@ definitions:
     - Mobile
   system.SysApi:
     properties:
-      apiGroup:
+      api_group:
         description: api组
         type: string
       createdAt:
@@ -1175,9 +1260,16 @@ paths:
       - application/json
       responses:
         "200":
-          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          description: 创建成功
           schema:
-            type: string
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: number
+                msg:
+                  type: string
+              type: object
       security:
       - ApiKeyAuth: []
       summary: 创建Article
@@ -1346,8 +1438,6 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: 分页获取API列表
-      tags:
-      - SysApi
   /api/updateApi:
     put:
       consumes:
@@ -1374,8 +1464,6 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: 修改基础api
-      tags:
-      - SysApi
   /appTab/createTag:
     post:
       consumes:
@@ -1572,9 +1660,16 @@ paths:
       - application/json
       responses:
         "200":
-          description: '{}'
+          description: 删除成功
           schema:
-            type: string
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: number
+                msg:
+                  type: string
+              type: object
       security:
       - ApiKeyAuth: []
       summary: 删除Article
@@ -1595,9 +1690,16 @@ paths:
       - application/json
       responses:
         "200":
-          description: '{}'
+          description: 批量删除成功
           schema:
-            type: string
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: number
+                msg:
+                  type: string
+              type: object
       security:
       - ApiKeyAuth: []
       summary: 批量删除Article
@@ -1618,9 +1720,18 @@ paths:
       - application/json
       responses:
         "200":
-          description: '{"success":true, "msg":"获得成功"}'
+          description: 获得成功
           schema:
-            type: string
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: number
+                data:
+                  $ref: '#/definitions/app.Article'
+                msg:
+                  type: string
+              type: object
       security:
       - ApiKeyAuth: []
       summary: get单个Article
@@ -1631,17 +1742,44 @@ paths:
       consumes:
       - application/json
       parameters:
-      - description: Get Article
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/app.Article'
+      - in: query
+        name: content
+        type: string
+      - description: 创建时间
+        in: query
+        name: createdAt
+        type: string
+      - in: query
+        name: desc
+        type: string
+      - description: 主键ID
+        in: query
+        name: id
+        type: integer
+      - in: query
+        name: is_important
+        type: integer
+      - in: query
+        name: reading_quantity
+        type: integer
+      - in: query
+        name: state
+        type: integer
+      - in: query
+        name: title
+        type: string
+      - description: 更新时间
+        in: query
+        name: updatedAt
+        type: string
+      - in: query
+        name: user_id
+        type: integer
       produces:
       - application/json
       responses:
         "200":
-          description: '{"success":true, "msg":"获得成功"}'
+          description: 获得成功
           schema:
             type: string
       security:
@@ -1664,7 +1802,7 @@ paths:
       - application/json
       responses:
         "200":
-          description: '{"code":0,"data":{},"msg":"获取成功"}'
+          description: 获取成功
           schema:
             type: string
       security:
@@ -1682,14 +1820,21 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/app.Article'
+          $ref: '#/definitions/request.IdsReq'
       produces:
       - application/json
       responses:
         "200":
           description: '{}'
           schema:
-            type: string
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: number
+                msg:
+                  type: string
+              type: object
       security:
       - ApiKeyAuth: []
       summary: 批量更新Article
@@ -2315,6 +2460,8 @@ paths:
             allOf:
             - $ref: '#/definitions/response.Response'
             - properties:
+                code:
+                  type: number
                 data:
                   $ref: '#/definitions/response.SysCaptchaResponse'
                 msg:
@@ -2323,6 +2470,57 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: 生成验证码
+      tags:
+      - Base
+  /base/captcha/img:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 生成验证码,返回包括随机数id,base64,验证码长度
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: number
+                data:
+                  $ref: '#/definitions/response.SysCaptchaResponse'
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 生成图片验证码
+      tags:
+      - Base
+  /base/getToken/login:
+    post:
+      parameters:
+      - description: 用户名, 密码
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.Login'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回包括用户信息,token,过期时间
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/server-fiber_model_system_response.LoginResponse'
+                msg:
+                  type: string
+              type: object
+      summary: 用户登录 获取token
       tags:
       - Base
   /base/login:
@@ -2351,6 +2549,131 @@ paths:
       summary: 用户登录
       tags:
       - Base
+  /base_message/createBaseMessage:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 创建base_message
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/app.BaseMessage'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 创建base_message
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: number
+                data:
+                  type: object
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 创建BaseMessage
+      tags:
+      - BaseMessage
+  /base_message/getBaseMessage/:id:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 查找base message
+        in: path
+        name: id
+        required: true
+        type: number
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 查找base message
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: number
+                data:
+                  $ref: '#/definitions/app.BaseMessage'
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 查找base message
+      tags:
+      - BaseMessage
+  /base_message/updateBaseMessage:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 创建base_message
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/app.BaseMessage'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 查找base message
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: number
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 更新 base_message
+      tags:
+      - BaseMessage
+  /base_message/upload:
+    post:
+      consumes:
+      - multipart/form-data
+      parameters:
+      - description: 上传文件示例
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 上传文件示例,返回包括文件详情
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/response.ResponseUploadFile'
+                  - properties:
+                      file:
+                        $ref: '#/definitions/app.FileUploadAndDownload'
+                    type: object
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 上传文件示例
   /casbin/UpdateCasbin:
     post:
       consumes:
@@ -2424,32 +2747,45 @@ paths:
       - application/json
       responses:
         "200":
-          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          description: 创建Comment
           schema:
-            type: string
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: number
+                msg:
+                  type: string
+              type: object
       security:
       - ApiKeyAuth: []
       summary: 创建Comment
       tags:
       - Comment
-  /comment/deleteComment:
+  /comment/deleteComment/:id:
     delete:
       consumes:
       - application/json
       parameters:
       - description: 删除Comment
-        in: body
-        name: data
+        in: path
+        name: id
         required: true
-        schema:
-          $ref: '#/definitions/app.Comment'
+        type: number
       produces:
       - application/json
       responses:
         "200":
-          description: '{"success":true,"data":{},"msg":"删除成功"}'
+          description: 删除Comment
           schema:
-            type: string
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: number
+                msg:
+                  type: string
+              type: object
       security:
       - ApiKeyAuth: []
       summary: 删除Comment
@@ -2470,50 +2806,47 @@ paths:
       - application/json
       responses:
         "200":
-          description: '{"success":true,"data":{},"msg":"批量删除成功"}'
+          description: 批量删除成功
           schema:
-            type: string
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: number
+                msg:
+                  type: string
+              type: object
       security:
       - ApiKeyAuth: []
       summary: 批量删除Comment
       tags:
       - Comment
-  /comment/findComment:
+  /comment/getComment/:id:
     get:
       consumes:
       - application/json
       parameters:
-      - in: query
-        name: articleId
-        type: integer
-      - in: query
-        name: content
-        type: string
-      - description: 创建时间
-        in: query
-        name: createdAt
-        type: string
-      - description: 主键ID
-        in: query
+      - description: 用id查询Comment
+        in: path
         name: id
-        type: integer
-      - in: query
-        name: parentId
-        type: integer
-      - description: 更新时间
-        in: query
-        name: updatedAt
-        type: string
-      - in: query
-        name: user_id
-        type: integer
+        required: true
+        type: number
       produces:
       - application/json
       responses:
         "200":
-          description: '{"success":true,"data":{},"msg":"查询成功"}'
+          description: 查询成功
           schema:
-            type: string
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: number
+                data:
+                  $ref: '#/definitions/app.Comment'
+                msg:
+                  type: string
+              type: object
       security:
       - ApiKeyAuth: []
       summary: 用id查询Comment
@@ -2553,19 +2886,138 @@ paths:
       - application/json
       responses:
         "200":
-          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          description: 获取成功
           schema:
-            type: string
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: number
+                data:
+                  allOf:
+                  - $ref: '#/definitions/response.PageResult'
+                  - properties:
+                      list:
+                        $ref: '#/definitions/app.Comment'
+                      page:
+                        type: number
+                      pageSize:
+                        type: number
+                      total:
+                        type: number
+                    type: object
+                msg:
+                  type: string
+              type: object
       security:
       - ApiKeyAuth: []
       summary: 分页获取Comment列表
       tags:
       - Comment
-  /comment/updateComment:
+  /comment/getCommentTreeList:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - in: query
+        name: articleId
+        type: integer
+      - in: query
+        name: content
+        type: string
+      - description: 是否为截图 1, 或 2
+        in: query
+        name: is_cropper
+        type: string
+      - description: 关键字
+        in: query
+        name: keyword
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 每页大小
+        in: query
+        name: pageSize
+        type: integer
+      - in: query
+        name: proportion
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: number
+                data:
+                  allOf:
+                  - $ref: '#/definitions/response.PageResult'
+                  - properties:
+                      list:
+                        $ref: '#/definitions/app.Comment'
+                      page:
+                        type: number
+                      pageSize:
+                        type: number
+                      total:
+                        type: number
+                    type: object
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 树状获取Comment列表
+      tags:
+      - Comment
+  /comment/pariseComment:
     put:
       consumes:
       - application/json
       parameters:
+      - description: 点赞
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/app.Praise'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 点赞成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: number
+                data:
+                  $ref: '#/definitions/app.Praise'
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 点赞
+      tags:
+      - Comment
+  /comment/updateComment/:id:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 获取id
+        in: path
+        name: id
+        required: true
+        type: number
       - description: 更新Comment
         in: body
         name: data
@@ -2576,9 +3028,16 @@ paths:
       - application/json
       responses:
         "200":
-          description: '{"success":true,"data":{},"msg":"更新成功"}'
+          description: 更新成功
           schema:
-            type: string
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: number
+                msg:
+                  type: string
+              type: object
       security:
       - ApiKeyAuth: []
       summary: 更新Comment
@@ -2589,12 +3048,34 @@ paths:
       consumes:
       - application/json
       parameters:
-      - description: 客户ID
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/example.ExaCustomer'
+      - description: 创建时间
+        in: query
+        name: createdAt
+        type: string
+      - description: 客户名
+        in: query
+        name: customerName
+        type: string
+      - description: 客户手机号
+        in: query
+        name: customerPhoneData
+        type: string
+      - description: 主键ID
+        in: query
+        name: id
+        type: integer
+      - description: 管理角色ID
+        in: query
+        name: sysUserAuthorityID
+        type: string
+      - description: 管理ID
+        in: query
+        name: sysUserId
+        type: integer
+      - description: 更新时间
+        in: query
+        name: updatedAt
+        type: string
       produces:
       - application/json
       responses:
@@ -2751,7 +3232,12 @@ paths:
             - $ref: '#/definitions/response.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/response.PageResult'
+                  allOf:
+                  - $ref: '#/definitions/response.PageResult'
+                  - properties:
+                      list:
+                        $ref: '#/definitions/example.ExaCustomer'
+                    type: object
                 msg:
                   type: string
               type: object
@@ -2888,10 +3374,8 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: 断点续传到服务器
-      tags:
-      - ExaFileUploadAndDownload
   /fileUploadAndDownload/deleteFile:
-    post:
+    delete:
       parameters:
       - description: 传入文件里面id即可
         in: body
@@ -2974,7 +3458,7 @@ paths:
       tags:
       - ExaFileUploadAndDownload
   /fileUploadAndDownload/getFileList:
-    post:
+    get:
       consumes:
       - application/json
       parameters:
@@ -2994,7 +3478,12 @@ paths:
             - $ref: '#/definitions/response.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/response.PageResult'
+                  allOf:
+                  - $ref: '#/definitions/response.PageResult'
+                  - properties:
+                      list:
+                        $ref: '#/definitions/example.ExaFileUploadAndDownload'
+                    type: object
                 msg:
                   type: string
               type: object
@@ -3004,7 +3493,7 @@ paths:
       tags:
       - ExaFileUploadAndDownload
   /fileUploadAndDownload/removeChunk:
-    post:
+    delete:
       consumes:
       - multipart/form-data
       parameters:
@@ -3059,6 +3548,28 @@ paths:
       summary: 上传文件示例
       tags:
       - ExaFileUploadAndDownload
+  /frontend-user/deleteUser/:id:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 删除User
+        in: path
+        name: id
+        required: true
+        type: number
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 删除User
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 删除User
+      tags:
+      - User
   /getArticle/:id:
     get:
       consumes:
@@ -3452,12 +3963,12 @@ paths:
       summary: 更新菜单
       tags:
       - Menu
-  /moblieUser/createMoblieUser:
+  /mobileUser/createMobileUser:
     post:
       consumes:
       - application/json
       parameters:
-      - description: 创建MoblieUser
+      - description: 创建MobileUser
         in: body
         name: data
         required: true
@@ -3472,15 +3983,15 @@ paths:
             type: string
       security:
       - ApiKeyAuth: []
-      summary: 创建MoblieUser
+      summary: 创建MobileUser
       tags:
-      - MoblieUser
-  /moblieUser/deleteMoblieUser:
+      - MobileUser
+  /mobileUser/deleteMobileUser:
     delete:
       consumes:
       - application/json
       parameters:
-      - description: 删除MoblieUser
+      - description: 删除MobileUser
         in: body
         name: data
         required: true
@@ -3495,15 +4006,15 @@ paths:
             type: string
       security:
       - ApiKeyAuth: []
-      summary: 删除MoblieUser
+      summary: 删除MobileUser
       tags:
-      - MoblieUser
-  /moblieUser/deleteMoblieUserByIds:
+      - MobileUser
+  /mobileUser/deleteMobileUserByIds:
     delete:
       consumes:
       - application/json
       parameters:
-      - description: 批量删除MoblieUser
+      - description: 批量删除MobileUser
         in: body
         name: data
         required: true
@@ -3518,10 +4029,10 @@ paths:
             type: string
       security:
       - ApiKeyAuth: []
-      summary: 批量删除MoblieUser
+      summary: 批量删除MobileUser
       tags:
-      - MoblieUser
-  /moblieUser/findMoblieUser:
+      - MobileUser
+  /mobileUser/findMobileUser:
     get:
       consumes:
       - application/json
@@ -3578,10 +4089,10 @@ paths:
             type: string
       security:
       - ApiKeyAuth: []
-      summary: 用id查询MoblieUser
+      summary: 用id查询MobileUser
       tags:
-      - MoblieUser
-  /moblieUser/getMoblieUserList:
+      - MobileUser
+  /mobileUser/getMobileUserList:
     get:
       consumes:
       - application/json
@@ -3657,15 +4168,15 @@ paths:
             type: string
       security:
       - ApiKeyAuth: []
-      summary: 分页获取MoblieUser列表
+      summary: 分页获取MobileUser列表
       tags:
-      - MoblieUser
-  /moblieUser/updateMoblieUser:
+      - MobileUser
+  /mobileUser/updateMobileUser:
     put:
       consumes:
       - application/json
       parameters:
-      - description: 更新MoblieUser
+      - description: 更新MobileUser
         in: body
         name: data
         required: true
@@ -3680,9 +4191,9 @@ paths:
             type: string
       security:
       - ApiKeyAuth: []
-      summary: 更新MoblieUser
+      summary: 更新MobileUser
       tags:
-      - MoblieUser
+      - MobileUser
   /sysDictionary/createSysDictionary:
     post:
       consumes:
@@ -4646,9 +5157,14 @@ paths:
       - application/json
       responses:
         "200":
-          description: '{"success":true,"data":{},"msg":"批量删除成功"}'
+          description: 批量删除成功
           schema:
-            type: string
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
       security:
       - ApiKeyAuth: []
       summary: 批量删除User
@@ -4693,9 +5209,14 @@ paths:
       - application/json
       responses:
         "200":
-          description: '{"success":true,"data":{},"msg":"查询成功"}'
+          description: 查询成功
           schema:
-            type: string
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
       security:
       - ApiKeyAuth: []
       summary: 用id查询User
@@ -4783,9 +5304,14 @@ paths:
       - application/json
       responses:
         "200":
-          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          description: 获取成功
           schema:
-            type: string
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
       security:
       - ApiKeyAuth: []
       summary: 分页获取User列表
@@ -4933,11 +5459,16 @@ paths:
       summary: 设置用户信息
       tags:
       - SysUser
-  /user/updateUser:
+  /user/updateUser/:id:
     put:
       consumes:
       - application/json
       parameters:
+      - description: 删除User
+        in: path
+        name: id
+        required: true
+        type: number
       - description: 更新User
         in: body
         name: data
@@ -4948,9 +5479,14 @@ paths:
       - application/json
       responses:
         "200":
-          description: '{"success":true,"data":{},"msg":"更新成功"}'
+          description: 更新成功
           schema:
-            type: string
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
       security:
       - ApiKeyAuth: []
       summary: 更新User

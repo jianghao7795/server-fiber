@@ -65,7 +65,7 @@ func (e *FileUploadAndDownloadService) EditFileName(file *example.ExaFileUploadA
 //@param: info request.PageInfo
 //@return: err error, list interface{}, total int64
 
-func (e *FileUploadAndDownloadService) GetFileRecordInfoList(info *request.PageInfo) (list interface{}, total int64, err error) {
+func (e *FileUploadAndDownloadService) GetFileRecordInfoList(info *request.PageInfo) (list []example.ExaFileUploadAndDownload, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	keyword := info.Keyword

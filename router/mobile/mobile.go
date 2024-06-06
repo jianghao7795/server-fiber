@@ -11,12 +11,12 @@ import (
 type MobileLoginRouter struct{}
 
 func (m *MobileUserRouter) InitMobileLoginRouter(Router fiber.Router) {
-	moblieLoginRouter := Router.Group("").Use(middleware.JWTAuthMobileMiddleware())
+	mobileLoginRouter := Router.Group("").Use(middleware.JWTAuthMobileMiddleware())
 	var mobileLoginApi = new(v1.MobileLoginApi)
 	var registerApi = new(v1.RegisterMobile)
 	{
-		moblieLoginRouter.Post("login", mobileLoginApi.Login)
-		moblieLoginRouter.Post("register", registerApi.Register)
+		mobileLoginRouter.Post("login", mobileLoginApi.Login)
+		mobileLoginRouter.Post("register", registerApi.Register)
 	}
 	mobileGetUserApi := Router.Group("").Use(middleware.JWTAuthMobileMiddleware())
 	{

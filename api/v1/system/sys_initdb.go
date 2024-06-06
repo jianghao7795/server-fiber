@@ -53,5 +53,5 @@ func (i *DBApi) CheckDB(c *fiber.Ctx) error {
 		needInit = false
 	}
 	global.LOG.Info(message)
-	return response.OkWithDetailed(fiber.Map{"needInit": needInit}, message, c)
+	return response.OkWithDetailed(needInit, message, c)
 }

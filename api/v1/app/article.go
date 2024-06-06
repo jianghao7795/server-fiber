@@ -18,7 +18,7 @@ import (
 // @accept application/json
 // @Produce application/json
 // @Param data body app.Article true "创建Article"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
+// @Success 200 {object} response.Response{msg=string,code=number} "创建成功"
 // @Router /Article/createArticle [post]
 func (a *ArticleApi) CreateArticle(c *fiber.Ctx) error {
 	var article app.Article
@@ -44,7 +44,7 @@ func (a *ArticleApi) CreateArticle(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data body app.Article true "删除Article"
-// @Success 200 {string} string "{}"
+// @Success 200 {object} response.Response{msg=string,code=number} "删除成功"
 // @Router /article/deleteArticle/:id [delete]
 func (*ArticleApi) DeleteArticle(c *fiber.Ctx) error {
 	id, _ := c.ParamsInt("id")
@@ -66,7 +66,7 @@ func (*ArticleApi) DeleteArticle(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data body app.Article true "批量删除Article"
-// @Success 200 {string} string "{}"
+// @Success 200 {object} response.Response{code=number,msg=string} "批量删除成功"
 // @Router /article/deleteArticleByIds [delete]
 func (a *ArticleApi) DeleteArticleByIds(c *fiber.Ctx) error {
 	var IDS request.IdsReq
@@ -124,7 +124,7 @@ func (*ArticleApi) UpdateArticle(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data body app.Article true "get单个Article"
-// @Success 200 {string} string "{"success":true, "msg":"获得成功"}"
+// @Success 200 {object} response.Response{msg=string,data=app.Article,code=number} "获得成功"
 // @Router /article/findArticle/:id [get]
 func (*ArticleApi) FindArticle(c *fiber.Ctx) error {
 	id, _ := c.ParamsInt("id")
@@ -134,7 +134,7 @@ func (*ArticleApi) FindArticle(c *fiber.Ctx) error {
 			"msg": err.Error(),
 		}, "查询失败", c)
 	} else {
-		return response.OkWithData(fiber.Map{"article": articles}, c)
+		return response.OkWithData(articles, c)
 	}
 
 }
@@ -146,8 +146,8 @@ func (*ArticleApi) FindArticle(c *fiber.Ctx) error {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body app.Article true "Get Article"
-// @Success 200 {string} string "{"success":true, "msg":"获得成功"}"
+// @Param data query app.Article true "Get Article"
+// @Success 200 {string} response.Response{msg=string,data=response.PageResult{list=app.Article[],total=number},code=number,page=number,pageSize=number} "获得成功"
 // @Router /article/getArticleList [get]
 func (*ArticleApi) GetArticleList(c *fiber.Ctx) error {
 	var pageInfo appReq.ArticleSearch
@@ -176,8 +176,8 @@ func (*ArticleApi) GetArticleList(c *fiber.Ctx) error {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body app.Article true "批量更新Article"
-// @Success 200 {string} string "{}"
+// @Param data body request.IdsReq true "批量更新Article"
+// @Success 200 {object} response.Response{msg=string,code=number} "{}"
 // @Router /article/putArticleByIds [put]
 func (*ArticleApi) PutArticleByIds(c *fiber.Ctx) error {
 	var IDS request.IdsReq
@@ -200,7 +200,7 @@ func (*ArticleApi) PutArticleByIds(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data body app.Article true "获取文章阅读量"
-// @Success 200 {string} string "{"code":0,"data":{},"msg":"获取成功"}"
+// @Success 200 {string} {object} response.Response{msg=string,data=number,code=number} "获取成功"
 // @Router /article/getArticleReading [get]
 func (*ArticleApi) GetArticleReading(c *fiber.Ctx) error {
 	count, err := articleService.GetArticleReading()

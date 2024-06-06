@@ -105,7 +105,7 @@ func (u *FileUploadAndDownloadApi) DeleteFile(c *fiber.Ctx) error {
 	}
 	if err := fileUploadAndDownloadService.DeleteFile(uint(id)); err != nil {
 		global.LOG.Error("删除失败!", zap.Error(err))
-		return response.FailWithDetailed(fiber.Map{"msg": err.Error()}, "删除失败", c)
+		return response.FailWithDetailed(err.Error(), "删除失败", c)
 	}
 	return response.OkWithMessage("删除成功", c)
 }
@@ -116,7 +116,7 @@ func (u *FileUploadAndDownloadApi) DeleteFile(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data body request.PageInfo true "页码, 每页大小"
-// @Success 200 {object} response.Response{data=response.PageResult,msg=string} "分页文件列表,返回包括列表,总数,页码,每页数量"
+// @Success 200 {object} response.Response{data=response.PageResult{list=example.ExaFileUploadAndDownload[]},msg=string} "分页文件列表,返回包括列表,总数,页码,每页数量"
 // @Router /fileUploadAndDownload/getFileList [get]
 func (u *FileUploadAndDownloadApi) GetFileList(c *fiber.Ctx) error {
 	var pageInfo request.PageInfo

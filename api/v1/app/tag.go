@@ -109,11 +109,11 @@ func (TagApi *TagApi) UpdateTag(c *fiber.Ctx) error {
 // @Router /appTab/findTag [get]
 func (TagApi *TagApi) FindTag(c *fiber.Ctx) error {
 	id, _ := c.ParamsInt("id")
-	if reappTab, err := appTabService.GetTag(uint(id)); err != nil {
+	if tag, err := appTabService.GetTag(uint(id)); err != nil {
 		global.LOG.Error("查询失败!", zap.Error(err))
 		return response.FailWithMessage("查询失败", c)
 	} else {
-		return response.OkWithData(fiber.Map{"tag": reappTab}, c)
+		return response.OkWithData(tag, c)
 	}
 }
 

@@ -41,7 +41,7 @@ func (e *CustomerApi) CreateExaCustomer(c *fiber.Ctx) error {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body example.ExaCustomer true "客户ID"
+// @Param data query example.ExaCustomer true "客户ID"
 // @Success 200 {object} response.Response{msg=string} "删除客户"
 // @Router /customer/customer [delete]
 func (e *CustomerApi) DeleteExaCustomer(c *fiber.Ctx) error {
@@ -112,7 +112,7 @@ func (e *CustomerApi) GetExaCustomer(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data query request.PageInfo true "页码, 每页大小"
-// @Success 200 {object} response.Response{data=response.PageResult,msg=string} "分页获取权限客户列表,返回包括列表,总数,页码,每页数量"
+// @Success 200 {object} response.Response{data=response.PageResult{list=example.ExaCustomer[]},msg=string} "分页获取权限客户列表,返回包括列表,总数,页码,每页数量"
 // @Router /customer/customerList [get]
 func (e *CustomerApi) GetExaCustomerList(c *fiber.Ctx) error {
 	var pageInfo request.SearchCustomerParams

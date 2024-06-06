@@ -10,21 +10,22 @@ package app
 import (
 	"server-fiber/global"
 	"server-fiber/model/app"
-	responseUplodFile "server-fiber/model/app/response"
+	responseUploadFile "server-fiber/model/app/response"
 	"server-fiber/model/common/response"
 
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
 )
 
-// UploadFile @Tags ExaFileUploadAndDownload
+// UploadFile
+// @Tags backend upload
 // @Summary 上传文件示例
 // @Security ApiKeyAuth
 // @accept multipart/form-data
 // @Produce  application/json
 // @Param file formData file true "上传文件示例"
-// @Success 200 {object} response.Response{data=string,msg=string} "上传文件示例,返回包括文件详情"
-// @Router /fileUploadAndDownload/upload [post]
+// @Success 200 {object} response.Response{data=responseUploadFile.ResponseUploadFile{file=app.FileUploadAndDownload},msg=string} "上传文件示例,返回包括文件详情"
+// @Router /base_message/upload [post]
 func (u *FileUploadAndDownloadApi) UploadFile(c *fiber.Ctx) error {
 	var file app.FileUploadAndDownload
 	noSave := c.Query("noSave", "0")
@@ -38,5 +39,5 @@ func (u *FileUploadAndDownloadApi) UploadFile(c *fiber.Ctx) error {
 		global.LOG.Error("上传更新失败!", zap.Error(err))
 		return response.FailWithMessage("上传更新失败", c)
 	}
-	return response.OkWithDetailed(responseUplodFile.ResponseUploadFile{File: file}, "上传成功", c)
+	return response.OkWithDetailed(responseUploadFile.ResponseUploadFile{File: file}, "上传成功", c)
 }

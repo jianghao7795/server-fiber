@@ -68,6 +68,6 @@ func (g *SystemGithubApi) CreateGithub(c *fiber.Ctx) error {
 		global.LOG.Error("创建commit有错误!", zap.Error(err))
 		return response.FailWithMessage("创建commit有错误!", c)
 	} else {
-		return response.OkWithData(fiber.Map{"total": total}, c)
+		return response.OkWithData(total, c)
 	}
 }

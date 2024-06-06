@@ -5,7 +5,7 @@ import (
 	"server-fiber/model/mobile"
 )
 
-type MoblieUserSearch struct {
+type MobileUserSearch struct {
 	mobile.MobileUser
 	request.PageInfo
 }

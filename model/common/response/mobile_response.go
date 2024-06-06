@@ -12,18 +12,9 @@ type ResponseMobile struct {
 
 const (
 	ERROR401 = fiber.StatusUnauthorized
-	ERROR403 = fiber.StatusForbidden
 )
 
 // 返回400 错误信息
 func FailWithDetailed401(data interface{}, message string, c *fiber.Ctx) error {
 	return Result400(ERROR401, data, message, c)
-}
-
-func FailWithMessage401(message string, c *fiber.Ctx) error {
-	return Result400(ERROR401, map[string]interface{}{}, message, c)
-}
-
-func FailWithMessage403(message string, c *fiber.Ctx) error {
-	return Result400(ERROR403, map[string]interface{}{}, message, c)
 }

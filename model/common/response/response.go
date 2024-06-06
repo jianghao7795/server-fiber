@@ -11,10 +11,11 @@ type Response struct {
 }
 
 const (
-	ERROR             = fiber.StatusBadRequest   // 错误返回的code 数据
-	SUCCESS           = fiber.StatusOK           // 成功返回的code
-	ERRORNotFound     = fiber.StatusNotFound     // 404错误
+	ERROR   = fiber.StatusBadRequest // 错误返回的code 数据
+	SUCCESS = fiber.StatusOK         // 成功返回的code
+	// ERRORNotFound     = fiber.StatusNotFound     // 404错误
 	ERRORUnauthorized = fiber.StatusUnauthorized // 401错误
+	ERROR403          = fiber.StatusForbidden    // 403错误
 )
 
 func Result(code int, data interface{}, msg string, c *fiber.Ctx) error {
@@ -77,6 +78,14 @@ func Result400(code int, data interface{}, msg string, c *fiber.Ctx) error {
 	})
 }
 
-func FailWithMessage404(message string, c *fiber.Ctx) error {
-	return Result400(ERRORNotFound, map[string]interface{}{}, message, c)
+// func FailWithMessage404(message string, c *fiber.Ctx) error {
+//	 return Result(ERRORNotFound, map[string]interface{}{}, message, c)
+// }
+
+func FailWithMessage401(message string, c *fiber.Ctx) error {
+	return Result400(ERRORUnauthorized, map[string]interface{}{}, message, c)
+}
+
+func FailWithMessage403(message string, c *fiber.Ctx) error {
+	return Result400(ERROR403, map[string]interface{}{}, message, c)
 }

@@ -2,7 +2,7 @@ package app
 
 import (
 	"server-fiber/global"
-	comment "server-fiber/model/app"
+	"server-fiber/model/app"
 	commentReq "server-fiber/model/app/request"
 	"server-fiber/model/common/request"
 	"server-fiber/model/common/response"
@@ -17,11 +17,11 @@ import (
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body comment.Comment true "创建Comment"
-// @Success 200 {string} {"id": 1} "{"success":true,"data":{},"msg":"获取成功"}"
+// @Param data body app.Comment true "创建Comment"
+// @Success 200 {object} response.Response{msg=string,code=number} "创建Comment"
 // @Router /comment/createComment [post]
 func (commentApi *CommentApi) CreateComment(c *fiber.Ctx) error {
-	var commentData comment.Comment
+	var commentData app.Comment
 	err := c.BodyParser(&commentData)
 	if err != nil {
 		global.LOG.Error("获取数据失败!", zap.Error(err))
@@ -41,14 +41,14 @@ func (commentApi *CommentApi) CreateComment(c *fiber.Ctx) error {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body comment.Comment true "删除Comment"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
-// @Router /comment/deleteComment [delete]
+// @Param id path number true "删除Comment"
+// @Success 200 {object} response.Response{msg=string,code=number} "删除Comment"
+// @Router /comment/deleteComment/:id [delete]
 func (commentApi *CommentApi) DeleteComment(c *fiber.Ctx) error {
 	id, _ := c.ParamsInt("id", 0)
 	if err := commentService.DeleteComment(uint(id)); err != nil {
 		global.LOG.Error("删除失败!", zap.Error(err))
-		return response.FailWithDetailed(fiber.Map{"msg": err.Error()}, "删除失败", c)
+		return response.FailWithDetailed(err.Error(), "删除失败", c)
 	} else {
 		return response.OkWithMessage("删除成功", c)
 	}
@@ -61,7 +61,7 @@ func (commentApi *CommentApi) DeleteComment(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data body request.IdsReq true "批量删除Comment"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"批量删除成功"}"
+// @Success 200 {object} response.Response{msg=string,code=number} "批量删除成功"
 // @Router /comment/deleteCommentByIds [delete]
 func (commentApi *CommentApi) DeleteCommentByIds(c *fiber.Ctx) error {
 	var IDS request.IdsReq
@@ -80,11 +80,12 @@ func (commentApi *CommentApi) DeleteCommentByIds(c *fiber.Ctx) error {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body comment.Comment true "更新Comment"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"更新成功"}"
+// @Param id path number true "获取id"
+// @Param data body app.Comment true "更新Comment"
+// @Success 200 {object} response.Response{msg=string,code=number} "更新成功"
 // @Router /comment/updateComment/:id [put]
 func (commentApi *CommentApi) UpdateComment(c *fiber.Ctx) error {
-	var comment2 comment.Comment
+	var comment2 app.Comment
 	id, _ := c.ParamsInt("id", 0)
 	comment2.ID = uint(id)
 	err := c.BodyParser(&comment2)
@@ -106,8 +107,8 @@ func (commentApi *CommentApi) UpdateComment(c *fiber.Ctx) error {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data query comment.Comment true "用id查询Comment"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"查询成功"}"
+// @Param id path number true "用id查询Comment"
+// @Success 200 {object} response.Response{msg=string,data=app.Comment,code=number} "查询成功"
 // @Router /comment/getComment/:id [get]
 func (commentApi *CommentApi) FindComment(c *fiber.Ctx) error {
 	id, err := c.ParamsInt("id", 0)
@@ -115,11 +116,11 @@ func (commentApi *CommentApi) FindComment(c *fiber.Ctx) error {
 		global.LOG.Error("未获取到id参数!", zap.Error(err))
 		return response.FailWithMessage("未获取到id参数", c)
 	}
-	if recomment, err := commentService.GetComment(id); err != nil {
+	if comment, err := commentService.GetComment(id); err != nil {
 		global.LOG.Error("查询失败!", zap.Error(err))
 		return response.FailWithMessage("查询失败"+err.Error(), c)
 	} else {
-		return response.OkWithData(fiber.Map{"comment": recomment}, c)
+		return response.OkWithData(comment, c)
 	}
 }
 
@@ -130,7 +131,7 @@ func (commentApi *CommentApi) FindComment(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data query commentReq.CommentSearch true "分页获取Comment列表"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
+// @Success 200 {object} response.Response{msg=string,data=response.PageResult{list=app.Comment[],total=number,page=number,pageSize=number},code=number} "获取成功"
 // @Router /comment/getCommentList [get]
 func (commentApi *CommentApi) GetCommentList(c *fiber.Ctx) error {
 	var pageInfo commentReq.CommentSearch
@@ -148,6 +149,15 @@ func (commentApi *CommentApi) GetCommentList(c *fiber.Ctx) error {
 	}
 }
 
+// GetCommentList 树状获取Comment列表
+// @Tags Comment
+// @Summary 树状获取Comment列表
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param data query commentReq.CommentSearch true "分页获取Comment列表"
+// @Success 200 {object} response.Response{msg=string,data=response.PageResult{list=app.Comment[],total=number,page=number,pageSize=number},code=number} "获取成功"
+// @Router /comment/getCommentTreeList [get]
 func (*CommentApi) GetCommentTreeList(c *fiber.Ctx) error {
 	var pageInfo commentReq.CommentSearch
 	_ = c.QueryParser(&pageInfo)
@@ -166,9 +176,17 @@ func (*CommentApi) GetCommentTreeList(c *fiber.Ctx) error {
 }
 
 // PutLikeItOrDislike 点赞
+// @Tags Comment
+// @Summary 点赞
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param data body app.Praise true "点赞"
+// @Success 200 {object} response.Response{msg=string,code=number,data=app.Praise} "点赞成功"
+// @Router /comment/pariseComment [put]
 func (*CommentApi) PutLikeItOrDislike(c *fiber.Ctx) error {
-	var likeIt comment.Praise
-	_ = c.QueryParser(&likeIt)
+	var likeIt app.Praise
+	_ = c.BodyParser(&likeIt)
 
 	if err := commentService.PutLikeItOrDislike(&likeIt); err != nil {
 		global.LOG.Error("点赞失败!", zap.Error(err))

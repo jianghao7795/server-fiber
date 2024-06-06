@@ -9,44 +9,44 @@ import (
 
 type MobileUserService struct{}
 
-// CreateMoblieUser 创建MoblieUser记录
+// CreateMobileUser 创建MobileUser记录
 // Author [jianghao](https://github.com/JiangHaoCode)
-func (moblieUserService *MobileUserService) CreateMoblieUser(moblieUser mobile.MobileUser) (err error) {
-	err = global.DB.Create(&moblieUser).Error
+func (mobileUserService *MobileUserService) CreateMobileUser(mobileUser mobile.MobileUser) (err error) {
+	err = global.DB.Create(&mobileUser).Error
 	return err
 }
 
-// DeleteMoblieUser 删除MoblieUser记录
+// DeleteMobileUser 删除MobileUser记录
 // Author [jianghao](https://github.com/JiangHaoCode)
-func (moblieUserService *MobileUserService) DeleteMoblieUser(id uint) (err error) {
+func (mobileUserService *MobileUserService) DeleteMobileUser(id uint) (err error) {
 	err = global.DB.Delete(&mobile.MobileUser{}, id).Error
 	return err
 }
 
-// DeleteMoblieUserByIds 批量删除MoblieUser记录
+// DeleteMobileUserByIds 批量删除MobileUser记录
 // Author [jianghao](https://github.com/JiangHaoCode)
-func (moblieUserService *MobileUserService) DeleteMoblieUserByIds(ids request.IdsReq) (err error) {
+func (mobileUserService *MobileUserService) DeleteMobileUserByIds(ids request.IdsReq) (err error) {
 	err = global.DB.Delete(&[]mobile.MobileUser{}, "id in ?", ids.Ids).Error
 	return err
 }
 
-// UpdateMoblieUser 更新MoblieUser记录
+// UpdateMobileUser 更新MobileUser记录
 // Author [jianghao](https://github.com/JiangHaoCode)
-func (moblieUserService *MobileUserService) UpdateMoblieUser(moblieUser mobile.MobileUser) (err error) {
-	err = global.DB.Save(&moblieUser).Error
+func (mobileUserService *MobileUserService) UpdateMobileUser(mobileUser mobile.MobileUser) (err error) {
+	err = global.DB.Save(&mobileUser).Error
 	return err
 }
 
-// GetMoblieUser 根据id获取MoblieUser记录
+// GetMobileUser 根据id获取MobileUser记录
 // Author [jianghao](https://github.com/JiangHaoCode)
-func (moblieUserService *MobileUserService) GetMoblieUser(id uint) (moblieUser mobile.MobileUser, err error) {
-	err = global.DB.Where("id = ?", id).First(&moblieUser).Error
+func (mobileUserService *MobileUserService) GetMobileUser(id uint) (mobileUser mobile.MobileUser, err error) {
+	err = global.DB.Where("id = ?", id).First(&mobileUser).Error
 	return
 }
 
-// GetMoblieUserInfoList 分页获取MoblieUser记录
+// GetMobileUserInfoList 分页获取MobileUser记录
 // Author [jianghao](https://github.com/JiangHaoCode)
-func (moblieUserService *MobileUserService) GetMoblieUserInfoList(info mobileReq.MoblieUserSearch) (list []mobile.MobileUser, total int64, err error) {
+func (mobileUserService *MobileUserService) GetMobileUserInfoList(info mobileReq.MobileUserSearch) (list []mobile.MobileUser, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	// 创建db
@@ -54,12 +54,12 @@ func (moblieUserService *MobileUserService) GetMoblieUserInfoList(info mobileReq
 	if info.Username != "" {
 		db = db.Where("username like ?", "%"+info.Username+"%")
 	}
-	var moblieUsers []mobile.MobileUser
+	var mobileUsers []mobile.MobileUser
 	// 如果有条件搜索 下方会自动创建搜索语句
 	err = db.Count(&total).Error
 	if err != nil {
 		return
 	}
-	err = db.Limit(limit).Offset(offset).Find(&moblieUsers).Error
-	return moblieUsers, total, err
+	err = db.Limit(limit).Offset(offset).Find(&mobileUsers).Error
+	return mobileUsers, total, err
 }

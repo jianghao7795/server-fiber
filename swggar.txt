@@ -7,5 +7,14 @@
 // @Success 200 {object} response.Response{msg=string} "更新角色api权限" // 返回类型
 // @Router /casbin/UpdateCasbin [post] // router 地址 访问方法
 
-// @Param data query request.CasbinInReceive true "权限id, 权限模型列表" // 请求参数get
-// @Param data params request.CasbinInReceive true "权限id, 权限模型列表" // 请求参数 get router中的参数
+// @Param query query request.CasbinInSearch true "权限id, 权限模型列表" // 请求参数get
+// @Param id path number true "权限id, 权限模型列表" // 请求参数 get router中的参数
+
+// @Tags Casbin
+// @Summary 更新角色api权限
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param data body request.CasbinInReceive true "权限id, 权限模型列表"
+// @Success 200 {object} response.Response{msg=string} "更新角色api权限"
+// @Router /casbin/UpdateCasbin [post]
