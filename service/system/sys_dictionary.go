@@ -30,10 +30,11 @@ func (dictionaryService *DictionaryService) CreateSysDictionary(sysDictionary sy
 //@param: sysDictionary model.SysDictionary
 //@return: err error
 
-func (dictionaryService *DictionaryService) DeleteSysDictionary(sysDictionary system.SysDictionary) (err error) {
-	err = global.DB.Where("id = ?", sysDictionary.ID).Preload("SysDictionaryDetails").First(&sysDictionary).Error
+func (dictionaryService *DictionaryService) DeleteSysDictionary(id uint) (err error) {
+	var sysDictionary system.SysDictionary
+	err = global.DB.Where("id = ?", id).Preload("SysDictionaryDetails").First(&sysDictionary).Error
 	if err != nil && errors.Is(err, gorm.ErrRecordNotFound) {
-		return errors.New("请不要搞事")
+		return errors.New("请不要搞事(乱删)")
 	}
 	if err != nil {
 		return err
@@ -79,8 +80,12 @@ func (dictionaryService *DictionaryService) UpdateSysDictionary(sysDictionary *s
 //@param: Type string, Id uint
 //@return: err error, sysDictionary model.SysDictionary
 
-func (dictionaryService *DictionaryService) GetSysDictionary(Type string, Id uint) (sysDictionary system.SysDictionary, err error) {
-	err = global.DB.Where("type = ? OR id = ? and status = ?", Type, Id, true).Preload("SysDictionaryDetails", "status = ?", true).First(&sysDictionary).Error
+//	func (dictionaryService *DictionaryService) GetSysDictionary(Type string, Id uint) (sysDictionary system.SysDictionary, err error) {
+//		err = global.DB.Where("type = ? OR id = ? and status = ?", Type, Id, true).Preload("SysDictionaryDetails", "status = ?", true).First(&sysDictionary).Error
+//		return
+//	}
+func (dictionaryService *DictionaryService) GetSysDictionary(Id uint) (sysDictionary system.SysDictionary, err error) {
+	err = global.DB.Where("id = ? and status = ?", Id, true).Preload("SysDictionaryDetails", "status = ?", true).First(&sysDictionary).Error
 	return
 }
 

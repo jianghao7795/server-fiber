@@ -6,7 +6,6 @@ import (
 	"server-fiber/model/common/response"
 	"server-fiber/model/system"
 	systemReq "server-fiber/model/system/request"
-	systemRes "server-fiber/model/system/response"
 	"server-fiber/utils"
 
 	"github.com/gofiber/fiber/v2"
@@ -108,7 +107,7 @@ func (s *SystemApiApi) GetApiById(c *fiber.Ctx) error {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败", c)
 	} else {
-		return response.OkWithData(systemRes.SysAPIResponse{Api: api}, c)
+		return response.OkWithData(api, c)
 	}
 }
 
@@ -150,7 +149,7 @@ func (s *SystemApiApi) GetAllApis(c *fiber.Ctx) error {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败", c)
 	} else {
-		return response.OkWithDetailed(systemRes.SysAPIListResponse{Apis: apis}, "获取成功", c)
+		return response.OkWithDetailed(apis, "获取成功", c)
 	}
 }
 

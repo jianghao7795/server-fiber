@@ -21,7 +21,7 @@ type AuthorityMenuApi struct{}
 // @Produce  application/json
 // @Param data body request.Empty true "空"
 // @Success 200 {object} response.Response{data=systemRes.SysMenusResponse,msg=string} "获取用户动态路由,返回包括系统菜单详情列表"
-// @Router /menu/getMenu [post]
+// @Router /menu/getMenu [get]
 func (a *AuthorityMenuApi) GetMenu(c *fiber.Ctx) error {
 	if menus, err := menuService.GetMenuTree(utils.GetUserAuthorityId(c)); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
@@ -46,7 +46,7 @@ func (a *AuthorityMenuApi) GetBaseMenuTree(c *fiber.Ctx) error {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败", c)
 	} else {
-		return response.OkWithDetailed(systemRes.SysBaseMenusResponse{Menus: menus}, "获取成功", c)
+		return response.OkWithDetailed(menus, "获取成功", c)
 	}
 }
 
@@ -174,7 +174,7 @@ func (a *AuthorityMenuApi) UpdateBaseMenu(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data body request.GetById true "菜单id"
 // @Success 200 {object} response.Response{data=systemRes.SysBaseMenuResponse,msg=string} "根据id获取菜单,返回包括系统菜单列表"
-// @Router /menu/getBaseMenuById [post]
+// @Router /menu/getBaseMenuById/:id [get]
 func (a *AuthorityMenuApi) GetBaseMenuById(c *fiber.Ctx) error {
 	var idInfo request.GetById
 	idInfo.ID, _ = c.ParamsInt("id")
@@ -185,7 +185,7 @@ func (a *AuthorityMenuApi) GetBaseMenuById(c *fiber.Ctx) error {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败", c)
 	} else {
-		return response.OkWithDetailed(systemRes.SysBaseMenuResponse{Menu: menu}, "获取成功", c)
+		return response.OkWithDetailed(menu, "获取成功", c)
 	}
 	// return response.OkWithDetailed("", "获取成功", c)
 }

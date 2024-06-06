@@ -16,7 +16,7 @@ func (s *UserRouter) InitUserRouter(Router fiber.Router) {
 	userRouter.Post("admin_register", middleware.OperationRecord, baseApi.Register)               // 管理员注册账号
 	userRouter.Post("changePassword", middleware.OperationRecord, baseApi.ChangePassword)         // 用户修改密码
 	userRouter.Post("setUserAuthority", middleware.OperationRecord, baseApi.SetUserAuthority)     // 设置用户权限
-	userRouter.Delete("deleteUser", middleware.OperationRecord, baseApi.DeleteUser)               // 删除用户
+	userRouter.Delete("deleteUser/:id", middleware.OperationRecord, baseApi.DeleteUser)           // 删除用户
 	userRouter.Put("setUserInfo", middleware.OperationRecord, baseApi.SetUserInfo)                // 设置用户信息
 	userRouter.Put("setSelfInfo", middleware.OperationRecord, baseApi.SetSelfInfo)                // 设置自身信息
 	userRouter.Post("setUserAuthorities", middleware.OperationRecord, baseApi.SetUserAuthorities) // 设置用户权限组

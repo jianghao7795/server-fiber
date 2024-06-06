@@ -4,7 +4,6 @@ import (
 	"server-fiber/global"
 	"server-fiber/model/common/response"
 	"server-fiber/model/system/request"
-	systemRes "server-fiber/model/system/response"
 	"server-fiber/utils"
 
 	"github.com/gofiber/fiber/v2"
@@ -51,5 +50,5 @@ func (cas *CasbinApi) GetPolicyPathByAuthorityId(c *fiber.Ctx) error {
 		return response.FailWithMessage(err.Error(), c)
 	}
 	paths := casbinService.GetPolicyPathByAuthorityId(casbin.AuthorityId)
-	return response.OkWithDetailed(systemRes.PolicyPathResponse{Paths: paths}, "获取成功", c)
+	return response.OkWithDetailed(paths, "获取成功", c)
 }

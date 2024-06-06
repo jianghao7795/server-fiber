@@ -66,7 +66,7 @@ func (userApi *UserApi) DeleteUser(c *fiber.Ctx) error {
 // @Router /user/deleteUserByIds [delete]
 func (userApi *UserApi) DeleteUserByIds(c *fiber.Ctx) error {
 	var IDS request.IdsReq
-	_ = c.QueryParser(&IDS)
+	_ = c.BodyParser(&IDS)
 	if err := userService.DeleteUserByIds(IDS); err != nil {
 		global.LOG.Error("批量删除失败!", zap.Error(err))
 		return response.FailWithMessage("批量删除失败"+err.Error(), c)

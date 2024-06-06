@@ -23,8 +23,8 @@ func (dictionaryDetailService *DictionaryDetailService) CreateSysDictionaryDetai
 //@param: sysDictionaryDetail model.SysDictionaryDetail
 //@return: err error
 
-func (dictionaryDetailService *DictionaryDetailService) DeleteSysDictionaryDetail(sysDictionaryDetail system.SysDictionaryDetail) (err error) {
-	err = global.DB.Delete(&sysDictionaryDetail).Error
+func (dictionaryDetailService *DictionaryDetailService) DeleteSysDictionaryDetail(id uint) (err error) {
+	err = global.DB.Delete(&system.SysDictionaryDetail{}, id).Error
 	return err
 }
 

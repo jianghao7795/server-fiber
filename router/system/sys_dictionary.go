@@ -13,10 +13,10 @@ func (s *DictionaryRouter) InitSysDictionaryRouter(Router fiber.Router) {
 	sysDictionaryRouter := Router.Group("sysDictionary")
 	sysDictionaryApi := new(v1.DictionaryApi)
 
-	sysDictionaryRouter.Post("createSysDictionary", middleware.OperationRecord, sysDictionaryApi.CreateSysDictionary)   // 新建SysDictionary
-	sysDictionaryRouter.Delete("deleteSysDictionary", middleware.OperationRecord, sysDictionaryApi.DeleteSysDictionary) // 删除SysDictionary
-	sysDictionaryRouter.Put("updateSysDictionary", middleware.OperationRecord, sysDictionaryApi.UpdateSysDictionary)    // 更新SysDictionary
+	sysDictionaryRouter.Post("createSysDictionary", middleware.OperationRecord, sysDictionaryApi.CreateSysDictionary)       // 新建SysDictionary
+	sysDictionaryRouter.Delete("deleteSysDictionary/:id", middleware.OperationRecord, sysDictionaryApi.DeleteSysDictionary) // 删除SysDictionary
+	sysDictionaryRouter.Put("updateSysDictionary/:id", middleware.OperationRecord, sysDictionaryApi.UpdateSysDictionary)    // 更新SysDictionary
 
-	sysDictionaryRouter.Get("findSysDictionary", sysDictionaryApi.FindSysDictionary)       // 根据ID获取SysDictionary
+	sysDictionaryRouter.Get("findSysDictionary/:id", sysDictionaryApi.FindSysDictionary)   // 根据ID获取SysDictionary
 	sysDictionaryRouter.Get("getSysDictionaryList", sysDictionaryApi.GetSysDictionaryList) // 获取SysDictionary列表
 }

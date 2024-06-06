@@ -39,11 +39,10 @@ func (s *DictionaryDetailApi) CreateSysDictionaryDetail(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data body system.SysDictionaryDetail true "SysDictionaryDetail模型"
 // @Success 200 {object} response.Response{msg=string} "删除SysDictionaryDetail"
-// @Router /sysDictionaryDetail/deleteSysDictionaryDetail [delete]
+// @Router /sysDictionaryDetail/deleteSysDictionaryDetail/:id [delete]
 func (s *DictionaryDetailApi) DeleteSysDictionaryDetail(c *fiber.Ctx) error {
-	var detail system.SysDictionaryDetail
-	_ = c.QueryParser(&detail)
-	if err := dictionaryDetailService.DeleteSysDictionaryDetail(detail); err != nil {
+	id, _ := c.ParamsInt("id")
+	if err := dictionaryDetailService.DeleteSysDictionaryDetail(uint(id)); err != nil {
 		global.LOG.Error("删除失败!", zap.Error(err))
 		return response.FailWithMessage("删除失败", c)
 	} else {
@@ -77,10 +76,11 @@ func (s *DictionaryDetailApi) UpdateSysDictionaryDetail(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data query system.SysDictionaryDetail true "用id查询SysDictionaryDetail"
 // @Success 200 {object} response.Response{data=map[string]interface{},msg=string} "用id查询SysDictionaryDetail"
-// @Router /sysDictionaryDetail/findSysDictionaryDetail [get]
+// @Router /sysDictionaryDetail/findSysDictionaryDetail/:id [get]
 func (s *DictionaryDetailApi) FindSysDictionaryDetail(c *fiber.Ctx) error {
 	var detail system.SysDictionaryDetail
-	_ = c.QueryParser(&detail)
+	id, _ := c.ParamsInt("id")
+	detail.ID = uint(id)
 	if err := utils.Verify(detail, utils.IdVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
@@ -88,7 +88,7 @@ func (s *DictionaryDetailApi) FindSysDictionaryDetail(c *fiber.Ctx) error {
 		global.LOG.Error("查询失败!", zap.Error(err))
 		return response.FailWithMessage("查询失败", c)
 	} else {
-		return response.OkWithDetailed(fiber.Map{"resysDictionaryDetail": resysDictionaryDetail}, "查询成功", c)
+		return response.OkWithDetailed(resysDictionaryDetail, "查询成功", c)
 	}
 }
 

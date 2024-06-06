@@ -4,7 +4,6 @@ import (
 	"strconv"
 
 	"server-fiber/global"
-	"server-fiber/model/common/request"
 	"server-fiber/model/common/response"
 	"server-fiber/model/system"
 	systemReq "server-fiber/model/system/request"
@@ -253,18 +252,14 @@ func (b *BaseApi) SetUserAuthorities(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data body request.GetById true "用户ID"
 // @Success 200 {object} response.Response{msg=string} "删除用户"
-// @Router /user/deleteUser [delete]
+// @Router /user/deleteUser/:id [delete]
 func (b *BaseApi) DeleteUser(c *fiber.Ctx) error {
-	var reqId request.GetById
-	_ = c.QueryParser(&reqId)
-	if err := utils.Verify(reqId, utils.IdVerify); err != nil {
-		return response.FailWithMessage(err.Error(), c)
-	}
+	id, _ := c.ParamsInt("id")
 	jwtId := utils.GetUserID(c)
-	if jwtId == uint(reqId.ID) {
+	if jwtId == uint(id) {
 		return response.FailWithMessage("删除失败, 自杀失败", c)
 	}
-	if err := userService.DeleteUser(reqId.ID); err != nil {
+	if err := userService.DeleteUser(id); err != nil {
 		global.LOG.Error("删除失败!", zap.Error(err))
 		return response.FailWithMessage("删除失败", c)
 	} else {
@@ -352,7 +347,7 @@ func (b *BaseApi) GetUserInfo(c *fiber.Ctx) error {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败", c)
 	} else {
-		return response.OkWithDetailed(fiber.Map{"userInfo": ReqUser}, "获取成功", c)
+		return response.OkWithDetailed(ReqUser, "获取成功", c)
 	}
 }
 

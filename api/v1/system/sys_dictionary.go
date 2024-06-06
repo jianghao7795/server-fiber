@@ -39,11 +39,14 @@ func (s *DictionaryApi) CreateSysDictionary(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data body system.SysDictionary true "SysDictionary模型"
 // @Success 200 {object} response.Response{msg=string} "删除SysDictionary"
-// @Router /sysDictionary/deleteSysDictionary [delete]
+// @Router /sysDictionary/deleteSysDictionary/:id [delete]
 func (s *DictionaryApi) DeleteSysDictionary(c *fiber.Ctx) error {
-	var dictionary system.SysDictionary
-	_ = c.QueryParser(&dictionary)
-	if err := dictionaryService.DeleteSysDictionary(dictionary); err != nil {
+	id, _ := c.ParamsInt("id")
+	if id == 0 {
+		global.LOG.Error("id获取失败!")
+		return response.FailWithMessage("id获取失败", c)
+	}
+	if err := dictionaryService.DeleteSysDictionary(uint(id)); err != nil {
 		global.LOG.Error("删除失败!", zap.Error(err))
 		return response.FailWithMessage("删除失败", c)
 	} else {
@@ -58,10 +61,14 @@ func (s *DictionaryApi) DeleteSysDictionary(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data body system.SysDictionary true "SysDictionary模型"
 // @Success 200 {object} response.Response{msg=string} "更新SysDictionary"
-// @Router /sysDictionary/updateSysDictionary [put]
+// @Router /sysDictionary/updateSysDictionary/:id [put]
 func (s *DictionaryApi) UpdateSysDictionary(c *fiber.Ctx) error {
 	var dictionary system.SysDictionary
 	_ = c.BodyParser(&dictionary)
+	id, _ := c.ParamsInt("id")
+	if dictionary.ID != uint(id) {
+		return response.FailWithMessage("id不一致", c)
+	}
 	if err := dictionaryService.UpdateSysDictionary(&dictionary); err != nil {
 		global.LOG.Error("更新失败!", zap.Error(err))
 		return response.FailWithMessage("更新失败", c)
@@ -77,11 +84,14 @@ func (s *DictionaryApi) UpdateSysDictionary(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data query system.SysDictionary true "ID或字典英名"
 // @Success 200 {object} response.Response{data=map[string]interface{},msg=string} "用id查询SysDictionary"
-// @Router /sysDictionary/findSysDictionary [get]
+// @Router /sysDictionary/findSysDictionary/:id [get]
 func (s *DictionaryApi) FindSysDictionary(c *fiber.Ctx) error {
-	var dictionary system.SysDictionary
-	_ = c.QueryParser(&dictionary)
-	if sysDictionary, err := dictionaryService.GetSysDictionary(dictionary.Type, dictionary.ID); err != nil {
+	id, _ := c.ParamsInt("id")
+	if id == 0 {
+		global.LOG.Error("id获取失败!")
+		return response.FailWithMessage("id获取失败", c)
+	}
+	if sysDictionary, err := dictionaryService.GetSysDictionary(uint(id)); err != nil {
 		global.LOG.Error("查询失败!", zap.Error(err))
 		return response.FailWithMessage("查询失败", c)
 	} else {
