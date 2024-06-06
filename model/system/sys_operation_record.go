@@ -23,7 +23,7 @@ type SysOperationRecord struct {
 	Body         string        `json:"body" form:"body" gorm:"type:text;column:body;comment:请求Body"`                 // 请求Body
 	Resp         string        `json:"resp" form:"resp" gorm:"type:text;column:resp;comment:响应Body"`                 // 响应Body
 	UserID       int           `json:"user_id" form:"user_id" gorm:"column:user_id;comment:用户id"`                    // 用户id
-	User         SysUser       `json:"user"`
+	User         SysUser       `json:"user" form:"user" gorm:"foreignKey:UserID"`
 	TypePort     PolicyType    `json:"type_port" form:"type_port" gorm:"column:type_port;comment:区别前端后台移动端"`
 }
 

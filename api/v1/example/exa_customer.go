@@ -41,16 +41,15 @@ func (e *CustomerApi) CreateExaCustomer(c *fiber.Ctx) error {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data query example.ExaCustomer true "客户ID"
+// @Param id path number true "客户ID"
 // @Success 200 {object} response.Response{msg=string} "删除客户"
-// @Router /customer/customer [delete]
+// @Router /customer/customer/:id [delete]
 func (e *CustomerApi) DeleteExaCustomer(c *fiber.Ctx) error {
-	var customer example.ExaCustomer
-	_ = c.QueryParser(&customer)
-	if err := utils.Verify(customer.MODEL, utils.IdVerify); err != nil {
-		return response.FailWithMessage(err.Error(), c)
+	id, _ := c.ParamsInt("id")
+	if id == 0 {
+		return response.FailWithMessage("id不存在", c)
 	}
-	if err := customerService.DeleteExaCustomer(customer.ID); err != nil {
+	if err := customerService.DeleteExaCustomer(uint(id)); err != nil {
 		global.LOG.Error("删除失败!", zap.Error(err))
 		return response.FailWithMessage("删除失败", c)
 	} else {
@@ -63,13 +62,21 @@ func (e *CustomerApi) DeleteExaCustomer(c *fiber.Ctx) error {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
+// @Param id path number true "客户ID"
 // @Param data body example.ExaCustomer true "客户ID, 客户信息"
-// @Success 200 {object} response.Response{msg=string} "更新客户信息"
-// @Router /customer/customer [put]
+// @Success 200 {object} response.Response{msg=string,code=number} "更新客户信息"
+// @Router /customer/customer/:id [put]
 func (e *CustomerApi) UpdateExaCustomer(c *fiber.Ctx) error {
+	id, _ := c.ParamsInt("id")
+	if id == 0 {
+		return response.FailWithMessage("id不存在", c)
+	}
 	var customer example.ExaCustomer
 	_ = c.BodyParser(&customer)
-	if err := utils.Verify(customer.MODEL, utils.IdVerify); err != nil {
+	if customer.ID != uint(id) {
+		return response.FailWithMessage("数据不一致（id）", c)
+	}
+	if err := utils.Verify(customer, utils.IdVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
 	if err := utils.Verify(customer, utils.CustomerVerify); err != nil {
@@ -88,16 +95,15 @@ func (e *CustomerApi) UpdateExaCustomer(c *fiber.Ctx) error {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data query example.ExaCustomer true "客户ID"
+// @Param id path number true "客户ID"
 // @Success 200 {object} response.Response{data=exampleRes.ExaCustomerResponse,msg=string} "获取单一客户信息,返回包括客户详情"
-// @Router /customer/customer [get]
+// @Router /customer/customer/:id [get]
 func (e *CustomerApi) GetExaCustomer(c *fiber.Ctx) error {
-	var customer example.ExaCustomer
-	_ = c.QueryParser(&customer)
-	if err := utils.Verify(customer.MODEL, utils.IdVerify); err != nil {
-		return response.FailWithMessage(err.Error(), c)
+	id, _ := c.ParamsInt("id")
+	if id == 0 {
+		return response.FailWithMessage("id不存在", c)
 	}
-	data, err := customerService.GetExaCustomer(customer.ID)
+	data, err := customerService.GetExaCustomer(uint(id))
 	if err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败", c)

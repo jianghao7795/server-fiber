@@ -56,7 +56,7 @@ func (userService *UserService) GetUser(id uint) (user app.User, err error) {
 
 // GetUserInfoList 分页获取User记录
 // Author wuhao
-func (userService *UserService) GetUserInfoList(info *appReq.UserSearch) (list interface{}, total int64, err error) {
+func (userService *UserService) GetUserInfoList(info *appReq.UserSearch) (list []app.User, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	// 创建db

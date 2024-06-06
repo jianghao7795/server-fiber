@@ -2674,6 +2674,8 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: 上传文件示例
+      tags:
+      - backend upload
   /casbin/UpdateCasbin:
     post:
       consumes:
@@ -3044,106 +3046,6 @@ paths:
       tags:
       - Comment
   /customer/customer:
-    delete:
-      consumes:
-      - application/json
-      parameters:
-      - description: 创建时间
-        in: query
-        name: createdAt
-        type: string
-      - description: 客户名
-        in: query
-        name: customerName
-        type: string
-      - description: 客户手机号
-        in: query
-        name: customerPhoneData
-        type: string
-      - description: 主键ID
-        in: query
-        name: id
-        type: integer
-      - description: 管理角色ID
-        in: query
-        name: sysUserAuthorityID
-        type: string
-      - description: 管理ID
-        in: query
-        name: sysUserId
-        type: integer
-      - description: 更新时间
-        in: query
-        name: updatedAt
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: 删除客户
-          schema:
-            allOf:
-            - $ref: '#/definitions/response.Response'
-            - properties:
-                msg:
-                  type: string
-              type: object
-      security:
-      - ApiKeyAuth: []
-      summary: 删除客户
-      tags:
-      - ExaCustomer
-    get:
-      consumes:
-      - application/json
-      parameters:
-      - description: 创建时间
-        in: query
-        name: createdAt
-        type: string
-      - description: 客户名
-        in: query
-        name: customerName
-        type: string
-      - description: 客户手机号
-        in: query
-        name: customerPhoneData
-        type: string
-      - description: 主键ID
-        in: query
-        name: id
-        type: integer
-      - description: 管理角色ID
-        in: query
-        name: sysUserAuthorityID
-        type: string
-      - description: 管理ID
-        in: query
-        name: sysUserId
-        type: integer
-      - description: 更新时间
-        in: query
-        name: updatedAt
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: 获取单一客户信息,返回包括客户详情
-          schema:
-            allOf:
-            - $ref: '#/definitions/response.Response'
-            - properties:
-                data:
-                  $ref: '#/definitions/response.ExaCustomerResponse'
-                msg:
-                  type: string
-              type: object
-      security:
-      - ApiKeyAuth: []
-      summary: 获取单一客户信息
-      tags:
-      - ExaCustomer
     post:
       consumes:
       - application/json
@@ -3171,10 +3073,70 @@ paths:
       summary: 创建客户
       tags:
       - ExaCustomer
+  /customer/customer/:id:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 客户ID
+        in: path
+        name: id
+        required: true
+        type: number
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 删除客户
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 删除客户
+      tags:
+      - ExaCustomer
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 客户ID
+        in: path
+        name: id
+        required: true
+        type: number
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取单一客户信息,返回包括客户详情
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.ExaCustomerResponse'
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 获取单一客户信息
+      tags:
+      - ExaCustomer
     put:
       consumes:
       - application/json
       parameters:
+      - description: 客户ID
+        in: path
+        name: id
+        required: true
+        type: number
       - description: 客户ID, 客户信息
         in: body
         name: data
@@ -3190,6 +3152,8 @@ paths:
             allOf:
             - $ref: '#/definitions/response.Response'
             - properties:
+                code:
+                  type: number
                 msg:
                   type: string
               type: object
@@ -3592,7 +3556,7 @@ paths:
       - ApiKeyAuth: []
       summary: get单个Article
       tags:
-      - Article
+      - Frontend Article
   /getArticleList:
     get:
       consumes:
@@ -3615,30 +3579,64 @@ paths:
       - ApiKeyAuth: []
       summary: Get Article
       tags:
-      - Article
+      - Frontend Article
   /getSearchArticle/:name/:value:
     get:
       consumes:
       - application/json
       parameters:
-      - description: Serach Artcle
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/frontend.Article'
+      - in: query
+        name: content
+        type: string
+      - description: 创建时间
+        in: query
+        name: createdAt
+        type: string
+      - in: query
+        name: desc
+        type: string
+      - description: 主键ID
+        in: query
+        name: id
+        type: integer
+      - in: query
+        name: is_important
+        type: integer
+      - in: query
+        name: reading_quantity
+        type: integer
+      - in: query
+        name: state
+        type: integer
+      - in: query
+        name: title
+        type: string
+      - description: 更新时间
+        in: query
+        name: updatedAt
+        type: string
+      - in: query
+        name: user_id
+        type: integer
       produces:
       - application/json
       responses:
         "200":
-          description: '{"success":true, "msg":"获得成功"}'
+          description: 获得成功
           schema:
-            type: string
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                list:
+                  items:
+                    $ref: '#/definitions/frontend.Article'
+                  type: array
+              type: object
       security:
       - ApiKeyAuth: []
       summary: get单个Article
       tags:
-      - Article
+      - Frontend Article
   /init/checkdb:
     post:
       produces:
@@ -5106,9 +5104,16 @@ paths:
       - application/json
       responses:
         "200":
-          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          description: 获取成功
           schema:
-            type: string
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: number
+                msg:
+                  type: string
+              type: object
       security:
       - ApiKeyAuth: []
       summary: 创建User
@@ -5162,6 +5167,8 @@ paths:
             allOf:
             - $ref: '#/definitions/response.Response'
             - properties:
+                code:
+                  type: number
                 msg:
                   type: string
               type: object
@@ -5214,6 +5221,8 @@ paths:
             allOf:
             - $ref: '#/definitions/response.Response'
             - properties:
+                code:
+                  type: number
                 msg:
                   type: string
               type: object
@@ -5309,6 +5318,15 @@ paths:
             allOf:
             - $ref: '#/definitions/response.Response'
             - properties:
+                code:
+                  type: number
+                data:
+                  allOf:
+                  - $ref: '#/definitions/response.PageResult'
+                  - properties:
+                      list:
+                        $ref: '#/definitions/app.User'
+                    type: object
                 msg:
                   type: string
               type: object
@@ -5484,6 +5502,8 @@ paths:
             allOf:
             - $ref: '#/definitions/response.Response'
             - properties:
+                code:
+                  type: number
                 msg:
                   type: string
               type: object

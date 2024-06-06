@@ -19,7 +19,7 @@ import (
 // @accept application/json
 // @Produce application/json
 // @Param data body app.User true "创建User"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
+// @Success 200 {object} response.Response{msg=string,code=number} "获取成功"
 // @Router /user/createUser [post]
 func (userApi *UserApi) CreateUser(c *fiber.Ctx) error {
 	var user app.User
@@ -43,7 +43,7 @@ func (userApi *UserApi) CreateUser(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param id path number true "删除User"
-// @Success 200 {string} response.Response{msg=string} "删除User"
+// @Success 200 {string} response.Response{msg=string,code=number} "删除User"
 // @Router /frontend-user/deleteUser/:id [delete]
 func (userApi *UserApi) DeleteUser(c *fiber.Ctx) error {
 	id, _ := c.ParamsInt("id")
@@ -62,7 +62,7 @@ func (userApi *UserApi) DeleteUser(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data body request.IdsReq true "批量删除User"
-// @Success 200 {object} response.Response{msg=string} "批量删除成功"
+// @Success 200 {object} response.Response{msg=string,code=number} "批量删除成功"
 // @Router /user/deleteUserByIds [delete]
 func (userApi *UserApi) DeleteUserByIds(c *fiber.Ctx) error {
 	var IDS request.IdsReq
@@ -83,7 +83,7 @@ func (userApi *UserApi) DeleteUserByIds(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param id path number true "删除User"
 // @Param data body app.User true "更新User"
-// @Success 200 {object} response.Response{msg=string} "更新成功"
+// @Success 200 {object} response.Response{msg=string,code=number} "更新成功"
 // @Router /user/updateUser/:id [put]
 func (userApi *UserApi) UpdateUser(c *fiber.Ctx) error {
 	var user app.User
@@ -114,7 +114,7 @@ func (userApi *UserApi) UpdateUser(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data query app.User true "用id查询User"
-// @Success 200 {object} response.Response{msg=string} "查询成功"
+// @Success 200 {object} response.Response{msg=string,code=number} "查询成功"
 // @Router /user/findUser [get]
 func (userApi *UserApi) FindUser(c *fiber.Ctx) error {
 	id, _ := c.ParamsInt("id")
@@ -133,7 +133,7 @@ func (userApi *UserApi) FindUser(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data query appReq.UserSearch true "分页获取User列表"
-// @Success 200 {object} response.Response{msg=string} "获取成功"
+// @Success 200 {object} response.Response{msg=string,code=number,data=response.PageResult{list=app.User[]}} "获取成功"
 // @Router /user/getUserList [get]
 func (userApi *UserApi) GetUserList(c *fiber.Ctx) error {
 	var pageInfo appReq.UserSearch

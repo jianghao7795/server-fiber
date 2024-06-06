@@ -1,6 +1,7 @@
 package example
 
 import (
+	"errors"
 	"server-fiber/global"
 	"server-fiber/model/example"
 	"server-fiber/model/example/request"
@@ -40,8 +41,10 @@ func (exa *CustomerService) DeleteExaCustomer(id uint) (err error) {
 //@return: err error
 
 func (exa *CustomerService) UpdateExaCustomer(e *example.ExaCustomer) (err error) {
-	err = global.DB.Save(e).Error
-	return err
+	if e.ID == 0 {
+		return errors.New("客户名称不能为空")
+	}
+	return global.DB.Where("id = ?", e.ID).First(&example.ExaCustomer{}).Save(e).Error
 }
 
 //@author: wuhao
