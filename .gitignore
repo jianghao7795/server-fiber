@@ -6,3 +6,4 @@ server-fiber
 config.yaml
 breakpointDir
 fileDir
+uploads
