@@ -31,8 +31,8 @@ func AutoInjectionCode(filepath string, funcName string, codeData string) error 
 		return err
 	}
 	srcDataLen := len(srcData)
-	fset := token.NewFileSet()
-	fparser, err := parser.ParseFile(fset, filepath, srcData, parser.ParseComments)
+	fest := token.NewFileSet()
+	sparser, err := parser.ParseFile(fest, filepath, srcData, parser.ParseComments)
 	if err != nil {
 		return err
 	}
@@ -46,7 +46,7 @@ func AutoInjectionCode(filepath string, funcName string, codeData string) error 
 
 	// 如果指定了函数名，先寻找对应函数
 	if funcName != "" {
-		for _, decl := range fparser.Decls {
+		for _, decl := range sparser.Decls {
 			if funDecl, ok := decl.(*ast.FuncDecl); ok && funDecl.Name.Name == funcName {
 				expectedFunction = funDecl
 				codeStartPos = int(funDecl.Body.Lbrace)
@@ -57,12 +57,12 @@ func AutoInjectionCode(filepath string, funcName string, codeData string) error 
 	}
 
 	// 遍历所有注释
-	for _, comment := range fparser.Comments {
+	for _, comment := range sparser.Comments {
 		if int(comment.Pos()) > codeStartPos && int(comment.End()) <= codeEndPos {
-			if startComment != "" && strings.Contains(comment.Text(), startComment) {
+			if strings.Contains(comment.Text(), startComment) {
 				startCommentPos = int(comment.Pos()) // Note: Pos is the second '/'
 			}
-			if endComment != "" && strings.Contains(comment.Text(), endComment) {
+			if strings.Contains(comment.Text(), endComment) {
 				endCommentPos = int(comment.Pos()) // Note: Pos is the second '/'
 			}
 		}

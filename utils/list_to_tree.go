@@ -1,6 +1,6 @@
 package utils
 
-// 列表转化为树形结构
+// Item 列表转化为树形结构
 // 1. 传入的列表必须是有序的，即按照父级id进行排序
 // 2. 传入的列表必须是所有的数据，不能是分页的数据
 // 3. 传入的列表必须是一个结构体的列表
@@ -17,7 +17,7 @@ type Tree[T Item] struct {
 	Children []T
 }
 
-func BuildTree[U Item](items []U) []Tree[U] {
+func ListToTree[U Item](items []U) []Tree[U] {
 	tree := make([]Tree[U], 0)
 	for _, item := range items {
 		if item.GetParentId() == 0 {

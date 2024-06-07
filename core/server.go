@@ -1,6 +1,7 @@
 package core
 
 import (
+	"database/sql"
 	"fmt"
 	"os"
 
@@ -18,8 +19,8 @@ func RunServer() {
 		global.LOG.Error("配置错误：", zap.Error(err))
 		os.Exit(1)
 	}
-	global.LOG = zapInit()         // 初始化zap日志库
-	global.Logger = InitLogger()   // 初始化 log 让log标准输出
+	global.LOG = zapInit() // 初始化zap日志库
+	//global.Logger = InitLogger()   // 初始化 log 让log标准输出
 	zap.ReplaceGlobals(global.LOG) // 配置部署到全局
 
 	db, err := initialize.Gorm() // gorm连接数据库
@@ -40,7 +41,12 @@ func RunServer() {
 		// initialize.RegisterTables(global.DB) // 初始化表
 		// 程序结束前关闭数据库链接
 		db, _ := global.DB.DB()
-		defer db.Close()
+		defer func(db *sql.DB) {
+			err := db.Close()
+			if err != nil {
+				global.LOG.Error("数据库关闭失败: " + err.Error())
+			}
+		}(db)
 	}
 	if global.CONFIG.System.UseMultipoint || global.CONFIG.System.UseRedis {
 		err = initialize.Redis()

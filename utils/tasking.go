@@ -12,7 +12,7 @@ import (
 //@param:
 //@return: error
 
-func Tasking(taskName string, output string, interval string) (err error) {
+func Tasking(taskName string, output string, interval string) error {
 	duration, err := time.ParseDuration(interval)
 	if err != nil {
 		return err
@@ -21,5 +21,5 @@ func Tasking(taskName string, output string, interval string) (err error) {
 		return errors.New("parse duration < 0")
 	}
 	log.Println("taskName: ", taskName, ", output: ", output, ", duration: ", duration)
-	return
+	return err
 }

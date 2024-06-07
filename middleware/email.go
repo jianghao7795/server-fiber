@@ -16,7 +16,7 @@ import (
 	"go.uber.org/zap"
 )
 
-var userService = new(systemService.UserService)
+var userService = systemService.UserServiceApp
 
 func ErrorToEmail(c *fiber.Ctx) error {
 	var username string

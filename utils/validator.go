@@ -36,7 +36,7 @@ func NotEmpty() string {
 	return "notEmpty"
 }
 
-// @function: RegexpMatch
+// RegexpMatch @function: RegexpMatch
 // @description: 正则校验 校验输入项是否满足正则表达式
 // @param:  rule string
 // @return: string

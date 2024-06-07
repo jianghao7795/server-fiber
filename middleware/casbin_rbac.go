@@ -30,10 +30,6 @@ func CasbinHandler(c *fiber.Ctx) error {
 		return c.Next()
 	} else {
 		// 上传文件 由于是ajxs 必须返回400 错误 才能展示错误信息
-		if obj == "/base_message/upload_file" {
-			return response.FailWithDetailed400(nil, "权限不足", c)
-
-		}
 		return response.FailWithMessage403("权限不足", c)
 	}
 }

@@ -1,7 +1,6 @@
 package global
 
 import (
-	"log/slog"
 	"server-fiber/config"
 	"server-fiber/utils/timer"
 	"sync"
@@ -16,24 +15,23 @@ import (
 	"gorm.io/gorm"
 )
 
+// Cache config.Cache 使用 redis
+
 var (
-	DB     *gorm.DB // gorm
-	DBList map[string]*gorm.DB
-	REDIS  *redis.Client // redis
-	CONFIG config.Server // 配置
-	VIP    *viper.Viper  // 读取配置文件
-	// LOG    *oplogging.Logger
-	LOG                *zap.Logger // 日志
+	DB                 *gorm.DB // gorm
+	DBList             map[string]*gorm.DB
+	REDIS              *redis.Client // redis
+	CONFIG             config.Server // 配置
+	VIP                *viper.Viper  // 读取配置文件
+	LOG                *zap.Logger   // 日志
 	Timer              = timer.NewTimerTask()
 	ConcurrencyControl = &singleflight.Group{} // 记录token
 
 	BlackCache local_cache.Cache // 缓存
-	// lock       sync.RWMutex
+	// Validate lock       sync.RWMutex
 	Validate ut.Translator
-	// 缓存
-	// Cache config.Cache
-	Logger *slog.Logger // 用处 打印log
-	lock   sync.RWMutex
+	//Logger   *slog.Logger // 用处 打印log
+	lock sync.RWMutex
 )
 
 func Done(c *fiber.Ctx, logString []byte) {

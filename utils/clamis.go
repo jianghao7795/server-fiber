@@ -25,7 +25,7 @@ func GetClaims(c *fiber.Ctx) (*systemReq.CustomClaims, error) {
 	return claims, err // 返回解析出的CustomClaims结构体和错误
 }
 
-// 从fiber的Context中获取从jwt解析出来的用户ID
+// GetUserID 从fiber的Context中获取从jwt解析出来的用户ID
 func GetUserID(c *fiber.Ctx) uint {
 	var claims = c.Locals("claims")
 	if claims == nil {
@@ -52,7 +52,7 @@ func GetUserID(c *fiber.Ctx) uint {
 	}
 }
 
-// 从fiber的Context中获取从jwt解析出来的用户UUID
+// GetUserUuid 从fiber的Context中获取从jwt解析出来的用户UUID
 func GetUserUuid(c *fiber.Ctx) uuid.UUID {
 	var claims = c.Locals("claims")
 	waitUse := claims.(*systemReq.CustomClaims)

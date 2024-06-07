@@ -4,6 +4,7 @@ import (
 	ioutil "io"
 	"math"
 	"os"
+	"server-fiber/global"
 	"strconv"
 )
 
@@ -29,8 +30,8 @@ func BreakPointContinue(content []byte, fileName string, contentNumber int, cont
 	if err != nil {
 		return path, err
 	}
-	pathc, err := makeFileContent(content, fileName, path, contentNumber)
-	return pathc, err
+	paths, err := makeFileContent(content, fileName, path, contentNumber)
+	return paths, err
 }
 
 //@author: wuhao
@@ -87,7 +88,16 @@ func MakeFile(fileName string, FileMd5 string) (string, error) {
 	if err != nil {
 		return finishDir + fileName, err
 	}
-	defer fd.Close()
+	defer func(fd *os.File) {
+		err := fd.Close()
+		if err != nil {
+			// log.Println("log", err.Error())
+			err = os.Remove(finishDir + fileName)
+			if err != nil {
+				global.LOG.Error("log" + err.Error())
+			}
+		}
+	}(fd)
 	for k := range rd {
 		content, _ := os.ReadFile(breakpointDir + FileMd5 + "/" + fileName + "_" + strconv.Itoa(k))
 		_, err = fd.Write(content)
