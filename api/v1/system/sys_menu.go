@@ -30,7 +30,7 @@ func (a *AuthorityMenuApi) GetMenu(c *fiber.Ctx) error {
 		if menus == nil {
 			menus = []system.SysMenu{}
 		}
-		return response.OkWithDetailed(systemRes.SysMenusResponse{Menus: menus}, "获取成功", c)
+		return response.OkWithDetailed(menus, "获取成功", c)
 	}
 }
 
