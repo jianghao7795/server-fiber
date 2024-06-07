@@ -5,9 +5,9 @@ import (
 	"server-fiber/model/frontend"
 )
 
-type FrontendImages struct{}
+type Images struct{}
 
-func (s *FrontendImages) GetImagesList() (list []frontend.ExaFile, err error) {
+func (s *Images) GetImagesList() (list []frontend.ExaFile, err error) {
 	err = global.DB.Model(&frontend.ExaFile{}).Where("proportion > 1.6").Order("id desc").Find(&list).Error
 	return
 }

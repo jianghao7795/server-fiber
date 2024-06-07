@@ -12,12 +12,12 @@ type FrontendRouter struct{}
 
 func (s *FrontendRouter) InitFrontendRouter(Router fiber.Router) {
 	frontend := Router.Group("")
-	var frontendTagApi = new(v1.FrontendTagApi)
+	var frontendTagApi = new(v1.TagApi)
 	{
 		frontend.Get("getTagList", frontendTagApi.GetTagList)
 		frontend.Get("getTagArticleList/:id", frontendTagApi.GetTag)
 	}
-	var frontendArticleApi = new(v1.FrontendArticleApi)
+	var frontendArticleApi = new(v1.ArticleApi)
 	{
 		frontend.Get("getArticleList", frontendArticleApi.GetArticleList)
 		frontend.Get("getArticle/:id", frontendArticleApi.GetArticleDetail)
@@ -28,7 +28,7 @@ func (s *FrontendRouter) InitFrontendRouter(Router fiber.Router) {
 		frontend.Get("getArticleComment/:articleId", frontendCommentApi.GetCommentByArticleId)
 		frontend.Post("createdComment", middleware.OperationRecord, frontendCommentApi.CreatedComment)
 	}
-	var frontendUserApi = new(v1.FrontendUser)
+	var frontendUserApi = new(v1.User)
 	{
 		frontend.Get("getImages", middleware.JWTAuth, frontendUserApi.GetImages)
 		frontend.Post("login", frontendUserApi.Login)

@@ -14,13 +14,13 @@ import (
 	"github.com/redis/go-redis/v9"
 )
 
-type FrontendTag struct{}
+type Tag struct{}
 
-func (s *FrontendTag) GetTagList(c *fiber.Ctx) (list []frontend.Tag, err error) {
+func (s *Tag) GetTagList(c *fiber.Ctx) (list []frontend.Tag, err error) {
 	var tagListStr string
 	tagListStr, err = global.REDIS.Get(c.Context(), "tag-list").Result()
 	var cacheTime = global.CONFIG.Cache.Time
-	if err == redis.Nil {
+	if errors.Is(err, redis.Nil) {
 		db := global.DB.Model(&frontend.Tag{})
 		err = db.Order("id desc").Find(&list).Error
 		if err != nil {
@@ -43,10 +43,10 @@ func (s *FrontendTag) GetTagList(c *fiber.Ctx) (list []frontend.Tag, err error) 
 	return list, err
 }
 
-func (s *FrontendTag) GetTagArticle(tagId int, c *fiber.Ctx) (tagArticle frontend.Tag, err error) {
+func (s *Tag) GetTagArticle(tagId int, c *fiber.Ctx) (tagArticle frontend.Tag, err error) {
 	tagArticleStr := ""
 	tagArticleStr, err = global.REDIS.Get(c.Context(), "tag-"+strconv.Itoa(tagId)).Result()
-	if err == redis.Nil {
+	if errors.Is(err, redis.Nil) {
 		db := global.DB.Model(&frontend.Tag{})
 		err = db.Where("id = ?", tagId).Order("id desc").Preload("Articles").First(&tagArticle).Error
 		if err != nil {

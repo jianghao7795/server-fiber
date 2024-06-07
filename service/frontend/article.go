@@ -19,9 +19,9 @@ import (
 	"gorm.io/gorm"
 )
 
-type FrontendArticle struct{}
+type Article struct{}
 
-func (s *FrontendArticle) GetArticleList(info *frontendReq.ArticleSearch, c *fiber.Ctx) (list []frontend.Article, total int64, err error) {
+func (s *Article) GetArticleList(info *frontendReq.ArticleSearch, c *fiber.Ctx) (list []frontend.Article, total int64, err error) {
 	var cacheTime = global.CONFIG.Cache.Time
 	var articleStr string
 	db := global.DB.Model(&frontend.Article{})
@@ -35,7 +35,7 @@ func (s *FrontendArticle) GetArticleList(info *frontendReq.ArticleSearch, c *fib
 		articleStr, err = global.REDIS.Get(c.Context(), "article-list"+strconv.Itoa(info.Page)).Result()
 	}
 
-	if err == redis.Nil {
+	if errors.Is(err, redis.Nil) {
 		limit := info.PageSize
 		offset := info.PageSize * (info.Page - 1)
 
@@ -76,7 +76,7 @@ func (s *FrontendArticle) GetArticleList(info *frontendReq.ArticleSearch, c *fib
 	return list, total, err
 }
 
-func (s *FrontendArticle) GetAricleDetail(articleId int, c *fiber.Ctx) (articleDetail frontend.Article, err error) {
+func (s *Article) GetAricleDetail(articleId int, c *fiber.Ctx) (articleDetail frontend.Article, err error) {
 	reqIP := c.IP()
 	var ipUser frontend.Ip
 	t := time.Now()
@@ -128,7 +128,7 @@ func (s *FrontendArticle) GetAricleDetail(articleId int, c *fiber.Ctx) (articleD
 	// return
 }
 
-func (s *FrontendArticle) GetSearchArticle(info *frontendReq.ArticleSearch) (list []frontend.Article, err error) {
+func (s *Article) GetSearchArticle(info *frontendReq.ArticleSearch) (list []frontend.Article, err error) {
 	db := global.DB.Model(&frontend.Article{})
 	// Preload("Tags", func(dbg *gorm.DB) *gorm.DB {
 	// 	return dbg.Where("name = ?", info.Value)

@@ -7,8 +7,7 @@ import (
 	"server-fiber/model/frontend"
 	loginRequest "server-fiber/model/frontend/request"
 	"server-fiber/model/system"
-	frontendServer "server-fiber/service/frontend"
-	systemService "server-fiber/service/system"
+
 	"server-fiber/utils"
 
 	systemReq "server-fiber/model/system/request"
@@ -20,11 +19,8 @@ import (
 	"go.uber.org/zap"
 )
 
-type FrontendUser struct{}
+type User struct{}
 
-var userService = new(systemService.UserService)
-var jwtService = new(systemService.JwtService)
-var frontendService = new(frontendServer.FrontendUser)
 var store = base64Captcha.DefaultMemStore
 
 // var userService = service.ServiceGroupApp.SystemServiceGroup.UserService
@@ -36,7 +32,7 @@ var store = base64Captcha.DefaultMemStore
 // 		return response.FailWithMessage(err.Error(), c)
 // 		return
 // 	}
-// 	userInfo, err := frontendService.Login(user)
+// 	userInfo, err := userServiceApp.Login(user)
 // 	if err != nil {
 // 		global.LOG.Error(err.Error(), zap.Error(err))
 // 		return response.FailWithMessage(err.Error(), c)
@@ -45,7 +41,7 @@ var store = base64Captcha.DefaultMemStore
 // 	}
 // }
 
-func (b *FrontendUser) Login(c *fiber.Ctx) error {
+func (b *User) Login(c *fiber.Ctx) error {
 	var l systemReq.Login
 	_ = c.BodyParser(&l)
 	if err := utils.Verify(l, utils.LoginVerifyFrontend); err != nil {
@@ -65,7 +61,7 @@ func (b *FrontendUser) Login(c *fiber.Ctx) error {
 }
 
 // 登录以后签发jwt
-func (u *FrontendUser) tokenNext(c *fiber.Ctx, user system.SysUser) error {
+func (u *User) tokenNext(c *fiber.Ctx, user system.SysUser) error {
 	j := &utils.JWT{PrivateKey: global.CONFIG.JWT.PrivateKey} // 唯一签名
 	claims := j.CreateClaims(systemReq.BaseClaims{
 		UUID:        user.UUID,
@@ -117,7 +113,7 @@ func (u *FrontendUser) tokenNext(c *fiber.Ctx, user system.SysUser) error {
 	}
 }
 
-func (*FrontendUser) RegisterUser(c *fiber.Ctx) error {
+func (*User) RegisterUser(c *fiber.Ctx) error {
 	var userInfo loginRequest.RegisterUser
 	_ = c.BodyParser(&userInfo)
 	if userInfo.Password != userInfo.RePassword {
@@ -128,7 +124,7 @@ func (*FrontendUser) RegisterUser(c *fiber.Ctx) error {
 		return response.FailWithMessage(err.Error(), c)
 	}
 
-	err := frontendService.RegisterUser(&userInfo)
+	err := userServiceApp.RegisterUser(&userInfo)
 	if err != nil {
 		global.LOG.Error("注册失败!", zap.Error(err))
 		return response.FailWithDetailed(nil, err.Error(), c)
@@ -137,7 +133,7 @@ func (*FrontendUser) RegisterUser(c *fiber.Ctx) error {
 	}
 }
 
-func (u *FrontendUser) GetCurrent(c *fiber.Ctx) error {
+func (u *User) GetCurrent(c *fiber.Ctx) error {
 	uuid := utils.GetUserUuid(c)
 	if ReqUser, err := userService.GetUserInfo(uuid); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
@@ -147,7 +143,7 @@ func (u *FrontendUser) GetCurrent(c *fiber.Ctx) error {
 	}
 }
 
-func (u *FrontendUser) UpdatePassword(c *fiber.Ctx) error {
+func (u *User) UpdatePassword(c *fiber.Ctx) error {
 	var resetPassword frontend.ResetPassword
 	_ = c.BodyParser(&resetPassword)
 
@@ -162,28 +158,28 @@ func (u *FrontendUser) UpdatePassword(c *fiber.Ctx) error {
 	// resetPassword.Password = utils.MD5V([]byte(resetPassword.Password))
 	// resetPassword.NewPassword = utils.MD5V([]byte(resetPassword.NewPassword))
 	// resetPassword.RepeatNewPassword = utils.MD5V([]byte(resetPassword.RepeatNewPassword))
-	if err := frontendService.ResetPassword(&resetPassword); err != nil {
+	if err := userServiceApp.ResetPassword(&resetPassword); err != nil {
 		return response.FailWithMessage("重置密码失败："+err.Error(), c)
 	}
 
 	return response.OkWithDetailed(nil, "重置密码成功", c)
 }
 
-func (u *FrontendUser) UpdateUserBackgroudImage(c *fiber.Ctx) error {
+func (u *User) UpdateUserBackgroudImage(c *fiber.Ctx) error {
 	var user frontend.User
 	var err error
 	err = c.BodyParser(&user)
 	if err != nil {
 		return response.FailWithMessage("获取数据失败", c)
 	}
-	err = frontendService.UpdateUserBackgroudImage(&user)
+	err = userServiceApp.UpdateUserBackgroudImage(&user)
 	if err != nil {
 		return response.FailWithMessage("更新失败："+err.Error(), c)
 	}
 	return response.OkWithDetailed(nil, "更新成功", c)
 }
 
-func (u *FrontendUser) UpdateUser(c *fiber.Ctx) error {
+func (u *User) UpdateUser(c *fiber.Ctx) error {
 	var user frontend.User
 	var err error
 	err = c.BodyParser(&user)
@@ -193,7 +189,7 @@ func (u *FrontendUser) UpdateUser(c *fiber.Ctx) error {
 	if err = utils.Verify(user, utils.UpdateUserVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
-	if err = frontendService.UpdateUser(&user); err != nil {
+	if err = userServiceApp.UpdateUser(&user); err != nil {
 		return response.FailWithDetailed(err.Error(), "更新失败", c)
 	}
 	return response.OkWithDetailed(nil, "更新成功", c)

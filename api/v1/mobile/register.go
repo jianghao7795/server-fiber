@@ -17,7 +17,7 @@ func (*RegisterMobile) Register(c *fiber.Ctx) (err error) {
 	if err != nil {
 		return response.FailWithMessage("获取数据失败", c)
 	}
-	if err = mobileRegisterService.Register(data); err != nil {
+	if err = registerService.Register(data); err != nil {
 		global.LOG.Error("注册失败!", zap.Error(err))
 		return response.FailWithMessage400("注册失败，请重试", c)
 	} else {

@@ -11,7 +11,7 @@ type MobileUserRouter struct{}
 
 func (m *MobileUserRouter) InitMobileRouter(Router fiber.Router) {
 	mobileUserRouterWithoutRecord := Router.Group("mobile")
-	var mobileUserApi = new(v1.MobileUserApi)
+	var mobileUserApi = new(v1.UserApi)
 
 	mobileUserRouterWithoutRecord.Post("createMobileUser", middleware.OperationRecord, mobileUserApi.CreateMobileUser)             // 新建MobileUser
 	mobileUserRouterWithoutRecord.Delete("deleteMobileUser/:id", middleware.OperationRecord, mobileUserApi.DeleteMobileUser)       // 删除MobileUser

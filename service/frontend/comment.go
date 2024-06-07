@@ -21,12 +21,12 @@ func (commentService *Comment) GetCommentByArticleId(articleId int) (list []fron
 	return commentList, err
 }
 
-func (commentService *Comment) findChildrenComment(comment *frontend.Comment) (err error) {
+func (*Comment) findChildrenComment(comment *frontend.Comment) (err error) {
 	err = global.DB.Where("parent_id = ?", comment.ID).Preload("User").Preload("ToUser").Order("user_id desc").Find(&comment.Children).Error
 	return err
 }
 
-func (c *Comment) CreatedComment(info *frontend.Comment) (err error) {
+func (*Comment) CreatedComment(info *frontend.Comment) (err error) {
 	err = global.DB.Create(info).Error
 	return
 }

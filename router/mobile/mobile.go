@@ -12,7 +12,7 @@ type MobileLoginRouter struct{}
 
 func (m *MobileUserRouter) InitMobileLoginRouter(Router fiber.Router) {
 	mobileLoginRouter := Router.Group("").Use(middleware.JWTAuthMobileMiddleware())
-	var mobileLoginApi = new(v1.MobileLoginApi)
+	var mobileLoginApi = new(v1.LoginApi)
 	var registerApi = new(v1.RegisterMobile)
 	{
 		mobileLoginRouter.Post("login", mobileLoginApi.Login)
