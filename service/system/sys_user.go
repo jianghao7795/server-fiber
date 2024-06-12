@@ -10,7 +10,7 @@ import (
 	"server-fiber/model/system/request"
 	"server-fiber/utils"
 
-	uuid "github.com/satori/go.uuid"
+	uuid "github.com/google/uuid"
 	"gorm.io/gorm"
 )
 
@@ -27,7 +27,7 @@ func (userService *UserService) Register(u system.SysUser) (userInter system.Sys
 	}
 	// 否则 附加uuid 密码md5简单加密 注册
 	u.Password = utils.MD5V([]byte(u.Password))
-	u.UUID = uuid.NewV4()
+	u.UUID = uuid.New()
 	err = global.DB.Create(&u).Error
 	return u, err
 }

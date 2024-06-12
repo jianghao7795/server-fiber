@@ -2,7 +2,7 @@ package request
 
 import (
 	"github.com/golang-jwt/jwt/v5"
-	uuid "github.com/satori/go.uuid"
+	uuid "github.com/google/uuid"
 )
 
 // Custom claims structure

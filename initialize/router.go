@@ -50,6 +50,13 @@ func Routers() *fiber.App {
 		CacheDuration: 100 * time.Second,
 		MaxAge:        3600,
 	}) // 本地的backend文件路由转化
+	routers = routers.Static("/backend/public/", "public/", fiber.Static{
+		Compress:      true,
+		ByteRange:     true,
+		Browse:        true,
+		CacheDuration: 100 * time.Second,
+		MaxAge:        3600,
+	})
 	routers = routers.Static("/mobile/uploads/", "uploads/", fiber.Static{
 		Compress:      true,
 		ByteRange:     true,

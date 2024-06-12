@@ -31,8 +31,8 @@ func (b *BaseApi) Captcha(c *fiber.Ctx) error {
 	// 生成默认数字的driver
 	driver := base64Captcha.NewDriverDigit(global.CONFIG.Captcha.ImgHeight, global.CONFIG.Captcha.ImgWidth, global.CONFIG.Captcha.KeyLong, 0.7, 80)
 	// cp := base64Captcha.NewCaptcha(driver, store.UseWithCtx(c))   // v8下使用redis
-	captcha := base64Captcha.NewCaptcha(driver, store)
-	if id, b64s, err := captcha.Generate(); err != nil {
+	newCaptcha := base64Captcha.NewCaptcha(driver, store)
+	if id, b64s, _, err := newCaptcha.Generate(); err != nil {
 		global.LOG.Error("验证码获取失败!", zap.Error(err))
 		return response.FailWithMessage("验证码获取失败", c)
 	} else {

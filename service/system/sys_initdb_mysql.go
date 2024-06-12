@@ -14,7 +14,7 @@ import (
 	"server-fiber/global"
 	"server-fiber/model/system/request"
 
-	uuid "github.com/satori/go.uuid"
+	"github.com/google/uuid"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -35,7 +35,7 @@ func (h *MysqlInitHandler) WriteConfig(ctx context.Context) error {
 	for k, v := range cs {
 		global.VIP.Set(k, v)
 	}
-	global.VIP.Set("jwt.signing-key", uuid.NewV4().String())
+	global.VIP.Set("jwt.signing-key", uuid.New().String())
 	return global.VIP.WriteConfig()
 }
 

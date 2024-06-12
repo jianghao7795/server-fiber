@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/gofiber/fiber/v2"
-	uuid "github.com/satori/go.uuid"
+	uuid "github.com/google/uuid"
 )
 
 // GetClaims 从fiber的Context中获取JWT token并解析出CustomClaims结构体
