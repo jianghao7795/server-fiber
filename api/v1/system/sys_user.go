@@ -1,6 +1,7 @@
 package system
 
 import (
+	"errors"
 	"strconv"
 
 	"server-fiber/global"
@@ -84,7 +85,7 @@ func (b *BaseApi) tokenNext(c *fiber.Ctx, user system.SysUser) error {
 		}, "登录成功", c)
 	}
 
-	if jwtStr, err := jwtService.GetRedisJWT(user.Username); err == redis.Nil {
+	if jwtStr, err := jwtService.GetRedisJWT(user.Username); errors.Is(err, redis.Nil) {
 		if err := jwtService.SetRedisJWT(token, user.Username); err != nil {
 			global.LOG.Error("设置登录状态失败!", zap.Error(err))
 			return response.FailWithMessage("设置登录状态失败", c)
