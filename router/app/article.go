@@ -7,10 +7,10 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-type ArticltRouter struct{}
+type ArticleRouter struct{}
 
 // InitArticleRouter 初始化 article 路由信息
-func (s *ArticltRouter) InitArticleRouter(Router fiber.Router) {
+func (s *ArticleRouter) InitArticleRouter(Router fiber.Router) {
 	var articleApi = new(v1.ArticleApi)
 	articleRouter := Router.Group("article")
 

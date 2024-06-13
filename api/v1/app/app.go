@@ -27,7 +27,7 @@ var appTabService = new(appService.TagService)
 // TaskNameApi task
 type TaskNameApi struct{}
 
-// FileUploadAndDownloadApi fileupload
+// FileUploadAndDownloadApi file upload
 type FileUploadAndDownloadApi struct{}
 
 var fileUploadService = new(appService.FileUploadService)

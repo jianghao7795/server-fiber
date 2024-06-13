@@ -9,7 +9,7 @@ import (
 )
 
 type appGroup struct {
-	app.ArticltRouter
+	app.ArticleRouter
 	app.CommentRouter
 	app.BaseMessageRouter
 	app.UserRouter
