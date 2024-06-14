@@ -16,6 +16,7 @@ import (
 	"go.uber.org/zap"
 )
 
+// Login
 // @Tags Base
 // @Summary 用户登录
 // @Produce  application/json
@@ -41,6 +42,7 @@ func (b *BaseApi) Login(c *fiber.Ctx) error {
 	}
 }
 
+// LoginToken
 // @Tags Base
 // @Summary 用户登录 获取token
 // @Produce  application/json
@@ -115,6 +117,7 @@ func (b *BaseApi) tokenNext(c *fiber.Ctx, user system.SysUser) error {
 	}
 }
 
+// Register
 // @Tags SysUser
 // @Summary 用户注册账号
 // @Produce  application/json
@@ -143,6 +146,7 @@ func (b *BaseApi) Register(c *fiber.Ctx) error {
 	}
 }
 
+// ChangePassword
 // @Tags SysUser
 // @Summary 用户修改密码
 // @Security ApiKeyAuth
@@ -165,6 +169,7 @@ func (b *BaseApi) ChangePassword(c *fiber.Ctx) error {
 	}
 }
 
+// GetUserList
 // @Tags SysUser
 // @Summary 分页获取用户列表
 // @Security ApiKeyAuth
@@ -192,6 +197,7 @@ func (b *BaseApi) GetUserList(c *fiber.Ctx) error {
 	}
 }
 
+// SetUserAuthority
 // @Tags SysUser
 // @Summary 更改用户权限
 // @Security ApiKeyAuth
@@ -227,6 +233,7 @@ func (b *BaseApi) SetUserAuthority(c *fiber.Ctx) error {
 	}
 }
 
+// SetUserAuthorities
 // @Tags SysUser
 // @Summary 设置用户权限
 // @Security ApiKeyAuth
@@ -246,6 +253,7 @@ func (b *BaseApi) SetUserAuthorities(c *fiber.Ctx) error {
 	}
 }
 
+// DeleteUser
 // @Tags SysUser
 // @Summary 删除用户
 // @Security ApiKeyAuth
@@ -268,6 +276,7 @@ func (b *BaseApi) DeleteUser(c *fiber.Ctx) error {
 	}
 }
 
+// SetUserInfo
 // @Tags SysUser
 // @Summary 设置用户信息
 // @Security ApiKeyAuth
@@ -307,6 +316,7 @@ func (b *BaseApi) SetUserInfo(c *fiber.Ctx) error {
 	}
 }
 
+// SetSelfInfo
 // @Tags SysUser
 // @Summary 设置用户信息
 // @Security ApiKeyAuth
@@ -335,6 +345,7 @@ func (b *BaseApi) SetSelfInfo(c *fiber.Ctx) error {
 	}
 }
 
+// GetUserInfo
 // @Tags SysUser
 // @Summary 获取用户信息
 // @Security ApiKeyAuth
@@ -352,6 +363,7 @@ func (b *BaseApi) GetUserInfo(c *fiber.Ctx) error {
 	}
 }
 
+// ResetPassword
 // @Tags SysUser
 // @Summary 重置用户密码
 // @Security ApiKeyAuth
@@ -370,13 +382,13 @@ func (b *BaseApi) ResetPassword(c *fiber.Ctx) error {
 	}
 }
 
+// GetUserCount
 // @Tags SysUser
 // @Summary 获取人员总数
 // @Security ApiKeyAuth
 // @Produce  application/json
-// @Success 200 {object} return response.Response{count=string} "获取人员总数"
+// @Success 200 {object} return response.Response{data=string} "获取人员总数"
 // @Router /user/getUserCount [get]
-
 func (b *BaseApi) GetUserCount(c *fiber.Ctx) error {
 	if userCount, err := userService.UserCount(); err != nil {
 		global.LOG.Error("获取总数失败!", zap.Error(err))
@@ -386,7 +398,7 @@ func (b *BaseApi) GetUserCount(c *fiber.Ctx) error {
 	}
 }
 
-func (b *BaseApi) GetFlowmeter(c *fiber.Ctx) error {
+func (b *BaseApi) GetFlow(c *fiber.Ctx) error {
 	receiveBytes, transmitBytes, _ := utils.TotalFlowByDevice("lo")
 	return response.OkWithDetailed(fiber.Map{"receiveBytes": receiveBytes, "transmitBytes": transmitBytes}, "获取成功", c)
 }

@@ -25,5 +25,5 @@ func (s *UserRouter) InitUserRouter(Router fiber.Router) {
 	userRouter.Get("getUserList", baseApi.GetUserList)   // 分页获取用户列表
 	userRouter.Get("getUserInfo", baseApi.GetUserInfo)   // 获取自身信息
 	userRouter.Get("getUserCount", baseApi.GetUserCount) // 获取用户数
-	userRouter.Get("getFlowmeter", baseApi.GetFlowmeter) // 获取摸个ip流量
+	userRouter.Get("getFlow", baseApi.GetFlow)           // 获取摸个ip流量
 }
