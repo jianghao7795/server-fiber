@@ -11,8 +11,7 @@ import (
 )
 
 // GormMysql 初始化Mysql数据库
-// Author [piexlmax](/piexlmax)
-// Author wuhao
+
 func GormMysql() (*gorm.DB, error) {
 	m := global.CONFIG.Mysql
 	if m.Dbname == "" {

@@ -11,7 +11,6 @@ import (
 )
 
 // GormPgSql 初始化 Postgresql 数据库
-// Author wuhao
 func GormPgSql() (*gorm.DB, error) {
 	p := global.CONFIG.Pgsql
 	if p.Dbname == "" {
