@@ -62,7 +62,7 @@ func (s *ArticleApi) GetArticleDetail(c *fiber.Ctx) error {
 		return response.FailWithMessage("获取Id失败", c)
 
 	}
-	articleDetail, err := articleServiceApp.GetAricleDetail(id, c)
+	articleDetail, err := articleServiceApp.GetArticleDetail(id, c)
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return response.FailWithMessage("文章没有，请重新查询", c)
 
@@ -82,7 +82,7 @@ func (s *ArticleApi) GetArticleDetail(c *fiber.Ctx) error {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data query frontend.Article true "Serach Artcle"
+// @Param data query frontend.Article true "Search Article"
 // @Success 200 {object} response.Response{list=[]frontend.Article} "获得成功"
 // @Router /getSearchArticle/:name/:value [get]
 func (s *ArticleApi) GetSearchArticle(c *fiber.Ctx) error {

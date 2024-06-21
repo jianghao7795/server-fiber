@@ -13,9 +13,11 @@ func Redis() error {
 	// 初始化时可以指定连接redis的读写超时时间，默认都是3s
 	redisCfg := global.CONFIG.Redis
 	client := redis.NewClient(&redis.Options{
-		Addr:     redisCfg.Addr,
-		Password: redisCfg.Password, // no password set
-		DB:       redisCfg.DB,       // use default DB
+		Addr:     redisCfg.Addr,     // redis服务ip:port
+		Password: redisCfg.Password, // redis的认证密码
+		DB:       redisCfg.DB,       // 连接的database
+		//IdleTimeout: 300,               // 默认Idle超时时间
+		PoolSize: 100, // 连接池
 	})
 	pong, err := client.Ping(context.Background()).Result()
 	if err != nil {
