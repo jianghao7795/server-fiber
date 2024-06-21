@@ -66,7 +66,7 @@ func (b *BaseApi) LoginToken(c *fiber.Ctx) error {
 
 // 登录以后签发jwt
 func (b *BaseApi) tokenNext(c *fiber.Ctx, user system.SysUser) error {
-	j := &utils.JWT{PrivateKey: global.CONFIG.JWT.PrivateKey} // 唯一签名
+	j := utils.NewJWT() // 唯一签名
 	claims := j.CreateClaims(systemReq.BaseClaims{
 		UUID:        user.UUID,
 		ID:          user.ID,
@@ -219,7 +219,7 @@ func (b *BaseApi) SetUserAuthority(c *fiber.Ctx) error {
 		return response.FailWithMessage(err.Error(), c)
 	} else {
 		claims := utils.GetUserInfo(c)
-		j := &utils.JWT{PrivateKey: global.CONFIG.JWT.PrivateKey} // 唯一签名
+		j := utils.NewJWT() // 唯一签名
 		claims.AuthorityId = sua.AuthorityId
 		if token, err := j.CreateToken(*claims); err != nil {
 			global.LOG.Error("修改失败!", zap.Error(err))

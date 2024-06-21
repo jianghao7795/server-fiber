@@ -79,21 +79,21 @@ func viperInit(path ...string) (*viper.Viper, error) {
 	if err != nil {
 		return nil, err
 	}
-	publickey, err := jwt.ParseRSAPublicKeyFromPEM(publicKeyByte)
+	publicKey, err := jwt.ParseRSAPublicKeyFromPEM(publicKeyByte)
 	if err != nil {
 		return nil, err
 	}
-	privatekeyByte, err := os.ReadFile("./private_key.pem")
+	privateKeyByte, err := os.ReadFile("./private_key.pem")
 	if err != nil {
 		return nil, err
 	}
-	privatekey, err := jwt.ParseRSAPrivateKeyFromPEM(privatekeyByte)
+	privateKey, err := jwt.ParseRSAPrivateKeyFromPEM(privateKeyByte)
 	if err != nil {
 		return nil, err
 	}
 	// jwt
-	global.CONFIG.JWT.PrivateKey = privatekey
-	global.CONFIG.JWT.PublicKey = publickey
+	global.CONFIG.JWT.PrivateKey = privateKey
+	global.CONFIG.JWT.PublicKey = publicKey
 	// root 适配性
 	// 根据root位置去找到对应迁移位置,保证root路径有效
 	global.CONFIG.AutoCode.Root, _ = filepath.Abs("..")

@@ -62,7 +62,7 @@ func (b *User) Login(c *fiber.Ctx) error {
 
 // 登录以后签发jwt
 func (u *User) tokenNext(c *fiber.Ctx, user system.SysUser) error {
-	j := &utils.JWT{PrivateKey: global.CONFIG.JWT.PrivateKey} // 唯一签名
+	j := utils.NewJWT() // 唯一签名
 	claims := j.CreateClaims(systemReq.BaseClaims{
 		UUID:        user.UUID,
 		ID:          user.ID,

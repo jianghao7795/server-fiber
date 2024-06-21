@@ -10,6 +10,8 @@ import (
 	"go.uber.org/zap"
 )
 
+// 当开启多服务器部署时，替换下面的配置，使用redis共享存储验证码
+
 func NewDefaultRedisStore() *RedisStore {
 	return &RedisStore{
 		Expiration: time.Second * 180,
