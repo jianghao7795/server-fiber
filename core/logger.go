@@ -1,10 +1,5 @@
 package core
 
-import (
-	"log/slog"
-	"os"
-)
-
 // slog "log/slog"
 
 // 级别
@@ -26,15 +21,15 @@ import (
 // Duration
 // Any
 
-func InitLogger() *slog.Logger {
-	opts := &slog.HandlerOptions{
-		Level:     slog.LevelDebug,
-		AddSource: true,
-	}
-	textHandler := slog.NewTextHandler(os.Stdout, opts)
-	logger := slog.New(textHandler)
-	return logger
-}
+// func InitLogger() *slog.Logger {
+// 	opts := &slog.HandlerOptions{
+// 		Level:     slog.LevelDebug,
+// 		AddSource: true,
+// 	}
+// 	textHandler := slog.NewTextHandler(os.Stdout, opts)
+// 	logger := slog.New(textHandler)
+// 	return logger
+// }
 
 // func InitLogger() *slog.Logger {
 // 	opts := &slog.HandlerOptions{
