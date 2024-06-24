@@ -14,14 +14,13 @@ import (
 	systemRes "server-fiber/model/system/response"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/mojocn/base64Captcha"
 	"github.com/redis/go-redis/v9"
 	"go.uber.org/zap"
 )
 
 type User struct{}
 
-var store = base64Captcha.DefaultMemStore
+// var store = base64Captcha.DefaultMemStore
 
 // var userService = service.ServiceGroupApp.SystemServiceGroup.UserService
 // var jwtService = service.ServiceGroupApp.SystemServiceGroup.JwtService
@@ -47,17 +46,18 @@ func (b *User) Login(c *fiber.Ctx) error {
 	if err := utils.Verify(l, utils.LoginVerifyFrontend); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
-	if store.Verify(l.CaptchaId, l.Captcha, true) {
-		u := &system.SysUser{Username: l.Username, Password: l.Password}
-		if user, err := userService.Login(u); err != nil {
-			global.LOG.Error("登陆失败! 用户名不存在或者密码错误!", zap.Error(err))
-			return response.FailWithMessage("用户名不存在或者密码错误", c)
-		} else {
-			return b.tokenNext(c, *user)
-		}
+	u := &system.SysUser{Username: l.Username, Password: l.Password}
+	if user, err := userService.Login(u); err != nil {
+		global.LOG.Error("登陆失败! 用户名不存在或者密码错误!", zap.Error(err))
+		return response.FailWithMessage("用户名不存在或者密码错误", c)
 	} else {
-		return response.FailWithMessage("验证码错误", c)
+		return b.tokenNext(c, *user)
 	}
+	// if store.Verify(l.CaptchaId, l.Captcha, true) {
+
+	// } else {
+	// 	return response.FailWithMessage("验证码错误", c)
+	// }
 }
 
 // 登录以后签发jwt
