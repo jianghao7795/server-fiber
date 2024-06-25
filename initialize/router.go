@@ -31,39 +31,39 @@ func Routers() *fiber.App {
 	}
 
 	app := fiber.New(global.CONFIG.FiberConfig)
-	appRouter := router.AppRouter
-	systemRouter := router.SystemRouter
-	exampleRouter := router.ExampleRouter
-	mobile := router.MobileRouter
-	routers := app.Use(swagger.New(cfg)) // swagger文档配置
-	routers = routers.Static("/api/uploads/", "uploads/", fiber.Static{
+	app.Static("/api/uploads/", "uploads/", fiber.Static{
 		Compress:      true,
 		ByteRange:     true,
 		Browse:        true,
 		CacheDuration: 100 * time.Second,
 		MaxAge:        3600,
 	}) // 本地的frontend api文件路由转化
-	routers = routers.Static("/backend/uploads/", "uploads/", fiber.Static{
+	app.Static("/backend/uploads/", "uploads/", fiber.Static{
 		Compress:      true,
 		ByteRange:     true,
 		Browse:        true,
 		CacheDuration: 100 * time.Second,
 		MaxAge:        3600,
 	}) // 本地的backend文件路由转化
-	routers = routers.Static("/backend/public/", "public/", fiber.Static{
+	app.Static("/backend/public/", "public/", fiber.Static{
 		Compress:      true,
 		ByteRange:     true,
 		Browse:        true,
 		CacheDuration: 100 * time.Second,
 		MaxAge:        3600,
 	})
-	routers = routers.Static("/mobile/uploads/", "uploads/", fiber.Static{
+	app.Static("/mobile/uploads/", "uploads/", fiber.Static{
 		Compress:      true,
 		ByteRange:     true,
 		Browse:        true,
 		CacheDuration: 100 * time.Second,
 		MaxAge:        3600,
 	}) // 本地的mobile文件路由转化
+	appRouter := router.AppRouter
+	systemRouter := router.SystemRouter
+	exampleRouter := router.ExampleRouter
+	mobile := router.MobileRouter
+	routers := app.Use(swagger.New(cfg)) // swagger文档配置
 	routers = routers.Use(logger.New(logger.Config{
 		Done: global.Done,
 	})) //log 日志配置

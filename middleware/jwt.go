@@ -15,7 +15,7 @@ var jwtService = new(systemService.JwtService)
 
 func JWTAuth(c *fiber.Ctx) error {
 	// 解决访问文件的401问题
-	if strings.Contains(c.Get("Accept"), "image/") {
+	if strings.Contains(c.Path(), "uploads/excel/") || strings.Contains(c.Path(), "uploads/file/") {
 		code := c.Response().StatusCode()
 		return c.Status(code).SendFile(strings.Join(strings.Split(c.Path(), "/")[2:], "/"))
 	}
