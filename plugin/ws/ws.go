@@ -1,82 +1,50 @@
 package ws
 
-// type wsPlugin struct {
-// 	logger               *zap.Logger                       // 日志输出对象
-// 	manageBuf            int64                             // buffer
-// 	registeredMsgHandler map[int32]func(biz.IMessage) bool // 消息处理
-// 	checkMap             map[string]biz.CheckFunc          // 用户校验
+import (
+	"github.com/gofiber/fiber/v2"
+	"go.uber.org/zap"
+)
 
-// 	admin     biz.IManage
-// 	adminCase *biz.AdminCase
-// }
+// wsPlugin 结构体定义了一个WebSocket插件，包含日志输出对象和buffer大小
+type wsPlugin struct {
+	logger    *zap.Logger // 日志输出对象
+	manageBuf int64       // buffer大小
+	// registeredMsgHandler map[int32]func(biz.IMessage) bool // 消息处理函数映射
+	// checkMap             map[string]biz.CheckFunc          // 用户校验函数映射
 
-// func DefaultRegisteredMsgHandler(admin biz.IManage, logger *zap.Logger) map[int32]func(biz.IMessage) bool {
-// 	return map[int32]func(msg biz.IMessage) bool{
-// 		1: func(msg biz.IMessage) bool {
-// 			// w.admin 里面找到注册客户端的方法
-// 			client, ok := admin.FindClient(msg.GetTo())
-// 			if !ok {
-// 				logger.Info("没有找到该用户")
-// 				return false
-// 			}
-// 			return client.SendMes(msg)
-// 		},
-// 	}
-// }
+	// admin     biz.IManage
+	// adminCase *biz.AdminCase
+}
 
-// func DefaultCheckMap() map[string]biz.CheckFunc {
-// 	return map[string]biz.CheckFunc{
-// 		"ws": func(c interface{}) (string, bool) {
-// 			// 先断言是gin.content
-// 			cc, ok := c.(*fiber.Ctx)
-// 			if !ok {
-// 				return "", false
-// 			}
-// 			token := cc.Query("jwt")
-// 			// 可以携带jwt
-// 			if len(token) == 0 {
-// 				return "", false
-// 			}
-// 			// 解析 jwt...
+// Register 方法注册了WebSocket路由
+func (w *wsPlugin) Register(g fiber.Router) {
+	// ws 为身份校验函数
+	g.Get("/ws", func(c *fiber.Ctx) error {
+		// 实现WebSocket连接的逻辑
+		return nil
+	})
+	g.Post("/sendMsg", func(c *fiber.Ctx) error {
+		// 实现发送消息的逻辑
+		return nil
+	})
+}
 
-// 			return token, true
-// 		},
-// 	}
-// }
+// RouterPath 方法返回插件的路由路径
+func (w *wsPlugin) RouterPath() string {
+	return "ws"
+}
 
-// func (w *wsPlugin) Register(g fiber.Router) {
-// 	// ws 为身份校验函数
-// 	g.Get("/ws", func(c *fiber.Ctx) error {
-// 		w.adminCase.HandlerWS("ws", &websocket.AcceptOptions{
-// 			InsecureSkipVerify: true,
-// 		})
-// 		return nil
-// 	})
-// 	g.Post("/sendMsg", func(c *fiber.Ctx) error {
-// 		w.adminCase.SendMsg("ws")
-// 		return nil
-// 	})
-// }
+// 假设有一个全局变量来存储插件实例，以便在其他地方使用
+var globalWSPlugin *wsPlugin
 
-// func (w *wsPlugin) RouterPath() string {
-// 	return "ws"
-// }
-
-// func GenerateWs(logger *zap.Logger, manageBuf int64, checkMap map[string]biz.CheckFunc) *wsPlugin {
-// 	m := data.NewManage(manageBuf)
-// 	t := data.NewTopic()
-// 	h := data.NewHandle()
-// 	admin := data.NewAdmin(m, t, h, logger)
-// 	for s, checkFunc := range checkMap {
-// 		admin.AddCheckFunc(s, checkFunc)
-// 	}
-// 	registeredMsgHandler := DefaultRegisteredMsgHandler(admin, logger)
-
-// 	for key, handler := range registeredMsgHandler {
-// 		admin.RegisteredMsgHandler(key, handler)
-// 	}
-// 	return &wsPlugin{
-// 		logger: logger, manageBuf: manageBuf,
-// 		registeredMsgHandler: registeredMsgHandler, checkMap: checkMap, admin: admin, adminCase: biz.NewAdmin(admin),
-// 	}
-// }
+func init() {
+	// 初始化插件实例，这里可以添加插件初始化逻辑
+	globalWSPlugin = &wsPlugin{
+		logger:    zap.NewExample(), // 示例日志初始化，实际应用中应替换为合适的日志配置
+		manageBuf: 1024,
+	}
+	// 注册插件，这里假设有一个全局的Fiber应用实例
+	app := fiber.New()
+	globalWSPlugin.Register(app)
+	// 启动服务器等后续操作...
+}

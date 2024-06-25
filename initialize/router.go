@@ -121,7 +121,7 @@ func Routers() *fiber.App {
 		// {
 		// 	mobile.InitMobileRouter(MobleGroup)
 		// }
-		InstallPlugin(backendRooter, PublicGroup)
+		InstallPlugin(backendRooter)
 	}
 
 	return app

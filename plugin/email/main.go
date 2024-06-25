@@ -17,7 +17,7 @@ func CreateEmailPlug(To, From, Host, Secret, Nickname string, Port int, IsSSL bo
 	global.GlobalConfig.Nickname = Nickname
 	global.GlobalConfig.Port = Port
 	global.GlobalConfig.IsSSL = IsSSL
-	return nil
+	return &emailPlugin{}
 }
 
 func (*emailPlugin) Register(group fiber.Router) {
