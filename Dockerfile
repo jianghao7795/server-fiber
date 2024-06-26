@@ -1,8 +1,8 @@
 FROM golang:1.22.4-alpine3.20
 
-MAINTAINER "jianghao"
+LABEL org.opencontainers.image.authors="jianghao"
 
-ENV GOPROXY https://goproxy.cn,direct
+ENV GOPROXY=https://goproxy.cn,direct
 # RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 ENV GO111MODULE=on
 
