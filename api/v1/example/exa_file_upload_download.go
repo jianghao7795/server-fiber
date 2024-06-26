@@ -35,7 +35,7 @@ func (u *FileUploadAndDownloadApi) UploadFile(c *fiber.Ctx) error {
 		global.LOG.Error("接收文件失败!", zap.Error(err))
 		return response.FailWithMessage("接收文件失败", c)
 	}
-	if fileImages.Size > 10*1024*1024 {
+	if fileImages.Size > global.CONFIG.Local.Size*1024*1024 {
 		global.LOG.Error("文件大小超过10M!")
 		return response.FailWithMessage("文件大小超过10M", c)
 	} // 文件大小限制10M

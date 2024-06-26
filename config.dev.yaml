@@ -43,15 +43,13 @@ cors:
     - allow-origin: example1.com # 允许访问的域名
       allow-methods: GET, POST, PUT, DELETE, PATCH
       allow-headers: content-type
-      expose-headers:
-        Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers,
+      expose-headers: Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers,
         Content-Type
       allow-credentials: true
     - allow-origin: example2.com # 允许访问的域名
       allow-methods: GET, POST, PUT, DELETE
       allow-headers: content-type
-      expose-headers:
-        Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers,
+      expose-headers: Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers,
         Content-Type
       allow-credentials: true
 db-list:
@@ -90,7 +88,8 @@ jwt:
   buffer-time: 60
   issuer: jianghao
 local:
-  path: uploads/file
+  path: uploads/file # 上传文件保存路径
+  size: 10 # 上传文件大小单位M
 mysql:
   path: 192.168.1.2
   port: "3306"
