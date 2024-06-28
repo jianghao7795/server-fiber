@@ -12,3 +12,5 @@ type CORSWhitelist struct {
 	ExposeHeaders    string `mapstructure:"expose-headers" json:"expose-headers" yaml:"expose-headers"`
 	AllowCredentials bool   `mapstructure:"allow-credentials" json:"allow-credentials" yaml:"allow-credentials"`
 }
+
+type List struct{}

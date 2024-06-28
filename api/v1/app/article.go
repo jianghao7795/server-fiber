@@ -47,7 +47,11 @@ func (a *ArticleApi) CreateArticle(c *fiber.Ctx) error {
 // @Success 200 {object} response.Response{msg=string,code=number} "删除成功"
 // @Router /article/deleteArticle/:id [delete]
 func (*ArticleApi) DeleteArticle(c *fiber.Ctx) error {
-	id, _ := c.ParamsInt("id")
+	id, err := c.ParamsInt("id")
+	if err != nil {
+		global.LOG.Error("获取id失败", zap.Error(err))
+		return response.FailWithMessage("获取id失败", c)
+	}
 	if err := articleService.DeleteArticle(uint(id)); err != nil {
 		global.LOG.Error("删除失败", zap.Error(err))
 		return response.FailWithDetailed(map[string]string{
@@ -70,7 +74,11 @@ func (*ArticleApi) DeleteArticle(c *fiber.Ctx) error {
 // @Router /article/deleteArticleByIds [delete]
 func (a *ArticleApi) DeleteArticleByIds(c *fiber.Ctx) error {
 	var IDS request.IdsReq
-	_ = c.QueryParser(&IDS)
+	err := c.BodyParser(&IDS)
+	if err != nil {
+		global.LOG.Error("获取id失败", zap.Error(err))
+		return response.FailWithMessage("获取id失败", c)
+	}
 	if err := articleService.DeleteArticleByIds(IDS); err != nil {
 		global.LOG.Error("批量删除失败!", zap.Error(err))
 		return response.FailWithDetailed(map[string]string{

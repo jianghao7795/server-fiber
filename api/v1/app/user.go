@@ -46,7 +46,11 @@ func (userApi *UserApi) CreateUser(c *fiber.Ctx) error {
 // @Success 200 {string} response.Response{msg=string,code=number} "删除User"
 // @Router /frontend-user/deleteUser/:id [delete]
 func (userApi *UserApi) DeleteUser(c *fiber.Ctx) error {
-	id, _ := c.ParamsInt("id")
+	id, err := c.ParamsInt("id")
+	if err != nil {
+		global.LOG.Error("获取id失败!", zap.Error(err))
+		return response.FailWithMessage("获取id失败，传正确的id", c)
+	}
 	if err := userService.DeleteUser(id); err != nil {
 		global.LOG.Error("删除失败!", zap.Error(err))
 		return response.FailWithMessage("删除失败"+err.Error(), c)
@@ -66,7 +70,11 @@ func (userApi *UserApi) DeleteUser(c *fiber.Ctx) error {
 // @Router /user/deleteUserByIds [delete]
 func (userApi *UserApi) DeleteUserByIds(c *fiber.Ctx) error {
 	var IDS request.IdsReq
-	_ = c.BodyParser(&IDS)
+	err := c.BodyParser(&IDS)
+	if err != nil {
+		global.LOG.Error("获取id失败", zap.Error(err))
+		return response.FailWithMessage("获取id失败", c)
+	}
 	if err := userService.DeleteUserByIds(IDS); err != nil {
 		global.LOG.Error("批量删除失败!", zap.Error(err))
 		return response.FailWithMessage("批量删除失败"+err.Error(), c)
