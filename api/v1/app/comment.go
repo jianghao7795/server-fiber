@@ -45,7 +45,11 @@ func (commentApi *CommentApi) CreateComment(c *fiber.Ctx) error {
 // @Success 200 {object} response.Response{msg=string,code=number} "删除Comment"
 // @Router /comment/deleteComment/:id [delete]
 func (commentApi *CommentApi) DeleteComment(c *fiber.Ctx) error {
-	id, _ := c.ParamsInt("id", 0)
+	id, err := c.ParamsInt("id")
+	if err != nil {
+		global.LOG.Error("获取id失败!", zap.Error(err))
+		return response.FailWithMessage("获取id失败", c)
+	}
 	if err := commentService.DeleteComment(uint(id)); err != nil {
 		global.LOG.Error("删除失败!", zap.Error(err))
 		return response.FailWithDetailed(err.Error(), "删除失败", c)
@@ -65,7 +69,11 @@ func (commentApi *CommentApi) DeleteComment(c *fiber.Ctx) error {
 // @Router /comment/deleteCommentByIds [delete]
 func (commentApi *CommentApi) DeleteCommentByIds(c *fiber.Ctx) error {
 	var IDS request.IdsReq
-	_ = c.BodyParser(&IDS)
+	err := c.BodyParser(&IDS)
+	if err != nil {
+		global.LOG.Error("获取id组失败", zap.Error(err))
+		return response.FailWithMessage("获取id组失败", c)
+	}
 	if err := commentService.DeleteCommentByIds(IDS); err != nil {
 		global.LOG.Error("批量删除失败!", zap.Error(err))
 		return response.FailWithMessage("批量删除失败", c)
@@ -86,9 +94,13 @@ func (commentApi *CommentApi) DeleteCommentByIds(c *fiber.Ctx) error {
 // @Router /comment/updateComment/:id [put]
 func (commentApi *CommentApi) UpdateComment(c *fiber.Ctx) error {
 	var comment2 app.Comment
-	id, _ := c.ParamsInt("id", 0)
+	id, err := c.ParamsInt("id")
+	if err != nil {
+		global.LOG.Error("获取id失败!", zap.Error(err))
+		return response.FailWithMessage("获取id失败", c)
+	}
 	comment2.ID = uint(id)
-	err := c.BodyParser(&comment2)
+	err = c.BodyParser(&comment2)
 	if err != nil {
 		global.LOG.Error("获取数据失败!", zap.Error(err))
 		return response.FailWithMessage("获取数据失败", c)

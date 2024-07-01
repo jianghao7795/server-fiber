@@ -39,21 +39,25 @@ func GormMysql() (*gorm.DB, error) {
 }
 
 // GormMysqlByConfig 初始化Mysql数据库用过传入配置
-func GormMysqlByConfig(m config.DB) *gorm.DB {
+func GormMysqlByConfig(m config.DB) (*gorm.DB, error) {
 	if m.Dbname == "" {
-		return nil
+		return nil, nil
 	}
 	mysqlConfig := mysql.Config{
 		DSN:                       m.Dsn(), // DSN data source name
-		DefaultStringSize:         191,     // string 类型字段的默认长度
+		DefaultStringSize:         256,     // string 类型字段的默认长度
 		SkipInitializeWithVersion: false,   // 根据版本自动配置
+		DisableDatetimePrecision:  true,    // 禁用datetime 精度
 	}
 	if db, err := gorm.Open(mysql.New(mysqlConfig), internal.Gorm.Config()); err != nil {
-		panic(err)
+		return nil, err
 	} else {
-		sqlDB, _ := db.DB()
+		sqlDB, err := db.DB()
+		if err != nil {
+			return nil, err
+		}
 		sqlDB.SetMaxIdleConns(m.MaxIdleConns)
 		sqlDB.SetMaxOpenConns(m.MaxOpenConns)
-		return db
+		return db, nil
 	}
 }

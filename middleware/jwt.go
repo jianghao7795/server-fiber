@@ -35,7 +35,6 @@ func JWTAuth(c *fiber.Ctx) error {
 	j := utils.NewJWT()
 	// parseToken 解析token包含的信息
 	claims, err := j.ParseToken(token)
-	// global.Logger.Info(err.Error(), claims)
 	if err != nil {
 		if err == utils.ErrTokenExpired {
 			return response.FailWithDetailed401(fiber.Map{"reload": true}, "授权已过期", c)

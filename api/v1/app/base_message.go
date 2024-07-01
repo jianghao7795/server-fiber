@@ -68,7 +68,11 @@ func (a *BaseMessageApi) UpdateBaseMessage(c *fiber.Ctx) error {
 // @Success 200 {object} response.Response{msg=string,data=app.BaseMessage,code=number} "查找base message"
 // @Router /base_message/getBaseMessage/:id [get]
 func (a *BaseMessageApi) FindBaseMessage(c *fiber.Ctx) error {
-	id, _ := c.ParamsInt("id")
+	id, err := c.ParamsInt("id")
+	if err != nil {
+		global.LOG.Error("获取id失败!", zap.Error(err))
+		return response.FailWithMessage("获取id失败", c)
+	}
 	if responseBaseMessage, err := baseMessageService.FindBaseMessage(uint(id)); err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			// respBaseMessage := baseMessageNotFound{message: "not found"}
