@@ -1,13 +1,19 @@
 package system
 
 import (
+	"context"
+
 	"server-fiber/global"
+	"server-fiber/model/app"
 	"server-fiber/model/common/response"
+	"server-fiber/model/example"
+	sysModel "server-fiber/model/system"
 	"server-fiber/model/system/request"
 
-	"go.uber.org/zap"
-
+	adapter "github.com/casbin/gorm-adapter/v3"
 	"github.com/gofiber/fiber/v2"
+	"go.uber.org/zap"
+	"gorm.io/gorm"
 )
 
 type DBApi struct{}
@@ -38,10 +44,10 @@ func (i *DBApi) InitDB(c *fiber.Ctx) error {
 
 // CheckDB
 // @Tags CheckDB
-// @Summary 初始化用户数据库
+// @Summary 是否进行初始化
 // @Produce  application/json
 // @Success 200 {object} response.Response{data=map[string]interface{},msg=string} "初始化用户数据库"
-// @Router /init/checkdb [post]
+// @Router /init/checkdb [get]
 func (i *DBApi) CheckDB(c *fiber.Ctx) error {
 	var (
 		message  = "前往初始化数据库"
@@ -49,9 +55,58 @@ func (i *DBApi) CheckDB(c *fiber.Ctx) error {
 	)
 
 	if global.DB != nil {
-		message = "数据库无需初始化"
+		message = "数据库连接失败"
 		needInit = false
 	}
-	global.LOG.Info(message)
-	return response.OkWithDetailed(needInit, message, c)
+	if i.hasTable(c.Context()) {
+		global.LOG.Info("数据库初始化成功：" + message)
+		return response.OkWithDetailed(needInit, message, c)
+	}
+	global.LOG.Error(message)
+	return response.FailWithDetailed400(needInit, message, c)
+}
+
+// hasTable检查数据库中是否存在表
+func (initDB *DBApi) hasTable(ctx context.Context) bool {
+	db, ok := ctx.Value("db").(*gorm.DB)
+	if !ok {
+		return false
+	}
+	tables := []interface{}{
+		sysModel.SysApi{},
+		sysModel.SysUser{},
+		sysModel.SysBaseMenu{},
+		sysModel.SysAuthority{},
+		sysModel.JwtBlacklist{},
+		sysModel.SysDictionary{},
+		sysModel.SysAutoCodeHistory{},
+		sysModel.SysOperationRecord{},
+		sysModel.SysDictionaryDetail{},
+		sysModel.SysBaseMenuParameter{},
+		sysModel.SysBaseMenuBtn{},
+		sysModel.SysAuthorityBtn{},
+		sysModel.SysAutoCode{},
+
+		adapter.CasbinRule{},
+
+		example.ExaFile{},
+		example.ExaCustomer{},
+		example.ExaFileChunk{},
+		example.ExaFileUploadAndDownload{},
+
+		app.Article{},
+		app.ArticleTag{},
+		app.Tag{},
+		app.BaseMessage{},
+		app.Comment{},
+		app.Ip{},
+		app.Praise{},
+		app.User{},
+	}
+	yes := true
+	for _, t := range tables {
+		yes = yes && db.Migrator().HasTable(t)
+
+	}
+	return yes
 }

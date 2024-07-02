@@ -2,8 +2,13 @@ package initialize
 
 import (
 	"context"
+
+	"server-fiber/model/app"
+	"server-fiber/model/example"
+	sysModel "server-fiber/model/system"
 	"server-fiber/service/system"
 
+	adapter "github.com/casbin/gorm-adapter/v3"
 	"gorm.io/gorm"
 )
 
@@ -29,6 +34,7 @@ func (e *ensureTables) DataInserted(ctx context.Context) bool {
 	return true
 }
 
+// 迁移数据
 func (e *ensureTables) MigrateTable(ctx context.Context) (context.Context, error) {
 	db, ok := ctx.Value("db").(*gorm.DB)
 	if !ok {
@@ -64,32 +70,42 @@ func (e *ensureTables) MigrateTable(ctx context.Context) (context.Context, error
 	return ctx, nil
 }
 
+// 判断是否已经创建了表
 func (e *ensureTables) TableCreated(ctx context.Context) bool {
 	db, ok := ctx.Value("db").(*gorm.DB)
 	if !ok {
 		return false
 	}
 	tables := []interface{}{
-		// sysModel.SysApi{},
-		// sysModel.SysUser{},
-		// sysModel.SysBaseMenu{},
-		// sysModel.SysAuthority{},
-		// sysModel.JwtBlacklist{},
-		// sysModel.SysDictionary{},
-		// sysModel.SysAutoCodeHistory{},
-		// sysModel.SysOperationRecord{},
-		// sysModel.SysDictionaryDetail{},
-		// sysModel.SysBaseMenuParameter{},
-		// sysModel.SysBaseMenuBtn{},
-		// sysModel.SysAuthorityBtn{},
-		// sysModel.SysAutoCode{},
+		sysModel.SysApi{},
+		sysModel.SysUser{},
+		sysModel.SysBaseMenu{},
+		sysModel.SysAuthority{},
+		sysModel.JwtBlacklist{},
+		sysModel.SysDictionary{},
+		sysModel.SysAutoCodeHistory{},
+		sysModel.SysOperationRecord{},
+		sysModel.SysDictionaryDetail{},
+		sysModel.SysBaseMenuParameter{},
+		sysModel.SysBaseMenuBtn{},
+		sysModel.SysAuthorityBtn{},
+		sysModel.SysAutoCode{},
 
-		// adapter.CasbinRule{},
+		adapter.CasbinRule{},
 
-		// example.ExaFile{},
-		// example.ExaCustomer{},
-		// example.ExaFileChunk{},
-		// example.ExaFileUploadAndDownload{},
+		example.ExaFile{},
+		example.ExaCustomer{},
+		example.ExaFileChunk{},
+		example.ExaFileUploadAndDownload{},
+
+		app.Article{},
+		app.ArticleTag{},
+		app.Tag{},
+		app.BaseMessage{},
+		app.Comment{},
+		app.Ip{},
+		app.Praise{},
+		app.User{},
 	}
 	yes := true
 	for _, t := range tables {
