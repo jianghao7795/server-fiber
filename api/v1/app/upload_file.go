@@ -27,17 +27,17 @@ import (
 // @Success 200 {object} response.Response{data=responseUploadFile.ResponseUploadFile{file=app.FileUploadAndDownload},msg=string} "上传文件示例,返回包括文件详情"
 // @Router /base_message/upload [post]
 func (u *FileUploadAndDownloadApi) UploadFile(c *fiber.Ctx) error {
-	var file app.FileUploadAndDownload
+	// var file app.FileUploadAndDownload
 	noSave := c.Query("noSave", "0")
 	header, err := c.FormFile("file")
 	if err != nil {
 		global.LOG.Error("接收文件失败!", zap.Error(err))
 		return response.FailWithMessage400("接收文件失败", c)
 	}
-	file, err = fileUploadService.UploadFile(header, noSave) // 文件上传后拿到文件路径
+	file, err := fileUploadService.UploadFile(header, noSave) // 文件上传后拿到文件路径
 	if err != nil {
 		global.LOG.Error("上传更新失败!", zap.Error(err))
-		return response.FailWithMessage("上传更新失败", c)
+		return response.FailWithMessage400("上传更新失败", c)
 	}
 	return response.OkWithDetailed(responseUploadFile.ResponseUploadFile{File: file}, "上传成功", c)
 }
