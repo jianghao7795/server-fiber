@@ -4,6 +4,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
+// Response 结构体
 type Response struct {
 	Code int         `json:"code"`
 	Data interface{} `json:"data"`
@@ -18,6 +19,7 @@ const (
 	ERROR403          = fiber.StatusForbidden    // 403错误
 )
 
+// 底层的返回结果
 func Result(code int, data interface{}, msg string, c *fiber.Ctx) error {
 	// 返回的最终结果
 	return c.Status(code).JSON(Response{
@@ -27,28 +29,34 @@ func Result(code int, data interface{}, msg string, c *fiber.Ctx) error {
 	})
 }
 
+// 成功返回
 func Ok(c *fiber.Ctx) error {
 	return Result(SUCCESS, map[string]interface{}{}, "操作成功", c)
 }
 
+// 成功返回 并带string信息返回
 func OkWithMessage(message string, c *fiber.Ctx) error {
 	return Result(SUCCESS, map[string]interface{}{}, message, c)
 }
 
+// 成功返回 并带id信息返回
 func OkWithId(message string, id uint, c *fiber.Ctx) error {
 	return Result(SUCCESS, map[string]uint{
 		"id": id,
 	}, message, c)
 }
 
+// 成功返回 并带data信息返回
 func OkWithData(data interface{}, c *fiber.Ctx) error {
 	return Result(SUCCESS, data, "操作成功", c)
 }
 
+// 成功返回 并带data 和 string message信息返回
 func OkWithDetailed(data interface{}, message string, c *fiber.Ctx) error {
 	return Result(SUCCESS, data, message, c)
 }
 
+// 失败返回
 func Fail(c *fiber.Ctx) error {
 	return Result(ERROR, map[string]interface{}{}, "操作失败", c)
 }
@@ -61,31 +69,26 @@ func FailWithDetailed(data interface{}, message string, c *fiber.Ctx) error {
 	return Result(ERROR, data, message, c)
 }
 
-// 返回400 错误信息
+// 返回400 错误信息 带上data信息
 func FailWithDetailed400(data interface{}, message string, c *fiber.Ctx) error {
-	return Result400(ERROR, data, message, c)
+	return Result(ERROR, data, message, c)
 }
 
+// 返回400 错误信息 带上message信息
 func FailWithMessage400(message string, c *fiber.Ctx) error {
-	return Result400(ERROR, map[string]interface{}{}, message, c)
+	return Result(ERROR, map[string]interface{}{}, message, c)
 }
 
-func Result400(code int, data interface{}, msg string, c *fiber.Ctx) error {
-	return c.Status(code).JSON(Response{
-		code,
-		data,
-		msg,
-	})
-}
-
-// func FailWithMessage404(message string, c *fiber.Ctx) error {
-//	 return Result(ERRORNotFound, map[string]interface{}{}, message, c)
-// }
-
+//	func FailWithMessage404(message string, c *fiber.Ctx) error {
+//		 return Result(ERRORNotFound, map[string]interface{}{}, message, c)
+//	}
+//
+// 返回401 错误信息 带上message信息
 func FailWithMessage401(message string, c *fiber.Ctx) error {
-	return Result400(ERRORUnauthorized, map[string]interface{}{}, message, c)
+	return Result(ERRORUnauthorized, map[string]interface{}{}, message, c)
 }
 
+// 返回403 错误信息 带上message信息
 func FailWithMessage403(message string, c *fiber.Ctx) error {
-	return Result400(ERROR403, map[string]interface{}{}, message, c)
+	return Result(ERROR403, map[string]interface{}{}, message, c)
 }

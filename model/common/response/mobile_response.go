@@ -14,7 +14,7 @@ const (
 	ERROR401 = fiber.StatusUnauthorized
 )
 
-// 返回400 错误信息
+// 返回401 错误信息 data 和 string message信息返回
 func FailWithDetailed401(data interface{}, message string, c *fiber.Ctx) error {
-	return Result400(ERROR401, data, message, c)
+	return Result(ERROR401, data, message, c)
 }
