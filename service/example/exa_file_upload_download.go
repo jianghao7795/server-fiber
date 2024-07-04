@@ -86,7 +86,7 @@ func (e *FileUploadAndDownloadService) GetFileRecordInfoList(info *request.PageI
 	if err != nil {
 		return
 	}
-	err = db.Limit(limit).Offset(offset).Order("updated_at desc").Find(&fileLists).Error
+	err = db.Limit(limit).Offset(offset).Order("id desc").Find(&fileLists).Error
 	return fileLists, total, err
 }
 
