@@ -36,12 +36,11 @@ func ErrorToEmail(c *fiber.Ctx) error {
 	// 再重新写回请求体body中，ioutil.ReadAll会清空c.Request.Body中的数据
 	// c.Request.Body = ioutil.NopCloser(bytes.NewBuffer(body))
 	record := system.SysOperationRecord{
-		Ip:       c.IP(),
-		Method:   c.Method(),
-		Path:     c.Path(),
-		Agent:    string(c.Request().Header.UserAgent()),
-		Body:     string(body),
-		TypePort: system.Backend,
+		Ip:     c.IP(),
+		Method: c.Method(),
+		Path:   c.Path(),
+		Agent:  string(c.Request().Header.UserAgent()),
+		Body:   string(body),
 	}
 	now := time.Now()
 	latency := time.Since(now)
@@ -49,7 +48,7 @@ func ErrorToEmail(c *fiber.Ctx) error {
 	record.ErrorMessage = string(c.Response().Body())
 	str := "接收到的请求为" + record.Body + "\n" + "请求方式为" + record.Method + "\n" + "报错信息如下" + record.ErrorMessage + "\n" + "耗时" + latency.String() + "\n"
 	if status != 200 {
-		subject := username + "" + record.Ip + "调用了" + record.Path + "报错了"
+		subject := username + record.Agent + record.Ip + "调用了" + record.Path + "报错了"
 		if err := utils.ErrorToEmail(subject, str); err != nil {
 			global.LOG.Error("ErrorToEmail Failed, err:", zap.Error(err))
 		}

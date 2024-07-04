@@ -1,8 +1,9 @@
 package app
 
 import (
+	"errors"
 	"server-fiber/global"
-	comment "server-fiber/model/app"
+	"server-fiber/model/app"
 	commentReq "server-fiber/model/app/request"
 	"server-fiber/model/common/request"
 	"strings"
@@ -12,7 +13,7 @@ type CommentService struct{}
 
 // CreateComment 创建Comment记录
 // Author wuhao
-func (commentService *CommentService) CreateComment(comment *comment.Comment) (err error) {
+func (commentService *CommentService) CreateComment(comment *app.Comment) (err error) {
 	err = global.DB.Create(comment).Error
 	return err
 }
@@ -20,38 +21,42 @@ func (commentService *CommentService) CreateComment(comment *comment.Comment) (e
 // DeleteComment 删除Comment记录
 // Author wuhao
 func (commentService *CommentService) DeleteComment(id uint) (err error) {
-	err = global.DB.Delete(&comment.Comment{}, id).Error
+	err = global.DB.Delete(&app.Comment{}, id).Error
 	return err
 }
 
 // DeleteCommentByIds 批量删除Comment记录
 // Author wuhao
 func (commentService *CommentService) DeleteCommentByIds(ids request.IdsReq) (err error) {
-	err = global.DB.Delete(&[]comment.Comment{}, "id in ?", ids.Ids).Error
+	err = global.DB.Delete(&[]app.Comment{}, "id in ?", ids.Ids).Error
 	return err
 }
 
 // UpdateComment 更新Comment记录
 // Author wuhao
-func (commentService *CommentService) UpdateComment(comment *comment.Comment) (err error) {
-	err = global.DB.Save(comment).Error
-	return err
+func (commentService *CommentService) UpdateComment(comment *app.Comment) (err error) {
+	var commentReplica app.Comment
+	db := global.DB.Where("id = ?", comment.ID).First(&commentReplica)
+	if commentReplica.ID == 0 {
+		return errors.New("未找到该comment")
+	}
+	return db.Save(comment).Error
 }
 
 // GetComment 根据id获取Comment记录
 // Author wuhao
-func (commentService *CommentService) GetComment(id int) (comment comment.Comment, err error) {
+func (commentService *CommentService) GetComment(id int) (comment app.Comment, err error) {
 	err = global.DB.Preload("Article").Where("id = ?", id).First(&comment).Error
 	return
 }
 
 // GetCommentInfoList 分页获取Comment记录
 // Author wuhao
-func (commentService *CommentService) GetCommentInfoList(info *commentReq.CommentSearch) (list []comment.Comment, total int64, err error) {
+func (commentService *CommentService) GetCommentInfoList(info *commentReq.CommentSearch) (list []app.Comment, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	// 创建db
-	db := global.DB.Model(&comment.Comment{}).Preload("Article").Preload("User").Preload("ToUser").Preload("Praise")
+	db := global.DB.Model(&app.Comment{}).Preload("Article").Preload("User").Preload("ToUser").Preload("Praise")
 	if info.ArticleId != 0 {
 		db = db.Where("article_id = ?", info.ArticleId)
 	}
@@ -59,7 +64,7 @@ func (commentService *CommentService) GetCommentInfoList(info *commentReq.Commen
 		db = db.Where("content like ?", strings.Join([]string{"%", info.Content, "%"}, ""))
 		// db = db.Where("MATCH(content) AGAINST('+" + info.Content + "')")
 	}
-	var comments []comment.Comment
+	var comments []app.Comment
 	// 如果有条件搜索 下方会自动创建搜索语句
 	err = db.Count(&total).Error
 	if err != nil {
@@ -71,10 +76,10 @@ func (commentService *CommentService) GetCommentInfoList(info *commentReq.Commen
 
 // GetCommentTreeList 分页获取Treelist
 
-func (commentService *CommentService) GetCommentTreeList(info *commentReq.CommentSearch) (list []comment.Comment, total int64, err error) {
+func (commentService *CommentService) GetCommentTreeList(info *commentReq.CommentSearch) (list []app.Comment, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
-	db := global.DB.Model(&comment.Comment{})
+	db := global.DB.Model(&app.Comment{})
 	if info.ArticleId != 0 {
 		db = db.Where("article_id = ?", info.ArticleId)
 	}
@@ -86,7 +91,7 @@ func (commentService *CommentService) GetCommentTreeList(info *commentReq.Commen
 		return
 	}
 
-	var commentList []comment.Comment
+	var commentList []app.Comment
 
 	err = db.Limit(limit).Offset(offset).Where("parent_id = ?", 0).Preload("Article").Preload("User").Order("id desc").Find(&commentList).Error
 	// err = db.Limit(limit).Offset(offset).Where("parent_id = ?", 0).Find(&commentList).Error
@@ -98,17 +103,17 @@ func (commentService *CommentService) GetCommentTreeList(info *commentReq.Commen
 	return commentList, total, err
 }
 
-func (commentService *CommentService) findChildrenComment(comment *comment.Comment) (err error) {
+func (commentService *CommentService) findChildrenComment(comment *app.Comment) (err error) {
 	err = global.DB.Where("parent_id = ?", comment.ID).Preload("User").Preload("ToUser").Order("user_id desc").Find(&comment.Children).Error
 	return err
 }
 
 // LikeIt 点赞一条记录
-func (*CommentService) PutLikeItOrDislike(info *comment.Praise) (err error) {
-	db := global.DB.Model(&comment.Praise{})
+func (*CommentService) PutLikeItOrDislike(info *app.Praise) (err error) {
+	db := global.DB.Model(&app.Praise{})
 
 	if info.ID == 0 {
-		var praise comment.Praise
+		var praise app.Praise
 		err = db.Raw("Select id, comment_id, user_id, created_at, updated_at from praise where user_id = ? and comment_id = ? limit 1", info.UserId, info.CommentId).Scan(&praise).Error
 		if err != nil {
 			return err

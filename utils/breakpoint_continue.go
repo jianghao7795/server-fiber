@@ -83,7 +83,10 @@ func MakeFile(fileName string, FileMd5 string) (string, error) {
 		return finishDir + fileName, err
 	}
 	// if os.IsExist()
-	_ = os.MkdirAll(finishDir, os.ModePerm)
+	err = os.MkdirAll(finishDir, os.ModePerm)
+	if err != nil {
+		return "", err
+	}
 	fd, err := os.OpenFile(finishDir+fileName, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0o644)
 	if err != nil {
 		return finishDir + fileName, err
@@ -91,10 +94,10 @@ func MakeFile(fileName string, FileMd5 string) (string, error) {
 	defer func(fd *os.File) {
 		err := fd.Close()
 		if err != nil {
-			// log.Println("log", err.Error())
+			global.LOG.Error("关闭文件失败" + err.Error())
 			err = os.Remove(finishDir + fileName)
 			if err != nil {
-				global.LOG.Error("log" + err.Error())
+				global.LOG.Error("删除文件失败" + err.Error())
 			}
 		}
 	}(fd)

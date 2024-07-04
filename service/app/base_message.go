@@ -1,6 +1,7 @@
 package app
 
 import (
+	"errors"
 	"server-fiber/global"
 	"server-fiber/model/app"
 )
@@ -22,9 +23,13 @@ func (*BaseMessageService) CreateBaseMessage(baseMessage *app.BaseMessage) (err 
  * @param {app.BaseMessage} baseMessage
  * @return {*}
  */
-func (*BaseMessageService) UpdateBaseMessage(baseMessage *app.BaseMessage) (err error) {
-	err = global.DB.Save(baseMessage).Error
-	return
+func (*BaseMessageService) UpdateBaseMessage(id int, baseMessage *app.BaseMessage) (err error) {
+	var baseMessageReplica app.BaseMessage
+	db := global.DB.Model(app.BaseMessage{}).Where("id = ?", id).First(&baseMessageReplica)
+	if baseMessageReplica.ID == 0 {
+		return errors.New("数据库没有记录")
+	}
+	return db.Save(baseMessage).Error
 }
 
 /**

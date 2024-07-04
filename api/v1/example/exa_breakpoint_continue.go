@@ -86,7 +86,11 @@ func (u *FileUploadAndDownloadApi) BreakpointContinue(c *fiber.Ctx) error {
 func (u *FileUploadAndDownloadApi) FindFile(c *fiber.Ctx) error {
 	fileMd5 := c.Query("fileMd5")
 	fileName := c.Query("fileName")
-	chunkTotal, _ := strconv.Atoi(c.Query("chunkTotal"))
+	chunkTotal := c.QueryInt("chunkTotal", 0)
+	if chunkTotal == 0 {
+		global.LOG.Error("获取文件大小失败")
+		return response.FailWithMessage("获取文件大小失败", c)
+	}
 	file, err := fileUploadAndDownloadService.FindOrCreateFile(fileMd5, fileName, chunkTotal)
 	if err != nil {
 		global.LOG.Error("查找失败!", zap.Error(err))
@@ -112,6 +116,7 @@ func (b *FileUploadAndDownloadApi) BreakpointContinueFinish(c *fiber.Ctx) error 
 		return response.FailWithMessage("获取文件信息错误: "+err.Error(), c)
 	}
 	filePath, err := utils.MakeFile(file.FileName, file.FileMd5)
+
 	if err != nil {
 		global.LOG.Error("文件创建失败!", zap.Error(err))
 		return response.FailWithDetailed(exampleRes.FilePathResponse{FilePath: filePath}, "文件创建失败", c)
@@ -130,8 +135,12 @@ func (b *FileUploadAndDownloadApi) BreakpointContinueFinish(c *fiber.Ctx) error 
 // @Router /fileUploadAndDownload/removeChunk [delete]
 func (u *FileUploadAndDownloadApi) RemoveChunk(c *fiber.Ctx) error {
 	var file example.ExaFile
-	c.BodyParser(&file)
-	err := utils.RemoveChunk(file.FileMd5)
+	err := c.BodyParser(&file)
+	if err != nil {
+		global.LOG.Error("获取切片信息失败!", zap.Error(err))
+		return response.FailWithMessage("缓存切片删除失败", c)
+	}
+	err = utils.RemoveChunk(file.FileMd5)
 	if err != nil {
 		global.LOG.Error("缓存切片文件删除失败!", zap.Error(err))
 		return response.FailWithDetailed(err, "缓存切片文件删除失败", c)
@@ -146,8 +155,8 @@ func (u *FileUploadAndDownloadApi) RemoveChunk(c *fiber.Ctx) error {
 }
 
 func (u *FileUploadAndDownloadApi) FindFileBreakpoint(c *fiber.Ctx) error {
-	page, _ := strconv.Atoi(c.Query("page"))
-	pageSize, _ := strconv.Atoi(c.Query("pageSize"))
+	page := c.QueryInt("page", 1)
+	pageSize := c.QueryInt("pageSize", 10)
 	file, total, err := fileUploadAndDownloadService.FindFileBreakpoint(page, pageSize)
 	if err != nil {
 		global.LOG.Error("查找失败!", zap.Error(err))

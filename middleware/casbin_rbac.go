@@ -24,8 +24,12 @@ func CasbinHandler(c *fiber.Ctx) error {
 	sub := waitUse.AuthorityId
 	e := casbinService.Casbin()
 	// 判断策略中是否存在
-	success, _ := e.Enforce(sub, obj, act)
+	success, err := e.Enforce(sub, obj, act)
+	// log.Println("error is ", err, success, obj, act, sub)
 	// if global.CONFIG.System.Env == "develop" || success {
+	if err != nil {
+		return response.FailWithMessage403("验证失败", c)
+	}
 	if success {
 		return c.Next()
 	} else {

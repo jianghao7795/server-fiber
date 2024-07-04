@@ -43,15 +43,20 @@ func (a *BaseMessageApi) CreateBaseMessage(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data body app.BaseMessage true "创建base_message"
 // @Success 200 {object} response.Response{msg=string,code=number} "查找base message"
-// @Router /base_message/updateBaseMessage [put]
+// @Router /base_message/updateBaseMessage/:id [put]
 func (a *BaseMessageApi) UpdateBaseMessage(c *fiber.Ctx) error {
 	var baseMessage app.BaseMessage
-	err := c.BodyParser(&baseMessage)
+	id, err := c.ParamsInt("id", 0)
+	if err != nil {
+		global.LOG.Error("获取id失败", zap.Error(err))
+		return response.FailWithMessage("获取id失败", c)
+	}
+	err = c.BodyParser(&baseMessage)
 	if err != nil {
 		global.LOG.Error("获取数据失败!", zap.Error(err))
 		return response.FailWithMessage("获取数据失败", c)
 	}
-	if err = baseMessageService.UpdateBaseMessage(&baseMessage); err != nil {
+	if err = baseMessageService.UpdateBaseMessage(id, &baseMessage); err != nil {
 		global.LOG.Error("更新失败!", zap.Error(err))
 		return response.FailWithMessage("更新失败", c)
 	} else {
@@ -76,7 +81,7 @@ func (a *BaseMessageApi) FindBaseMessage(c *fiber.Ctx) error {
 	if responseBaseMessage, err := baseMessageService.FindBaseMessage(uint(id)); err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			// respBaseMessage := baseMessageNotFound{message: "not found"}
-			str := "not found"
+			str := "base message not found"
 			global.LOG.Error("查询失败!", zap.Error(errors.New(str)))
 			return response.OkWithData(str, c)
 		} else {

@@ -95,13 +95,18 @@ func (userApi *UserApi) DeleteUserByIds(c *fiber.Ctx) error {
 // @Router /user/updateUser/:id [put]
 func (userApi *UserApi) UpdateUser(c *fiber.Ctx) error {
 	var user app.User
-	id, _ := c.ParamsInt("id")
-	notFound := userService.FindIsUser(uint(id))
-	if notFound {
+	id, err := c.ParamsInt("id")
+	if err != nil {
+		global.LOG.Error("获取id失败", zap.Error(err))
+		return response.FailWithMessage("获取id失败", c)
+	}
+	var notFound bool
+	notFound, err = userService.FindIsUser(id)
+	if notFound && err != nil {
 		global.LOG.Error("未找到，该用户!", zap.Error(errors.New("未找到，该用户")))
 		return response.FailWithMessage("未找到，该用户", c)
 	}
-	err := c.BodyParser(&user)
+	err = c.BodyParser(&user)
 	if err != nil {
 		global.LOG.Error("获取数据失败!", zap.Error(err))
 		return response.FailWithMessage("获取数据失败"+err.Error(), c)
@@ -123,9 +128,13 @@ func (userApi *UserApi) UpdateUser(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data query app.User true "用id查询User"
 // @Success 200 {object} response.Response{msg=string,code=number} "查询成功"
-// @Router /user/findUser [get]
+// @Router /user/findUser/:id [get]
 func (userApi *UserApi) FindUser(c *fiber.Ctx) error {
-	id, _ := c.ParamsInt("id")
+	id, err := c.ParamsInt("id")
+	if err != nil {
+		global.LOG.Error("获取id失败", zap.Error(err))
+		return response.FailWithMessage("获取id失败", c)
+	}
 	if user, err := userService.GetUser(uint(id)); err != nil {
 		global.LOG.Error("查询失败!", zap.Error(err))
 		return response.FailWithMessage("查询失败"+err.Error(), c)

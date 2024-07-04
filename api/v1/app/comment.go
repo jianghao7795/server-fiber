@@ -198,7 +198,11 @@ func (*CommentApi) GetCommentTreeList(c *fiber.Ctx) error {
 // @Router /comment/pariseComment [put]
 func (*CommentApi) PutLikeItOrDislike(c *fiber.Ctx) error {
 	var likeIt app.Praise
-	_ = c.BodyParser(&likeIt)
+	err := c.BodyParser(&likeIt)
+	if err != nil {
+		global.LOG.Error("获取数据失败", zap.Error(err))
+		return response.FailWithMessage("获取数据失败", c)
+	}
 
 	if err := commentService.PutLikeItOrDislike(&likeIt); err != nil {
 		global.LOG.Error("点赞失败!", zap.Error(err))

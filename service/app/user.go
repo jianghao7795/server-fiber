@@ -43,8 +43,12 @@ func (userService *UserService) DeleteUserByIds(ids request.IdsReq) (err error) 
 // UpdateUser 更新User记录
 // Author wuhao
 func (userService *UserService) UpdateUser(user *app.User) (err error) {
-	err = global.DB.Save(user).Error
-	return err
+	var userReplice app.User
+	db := global.DB.Where("id = ?", user.ID).First(&userReplice)
+	if userReplice.ID == 0 {
+		return errors.New("更新错误， 未能找到该用户")
+	}
+	return db.Save(user).Error
 }
 
 // GetUser 根据id获取User记录
@@ -75,8 +79,8 @@ func (userService *UserService) GetUserInfoList(info *appReq.UserSearch) (list [
 	return users, total, err
 }
 
-func (userService *UserService) FindIsUser(id uint) bool {
+func (userService *UserService) FindIsUser(id int) (bool, error) {
 	var user app.User
 	err := global.DB.Where("id = ?", id).First(&user).Error
-	return errors.Is(err, gorm.ErrRecordNotFound)
+	return errors.Is(err, gorm.ErrRecordNotFound), err
 }

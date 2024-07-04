@@ -96,6 +96,6 @@ func (e *FileUploadAndDownloadService) FindFileBreakpoint(page int, pageSize int
 	var total int64
 	db := global.DB.Model(&example.ExaFile{})
 	db = db.Count(&total)
-	err := db.Offset(offset).Limit(pageSize).Find(&files).Error
+	err := db.Offset(offset).Limit(pageSize).Order("id desc").Find(&files).Error
 	return files, total, err
 }
