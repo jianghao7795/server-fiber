@@ -49,7 +49,11 @@ func (a *AuthorityApi) CreateAuthority(c *fiber.Ctx) error {
 // @Router /authority/copyAuthority [post]
 func (a *AuthorityApi) CopyAuthority(c *fiber.Ctx) error {
 	var copyInfo systemRes.SysAuthorityCopyResponse
-	_ = c.BodyParser(&copyInfo)
+	err := c.BodyParser(&copyInfo)
+	if err != nil {
+		global.LOG.Error("获取数据错误", zap.Error(err))
+		return response.FailWithMessage("获取数据错误", c)
+	}
 	if err := utils.Verify(copyInfo, utils.OldAuthorityVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
@@ -96,7 +100,11 @@ func (a *AuthorityApi) DeleteAuthority(c *fiber.Ctx) error {
 // @Router /authority/updateAuthority [post]
 func (a *AuthorityApi) UpdateAuthority(c *fiber.Ctx) error {
 	var auth system.SysAuthority
-	_ = c.BodyParser(&auth)
+	if err := c.BodyParser(&auth); err != nil {
+		global.LOG.Error("获取数据失败", zap.Error(err))
+		return response.FailWithMessage("获取数据失败", c)
+	}
+
 	if err := utils.Verify(auth, utils.AuthorityVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
@@ -119,6 +127,12 @@ func (a *AuthorityApi) UpdateAuthority(c *fiber.Ctx) error {
 func (a *AuthorityApi) GetAuthorityList(c *fiber.Ctx) error {
 	var pageInfo request.PageInfo
 	_ = c.QueryParser(&pageInfo)
+	if pageInfo.Page == 0 {
+		pageInfo.Page = 1
+	}
+	if pageInfo.PageSize == 0 {
+		pageInfo.PageSize = 10
+	}
 	if err := utils.Verify(pageInfo, utils.PageInfoVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
@@ -145,12 +159,12 @@ func (a *AuthorityApi) GetAuthorityList(c *fiber.Ctx) error {
 // @Router /authority/setDataAuthority [post]
 func (a *AuthorityApi) SetDataAuthority(c *fiber.Ctx) error {
 	var auth system.SysAuthority
-	err := c.BodyParser(&auth)
-	if err != nil {
+	if err := c.BodyParser(&auth); err != nil {
 		global.LOG.Error("获取数据失败!", zap.Error(err))
 		return response.FailWithMessage("获取数据失败", c)
 	}
 	if err := utils.Verify(auth, utils.AuthorityIdVerify); err != nil {
+		global.LOG.Error("验证角色权限错误", zap.Error(err))
 		return response.FailWithMessage(err.Error(), c)
 	}
 	if err := authorityService.SetDataAuthority(&auth); err != nil {

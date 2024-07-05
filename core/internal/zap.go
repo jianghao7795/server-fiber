@@ -5,17 +5,17 @@ import (
 
 	"server-fiber/global"
 
-	"go.uber.org/zap"
+	gozap "go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
 
-var Zap = new(_zap)
+var Zap = new(zap)
 
-type _zap struct{}
+type zap struct{}
 
 // GetEncoder 获取 zapcore.Encoder
 // Author wuhao
-func (z *_zap) GetEncoder() zapcore.Encoder {
+func (z *zap) GetEncoder() zapcore.Encoder {
 	if global.CONFIG.Zap.Format == "json" {
 		return zapcore.NewJSONEncoder(z.GetEncoderConfig())
 	}
@@ -24,7 +24,7 @@ func (z *_zap) GetEncoder() zapcore.Encoder {
 
 // GetEncoderConfig 获取zapcore.EncoderConfig
 // Author wuhao
-func (z *_zap) GetEncoderConfig() zapcore.EncoderConfig {
+func (z *zap) GetEncoderConfig() zapcore.EncoderConfig {
 	return zapcore.EncoderConfig{
 		MessageKey:     "message",
 		LevelKey:       "level",
@@ -42,20 +42,20 @@ func (z *_zap) GetEncoderConfig() zapcore.EncoderConfig {
 
 // GetEncoderCore 获取Encoder的 zapcore.Core
 // Author wuhao
-func (z *_zap) GetEncoderCore(l zapcore.Level, level zap.LevelEnablerFunc) zapcore.Core {
+func (z *zap) GetEncoderCore(l zapcore.Level, level gozap.LevelEnablerFunc) zapcore.Core {
 	writer := FileRotatelogs.GetWriteSyncer(l.String()) // 日志分割
 	return zapcore.NewCore(z.GetEncoder(), writer, level)
 }
 
 // CustomTimeEncoder 自定义日志输出时间格式
 // Author wuhao
-func (z *_zap) CustomTimeEncoder(t time.Time, encoder zapcore.PrimitiveArrayEncoder) {
+func (z *zap) CustomTimeEncoder(t time.Time, encoder zapcore.PrimitiveArrayEncoder) {
 	encoder.AppendString(global.CONFIG.Zap.Prefix + t.Format("2006/01/02 - 15:04:05.000"))
 }
 
 // GetZapCores 根据配置文件的Level获取 []zapcore.Core
 // Author wuhao
-func (z *_zap) GetZapCores() []zapcore.Core {
+func (z *zap) GetZapCores() []zapcore.Core {
 	cores := make([]zapcore.Core, 0, 7)
 	for level := global.CONFIG.Zap.TransportLevel(); level <= zapcore.FatalLevel; level++ {
 		cores = append(cores, z.GetEncoderCore(level, z.GetLevelPriority(level)))
@@ -65,39 +65,39 @@ func (z *_zap) GetZapCores() []zapcore.Core {
 
 // GetLevelPriority 根据 zapcore.Level 获取 zap.LevelEnablerFunc
 // Author wuhao
-func (z *_zap) GetLevelPriority(level zapcore.Level) zap.LevelEnablerFunc {
+func (z *zap) GetLevelPriority(level zapcore.Level) gozap.LevelEnablerFunc {
 	switch level {
 	case zapcore.DebugLevel:
 		return func(level zapcore.Level) bool { // 调试级别
-			return level == zap.DebugLevel
+			return level == gozap.DebugLevel
 		}
 	case zapcore.InfoLevel:
 		return func(level zapcore.Level) bool { // 日志级别
-			return level == zap.InfoLevel
+			return level == gozap.InfoLevel
 		}
 	case zapcore.WarnLevel:
 		return func(level zapcore.Level) bool { // 警告级别
-			return level == zap.WarnLevel
+			return level == gozap.WarnLevel
 		}
 	case zapcore.ErrorLevel:
 		return func(level zapcore.Level) bool { // 错误级别
-			return level == zap.ErrorLevel
+			return level == gozap.ErrorLevel
 		}
 	case zapcore.DPanicLevel:
 		return func(level zapcore.Level) bool { // dpanic级别
-			return level == zap.DPanicLevel
+			return level == gozap.DPanicLevel
 		}
 	case zapcore.PanicLevel:
 		return func(level zapcore.Level) bool { // panic级别
-			return level == zap.PanicLevel
+			return level == gozap.PanicLevel
 		}
 	case zapcore.FatalLevel:
 		return func(level zapcore.Level) bool { // 终止级别
-			return level == zap.FatalLevel
+			return level == gozap.FatalLevel
 		}
 	default:
 		return func(level zapcore.Level) bool { // 调试级别
-			return level == zap.DebugLevel
+			return level == gozap.DebugLevel
 		}
 	}
 }

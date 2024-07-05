@@ -141,7 +141,7 @@ func (authorityService *AuthorityService) DeleteAuthority(auth *system.SysAuthor
 //@param: info request.PageInfo
 //@return: err error, list interface{}, total int64
 
-func (authorityService *AuthorityService) GetAuthorityInfoList(info request.PageInfo) (list interface{}, total int64, err error) {
+func (authorityService *AuthorityService) GetAuthorityInfoList(info request.PageInfo) (list []system.SysAuthority, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	db := global.DB.Model(&system.SysAuthority{})

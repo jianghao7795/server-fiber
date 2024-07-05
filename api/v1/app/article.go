@@ -190,7 +190,7 @@ func (*ArticleApi) GetArticleList(c *fiber.Ctx) error {
 func (*ArticleApi) PutArticleByIds(c *fiber.Ctx) error {
 	var IDS request.IdsReq
 	_ = c.BodyParser(&IDS)
-	if err := articleService.PutArticleByIds(IDS); err != nil {
+	if err := articleService.PutArticleByIds(&IDS); err != nil {
 		global.LOG.Error("批量更新失败!", zap.Error(err))
 		return response.FailWithDetailed(map[string]string{
 			"msg": err.Error(),
@@ -214,7 +214,7 @@ func (*ArticleApi) GetArticleReading(c *fiber.Ctx) error {
 	count, err := articleService.GetArticleReading()
 	if err != nil {
 		global.LOG.Error("获取阅读量失败!", zap.Error(err))
-		return response.FailWithDetailed(map[string]string{
+		return response.FailWithDetailed(fiber.Map{
 			"msg": err.Error(),
 		}, "获取阅读量失败", c)
 	} else {

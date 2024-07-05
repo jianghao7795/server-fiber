@@ -64,7 +64,7 @@ func (*ArticleService) GetArticleInfoList(info *appReq.ArticleSearch) (list []ap
 }
 
 // 批量更新
-func (*ArticleService) PutArticleByIds(ids request.IdsReq) (err error) {
+func (*ArticleService) PutArticleByIds(ids *request.IdsReq) (err error) {
 	err = global.DB.Model(&app.Article{}).Where("id in ?", ids.Ids).Update("is_important", 2).Error
 	return
 }

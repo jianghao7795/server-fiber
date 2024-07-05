@@ -29,7 +29,7 @@ type BaseApi struct{}
 func (b *BaseApi) Captcha(c *fiber.Ctx) error {
 	// 字符,公式,验证码配置
 	// 生成默认数字的driver
-	driver := base64Captcha.NewDriverDigit(global.CONFIG.Captcha.ImgHeight, global.CONFIG.Captcha.ImgWidth, global.CONFIG.Captcha.KeyLong, 0.7, 80)
+	driver := base64Captcha.NewDriverDigit(global.CONFIG.Captcha.ImgHeight, global.CONFIG.Captcha.ImgWidth, global.CONFIG.Captcha.KeyLong, global.CONFIG.Captcha.MaxSkew, global.CONFIG.Captcha.DotCount)
 	// cp := base64Captcha.NewCaptcha(driver, store.UseWithCtx(c))   // v8下使用redis
 	newCaptcha := base64Captcha.NewCaptcha(driver, store)
 	if id, b64s, _, err := newCaptcha.Generate(); err != nil {

@@ -32,9 +32,11 @@ aws-s3:
 cache:
   time: 100
 captcha:
-  key-long: 6
-  img-width: 240
-  img-height: 80
+  key-long: 6 # 验证码长度
+  img-width: 240 # 宽度
+  img-height: 80 # 高度
+  dot-count: 80 # 干扰线点数
+  max-skew: 0.7 # 倾斜度
 casbin:
   model-path: ./rbac_model.conf
 cors:
