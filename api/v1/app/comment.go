@@ -148,6 +148,13 @@ func (commentApi *CommentApi) FindComment(c *fiber.Ctx) error {
 func (commentApi *CommentApi) GetCommentList(c *fiber.Ctx) error {
 	var pageInfo commentReq.CommentSearch
 	_ = c.QueryParser(&pageInfo)
+	if pageInfo.Page == 0 {
+		pageInfo.Page = 1
+	}
+
+	if pageInfo.PageSize == 0 {
+		pageInfo.PageSize = 10
+	}
 	if list, total, err := commentService.GetCommentInfoList(&pageInfo); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败"+err.Error(), c)
