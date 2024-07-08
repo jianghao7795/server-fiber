@@ -55,7 +55,7 @@ cors:
         Content-Type
       allow-credentials: true
 db-list:
-  - disable: false
+  - disable: false # 是否禁用
     type: ""
     alias-name: ""
     path: ""

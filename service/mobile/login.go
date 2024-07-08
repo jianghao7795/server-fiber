@@ -38,7 +38,7 @@ func (*MobileLoginService) GetUserInfo(id uint) (u mobile.MobileUser, err error)
 	return user, err
 }
 
-func (*MobileLoginService) UpdateUser(data request.MobileUpdate, id uint) (err error) {
+func (*MobileLoginService) UpdateUser(data *request.MobileUpdate, id uint) (err error) {
 	return global.DB.Model(&mobile.MobileUser{}).Where("id = ?", id).Update(data.Field, data.Value).Error
 }
 

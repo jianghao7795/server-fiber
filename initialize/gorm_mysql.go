@@ -41,7 +41,7 @@ func GormMysql() (*gorm.DB, error) {
 // GormMysqlByConfig 初始化Mysql数据库用过传入配置
 func GormMysqlByConfig(m config.DB) (*gorm.DB, error) {
 	if m.Dbname == "" {
-		return nil, nil
+		return nil, errors.New("请配置数据库")
 	}
 	mysqlConfig := mysql.Config{
 		DSN:                       m.Dsn(), // DSN data source name

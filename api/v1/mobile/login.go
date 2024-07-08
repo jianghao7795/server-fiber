@@ -50,18 +50,21 @@ func (*LoginApi) GetUserInfo(c *fiber.Ctx) error {
 
 func (*LoginApi) UpdateMobileUser(c *fiber.Ctx) error {
 	var data request.MobileUpdate
-	_ = c.BodyParser(&data)
-	authorization := c.Get("user_id")
+	if err := c.BodyParser(&data); err != nil {
+		global.LOG.Error("获取数据失败", zap.Error(err))
+		return response.FailWithMessage("获取数据失败", c)
+	}
+	authorization := c.Get("user_id") // user_id 在请求头信息中
 
 	if authorization == "" {
 		return response.FailWithDetailed400(map[string]string{"id": "0"}, "更新失败", c)
 	} else {
 		authId, _ := strconv.Atoi(authorization)
-		if err := loginService.UpdateUser(data, (uint(authId))); err != nil {
+		if err := loginService.UpdateUser(&data, uint(authId)); err != nil {
 			global.LOG.Error("更新用户失败!", zap.Error(err))
 			return response.FailWithMessage("更新用户失败", c)
 		} else {
-			return response.OkWithDetailed(data, "获取成功", c)
+			return response.OkWithDetailed(data, "更新成功", c)
 		}
 	}
 
@@ -69,7 +72,10 @@ func (*LoginApi) UpdateMobileUser(c *fiber.Ctx) error {
 
 func (*LoginApi) UpdatePassword(c *fiber.Ctx) error {
 	var data request.MobileUpdatePassword
-	_ = c.BodyParser(&data)
+	if err := c.BodyParser(&data); err != nil {
+		global.LOG.Error("获取数据失败", zap.Error(err))
+		return response.FailWithMessage("获取数据失败", c)
+	}
 
 	if err := utils.Verify(data, utils.MobileUpdatePasswordVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
