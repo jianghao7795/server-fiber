@@ -2,6 +2,7 @@ package initialize
 
 import (
 	"context"
+	"fmt"
 
 	"server-fiber/global"
 
@@ -19,7 +20,11 @@ func Redis() error {
 		//IdleTimeout: 300,               // 默认Idle超时时间
 		PoolSize: 100, // 连接池
 	})
-	pong, err := client.Ping(context.Background()).Result()
+
+	ctx := context.Background()
+	pong, err := client.Ping(ctx).Result()
+	redisExample2(client, ctx)
+
 	if err != nil {
 		global.LOG.Error("redis connect ping failed, err:", zap.Error(err))
 		return err
@@ -28,4 +33,62 @@ func Redis() error {
 		global.REDIS = client
 	}
 	return err
+}
+
+func redisExample2(rdb *redis.Client, ctx context.Context) {
+	zsetKey := "language_rank"
+	languages := []redis.Z{
+		{Score: 90.0, Member: "Golang"},
+		{Score: 98.0, Member: "Java"},
+		{Score: 95.0, Member: "Python"},
+		{Score: 97.0, Member: "JavaScript"},
+		{Score: 99.0, Member: "C/C++"},
+	}
+	// ZADD
+	num, err := rdb.ZAdd(ctx, zsetKey, languages...).Result()
+	if err != nil {
+		fmt.Printf("zadd failed, err:%v\n", err)
+		return
+	}
+	fmt.Printf("zadd %d succ.\n", num)
+
+	// 把Golang的分数加10
+	newScore, err := rdb.ZIncrBy(ctx, zsetKey, 10.0, "Golang").Result()
+	if err != nil {
+		fmt.Printf("zincrby failed, err:%v\n", err)
+		return
+	}
+	fmt.Printf("Golang's score is %f now.\n", newScore)
+
+	// 取分数最高的3个
+	ret, err := rdb.ZRevRangeWithScores(ctx, zsetKey, 0, 2).Result()
+	if err != nil {
+		fmt.Printf("zrevrange failed, err:%v\n", err)
+		return
+	}
+	for _, z := range ret {
+		fmt.Println(z.Member, z.Score)
+	}
+
+	// 取95~100分的
+	op := redis.ZRangeBy{
+		Min: "99",
+		Max: "100",
+	}
+	ret, err = rdb.ZRangeByScoreWithScores(ctx, zsetKey, &op).Result()
+	if err != nil {
+		fmt.Printf("zrangebyscore failed, err:%v\n", err)
+		return
+	}
+	for _, z := range ret {
+		fmt.Println(z.Member, z.Score)
+	}
+
+	vals, err := rdb.Keys(ctx, "Golang").Result()
+
+	if err != nil {
+		fmt.Printf("keys failed, err:%v\n", err)
+		return
+	}
+	fmt.Println(vals)
 }
