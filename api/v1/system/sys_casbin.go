@@ -22,7 +22,10 @@ type CasbinApi struct{}
 // @Router /casbin/UpdateCasbin [post]
 func (cas *CasbinApi) UpdateCasbin(c *fiber.Ctx) error {
 	var cmr request.CasbinInReceive
-	_ = c.BodyParser(&cmr)
+	if err := c.BodyParser(&cmr); err != nil {
+		global.LOG.Error("获取数据失败!", zap.Error(err))
+		return response.FailWithMessage("获取数据失败", c)
+	}
 	if err := utils.Verify(cmr, utils.AuthorityIdVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
