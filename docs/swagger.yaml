@@ -287,76 +287,6 @@ definitions:
         description: 图片宽度
         type: integer
     type: object
-  frontend.Article:
-    properties:
-      content:
-        type: string
-      createdAt:
-        description: 创建时间
-        type: string
-      desc:
-        type: string
-      id:
-        description: 主键ID
-        type: integer
-      is_important:
-        type: integer
-      reading_quantity:
-        type: integer
-      state:
-        type: integer
-      tags:
-        items:
-          $ref: '#/definitions/frontend.Tag'
-        type: array
-      title:
-        type: string
-      updatedAt:
-        description: 更新时间
-        type: string
-      user:
-        $ref: '#/definitions/frontend.ArticleUser'
-      user_id:
-        type: integer
-    type: object
-  frontend.ArticleUser:
-    properties:
-      createdAt:
-        description: 创建时间
-        type: string
-      headerImg:
-        type: string
-      id:
-        description: 主键ID
-        type: integer
-      nickName:
-        type: string
-      updatedAt:
-        description: 更新时间
-        type: string
-      userName:
-        type: string
-    type: object
-  frontend.Tag:
-    properties:
-      aritcles:
-        items:
-          $ref: '#/definitions/frontend.Article'
-        type: array
-      createdAt:
-        description: 创建时间
-        type: string
-      id:
-        description: 主键ID
-        type: integer
-      name:
-        type: string
-      status:
-        type: integer
-      updatedAt:
-        description: 更新时间
-        type: string
-    type: object
   mobile.MobileUser:
     properties:
       avatar:
@@ -672,13 +602,6 @@ definitions:
       total:
         type: integer
     type: object
-  response.PolicyPathResponse:
-    properties:
-      paths:
-        items:
-          $ref: '#/definitions/request.CasbinInfo'
-        type: array
-    type: object
   response.Response:
     properties:
       code:
@@ -691,18 +614,6 @@ definitions:
     properties:
       file:
         $ref: '#/definitions/app.FileUploadAndDownload'
-    type: object
-  response.SysAPIListResponse:
-    properties:
-      apis:
-        items:
-          $ref: '#/definitions/system.SysApi'
-        type: array
-    type: object
-  response.SysAPIResponse:
-    properties:
-      api:
-        $ref: '#/definitions/system.SysApi'
     type: object
   response.SysAuthorityBtnRes:
     properties:
@@ -751,20 +662,6 @@ definitions:
         items:
           $ref: '#/definitions/system.SysMenu'
         type: array
-    type: object
-  response.SysUserResponse:
-    properties:
-      user:
-        $ref: '#/definitions/system.SysUser'
-    type: object
-  server-fiber_model_system_response.LoginResponse:
-    properties:
-      expiresAt:
-        type: integer
-      token:
-        type: string
-      user:
-        $ref: '#/definitions/system.SysUser'
     type: object
   system.AutoCodeStruct:
     properties:
@@ -1372,8 +1269,6 @@ paths:
             allOf:
             - $ref: '#/definitions/response.Response'
             - properties:
-                data:
-                  $ref: '#/definitions/response.SysAPIListResponse'
                 msg:
                   type: string
               type: object
@@ -1399,12 +1294,7 @@ paths:
         "200":
           description: 根据id获取api,返回包括api详情
           schema:
-            allOf:
-            - $ref: '#/definitions/response.Response'
-            - properties:
-                data:
-                  $ref: '#/definitions/response.SysAPIResponse'
-              type: object
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
       summary: 根据id获取api
@@ -2515,8 +2405,6 @@ paths:
             allOf:
             - $ref: '#/definitions/response.Response'
             - properties:
-                data:
-                  $ref: '#/definitions/server-fiber_model_system_response.LoginResponse'
                 msg:
                   type: string
               type: object
@@ -2541,8 +2429,6 @@ paths:
             allOf:
             - $ref: '#/definitions/response.Response'
             - properties:
-                data:
-                  $ref: '#/definitions/server-fiber_model_system_response.LoginResponse'
                 msg:
                   type: string
               type: object
@@ -2612,7 +2498,7 @@ paths:
       summary: 查找base message
       tags:
       - BaseMessage
-  /base_message/updateBaseMessage:
+  /base_message/updateBaseMessage/:id:
     put:
       consumes:
       - application/json
@@ -2725,7 +2611,7 @@ paths:
             - $ref: '#/definitions/response.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/response.PolicyPathResponse'
+                  type: string
                 msg:
                   type: string
               type: object
@@ -3540,11 +3426,10 @@ paths:
       - application/json
       parameters:
       - description: get单个Article
-        in: body
-        name: data
+        in: path
+        name: id
         required: true
-        schema:
-          $ref: '#/definitions/frontend.Article'
+        type: number
       produces:
       - application/json
       responses:
@@ -3562,12 +3447,67 @@ paths:
       consumes:
       - application/json
       parameters:
-      - description: Get Article
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/frontend.Article'
+      - in: query
+        name: content
+        type: string
+      - description: 创建时间
+        in: query
+        name: createdAt
+        type: string
+      - in: query
+        name: desc
+        type: string
+      - description: 主键ID
+        in: query
+        name: id
+        type: integer
+      - description: 是否为截图 1, 或 2
+        in: query
+        name: is_cropper
+        type: string
+      - in: query
+        name: is_important
+        type: integer
+      - description: 关键字
+        in: query
+        name: keyword
+        type: string
+      - in: query
+        name: name
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 每页大小
+        in: query
+        name: pageSize
+        type: integer
+      - in: query
+        name: proportion
+        type: string
+      - in: query
+        name: reading_quantity
+        type: integer
+      - in: query
+        name: sort
+        type: string
+      - in: query
+        name: state
+        type: integer
+      - in: query
+        name: title
+        type: string
+      - description: 更新时间
+        in: query
+        name: updatedAt
+        type: string
+      - in: query
+        name: user_id
+        type: integer
+      - in: query
+        name: value
+        type: string
       produces:
       - application/json
       responses:
@@ -3599,12 +3539,37 @@ paths:
         in: query
         name: id
         type: integer
+      - description: 是否为截图 1, 或 2
+        in: query
+        name: is_cropper
+        type: string
       - in: query
         name: is_important
         type: integer
+      - description: 关键字
+        in: query
+        name: keyword
+        type: string
+      - in: query
+        name: name
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 每页大小
+        in: query
+        name: pageSize
+        type: integer
+      - in: query
+        name: proportion
+        type: string
       - in: query
         name: reading_quantity
         type: integer
+      - in: query
+        name: sort
+        type: string
       - in: query
         name: state
         type: integer
@@ -3618,27 +3583,23 @@ paths:
       - in: query
         name: user_id
         type: integer
+      - in: query
+        name: value
+        type: string
       produces:
       - application/json
       responses:
         "200":
           description: 获得成功
           schema:
-            allOf:
-            - $ref: '#/definitions/response.Response'
-            - properties:
-                list:
-                  items:
-                    $ref: '#/definitions/frontend.Article'
-                  type: array
-              type: object
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
       summary: get单个Article
       tags:
       - Frontend Article
   /init/checkdb:
-    post:
+    get:
       produces:
       - application/json
       responses:
@@ -3654,7 +3615,7 @@ paths:
                 msg:
                   type: string
               type: object
-      summary: 初始化用户数据库
+      summary: 是否进行初始化
       tags:
       - CheckDB
   /init/initdb:
@@ -3786,8 +3747,8 @@ paths:
       summary: 删除菜单
       tags:
       - Menu
-  /menu/getBaseMenuById:
-    post:
+  /menu/getBaseMenuById/:id:
+    get:
       consumes:
       - application/json
       parameters:
@@ -3845,7 +3806,7 @@ paths:
       tags:
       - AuthorityMenu
   /menu/getMenu:
-    post:
+    get:
       parameters:
       - description: 空
         in: body
@@ -4220,7 +4181,7 @@ paths:
       summary: 创建SysDictionary
       tags:
       - SysDictionary
-  /sysDictionary/deleteSysDictionary:
+  /sysDictionary/deleteSysDictionary/:id:
     delete:
       consumes:
       - application/json
@@ -4248,7 +4209,7 @@ paths:
       summary: 删除SysDictionary
       tags:
       - SysDictionary
-  /sysDictionary/findSysDictionary:
+  /sysDictionary/findSysDictionary/:id:
     get:
       consumes:
       - application/json
@@ -4372,7 +4333,7 @@ paths:
       summary: 分页获取SysDictionary列表
       tags:
       - SysDictionary
-  /sysDictionary/updateSysDictionary:
+  /sysDictionary/updateSysDictionary/:id:
     put:
       consumes:
       - application/json
@@ -4428,7 +4389,7 @@ paths:
       summary: 创建SysDictionaryDetail
       tags:
       - SysDictionaryDetail
-  /sysDictionaryDetail/deleteSysDictionaryDetail:
+  /sysDictionaryDetail/deleteSysDictionaryDetail/:id:
     delete:
       consumes:
       - application/json
@@ -4456,7 +4417,7 @@ paths:
       summary: 删除SysDictionaryDetail
       tags:
       - SysDictionaryDetail
-  /sysDictionaryDetail/findSysDictionaryDetail:
+  /sysDictionaryDetail/findSysDictionaryDetail/:id:
     get:
       consumes:
       - application/json
@@ -4700,7 +4661,7 @@ paths:
       summary: 批量删除SysOperationRecord
       tags:
       - SysOperationRecord
-  /sysOperationRecord/findSysOperationRecord:
+  /sysOperationRecord/findSysOperationRecord/:id:
     get:
       consumes:
       - application/json
@@ -5026,9 +4987,6 @@ paths:
             allOf:
             - $ref: '#/definitions/response.Response'
             - properties:
-                data:
-                  additionalProperties: true
-                  type: object
                 msg:
                   type: string
               type: object
@@ -5055,8 +5013,6 @@ paths:
             allOf:
             - $ref: '#/definitions/response.Response'
             - properties:
-                data:
-                  $ref: '#/definitions/response.SysUserResponse'
                 msg:
                   type: string
               type: object
@@ -5119,7 +5075,7 @@ paths:
       summary: 创建User
       tags:
       - User
-  /user/deleteUser:
+  /user/deleteUser/:id:
     delete:
       consumes:
       - application/json
@@ -5177,7 +5133,7 @@ paths:
       summary: 批量删除User
       tags:
       - User
-  /user/findUser:
+  /user/findUser/:id:
     get:
       consumes:
       - application/json
@@ -5231,6 +5187,25 @@ paths:
       summary: 用id查询User
       tags:
       - User
+  /user/getUserCount:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取人员总数
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 获取人员总数
+      tags:
+      - SysUser
   /user/getUserInfo:
     get:
       consumes:
@@ -5244,9 +5219,6 @@ paths:
             allOf:
             - $ref: '#/definitions/response.Response'
             - properties:
-                data:
-                  additionalProperties: true
-                  type: object
                 msg:
                   type: string
               type: object
@@ -5260,26 +5232,6 @@ paths:
       consumes:
       - application/json
       parameters:
-      - in: query
-        name: content
-        type: string
-      - description: 创建时间
-        in: query
-        name: createdAt
-        type: string
-      - in: query
-        name: headImg
-        type: string
-      - in: query
-        name: header
-        type: string
-      - description: 主键ID
-        in: query
-        name: id
-        type: integer
-      - in: query
-        name: introduction
-        type: string
       - description: 是否为截图 1, 或 2
         in: query
         name: is_cropper
@@ -5287,9 +5239,6 @@ paths:
       - description: 关键字
         in: query
         name: keyword
-        type: string
-      - in: query
-        name: name
         type: string
       - description: 页码
         in: query
@@ -5300,51 +5249,8 @@ paths:
         name: pageSize
         type: integer
       - in: query
-        name: password
-        type: string
-      - in: query
         name: proportion
         type: string
-      - description: 更新时间
-        in: query
-        name: updatedAt
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: 获取成功
-          schema:
-            allOf:
-            - $ref: '#/definitions/response.Response'
-            - properties:
-                code:
-                  type: number
-                data:
-                  allOf:
-                  - $ref: '#/definitions/response.PageResult'
-                  - properties:
-                      list:
-                        $ref: '#/definitions/app.User'
-                    type: object
-                msg:
-                  type: string
-              type: object
-      security:
-      - ApiKeyAuth: []
-      summary: 分页获取User列表
-      tags:
-      - User
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: 页码, 每页大小
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/request.PageInfo'
       produces:
       - application/json
       responses:
@@ -5466,9 +5372,6 @@ paths:
             allOf:
             - $ref: '#/definitions/response.Response'
             - properties:
-                data:
-                  additionalProperties: true
-                  type: object
                 msg:
                   type: string
               type: object

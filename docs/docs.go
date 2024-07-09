@@ -246,9 +246,6 @@ const docTemplate = `{
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "data": {
-                                            "$ref": "#/definitions/response.SysAPIListResponse"
-                                        },
                                         "msg": {
                                             "type": "string"
                                         }
@@ -292,19 +289,7 @@ const docTemplate = `{
                     "200": {
                         "description": "根据id获取api,返回包括api详情",
                         "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/response.Response"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "$ref": "#/definitions/response.SysAPIResponse"
-                                        }
-                                    }
-                                }
-                            ]
+                            "$ref": "#/definitions/response.Response"
                         }
                     }
                 }
@@ -2229,9 +2214,6 @@ const docTemplate = `{
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "data": {
-                                            "$ref": "#/definitions/server-fiber_model_system_response.LoginResponse"
-                                        },
                                         "msg": {
                                             "type": "string"
                                         }
@@ -2274,9 +2256,6 @@ const docTemplate = `{
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "data": {
-                                            "$ref": "#/definitions/server-fiber_model_system_response.LoginResponse"
-                                        },
                                         "msg": {
                                             "type": "string"
                                         }
@@ -2398,7 +2377,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/base_message/updateBaseMessage": {
+        "/base_message/updateBaseMessage/:id": {
             "put": {
                 "security": [
                     {
@@ -2604,7 +2583,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/response.PolicyPathResponse"
+                                            "type": "string"
                                         },
                                         "msg": {
                                             "type": "string"
@@ -4038,13 +4017,11 @@ const docTemplate = `{
                 "summary": "get单个Article",
                 "parameters": [
                     {
+                        "type": "number",
                         "description": "get单个Article",
-                        "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/frontend.Article"
-                        }
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -4076,13 +4053,101 @@ const docTemplate = `{
                 "summary": "Get Article",
                 "parameters": [
                     {
-                        "description": "Get Article",
-                        "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/frontend.Article"
-                        }
+                        "type": "string",
+                        "name": "content",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "创建时间",
+                        "name": "createdAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "desc",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "主键ID",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "是否为截图 1, 或 2",
+                        "name": "is_cropper",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "is_important",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "关键字",
+                        "name": "keyword",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页码",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页大小",
+                        "name": "pageSize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "proportion",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "reading_quantity",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "state",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "title",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "更新时间",
+                        "name": "updatedAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "user_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "value",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -4136,13 +4201,52 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
+                        "type": "string",
+                        "description": "是否为截图 1, 或 2",
+                        "name": "is_cropper",
+                        "in": "query"
+                    },
+                    {
                         "type": "integer",
                         "name": "is_important",
                         "in": "query"
                     },
                     {
+                        "type": "string",
+                        "description": "关键字",
+                        "name": "keyword",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页码",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页大小",
+                        "name": "pageSize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "proportion",
+                        "in": "query"
+                    },
+                    {
                         "type": "integer",
                         "name": "reading_quantity",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "sort",
                         "in": "query"
                     },
                     {
@@ -4165,42 +4269,32 @@ const docTemplate = `{
                         "type": "integer",
                         "name": "user_id",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "value",
+                        "in": "query"
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "获得成功",
                         "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/response.Response"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "list": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/definitions/frontend.Article"
-                                            }
-                                        }
-                                    }
-                                }
-                            ]
+                            "$ref": "#/definitions/response.Response"
                         }
                     }
                 }
             }
         },
         "/init/checkdb": {
-            "post": {
+            "get": {
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "CheckDB"
                 ],
-                "summary": "初始化用户数据库",
+                "summary": "是否进行初始化",
                 "responses": {
                     "200": {
                         "description": "初始化用户数据库",
@@ -4458,8 +4552,8 @@ const docTemplate = `{
                 }
             }
         },
-        "/menu/getBaseMenuById": {
-            "post": {
+        "/menu/getBaseMenuById/:id": {
+            "get": {
                 "security": [
                     {
                         "ApiKeyAuth": []
@@ -4562,7 +4656,7 @@ const docTemplate = `{
             }
         },
         "/menu/getMenu": {
-            "post": {
+            "get": {
                 "security": [
                     {
                         "ApiKeyAuth": []
@@ -5195,7 +5289,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/sysDictionary/deleteSysDictionary": {
+        "/sysDictionary/deleteSysDictionary/:id": {
             "delete": {
                 "security": [
                     {
@@ -5245,7 +5339,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/sysDictionary/findSysDictionary": {
+        "/sysDictionary/findSysDictionary/:id": {
             "get": {
                 "security": [
                     {
@@ -5447,7 +5541,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/sysDictionary/updateSysDictionary": {
+        "/sysDictionary/updateSysDictionary/:id": {
             "put": {
                 "security": [
                     {
@@ -5547,7 +5641,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/sysDictionaryDetail/deleteSysDictionaryDetail": {
+        "/sysDictionaryDetail/deleteSysDictionaryDetail/:id": {
             "delete": {
                 "security": [
                     {
@@ -5597,7 +5691,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/sysDictionaryDetail/findSysDictionaryDetail": {
+        "/sysDictionaryDetail/findSysDictionaryDetail/:id": {
             "get": {
                 "security": [
                     {
@@ -6011,7 +6105,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/sysOperationRecord/findSysOperationRecord": {
+        "/sysOperationRecord/findSysOperationRecord/:id": {
             "get": {
                 "security": [
                     {
@@ -6553,10 +6647,6 @@ const docTemplate = `{
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "data": {
-                                            "type": "object",
-                                            "additionalProperties": true
-                                        },
                                         "msg": {
                                             "type": "string"
                                         }
@@ -6599,9 +6689,6 @@ const docTemplate = `{
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "data": {
-                                            "$ref": "#/definitions/response.SysUserResponse"
-                                        },
                                         "msg": {
                                             "type": "string"
                                         }
@@ -6713,7 +6800,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/user/deleteUser": {
+        "/user/deleteUser/:id": {
             "delete": {
                 "security": [
                     {
@@ -6816,7 +6903,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/user/findUser": {
+        "/user/findUser/:id": {
             "get": {
                 "security": [
                     {
@@ -6908,6 +6995,42 @@ const docTemplate = `{
                 }
             }
         },
+        "/user/getUserCount": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SysUser"
+                ],
+                "summary": "获取人员总数",
+                "responses": {
+                    "200": {
+                        "description": "获取人员总数",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/user/getUserInfo": {
             "get": {
                 "security": [
@@ -6936,10 +7059,6 @@ const docTemplate = `{
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "data": {
-                                            "type": "object",
-                                            "additionalProperties": true
-                                        },
                                         "msg": {
                                             "type": "string"
                                         }
@@ -6965,42 +7084,10 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User"
+                    "SysUser"
                 ],
-                "summary": "分页获取User列表",
+                "summary": "分页获取用户列表",
                 "parameters": [
-                    {
-                        "type": "string",
-                        "name": "content",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "创建时间",
-                        "name": "createdAt",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "name": "headImg",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "name": "header",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "主键ID",
-                        "name": "id",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "name": "introduction",
-                        "in": "query"
-                    },
                     {
                         "type": "string",
                         "description": "是否为截图 1, 或 2",
@@ -7011,11 +7098,6 @@ const docTemplate = `{
                         "type": "string",
                         "description": "关键字",
                         "name": "keyword",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "name": "name",
                         "in": "query"
                     },
                     {
@@ -7032,85 +7114,8 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "name": "password",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
                         "name": "proportion",
                         "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "更新时间",
-                        "name": "updatedAt",
-                        "in": "query"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "获取成功",
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/response.Response"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "code": {
-                                            "type": "number"
-                                        },
-                                        "data": {
-                                            "allOf": [
-                                                {
-                                                    "$ref": "#/definitions/response.PageResult"
-                                                },
-                                                {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "list": {
-                                                            "$ref": "#/definitions/app.User"
-                                                        }
-                                                    }
-                                                }
-                                            ]
-                                        },
-                                        "msg": {
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                }
-            },
-            "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "SysUser"
-                ],
-                "summary": "分页获取用户列表",
-                "parameters": [
-                    {
-                        "description": "页码, 每页大小",
-                        "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.PageInfo"
-                        }
                     }
                 ],
                 "responses": {
@@ -7324,10 +7329,6 @@ const docTemplate = `{
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "data": {
-                                            "type": "object",
-                                            "additionalProperties": true
-                                        },
                                         "msg": {
                                             "type": "string"
                                         }
@@ -7816,108 +7817,6 @@ const docTemplate = `{
                 }
             }
         },
-        "frontend.Article": {
-            "type": "object",
-            "properties": {
-                "content": {
-                    "type": "string"
-                },
-                "createdAt": {
-                    "description": "创建时间",
-                    "type": "string"
-                },
-                "desc": {
-                    "type": "string"
-                },
-                "id": {
-                    "description": "主键ID",
-                    "type": "integer"
-                },
-                "is_important": {
-                    "type": "integer"
-                },
-                "reading_quantity": {
-                    "type": "integer"
-                },
-                "state": {
-                    "type": "integer"
-                },
-                "tags": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/frontend.Tag"
-                    }
-                },
-                "title": {
-                    "type": "string"
-                },
-                "updatedAt": {
-                    "description": "更新时间",
-                    "type": "string"
-                },
-                "user": {
-                    "$ref": "#/definitions/frontend.ArticleUser"
-                },
-                "user_id": {
-                    "type": "integer"
-                }
-            }
-        },
-        "frontend.ArticleUser": {
-            "type": "object",
-            "properties": {
-                "createdAt": {
-                    "description": "创建时间",
-                    "type": "string"
-                },
-                "headerImg": {
-                    "type": "string"
-                },
-                "id": {
-                    "description": "主键ID",
-                    "type": "integer"
-                },
-                "nickName": {
-                    "type": "string"
-                },
-                "updatedAt": {
-                    "description": "更新时间",
-                    "type": "string"
-                },
-                "userName": {
-                    "type": "string"
-                }
-            }
-        },
-        "frontend.Tag": {
-            "type": "object",
-            "properties": {
-                "aritcles": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/frontend.Article"
-                    }
-                },
-                "createdAt": {
-                    "description": "创建时间",
-                    "type": "string"
-                },
-                "id": {
-                    "description": "主键ID",
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "status": {
-                    "type": "integer"
-                },
-                "updatedAt": {
-                    "description": "更新时间",
-                    "type": "string"
-                }
-            }
-        },
         "mobile.MobileUser": {
             "type": "object",
             "properties": {
@@ -8376,17 +8275,6 @@ const docTemplate = `{
                 }
             }
         },
-        "response.PolicyPathResponse": {
-            "type": "object",
-            "properties": {
-                "paths": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/request.CasbinInfo"
-                    }
-                }
-            }
-        },
         "response.Response": {
             "type": "object",
             "properties": {
@@ -8404,25 +8292,6 @@ const docTemplate = `{
             "properties": {
                 "file": {
                     "$ref": "#/definitions/app.FileUploadAndDownload"
-                }
-            }
-        },
-        "response.SysAPIListResponse": {
-            "type": "object",
-            "properties": {
-                "apis": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/system.SysApi"
-                    }
-                }
-            }
-        },
-        "response.SysAPIResponse": {
-            "type": "object",
-            "properties": {
-                "api": {
-                    "$ref": "#/definitions/system.SysApi"
                 }
             }
         },
@@ -8498,28 +8367,6 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/system.SysMenu"
                     }
-                }
-            }
-        },
-        "response.SysUserResponse": {
-            "type": "object",
-            "properties": {
-                "user": {
-                    "$ref": "#/definitions/system.SysUser"
-                }
-            }
-        },
-        "server-fiber_model_system_response.LoginResponse": {
-            "type": "object",
-            "properties": {
-                "expiresAt": {
-                    "type": "integer"
-                },
-                "token": {
-                    "type": "string"
-                },
-                "user": {
-                    "$ref": "#/definitions/system.SysUser"
                 }
             }
         },

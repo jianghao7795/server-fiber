@@ -21,7 +21,7 @@ import (
 // @Summary 用户登录
 // @Produce  application/json
 // @Param data body systemReq.Login true "用户名, 密码, 验证码"
-// @Success 200 {object} response.Response{data=systemRes.LoginResponse,msg=string} "返回包括用户信息,token,过期时间"
+// @Success 200 {object} response.Response{msg=string} "返回包括用户信息,token,过期时间"
 // @Router /base/login [post]
 func (b *BaseApi) Login(c *fiber.Ctx) error {
 	var l systemReq.Login
@@ -47,7 +47,7 @@ func (b *BaseApi) Login(c *fiber.Ctx) error {
 // @Summary 用户登录 获取token
 // @Produce  application/json
 // @Param data body systemReq.Login true "用户名, 密码"
-// @Success 200 {object} response.Response{data=systemRes.LoginResponse,msg=string} "返回包括用户信息,token,过期时间"
+// @Success 200 {object} response.Response{msg=string} "返回包括用户信息,token,过期时间"
 // @Router /base/getToken/login [post]
 func (b *BaseApi) LoginToken(c *fiber.Ctx) error {
 	var l systemReq.LoginToken
@@ -122,7 +122,7 @@ func (b *BaseApi) tokenNext(c *fiber.Ctx, user system.SysUser) error {
 // @Summary 用户注册账号
 // @Produce  application/json
 // @Param data body systemReq.Register true "用户名, 昵称, 密码, 角色ID"
-// @Success 200 {object} response.Response{data=systemRes.SysUserResponse,msg=string} "用户注册账号,返回包括用户信息"
+// @Success 200 {object} response.Response{msg=string} "用户注册账号,返回包括用户信息"
 // @Router /user/admin_register [post]
 func (b *BaseApi) Register(c *fiber.Ctx) error {
 	var r systemReq.Register
@@ -175,9 +175,9 @@ func (b *BaseApi) ChangePassword(c *fiber.Ctx) error {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body request.PageInfo true "页码, 每页大小"
+// @Param query query request.PageInfo true "页码, 每页大小"
 // @Success 200 {object} response.Response{data=response.PageResult,msg=string} "分页获取用户列表,返回包括列表,总数,页码,每页数量"
-// @Router /user/getUserList [post]
+// @Router /user/getUserList [get]
 func (b *BaseApi) GetUserList(c *fiber.Ctx) error {
 	var searchInfo systemReq.SearchInfo
 	_ = c.QueryParser(&searchInfo)
@@ -283,7 +283,7 @@ func (b *BaseApi) DeleteUser(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data body system.SysUser true "ID, 用户名, 昵称, 头像链接"
-// @Success 200 {object} response.Response{data=map[string]interface{},msg=string} "设置用户信息"
+// @Success 200 {object} response.Response{msg=string} "设置用户信息"
 // @Router /user/setUserInfo [put]
 func (b *BaseApi) SetUserInfo(c *fiber.Ctx) error {
 	var user systemReq.ChangeUserInfo
@@ -323,7 +323,7 @@ func (b *BaseApi) SetUserInfo(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data body system.SysUser true "ID, 用户名, 昵称, 头像链接"
-// @Success 200 {object} response.Response{data=map[string]interface{},msg=string} "设置用户信息"
+// @Success 200 {object} response.Response{msg=string} "设置用户信息"
 // @Router /user/SetSelfInfo [put]
 func (b *BaseApi) SetSelfInfo(c *fiber.Ctx) error {
 	var user systemReq.ChangeUserInfo
@@ -351,7 +351,7 @@ func (b *BaseApi) SetSelfInfo(c *fiber.Ctx) error {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Success 200 {object} response.Response{data=map[string]interface{},msg=string} "获取用户信息"
+// @Success 200 {object} response.Response{msg=string} "获取用户信息"
 // @Router /user/getUserInfo [get]
 func (b *BaseApi) GetUserInfo(c *fiber.Ctx) error {
 	uuid := utils.GetUserUuid(c)
@@ -387,7 +387,7 @@ func (b *BaseApi) ResetPassword(c *fiber.Ctx) error {
 // @Summary 获取人员总数
 // @Security ApiKeyAuth
 // @Produce  application/json
-// @Success 200 {object} return response.Response{data=string} "获取人员总数"
+// @Success 200 {object} response.Response{msg=string} "获取人员总数"
 // @Router /user/getUserCount [get]
 func (b *BaseApi) GetUserCount(c *fiber.Ctx) error {
 	if userCount, err := userService.UserCount(); err != nil {

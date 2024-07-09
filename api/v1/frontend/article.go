@@ -2,12 +2,13 @@ package frontend
 
 import (
 	"errors"
-	"github.com/gofiber/fiber/v2"
-	"go.uber.org/zap"
-	"gorm.io/gorm"
 	"server-fiber/global"
 	"server-fiber/model/common/response"
 	"server-fiber/model/frontend/request"
+
+	"github.com/gofiber/fiber/v2"
+	"go.uber.org/zap"
+	"gorm.io/gorm"
 )
 
 type ArticleApi struct{}
@@ -19,7 +20,7 @@ type ArticleApi struct{}
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body frontend.Article true "Get Article"
+// @Param query query request.ArticleSearch true "Get Article"
 // @Success 200 {string} string "{"success":true, "msg":"获得成功"}"
 // @Router /getArticleList [get]
 func (s *ArticleApi) GetArticleList(c *fiber.Ctx) error {
@@ -52,7 +53,7 @@ func (s *ArticleApi) GetArticleList(c *fiber.Ctx) error {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body frontend.Article true "get单个Article"
+// @Param id path number true "get单个Article"
 // @Success 200 {string} string "{"success":true, "msg":"获得成功"}"
 // @Router /getArticle/:id [get]
 func (s *ArticleApi) GetArticleDetail(c *fiber.Ctx) error {
@@ -82,8 +83,8 @@ func (s *ArticleApi) GetArticleDetail(c *fiber.Ctx) error {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data query frontend.Article true "Search Article"
-// @Success 200 {object} response.Response{list=[]frontend.Article} "获得成功"
+// @Param query query request.ArticleSearch true "Search Article"
+// @Success 200 {object} response.Response{string} "获得成功"
 // @Router /getSearchArticle/:name/:value [get]
 func (s *ArticleApi) GetSearchArticle(c *fiber.Ctx) error {
 	var searchValue request.ArticleSearch
