@@ -42,7 +42,10 @@ type User struct{}
 
 func (b *User) Login(c *fiber.Ctx) error {
 	var l systemReq.Login
-	_ = c.BodyParser(&l)
+	if err := c.BodyParser(&l); err != nil {
+		global.LOG.Error("获取数据失败", zap.Error(err))
+		return response.FailWithMessage("获取数据失败", c)
+	}
 	if err := utils.Verify(l, utils.LoginVerifyFrontend); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}

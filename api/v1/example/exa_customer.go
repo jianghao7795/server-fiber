@@ -22,7 +22,11 @@ import (
 // @Router /customer/customer [post]
 func (e *CustomerApi) CreateExaCustomer(c *fiber.Ctx) error {
 	var customer example.ExaCustomer
-	_ = c.BodyParser(&customer)
+	if err := c.BodyParser(&customer); err != nil {
+		global.LOG.Error("获取数据失败", zap.Error(err))
+		return response.FailWithMessage("获取数据失败", c)
+	}
+
 	if err := utils.Verify(customer, utils.CustomerVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
