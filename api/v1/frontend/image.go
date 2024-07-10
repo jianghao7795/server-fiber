@@ -1,10 +1,11 @@
 package frontend
 
 import (
-	"github.com/gofiber/fiber/v2"
-	"go.uber.org/zap"
 	"server-fiber/global"
 	"server-fiber/model/common/response"
+
+	"github.com/gofiber/fiber/v2"
+	"go.uber.org/zap"
 )
 
 func (u *User) GetImages(c *fiber.Ctx) error {

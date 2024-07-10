@@ -18,16 +18,19 @@ type LoginApi struct{}
 
 func (*LoginApi) Login(c *fiber.Ctx) error {
 	var l mobile.Login
-	_ = c.BodyParser(&l)
-	if err := utils.Verify(l, utils.MobileLoginVerify); err != nil {
+	if err := c.BodyParser(&l); err != nil {
+		global.LOG.Error("获取登录数据失败", zap.Error(err))
+		return response.FailWithMessage("获取登录数据失败", c)
+	}
+	if err := utils.Verify(l, utils.MobileLoginVerify); err != nil { // 验证用户密码的规则
 		return response.FailWithMessage(err.Error(), c)
 	}
-	token, err := loginService.Login(l)
+	loginResponse, err := loginService.Login(l)
 	if err != nil {
 		global.LOG.Error("登陆失败! 用户名不存在或者密码错误!", zap.Error(err))
 		return response.FailWithMessage400("用户名不存在或者密码错误", c)
 	} else {
-		return response.OkWithDetailed(token, "登录成功", c)
+		return response.OkWithDetailed(loginResponse, "登录成功", c)
 	}
 
 }
@@ -57,7 +60,8 @@ func (*LoginApi) UpdateMobileUser(c *fiber.Ctx) error {
 	authorization := c.Get("user_id") // user_id 在请求头信息中
 
 	if authorization == "" {
-		return response.FailWithDetailed400(map[string]string{"id": "0"}, "更新失败", c)
+		global.LOG.Error("获取User_id 失败")
+		return response.FailWithDetailed400(fiber.Map{"id": 0}, "更新失败", c)
 	} else {
 		authId, _ := strconv.Atoi(authorization)
 		if err := loginService.UpdateUser(&data, uint(authId)); err != nil {

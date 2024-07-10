@@ -29,7 +29,10 @@ import (
 func (u *FileUploadAndDownloadApi) UploadFile(c *fiber.Ctx) error {
 	var file example.ExaFileUploadAndDownload
 	noSave := c.Query("noSave", "0")
-	isCropper, _ := strconv.Atoi(c.Query("is_cropper", "1"))
+	isCropper, err := strconv.Atoi(c.Query("is_cropper", "1"))
+	if err != nil {
+		global.LOG.Error("获取是否为裁剪图片失败", zap.Error(err))
+	}
 	fileImages, err := c.FormFile("file")
 	if err != nil {
 		global.LOG.Error("接收文件失败!", zap.Error(err))
@@ -78,8 +81,7 @@ func (u *FileUploadAndDownloadApi) UploadFile(c *fiber.Ctx) error {
 // EditFileName 编辑文件名或者备注
 func (u *FileUploadAndDownloadApi) EditFileName(c *fiber.Ctx) error {
 	var data example.ExaFileUploadAndDownload
-	err := c.BodyParser(&data)
-	if err != nil {
+	if err := c.BodyParser(&data); err != nil {
 		global.LOG.Error("获取文件失败!", zap.Error(err))
 		return response.FailWithMessage("获取文件失败"+err.Error(), c)
 	}

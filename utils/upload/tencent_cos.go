@@ -30,6 +30,7 @@ func (*TencentCOS) UploadFile(file *multipart.FileHeader) (string, string, error
 
 	_, err := client.Object.Put(context.Background(), global.CONFIG.TencentCOS.PathPrefix+"/"+fileKey, f, nil)
 	if err != nil {
+		global.LOG.Error("上传腾讯失败", zap.Error(err))
 		panic(err)
 	}
 	return global.CONFIG.TencentCOS.BaseURL + "/" + global.CONFIG.TencentCOS.PathPrefix + "/" + fileKey, fileKey, nil
@@ -40,11 +41,12 @@ func (*TencentCOS) DeleteFile(key string) error {
 	client := NewClient()
 	name := global.CONFIG.TencentCOS.PathPrefix + "/" + key
 	_, err := client.Object.Delete(context.Background(), name)
+
 	if err != nil {
 		global.LOG.Error("function bucketManager.Delete() Filed", zap.Any("err", err.Error()))
 		return errors.New("function bucketManager.Delete() Filed, err:" + err.Error())
 	}
-	return nil
+	return err
 }
 
 // NewClient init COS client

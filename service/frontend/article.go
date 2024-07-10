@@ -165,7 +165,10 @@ func (s *Article) GetSearchArticle(info *frontendReq.ArticleSearch) (list []fron
 	if info.Name == "tags" {
 		// 多对多关联 Association
 		var id uint
-		global.DB.Model(&frontend.Tag{}).Select("id").Where("name = ?", text).First(&id)
+		err = global.DB.Model(&frontend.Tag{}).Select("id").Where("name = ?", text).First(&id).Error
+		if err != nil {
+			return nil, err
+		}
 		dbTag := &frontend.Tag{MODEL: global.MODEL{ID: id}}
 		if info.Sort != "" {
 			err = global.DB.Model(dbTag).Preload("Tags").Order(sortField[info.Sort] + " desc").Association("Articles").Find(&list)

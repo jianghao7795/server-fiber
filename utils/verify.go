@@ -1,5 +1,6 @@
 package utils
 
+// 验证规则
 var (
 	IdVerify                    = Rules{"ID": {NotEmpty()}}
 	ApiVerify                   = Rules{"Path": {NotEmpty()}, "Description": {NotEmpty()}, "ApiGroup": {NotEmpty()}, "Method": {NotEmpty()}}

@@ -25,7 +25,10 @@ type AuthorityApi struct{}
 // @Router /authority/createAuthority [post]
 func (a *AuthorityApi) CreateAuthority(c *fiber.Ctx) error {
 	var authority system.SysAuthority
-	_ = c.BodyParser(&authority)
+	if err := c.BodyParser(&authority); err != nil {
+		global.LOG.Error("获取更新数据失败", zap.Error(err))
+		return response.FailWithMessage("获取更新数据失败", c)
+	}
 	if err := utils.Verify(authority, utils.AuthorityVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
@@ -33,8 +36,13 @@ func (a *AuthorityApi) CreateAuthority(c *fiber.Ctx) error {
 		global.LOG.Error("创建失败!", zap.Error(err))
 		return response.FailWithMessage("创建失败"+err.Error(), c)
 	} else {
-		_ = menuService.AddMenuAuthority(systemReq.DefaultMenu(), authority.AuthorityId)
-		_ = casbinService.UpdateCasbin(authority.AuthorityId, systemReq.DefaultCasbin())
+		if err := menuService.AddMenuAuthority(systemReq.DefaultMenu(), authority.AuthorityId); err != nil {
+			global.LOG.Warn("菜单授权失败", zap.Any("err: ", err))
+		}
+
+		if err := casbinService.UpdateCasbin(authority.AuthorityId, systemReq.DefaultCasbin()); err != nil {
+			global.LOG.Warn("Casbin 接口授权失败", zap.Any("err: ", err))
+		}
 		return response.OkWithDetailed(systemRes.SysAuthorityResponse{Authority: authBack}, "创建成功", c)
 	}
 }
