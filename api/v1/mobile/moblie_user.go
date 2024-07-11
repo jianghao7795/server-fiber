@@ -28,7 +28,7 @@ func (userApi *UserApi) CreateMobileUser(c *fiber.Ctx) error {
 		global.LOG.Error("获取用户数据失败", zap.Error(err))
 		return response.FailWithMessage("获取用户数据失败", c)
 	}
-	if err := userService.CreateMobileUser(mobileUser); err != nil {
+	if err := userService.CreateMobileUser(&mobileUser); err != nil {
 		global.LOG.Error("创建失败!", zap.Error(err))
 		return response.FailWithMessage("创建失败", c)
 	} else {
@@ -93,7 +93,7 @@ func (userApi *UserApi) UpdateMobileUser(c *fiber.Ctx) error {
 		global.LOG.Error("获取用户信息失败", zap.Error(err))
 		return response.FailWithMessage("获取用户信息失败", c)
 	}
-	if err := userService.UpdateMobileUser(mobileUser); err != nil {
+	if err := userService.UpdateMobileUser(&mobileUser); err != nil {
 		global.LOG.Error("更新失败!", zap.Error(err))
 		return response.FailWithMessage("更新失败", c)
 	} else {
@@ -136,7 +136,7 @@ func (userApi *UserApi) FindMobileUser(c *fiber.Ctx) error {
 func (userApi *UserApi) GetMobileUserList(c *fiber.Ctx) error {
 	var pageInfo mobileReq.MobileUserSearch
 	_ = c.QueryParser(&pageInfo)
-	if list, total, err := userService.GetMobileUserInfoList(pageInfo); err != nil {
+	if list, total, err := userService.GetMobileUserInfoList(&pageInfo); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败", c)
 	} else {

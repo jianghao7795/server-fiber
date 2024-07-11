@@ -12,9 +12,13 @@ type MobileUserService struct{}
 
 // CreateMobileUser 创建MobileUser记录
 // Author [jianghao](https://github.com/JiangHaoCode)
-func (mobileUserService *MobileUserService) CreateMobileUser(mobileUser mobile.MobileUser) (err error) {
-	err = global.DB.Create(&mobileUser).Error
-	return err
+func (mobileUserService *MobileUserService) CreateMobileUser(mobileUser *mobile.MobileUser) (err error) {
+	var waitUser mobile.MobileUser
+	db := global.DB.Where("username = ?", mobileUser.Username).Where("phone = ?", mobileUser.Phone).Where("realname = ?", mobileUser.Realname).First(&waitUser)
+	if waitUser.ID != 0 {
+		return errors.New("用户已存在")
+	}
+	return db.Create(&mobileUser).Error
 }
 
 // DeleteMobileUser 删除MobileUser记录
@@ -33,13 +37,13 @@ func (mobileUserService *MobileUserService) DeleteMobileUserByIds(ids request.Id
 
 // UpdateMobileUser 更新MobileUser记录
 // Author [jianghao](https://github.com/JiangHaoCode)
-func (mobileUserService *MobileUserService) UpdateMobileUser(mobileUser mobile.MobileUser) (err error) {
+func (mobileUserService *MobileUserService) UpdateMobileUser(mobileUser *mobile.MobileUser) (err error) {
 	var waitUpdate mobile.MobileUser
 	db := global.DB.Where("id = ?", mobileUser.ID).First(&waitUpdate)
 	if waitUpdate.ID == 0 {
 		return errors.New("不存在用户")
 	}
-	return db.Save(&mobileUser).Error
+	return db.Save(mobileUser).Error
 }
 
 // GetMobileUser 根据id获取MobileUser记录
@@ -51,7 +55,7 @@ func (mobileUserService *MobileUserService) GetMobileUser(id uint) (mobileUser m
 
 // GetMobileUserInfoList 分页获取MobileUser记录
 // Author [jianghao](https://github.com/JiangHaoCode)
-func (mobileUserService *MobileUserService) GetMobileUserInfoList(info mobileReq.MobileUserSearch) (list []mobile.MobileUser, total int64, err error) {
+func (mobileUserService *MobileUserService) GetMobileUserInfoList(info *mobileReq.MobileUserSearch) (list []mobile.MobileUser, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	// 创建db
