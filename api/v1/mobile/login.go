@@ -64,6 +64,9 @@ func (*LoginApi) UpdateMobileUser(c *fiber.Ctx) error {
 		return response.FailWithDetailed400(fiber.Map{"id": 0}, "更新失败", c)
 	} else {
 		authId, _ := strconv.Atoi(authorization)
+		if authId == 0 {
+			global.LOG.Error("user_id 转化错误")
+		}
 		if err := loginService.UpdateUser(&data, uint(authId)); err != nil {
 			global.LOG.Error("更新用户失败!", zap.Error(err))
 			return response.FailWithMessage("更新用户失败", c)

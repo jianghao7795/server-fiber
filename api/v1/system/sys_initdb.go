@@ -1,8 +1,6 @@
 package system
 
 import (
-	"context"
-
 	"server-fiber/global"
 	"server-fiber/model/app"
 	"server-fiber/model/common/response"
@@ -13,7 +11,6 @@ import (
 	adapter "github.com/casbin/gorm-adapter/v3"
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
-	"gorm.io/gorm"
 )
 
 type DBApi struct{}
@@ -50,28 +47,28 @@ func (i *DBApi) InitDB(c *fiber.Ctx) error {
 // @Router /init/checkdb [get]
 func (i *DBApi) CheckDB(c *fiber.Ctx) error {
 	var (
-		message  = "前往初始化数据库"
+		message  = ""
 		needInit = true
 	)
 
-	if global.DB != nil {
+	if global.DB == nil {
 		message = "数据库连接失败"
 		needInit = false
 	}
-	if i.hasTable(c.Context()) {
-		global.LOG.Info("数据库初始化成功：" + message)
+	if i.hasTable() {
+		global.LOG.Info("数据库初始化成功")
+		message = "数据库初始化成功"
 		return response.OkWithDetailed(needInit, message, c)
+	} else {
+		message = "数据库初始化失败：请查看后台日志"
+		needInit = true
 	}
 	global.LOG.Error(message)
 	return response.FailWithDetailed400(needInit, message, c)
 }
 
 // hasTable检查数据库中是否存在表
-func (initDB *DBApi) hasTable(ctx context.Context) bool {
-	db, ok := ctx.Value("db").(*gorm.DB)
-	if !ok {
-		return false
-	}
+func (initDB *DBApi) hasTable() bool {
 	tables := []interface{}{
 		sysModel.SysApi{},
 		sysModel.SysUser{},
@@ -105,8 +102,7 @@ func (initDB *DBApi) hasTable(ctx context.Context) bool {
 	}
 	yes := true
 	for _, t := range tables {
-		yes = yes && db.Migrator().HasTable(t)
-
+		yes = yes && global.DB.Migrator().HasTable(t)
 	}
 	return yes
 }

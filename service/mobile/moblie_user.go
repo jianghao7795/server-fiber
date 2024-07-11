@@ -1,6 +1,7 @@
 package mobile
 
 import (
+	"errors"
 	"server-fiber/global"
 	"server-fiber/model/common/request"
 	"server-fiber/model/mobile"
@@ -33,8 +34,12 @@ func (mobileUserService *MobileUserService) DeleteMobileUserByIds(ids request.Id
 // UpdateMobileUser 更新MobileUser记录
 // Author [jianghao](https://github.com/JiangHaoCode)
 func (mobileUserService *MobileUserService) UpdateMobileUser(mobileUser mobile.MobileUser) (err error) {
-	err = global.DB.Save(&mobileUser).Error
-	return err
+	var waitUpdate mobile.MobileUser
+	db := global.DB.Where("id = ?", mobileUser.ID).First(&waitUpdate)
+	if waitUpdate.ID == 0 {
+		return errors.New("不存在用户")
+	}
+	return db.Save(&mobileUser).Error
 }
 
 // GetMobileUser 根据id获取MobileUser记录

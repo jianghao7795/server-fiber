@@ -1,13 +1,14 @@
 package mobile
 
 import (
-	"github.com/gofiber/fiber/v2"
-	"go.uber.org/zap"
 	"server-fiber/global"
 	"server-fiber/model/common/request"
 	"server-fiber/model/common/response"
 	"server-fiber/model/mobile"
 	mobileReq "server-fiber/model/mobile/request"
+
+	"github.com/gofiber/fiber/v2"
+	"go.uber.org/zap"
 )
 
 type UserApi struct{}
@@ -23,7 +24,10 @@ type UserApi struct{}
 // @Router /mobileUser/createMobileUser [post]
 func (userApi *UserApi) CreateMobileUser(c *fiber.Ctx) error {
 	var mobileUser mobile.MobileUser
-	_ = c.BodyParser(&mobileUser)
+	if err := c.BodyParser(&mobileUser); err != nil {
+		global.LOG.Error("获取用户数据失败", zap.Error(err))
+		return response.FailWithMessage("获取用户数据失败", c)
+	}
 	if err := userService.CreateMobileUser(mobileUser); err != nil {
 		global.LOG.Error("创建失败!", zap.Error(err))
 		return response.FailWithMessage("创建失败", c)
@@ -62,7 +66,10 @@ func (userApi *UserApi) DeleteMobileUser(c *fiber.Ctx) error {
 // @Router /mobileUser/deleteMobileUserByIds [delete]
 func (userApi *UserApi) DeleteMobileUserByIds(c *fiber.Ctx) error {
 	var IDS request.IdsReq
-	_ = c.QueryParser(&IDS)
+	if err := c.BodyParser(&IDS); err != nil {
+		global.LOG.Error("获取id失败", zap.Error(err))
+		return response.FailWithMessage("批量获取id失败", c)
+	}
 	if err := userService.DeleteMobileUserByIds(IDS); err != nil {
 		global.LOG.Error("批量删除失败!", zap.Error(err))
 		return response.FailWithMessage("批量删除失败", c)
@@ -82,7 +89,10 @@ func (userApi *UserApi) DeleteMobileUserByIds(c *fiber.Ctx) error {
 // @Router /mobileUser/updateMobileUser [put]
 func (userApi *UserApi) UpdateMobileUser(c *fiber.Ctx) error {
 	var mobileUser mobile.MobileUser
-	_ = c.BodyParser(&mobileUser)
+	if err := c.BodyParser(&mobileUser); err != nil {
+		global.LOG.Error("获取用户信息失败", zap.Error(err))
+		return response.FailWithMessage("获取用户信息失败", c)
+	}
 	if err := userService.UpdateMobileUser(mobileUser); err != nil {
 		global.LOG.Error("更新失败!", zap.Error(err))
 		return response.FailWithMessage("更新失败", c)
@@ -99,9 +109,13 @@ func (userApi *UserApi) UpdateMobileUser(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data query mobile.MobileUser true "用id查询MobileUser"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"查询成功"}"
-// @Router /mobileUser/findMobileUser [get]
+// @Router /mobileUser/findMobileUser/:id [get]
 func (userApi *UserApi) FindMobileUser(c *fiber.Ctx) error {
-	id, _ := c.ParamsInt("id")
+	id, err := c.ParamsInt("id")
+	if err != nil {
+		global.LOG.Error("获取id失败", zap.Error(err))
+		return response.FailWithMessage("获取id失败", c)
+	}
 	if mobileUser, err := userService.GetMobileUser(uint(id)); err != nil {
 		global.LOG.Error("查询失败!", zap.Error(err))
 		return response.FailWithMessage("查询失败", c)

@@ -23,7 +23,7 @@ func Redis() error {
 
 	ctx := context.Background()
 	pong, err := client.Ping(ctx).Result()
-	redisExample2(client, ctx)
+	// redisExample2(client, ctx)
 
 	if err != nil {
 		global.LOG.Error("redis connect ping failed, err:", zap.Error(err))
@@ -35,7 +35,7 @@ func Redis() error {
 	return err
 }
 
-func redisExample2(rdb *redis.Client, ctx context.Context) {
+func RedisExample2(rdb *redis.Client, ctx context.Context) {
 	zsetKey := "language_rank"
 	languages := []redis.Z{
 		{Score: 90.0, Member: "Golang"},
