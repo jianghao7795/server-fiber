@@ -25,7 +25,7 @@ func (*LoginApi) Login(c *fiber.Ctx) error {
 	if err := utils.Verify(l, utils.MobileLoginVerify); err != nil { // 验证用户密码的规则
 		return response.FailWithMessage(err.Error(), c)
 	}
-	loginResponse, err := loginService.Login(l)
+	loginResponse, err := loginService.Login(&l)
 	if err != nil {
 		global.LOG.Error("登陆失败! 用户名不存在或者密码错误!", zap.Error(err))
 		return response.FailWithMessage400("用户名不存在或者密码错误", c)

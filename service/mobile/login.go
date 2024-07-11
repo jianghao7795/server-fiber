@@ -13,7 +13,7 @@ import (
 
 type MobileLoginService struct{}
 
-func (*MobileLoginService) Login(data mobile.Login) (m response.LoginResponse, err error) {
+func (*MobileLoginService) Login(data *mobile.Login) (m response.LoginResponse, err error) {
 	var user mobile.MobileUser
 	// data.Password = utils.MD5V([]byte(data.Password))
 	err = global.DB.Where("username = ? and password = ?", data.Username, data.Password).First(&user).Error
@@ -23,7 +23,7 @@ func (*MobileLoginService) Login(data mobile.Login) (m response.LoginResponse, e
 
 	j := utils.NewJWT()
 
-	tokenString, expiresAt, err := j.MakeToken(data, user.ID)
+	tokenString, expiresAt, err := j.MakeToken(*data, user.ID)
 	if err != nil {
 		return
 	}
