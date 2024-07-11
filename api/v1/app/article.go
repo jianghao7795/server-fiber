@@ -1,6 +1,7 @@
 package app
 
 import (
+	"log"
 	"server-fiber/global"
 	"server-fiber/model/app"
 	appReq "server-fiber/model/app/request"
@@ -189,7 +190,10 @@ func (*ArticleApi) GetArticleList(c *fiber.Ctx) error {
 // @Router /article/putArticleByIds [put]
 func (*ArticleApi) PutArticleByIds(c *fiber.Ctx) error {
 	var IDS request.IdsReq
-	_ = c.BodyParser(&IDS)
+	if err := c.BodyParser(&IDS); err != nil {
+		log.Println("ids 获取失败")
+		return response.FailWithMessage("ids 获取失败", c)
+	}
 	if err := articleService.PutArticleByIds(&IDS); err != nil {
 		global.LOG.Error("批量更新失败!", zap.Error(err))
 		return response.FailWithDetailed(map[string]string{
