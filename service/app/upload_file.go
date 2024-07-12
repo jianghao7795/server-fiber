@@ -30,11 +30,12 @@ func (e *FileUploadService) UploadFile(header *multipart.FileHeader, noSave stri
 		return app.FileUploadAndDownload{}, uploadErr
 	}
 	if noSave == "0" {
-		s := strings.Split(header.Filename, ".")
+		last := strings.LastIndex(header.Filename, ".")
+		s := header.Filename[last:]
 		f := app.FileUploadAndDownload{
 			Url:  filePath,
 			Name: header.Filename,
-			Tag:  s[len(s)-1],
+			Tag:  s,
 			Key:  key,
 		}
 		return f, e.Upload(f)
