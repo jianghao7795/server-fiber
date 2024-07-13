@@ -34,7 +34,14 @@ func (e *ExcelApi) ExportExcel(c *fiber.Ctx) error {
 		FileName: "",
 		InfoList: nil,
 	}
-	_ = c.BodyParser(&excelInfo)
+	if err := c.BodyParser(&excelInfo); err != nil {
+		global.LOG.Error("获取数据失败", zap.Error(err))
+		return response.FailWithMessage(err.Error(), c)
+	}
+
+	if excelInfo.FileName == "" {
+		return response.FailWithMessage("请传参数filename", c)
+	}
 	if strings.Contains(excelInfo.FileName, "..") {
 		return response.FailWithMessage("包含非法字符", c)
 	}
