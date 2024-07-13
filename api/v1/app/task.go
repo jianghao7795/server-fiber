@@ -32,6 +32,13 @@ func (*TaskNameApi) StartTasking(c *fiber.Ctx) error {
 	}
 }
 
+// @Tags start Tasking
+// @Summary start Tasking
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"关闭成功"}"
+// @Router /tasking/stop [get]
 func (*TaskNameApi) StopTasking(c *fiber.Ctx) error {
 	tasking := c.Query("task")
 	if tasking == "" {
