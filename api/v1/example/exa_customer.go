@@ -30,8 +30,16 @@ func (e *CustomerApi) CreateExaCustomer(c *fiber.Ctx) error {
 	if err := utils.Verify(customer, utils.CustomerVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
-	customer.SysUserID = utils.GetUserID(c)
-	customer.SysUserAuthorityID = utils.GetUserAuthorityId(c)
+	var err error
+	if customer.SysUserID, err = utils.GetUserID(c); err != nil {
+		global.LOG.Warn("用户查询错误", zap.Error(err))
+		return response.FailWithMessage(err.Error(), c)
+	}
+	customer.SysUserAuthorityID, err = utils.GetUserAuthorityId(c)
+	if err != nil {
+		global.LOG.Warn("获取用户权限失败", zap.Error(err))
+		return response.FailWithMessage("新增用户失败"+err.Error(), c)
+	}
 	if err := customerService.CreateExaCustomer(&customer); err != nil {
 		global.LOG.Error("创建失败!", zap.Error(err))
 		return response.FailWithMessage("创建失败", c)
@@ -49,9 +57,12 @@ func (e *CustomerApi) CreateExaCustomer(c *fiber.Ctx) error {
 // @Success 200 {object} response.Response{msg=string} "删除客户"
 // @Router /customer/customer/:id [delete]
 func (e *CustomerApi) DeleteExaCustomer(c *fiber.Ctx) error {
-	id, _ := c.ParamsInt("id")
+	id, err := c.ParamsInt("id")
+	if err != nil {
+		return response.FailWithMessage("请传id参数", c)
+	}
 	if id == 0 {
-		return response.FailWithMessage("id不存在", c)
+		return response.FailWithMessage("id传递错误", c)
 	}
 	if err := customerService.DeleteExaCustomer(uint(id)); err != nil {
 		global.LOG.Error("删除失败!", zap.Error(err))
@@ -76,7 +87,10 @@ func (e *CustomerApi) UpdateExaCustomer(c *fiber.Ctx) error {
 		return response.FailWithMessage("id不存在", c)
 	}
 	var customer example.ExaCustomer
-	_ = c.BodyParser(&customer)
+	if err := c.BodyParser(&customer); err != nil {
+		global.LOG.Error("获取数据失败", zap.Error(err))
+		return response.FailWithMessage("获取数据失败", c)
+	}
 	if customer.ID != uint(id) {
 		return response.FailWithMessage("数据不一致（id）", c)
 	}
@@ -88,7 +102,7 @@ func (e *CustomerApi) UpdateExaCustomer(c *fiber.Ctx) error {
 	}
 	if err := customerService.UpdateExaCustomer(&customer); err != nil {
 		global.LOG.Error("更新失败!", zap.Error(err))
-		return response.FailWithMessage("更新失败", c)
+		return response.FailWithMessage(err.Error(), c)
 	} else {
 		return response.OkWithMessage("更新成功", c)
 	}
@@ -130,7 +144,12 @@ func (e *CustomerApi) GetExaCustomerList(c *fiber.Ctx) error {
 	if err := utils.Verify(pageInfo, utils.PageInfoVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
-	customerList, total, err := customerService.GetCustomerInfoList(utils.GetUserAuthorityId(c), &pageInfo)
+	authorityId, err := utils.GetUserAuthorityId(c)
+	if err != nil {
+		global.LOG.Error("获取用户权限Id失败", zap.Error(err))
+		return response.FailWithMessage(err.Error(), c)
+	}
+	customerList, total, err := customerService.GetCustomerInfoList(authorityId, &pageInfo)
 	if err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败"+err.Error(), c)

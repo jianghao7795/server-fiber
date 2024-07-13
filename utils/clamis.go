@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"errors"
 	"server-fiber/global"
 	"server-fiber/model/common/response"
 	systemReq "server-fiber/model/system/request"
@@ -26,23 +27,23 @@ func GetClaims(c *fiber.Ctx) (*systemReq.CustomClaims, error) {
 }
 
 // GetUserID 从fiber的Context中获取从jwt解析出来的用户ID
-func GetUserID(c *fiber.Ctx) uint {
+func GetUserID(c *fiber.Ctx) (uint, error) {
 	waitUse, ok := c.Locals("claims").(*systemReq.CustomClaims)
 	if !ok {
 		// 处理类型断言失败的情况，例如返回错误信息或默认值
-		return 0
+		return 0, nil
 	}
 
 	if waitUse.BaseClaims.ID == 0 {
 		// 处理ID为0的情况，可能需要调用GetClaims函数重新获取claims
 		if cl, err := GetClaims(c); err != nil {
 			// 处理获取claims失败的情况，例如返回错误信息或默认值
-			return 0
+			return 0, err
 		} else {
-			return uint(cl.BaseClaims.ID)
+			return uint(cl.BaseClaims.ID), nil
 		}
 	} else {
-		return waitUse.BaseClaims.ID
+		return waitUse.BaseClaims.ID, nil
 	}
 }
 
@@ -70,24 +71,24 @@ func GetUserUuid(c *fiber.Ctx) uuid.UUID {
 }
 
 // 从fiber的Context中获取从jwt解析出来的用户角色id
-func GetUserAuthorityId(c *fiber.Ctx) string {
+func GetUserAuthorityId(c *fiber.Ctx) (string, error) {
 	var claims = c.Locals("claims")
 	waitUse, ok := claims.(*systemReq.CustomClaims)
 	if !ok {
 		if cl, err := GetClaims(c); err != nil {
-			return ""
+			return "", err
 		} else {
-			return cl.AuthorityId
+			return cl.AuthorityId, nil
 		}
 	}
 	if waitUse.BaseClaims.ID == 0 {
 		if cl, err := GetClaims(c); err != nil {
-			return ""
+			return "", err
 		} else {
-			return cl.AuthorityId
+			return cl.AuthorityId, nil
 		}
 	} else {
-		return waitUse.AuthorityId
+		return waitUse.AuthorityId, nil
 	}
 
 }
