@@ -148,7 +148,10 @@ func (u *User) GetCurrent(c *fiber.Ctx) error {
 
 func (u *User) UpdatePassword(c *fiber.Ctx) error {
 	var resetPassword frontend.ResetPassword
-	_ = c.BodyParser(&resetPassword)
+	if err := c.BodyParser(&resetPassword); err != nil {
+		global.LOG.Error("获取数据失败", zap.Error(err))
+		return response.FailWithMessage(err.Error(), c)
+	}
 
 	if err := utils.Verify(resetPassword, utils.ResetPasswordVerifyFrontend); err != nil {
 		return response.FailWithMessage(err.Error(), c)
