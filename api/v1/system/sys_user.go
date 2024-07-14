@@ -212,7 +212,7 @@ func (b *BaseApi) SetUserAuthority(c *fiber.Ctx) error {
 	if UserVerifyErr := utils.Verify(sua, utils.SetUserAuthorityVerify); UserVerifyErr != nil {
 		return response.FailWithMessage(UserVerifyErr.Error(), c)
 	}
-	userID := utils.GetUserID(c)
+	userID, _ := utils.GetUserID(c)
 	uuid := utils.GetUserUuid(c)
 	if err := userService.SetUserAuthority(userID, uuid, sua.AuthorityId); err != nil {
 		global.LOG.Error("修改失败!", zap.Error(err))
@@ -264,7 +264,7 @@ func (b *BaseApi) SetUserAuthorities(c *fiber.Ctx) error {
 // @Router /user/deleteUser/:id [delete]
 func (b *BaseApi) DeleteUser(c *fiber.Ctx) error {
 	id, _ := c.ParamsInt("id")
-	jwtId := utils.GetUserID(c)
+	jwtId, _ := utils.GetUserID(c)
 	if jwtId == uint(id) {
 		return response.FailWithMessage("删除失败, 自杀失败", c)
 	}
@@ -328,7 +328,7 @@ func (b *BaseApi) SetUserInfo(c *fiber.Ctx) error {
 func (b *BaseApi) SetSelfInfo(c *fiber.Ctx) error {
 	var user systemReq.ChangeUserInfo
 	_ = c.BodyParser(&user)
-	user.ID = utils.GetUserID(c)
+	user.ID, _ = utils.GetUserID(c)
 	if err := userService.SetUserInfo(system.SysUser{
 		MODEL: global.MODEL{
 			ID: user.ID,

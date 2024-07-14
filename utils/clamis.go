@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"errors"
 	"server-fiber/global"
 	"server-fiber/model/common/response"
 	systemReq "server-fiber/model/system/request"

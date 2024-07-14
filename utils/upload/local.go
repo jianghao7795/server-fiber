@@ -3,7 +3,6 @@ package upload
 import (
 	"errors"
 	"io"
-	"io/fs"
 	"mime/multipart"
 	"os"
 	"path"

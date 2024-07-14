@@ -3,7 +3,6 @@ package example
 import (
 	ioutil "io"
 	"mime/multipart"
-	"strconv"
 
 	"server-fiber/global"
 	"server-fiber/model/common/response"
@@ -27,11 +26,12 @@ import (
 // @Router /fileUploadAndDownload/breakpointContinue [post]
 func (u *FileUploadAndDownloadApi) BreakpointContinue(c *fiber.Ctx) error {
 	var breakpoint example.ExaFileData
-	if err := c.BodyParser(&breakpoint); err != nil {
+	err := c.BodyParser(&breakpoint)
+	if err != nil {
 		global.LOG.Error("获取数据失败", zap.Error(err))
 		return response.FailWithMessage("获取数据失败", c)
 	}
-	breakpoint.FileHeader, err := c.FormFile("file")
+	breakpoint.FileHeader, err = c.FormFile("file")
 	if err != nil {
 		global.LOG.Error("接收文件失败!", zap.Error(err))
 		return response.FailWithMessage("接收文件失败: "+err.Error(), c)

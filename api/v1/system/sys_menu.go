@@ -23,7 +23,12 @@ type AuthorityMenuApi struct{}
 // @Success 200 {object} response.Response{data=systemRes.SysMenusResponse,msg=string} "获取用户动态路由,返回包括系统菜单详情列表"
 // @Router /menu/getMenu [get]
 func (a *AuthorityMenuApi) GetMenu(c *fiber.Ctx) error {
-	if menus, err := menuService.GetMenuTree(utils.GetUserAuthorityId(c)); err != nil {
+	authorityId, err := utils.GetUserAuthorityId(c)
+	if err != nil {
+		global.LOG.Error("获取权限id失败", zap.Error(err))
+		return response.FailWithMessage("获取权限id", c)
+	}
+	if menus, err := menuService.GetMenuTree(authorityId); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败", c)
 	} else {
