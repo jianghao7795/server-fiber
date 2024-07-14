@@ -26,18 +26,17 @@ import (
 // @Success 200 {object} response.Response{msg=string} "断点续传到服务器"
 // @Router /fileUploadAndDownload/breakpointContinue [post]
 func (u *FileUploadAndDownloadApi) BreakpointContinue(c *fiber.Ctx) error {
-	fileMd5 := c.FormValue("fileMd5")
-	fileName := c.FormValue("fileName")
-	chunkMd5 := c.FormValue("chunkMd5")
-	// log.Println("fileMd5:", fileMd5, "fileName:", fileName, "chunkMd5:", chunkMd5)
-	chunkNumber, _ := strconv.Atoi(c.FormValue("chunkNumber"))
-	chunkTotal, _ := strconv.Atoi(c.FormValue("chunkTotal"))
-	FileHeader, err := c.FormFile("file")
+	var breakpoint example.ExaFileData
+	if err := c.BodyParser(&breakpoint); err != nil {
+		global.LOG.Error("获取数据失败", zap.Error(err))
+		return response.FailWithMessage("获取数据失败", c)
+	}
+	breakpoint.FileHeader, err := c.FormFile("file")
 	if err != nil {
 		global.LOG.Error("接收文件失败!", zap.Error(err))
 		return response.FailWithMessage("接收文件失败: "+err.Error(), c)
 	}
-	f, err := FileHeader.Open()
+	f, err := breakpoint.FileHeader.Open()
 	if err != nil {
 		global.LOG.Error("文件读取失败!", zap.Error(err))
 		return response.FailWithMessage("文件读取失败"+err.Error(), c)
@@ -53,22 +52,22 @@ func (u *FileUploadAndDownloadApi) BreakpointContinue(c *fiber.Ctx) error {
 		global.LOG.Error("文件分段读取失败!", zap.Error(err))
 		return response.FailWithMessage("文件分段读取失败", c)
 	}
-	if !utils.CheckMd5(cen, chunkMd5) {
+	if !utils.CheckMd5(cen, breakpoint.ChunkMd5) {
 		global.LOG.Error("检查md5失败!", zap.Error(err))
 		return response.FailWithMessage("检查md5失败", c)
 	}
-	file, err := fileUploadAndDownloadService.FindOrCreateFile(fileMd5, fileName, chunkTotal)
+	file, err := fileUploadAndDownloadService.FindOrCreateFile(breakpoint.FileMd5, breakpoint.FileName, breakpoint.ChunkTotal)
 	if err != nil {
 		global.LOG.Error("查找或创建记录失败!", zap.Error(err))
 		return response.FailWithMessage("查找或创建记录失败", c)
 	}
-	paths, err := utils.BreakPointContinue(cen, fileName, chunkNumber, chunkTotal, fileMd5)
+	paths, err := utils.BreakPointContinue(cen, breakpoint.FileName, breakpoint.ChunkNumber, breakpoint.ChunkTotal, breakpoint.FileMd5)
 	if err != nil {
 		global.LOG.Error("断点续传失败!", zap.Error(err))
 		return response.FailWithMessage("断点续传失败: "+err.Error(), c)
 	}
 
-	if err = fileUploadAndDownloadService.CreateFileChunk(file.ID, paths, chunkNumber); err != nil {
+	if err = fileUploadAndDownloadService.CreateFileChunk(file.ID, paths, breakpoint.ChunkNumber); err != nil {
 		global.LOG.Error("创建文件记录失败!", zap.Error(err))
 		return response.FailWithMessage("创建文件记录失败: "+err.Error(), c)
 	}

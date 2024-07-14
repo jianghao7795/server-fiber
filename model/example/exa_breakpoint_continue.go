@@ -1,6 +1,7 @@
 package example
 
 import (
+	"mime/multipart"
 	"server-fiber/global"
 )
 
@@ -29,4 +30,14 @@ type ExaFileChunk struct {
 
 func (ExaFileChunk) TableName() string {
 	return "exa_file_chunks"
+}
+
+type ExaFileData struct {
+	FileName string `json:"fileName" form:"fileName"`
+	FileMd5  string `json:"fileMd5" form:"fileMd5"`
+	// FilePath string `json:"file_path" form:"file_path"`
+	ChunkMd5    string                `json:"chunkMd5" form:"chunkMd5"`
+	ChunkNumber int                   `json:"chunkNumber" form:"chunkNumber"`
+	ChunkTotal  int                   `json:"chunkTotal" form:"chunkTotal"`
+	FileHeader  *multipart.FileHeader `json:"file" form:"file"`
 }
