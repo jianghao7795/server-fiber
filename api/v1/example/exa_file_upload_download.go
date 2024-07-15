@@ -42,7 +42,7 @@ func (u *FileUploadAndDownloadApi) UploadFile(c *fiber.Ctx) error {
 		global.LOG.Error("文件大小超过10M!")
 		return response.FailWithMessage("文件大小超过10M", c)
 	} // 文件大小限制10M
-	var header = c.Get("content-type")
+	header := c.Get("content-type")
 	if string(header) == "image/svg+xml" {
 		var fileDimension fileDimensionReq.FileDimension
 		fileDimension.Height = 2

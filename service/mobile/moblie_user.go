@@ -39,7 +39,11 @@ func (mobileUserService *MobileUserService) DeleteMobileUserByIds(ids request.Id
 // Author [jianghao](https://github.com/JiangHaoCode)
 func (mobileUserService *MobileUserService) UpdateMobileUser(mobileUser *mobile.MobileUser) (err error) {
 	var waitUpdate mobile.MobileUser
-	db := global.DB.Where("id = ?", mobileUser.ID).First(&waitUpdate)
+	db := global.DB.Model(&mobile.MobileUser{})
+	err = db.Where("id = ?", mobileUser.ID).First(&waitUpdate).Error
+	if err != nil {
+		return
+	}
 	if waitUpdate.ID == 0 {
 		return errors.New("不存在用户")
 	}
