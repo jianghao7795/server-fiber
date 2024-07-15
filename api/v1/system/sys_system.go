@@ -38,8 +38,8 @@ func (s *SystemApi) GetSystemConfig(c *fiber.Ctx) error {
 func (s *SystemApi) SetSystemConfig(c *fiber.Ctx) error {
 	var sys system.System
 	if err := c.BodyParser(&sys); err != nil {
-		global.LOG.Error("获取数据失败!", zap.Error(err))
-		return response.FailWithMessage("获取数据失败", c)
+		global.LOG.Error("获取配置数据失败", zap.Error(err))
+		return response.FailWithMessage(err.Error(), c)
 	}
 	if err := systemConfigService.SetSystemConfig(sys); err != nil {
 		global.LOG.Error("设置失败!", zap.Error(err))
