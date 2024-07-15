@@ -3,29 +3,23 @@ package system
 import (
 	json "github.com/bytedance/sonic"
 	"github.com/gofiber/fiber/v2"
-
+	"go.uber.org/zap"
 	// "encoding/json"
 	"io"
 	"net/http"
+	"time"
+
 	"server-fiber/global"
 	"server-fiber/model/common/request"
 	"server-fiber/model/common/response"
 	"server-fiber/model/system"
-	"strconv"
-	"time"
-
-	"go.uber.org/zap"
 )
 
 type SystemGithubApi struct{}
 
 func (g *SystemGithubApi) GetGithubList(c *fiber.Ctx) error {
 	var searchInfo request.PageInfo
-	page := c.Query("page", "1")
-	pageSize := c.Query("pageSize", "10")
-	searchInfo.Page, _ = strconv.Atoi(page)
-	searchInfo.PageSize, _ = strconv.Atoi(pageSize)
-
+	_ = c.QueryParser(&searchInfo)
 	if list, err := githubService.GetGithubList(searchInfo); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败", c)
