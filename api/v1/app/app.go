@@ -7,22 +7,22 @@ import (
 // ArticleApi article
 type ArticleApi struct{}
 
-var articleService = new(appService.ArticleService)
+var articleService = appService.ArticleServer
 
 // BaseMessageApi base message
 type BaseMessageApi struct{}
 
-var baseMessageService = new(appService.BaseMessageService)
+var baseMessageService = appService.BaseMessageServer
 
 // CommentApi comment
 type CommentApi struct{}
 
-var commentService = new(appService.CommentService)
+var commentService = appService.CommentServer
 
 // TagApi tag
 type TagApi struct{}
 
-var appTabService = new(appService.TagService)
+var appTabService = appService.TagServer
 
 // TaskNameApi task
 type TaskNameApi struct{}
@@ -30,9 +30,9 @@ type TaskNameApi struct{}
 // FileUploadAndDownloadApi file upload
 type FileUploadAndDownloadApi struct{}
 
-var fileUploadService = new(appService.FileUploadService)
+var fileUploadService = appService.FileUploadServer
 
 // UserApi user
 type UserApi struct{}
 
-var userService = new(appService.UserService)
+var userService = appService.UserServer
