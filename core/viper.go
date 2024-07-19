@@ -92,8 +92,8 @@ func viperInit(path ...string) (*viper.Viper, error) {
 		return nil, err
 	}
 	// jwt
-	global.CONFIG.JWT.PrivateKey = privateKey
-	global.CONFIG.JWT.PublicKey = publicKey
+	global.RunCONFIG.JWT.PrivateKey = privateKey
+	global.RunCONFIG.JWT.PublicKey = publicKey
 	// root 适配性
 	// 根据root位置去找到对应迁移位置,保证root路径有效
 	global.CONFIG.AutoCode.Root, _ = filepath.Abs("..")
@@ -101,9 +101,9 @@ func viperInit(path ...string) (*viper.Viper, error) {
 		local_cache.SetDefaultExpire(time.Second * time.Duration(global.CONFIG.JWT.ExpiresTime)),
 	)
 	{
-		global.CONFIG.FiberConfig.JSONEncoder = json.Marshal   // 自定义JSON编码器/解码器
-		global.CONFIG.FiberConfig.JSONDecoder = json.Unmarshal // 自定义JSON编码器/解码器
-		global.CONFIG.FiberConfig.ErrorHandler = func(ctx *fiber.Ctx, err error) error {
+		global.RunCONFIG.FiberConfig.JSONEncoder = json.Marshal   // 自定义JSON编码器/解码器
+		global.RunCONFIG.FiberConfig.JSONDecoder = json.Unmarshal // 自定义JSON编码器/解码器
+		global.RunCONFIG.FiberConfig.ErrorHandler = func(ctx *fiber.Ctx, err error) error {
 			// 状态代码默认为500
 			code := fiber.StatusInternalServerError
 			var message string = "服务器错误"

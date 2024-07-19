@@ -34,7 +34,7 @@ type UpdateImage struct {
 	HeapImage string
 }
 
-var MySecret *rsa.PrivateKey = global.CONFIG.JWT.PrivateKey
+var MySecret *rsa.PrivateKey = global.RunCONFIG.JWT.PrivateKey
 
 type FrontendUser struct{}
 

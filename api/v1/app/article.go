@@ -136,7 +136,11 @@ func (*ArticleApi) UpdateArticle(c *fiber.Ctx) error {
 // @Success 200 {object} response.Response{msg=string,data=app.Article,code=number} "获得成功"
 // @Router /article/findArticle/:id [get]
 func (*ArticleApi) FindArticle(c *fiber.Ctx) error {
-	id, _ := c.ParamsInt("id")
+	id, err := c.ParamsInt("id")
+	if err != nil {
+		global.LOG.Error("获取id失败", zap.Error(err))
+		return response.FailWithMessage("获取id失败: "+err.Error(), c)
+	}
 	if articles, err := articleService.GetArticle(uint(id)); err != nil {
 		global.LOG.Error("查询失败!", zap.Error(err))
 		return response.FailWithDetailed(map[string]string{

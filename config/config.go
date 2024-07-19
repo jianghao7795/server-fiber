@@ -5,13 +5,13 @@ import (
 )
 
 type Server struct {
-	JWT     JWT     `mapstructure:"jwt" json:"jwt" yaml:"jwt"`
-	Zap     Zap     `mapstructure:"zap" json:"zap" yaml:"zap"`
-	Redis   Redis   `mapstructure:"redis" json:"redis" yaml:"redis"`
-	Email   Email   `mapstructure:"email" json:"email" yaml:"email"`
-	Casbin  Casbin  `mapstructure:"casbin" json:"casbin" yaml:"casbin"`
-	System  System  `mapstructure:"system" json:"system" yaml:"system"`
-	Captcha Captcha `mapstructure:"captcha" json:"captcha" yaml:"captcha"`
+	JWT     PrivacyJWT `mapstructure:"jwt" json:"jwt" yaml:"jwt"`
+	Zap     Zap        `mapstructure:"zap" json:"zap" yaml:"zap"`
+	Redis   Redis      `mapstructure:"redis" json:"redis" yaml:"redis"`
+	Email   Email      `mapstructure:"email" json:"email" yaml:"email"`
+	Casbin  Casbin     `mapstructure:"casbin" json:"casbin" yaml:"casbin"`
+	System  System     `mapstructure:"system" json:"system" yaml:"system"`
+	Captcha Captcha    `mapstructure:"captcha" json:"captcha" yaml:"captcha"`
 	// auto
 	AutoCode Autocode `mapstructure:"autocode" json:"autocode" yaml:"autocode"`
 	// gorm
@@ -35,5 +35,10 @@ type Server struct {
 	// 缓存
 	Cache Cache `mapstructure:"cache" json:"cache" yaml:"cache"`
 	// fiber config
-	FiberConfig fiber.Config `mapstructure:"fiberconifg" json:"fiberconifg" yaml:"fiberconifg"`
+
+}
+
+type RunServer struct {
+	JWT         JWTConfig
+	FiberConfig fiber.Config
 }

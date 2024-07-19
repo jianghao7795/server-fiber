@@ -30,7 +30,7 @@ func Routers() *fiber.App {
 		CacheAge: 3600, // Default to 1 hour
 	}
 
-	app := fiber.New(global.CONFIG.FiberConfig)
+	app := fiber.New(global.RunCONFIG.FiberConfig)
 	app.Static("/api/uploads/", "uploads/", fiber.Static{
 		Compress:      true,
 		ByteRange:     true,

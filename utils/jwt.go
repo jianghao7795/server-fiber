@@ -18,8 +18,8 @@ type JWT struct {
 
 func NewJWT() *JWT {
 	return &JWT{
-		PrivateKey: global.CONFIG.JWT.PrivateKey,
-		PublicKey:  global.CONFIG.JWT.PublicKey,
+		PrivateKey: global.RunCONFIG.JWT.PrivateKey,
+		PublicKey:  global.RunCONFIG.JWT.PublicKey,
 	}
 }
 
