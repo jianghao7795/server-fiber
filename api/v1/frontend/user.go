@@ -49,8 +49,7 @@ func (b *User) Login(c *fiber.Ctx) error {
 	if err := utils.Verify(l, utils.LoginVerifyFrontend); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
-	u := &system.SysUser{Username: l.Username, Password: l.Password}
-	if user, err := userService.Login(u); err != nil {
+	if user, err := userService.Login(l.Username, l.Password); err != nil {
 		global.LOG.Error("登陆失败! 用户名不存在或者密码错误!", zap.Error(err))
 		return response.FailWithMessage("用户名不存在或者密码错误", c)
 	} else {

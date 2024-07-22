@@ -25,17 +25,19 @@ import (
 // @Router /base/login [post]
 func (b *BaseApi) Login(c *fiber.Ctx) error {
 	var l systemReq.Login
-	_ = c.BodyParser(&l)
+	if err := c.BodyParser(&l); err != nil {
+		global.LOG.Error("参数解析失败!", zap.Error(err))
+		return response.FailWithMessage("参数错误", c)
+	}
 	if err := utils.Verify(l, utils.LoginVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
 	if store.Verify(l.CaptchaId, l.Captcha, true) {
-		u := &system.SysUser{Username: l.Username, Password: l.Password}
-		if user, err := userService.Login(u); err != nil {
+		if user, err := userService.Login(l.Username, l.Password); err != nil {
 			global.LOG.Error("登陆失败! 用户名不存在或者密码错误!", zap.Error(err))
 			return response.FailWithMessage("用户名不存在或者密码错误", c)
 		} else {
-			return b.tokenNext(c, *user)
+			return b.tokenNext(c, user)
 		}
 	} else {
 		return response.FailWithMessage("验证码错误", c)
@@ -60,12 +62,12 @@ func (b *BaseApi) LoginToken(c *fiber.Ctx) error {
 		global.LOG.Error("登陆失败! 用户名不存在或者密码错误!", zap.Error(err))
 		return response.FailWithMessage("用户名不存在或者密码错误", c)
 	} else {
-		return b.tokenNext(c, *user)
+		return b.tokenNext(c, user)
 	}
 }
 
 // 登录以后签发jwt
-func (b *BaseApi) tokenNext(c *fiber.Ctx, user system.SysUser) error {
+func (b *BaseApi) tokenNext(c *fiber.Ctx, user *system.SysUser) error {
 	j := utils.NewJWT() // 唯一签名
 	claims := j.CreateClaims(systemReq.BaseClaims{
 		UUID:        user.UUID,
@@ -81,7 +83,7 @@ func (b *BaseApi) tokenNext(c *fiber.Ctx, user system.SysUser) error {
 	}
 	if !global.CONFIG.System.UseMultipoint {
 		return response.OkWithDetailed(systemRes.LoginResponse{
-			User:      user,
+			User:      *user,
 			Token:     token,
 			ExpiresAt: claims.RegisteredClaims.ExpiresAt.Unix(),
 		}, "登录成功", c)
@@ -93,7 +95,7 @@ func (b *BaseApi) tokenNext(c *fiber.Ctx, user system.SysUser) error {
 			return response.FailWithMessage("设置登录状态失败", c)
 		}
 		return response.OkWithDetailed(systemRes.LoginResponse{
-			User:      user,
+			User:      *user,
 			Token:     token,
 			ExpiresAt: claims.RegisteredClaims.ExpiresAt.Unix(),
 		}, "登录成功", c)
@@ -110,7 +112,7 @@ func (b *BaseApi) tokenNext(c *fiber.Ctx, user system.SysUser) error {
 			return response.FailWithMessage("设置登录状态失败", c)
 		}
 		return response.OkWithDetailed(systemRes.LoginResponse{
-			User:      user,
+			User:      *user,
 			Token:     token,
 			ExpiresAt: claims.RegisteredClaims.ExpiresAt.Unix(),
 		}, "登录成功", c)
@@ -137,12 +139,12 @@ func (b *BaseApi) Register(c *fiber.Ctx) error {
 		})
 	}
 	user := &system.SysUser{Username: r.Username, NickName: r.NickName, Password: r.Password, HeaderImg: r.HeaderImg, AuthorityId: r.AuthorityId, Authorities: authorities, Phone: r.Phone, Email: r.Email}
-	userReturn, err := userService.Register(*user)
+	userReturn, err := userService.Register(user)
 	if err != nil {
 		global.LOG.Error("注册失败!", zap.Error(err))
-		return response.FailWithDetailed(systemRes.SysUserResponse{User: userReturn}, "注册失败", c)
+		return response.FailWithDetailed(systemRes.SysUserResponse{User: *userReturn}, "注册失败", c)
 	} else {
-		return response.OkWithDetailed(systemRes.SysUserResponse{User: userReturn}, "注册成功", c)
+		return response.OkWithDetailed(systemRes.SysUserResponse{User: *userReturn}, "注册成功", c)
 	}
 }
 

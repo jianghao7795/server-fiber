@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"time"
 
 	"server-fiber/global"
 	"server-fiber/model/system"
@@ -20,7 +21,7 @@ import (
 //@param: u model.SysUser
 //@return: err error, userInter model.SysUser
 
-func (userService *UserService) Register(u system.SysUser) (userInter system.SysUser, err error) {
+func (userService *UserService) Register(u *system.SysUser) (userInter *system.SysUser, err error) {
 	var user system.SysUser
 	if !errors.Is(global.DB.Where("username = ?", u.Username).First(&user).Error, gorm.ErrRecordNotFound) { // 判断用户名是否注册
 		return userInter, errors.New("用户名已注册")
@@ -28,6 +29,7 @@ func (userService *UserService) Register(u system.SysUser) (userInter system.Sys
 	// 否则 附加uuid 密码md5简单加密 注册
 	u.Password = utils.MD5V([]byte(u.Password))
 	u.UUID = uuid.New()
+	// u.ExpirationDate = time.Now().Format("2006-01-02 15:04:05")
 	err = global.DB.Create(&u).Error
 	return u, err
 }
@@ -36,16 +38,16 @@ func (userService *UserService) Register(u system.SysUser) (userInter system.Sys
 //@function: Login
 //@description: 用户登录
 //@param: u *model.SysUser
-//@return: err error, userInter *model.SysUser
+//@return: err error, userInter g*model.SysUser
 
-func (userService *UserService) Login(u *system.SysUser) (userInter *system.SysUser, err error) {
+func (userService *UserService) Login(username, password string) (*system.SysUser, error) {
 	if nil == global.DB {
 		return nil, fmt.Errorf("db not init")
 	}
 
 	var user system.SysUser
 	// u.Password = utils.MD5V([]byte(u.Password))
-	err = global.DB.Where("username = ? AND password = ?", u.Username, u.Password).Preload("Authorities").Preload("Authority").First(&user).Error
+	err := global.DB.Where("username = ? AND password = ?", username, password).Preload("Authorities").Preload("Authority").First(&user).Error
 	if err == nil {
 		var am system.SysMenu
 		ferr := global.DB.First(&am, "name = ? AND authority_id = ?", user.Authority.DefaultRouter, user.AuthorityId).Error
@@ -53,7 +55,12 @@ func (userService *UserService) Login(u *system.SysUser) (userInter *system.SysU
 			user.Authority.DefaultRouter = "404"
 		}
 	}
-	return &user, err
+
+	if user.UpdatedAt.AddDate(0, 3, 0).After(time.Now()) {
+		return nil, errors.New("密码已过期，请修改密码")
+	}
+
+	return &user, nil
 }
 
 //@author: [jianghao](https://github.com/JiangHaoCode)
