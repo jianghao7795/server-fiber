@@ -19,7 +19,7 @@ import (
 // @Produce application/json
 // @Param data body app.Tag true "创建Tag"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /appTab/createTag [post]
+// @Router /tag/createTag [post]
 func (TagApi *TagApi) CreateTag(c *fiber.Ctx) error {
 	var appTab app.Tag
 	err := c.BodyParser(&appTab)
@@ -43,7 +43,7 @@ func (TagApi *TagApi) CreateTag(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data body app.Tag true "删除Tag"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
-// @Router /appTab/deleteTag [delete]
+// @Router /tag/deleteTag [delete]
 func (TagApi *TagApi) DeleteTag(c *fiber.Ctx) error {
 	id, _ := c.ParamsInt("id")
 	if err := appTabService.DeleteTag(uint(id)); err != nil {
@@ -62,7 +62,7 @@ func (TagApi *TagApi) DeleteTag(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data body request.IdsReq true "批量删除Tag"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"批量删除成功"}"
-// @Router /appTab/deleteTagByIds [delete]
+// @Router /tag/deleteTagByIds [delete]
 func (TagApi *TagApi) DeleteTagByIds(c *fiber.Ctx) error {
 	var IDS request.IdsReq
 	_ = c.BodyParser(&IDS)
@@ -82,7 +82,7 @@ func (TagApi *TagApi) DeleteTagByIds(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data body app.Tag true "更新Tag"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"更新成功"}"
-// @Router /appTab/updateTag [put]
+// @Router /tag/updateTag [put]
 func (TagApi *TagApi) UpdateTag(c *fiber.Ctx) error {
 	var appTab app.Tag
 	err := c.BodyParser(&appTab)
@@ -106,7 +106,7 @@ func (TagApi *TagApi) UpdateTag(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data query app.Tag true "用id查询Tag"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"查询成功"}"
-// @Router /appTab/findTag [get]
+// @Router /tag/findTag [get]
 func (TagApi *TagApi) FindTag(c *fiber.Ctx) error {
 	id, _ := c.ParamsInt("id")
 	if tag, err := appTabService.GetTag(uint(id)); err != nil {
@@ -125,7 +125,7 @@ func (TagApi *TagApi) FindTag(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data query appReq.TagSearch true "分页获取Tag列表"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /appTab/getTagList [get]
+// @Router /tag/getTagList [get]
 func (TagApi *TagApi) GetTagList(c *fiber.Ctx) error {
 	var pageInfo appReq.TagSearch
 	_ = c.QueryParser(&pageInfo)
