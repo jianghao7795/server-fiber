@@ -17,12 +17,11 @@ import (
 
 type Local struct{}
 
-//@object: *Local
-//@function: UploadFile
-//@description: 上传文件
-//@param: file *multipart.FileHeader
-//@return: string, string, error
-
+// @object: *Local
+// @function: UploadFile
+// @description: 本地上传文件
+// @param: file *multipart.FileHeader
+// @return: string, string, error
 func (*Local) UploadFile(file *multipart.FileHeader) (string, string, error) {
 	// 读取文件后缀
 	ext := path.Ext(file.Filename)
@@ -49,12 +48,11 @@ func (*Local) UploadFile(file *multipart.FileHeader) (string, string, error) {
 		global.LOG.Error("function file.Open() Filed", zap.Any("err", openError.Error()))
 		return "", "", errors.New("function file.Open() Filed, err:" + openError.Error())
 	}
-	defer f.Close() // 创建文件 defer 关闭
+	defer f.Close() // 文件 defer 关闭
 
 	out, createErr := os.Create(p)
 	if createErr != nil {
 		global.LOG.Error("function os.Create() Filed", zap.Any("err", createErr.Error()))
-
 		return "", "", errors.New("function os.Create() Filed, err:" + createErr.Error())
 	}
 	defer out.Close() // 创建文件 defer 关闭

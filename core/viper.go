@@ -96,7 +96,10 @@ func viperInit(path ...string) (*viper.Viper, error) {
 	global.RunCONFIG.JWT.PublicKey = publicKey
 	// root 适配性
 	// 根据root位置去找到对应迁移位置,保证root路径有效
-	global.CONFIG.AutoCode.Root, _ = filepath.Abs("..")
+	global.CONFIG.AutoCode.Root, err = filepath.Abs("..") // filepath.Abs 是相对路径 变为绝对路径
+	if err != nil {
+		panic(err)
+	}
 	global.BlackCache = local_cache.NewCache(
 		local_cache.SetDefaultExpire(time.Second * time.Duration(global.CONFIG.JWT.ExpiresTime)),
 	)
