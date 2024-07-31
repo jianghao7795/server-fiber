@@ -34,8 +34,8 @@ func (b *BaseApi) Login(c *fiber.Ctx) error {
 	}
 	if store.Verify(l.CaptchaId, l.Captcha, true) {
 		if user, err := userService.Login(l.Username, l.Password); err != nil {
-			global.LOG.Error("登陆失败! 用户名不存在或者密码错误!", zap.Error(err))
-			return response.FailWithMessage("用户名不存在或者密码错误", c)
+			global.LOG.Error(err.Error(), zap.Error(err))
+			return response.FailWithMessage(err.Error(), c)
 		} else {
 			return b.tokenNext(c, user)
 		}
@@ -59,8 +59,8 @@ func (b *BaseApi) LoginToken(c *fiber.Ctx) error {
 	}
 	u := &system.SysUser{Username: l.Username, Password: l.Password}
 	if user, err := userService.LoginToken(u); err != nil {
-		global.LOG.Error("登陆失败! 用户名不存在或者密码错误!", zap.Error(err))
-		return response.FailWithMessage("用户名不存在或者密码错误", c)
+		global.LOG.Error(err.Error(), zap.Error(err))
+		return response.FailWithMessage(err.Error(), c)
 	} else {
 		return b.tokenNext(c, user)
 	}
@@ -78,8 +78,8 @@ func (b *BaseApi) tokenNext(c *fiber.Ctx, user *system.SysUser) error {
 	})
 	token, err := j.CreateToken(claims)
 	if err != nil {
-		global.LOG.Error("获取token失败!", zap.Error(err))
-		return response.FailWithMessage("获取token失败", c)
+		global.LOG.Error(err.Error(), zap.Error(err))
+		return response.FailWithMessage(err.Error(), c)
 	}
 	if !global.CONFIG.System.UseMultipoint {
 		return response.OkWithDetailed(systemRes.LoginResponse{
