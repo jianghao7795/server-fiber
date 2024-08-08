@@ -9,7 +9,7 @@ start:
 	air
 
 dev:
-	go run .
+	go run cmd/main.go -c config.yaml
 
 local:
 	go run . -c config.yaml
