@@ -1,4 +1,4 @@
-FROM golang:latest
+FROM golang:1.22.3
 
 LABEL org.opencontainers.image.authors="jianghao"
 
@@ -8,7 +8,7 @@ ENV GO111MODULE=on
 
 WORKDIR /app
 COPY . /app
-RUN go build -o server-fiber .
+RUN go build -o server-fiber cmd/main.go
 
 EXPOSE 3100
 CMD ["/app/server-fiber", "-c", "config.yaml"]
