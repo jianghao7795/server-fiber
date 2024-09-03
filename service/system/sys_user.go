@@ -44,7 +44,7 @@ func (userService *UserService) Login(username, password string) (*system.SysUse
 
 	var user system.SysUser
 	// u.Password = utils.MD5V([]byte(u.Password))
-	err := global.DB.Where("username = ? AND password = ?", username, password).Preload("Authorities").Preload("Authority").First(&user).Error
+	err := global.DB.Where("username = ? AND password = ?", username, utils.Sha512V(password)).Preload("Authorities").Preload("Authority").First(&user).Error
 	if err == nil {
 		var am system.SysMenu
 		ferr := global.DB.First(&am, "name = ? AND authority_id = ?", user.Authority.DefaultRouter, user.AuthorityId).Error
