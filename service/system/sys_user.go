@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"log"
-	"time"
 
 	"server-fiber/global"
 	"server-fiber/model/system"
@@ -56,9 +55,9 @@ func (userService *UserService) Login(username, password string) (*system.SysUse
 		}
 	}
 
-	if user.UpdatedAt.AddDate(0, 3, 0).After(time.Now()) {
-		return nil, errors.New("密码已过期，请修改密码")
-	}
+	// if user.UpdatedAt.AddDate(0, 3, 0).After(time.Now()) {
+	// 	return nil, errors.New("密码已过期，请修改密码")
+	// }
 
 	return &user, nil
 }

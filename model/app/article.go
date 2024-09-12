@@ -23,3 +23,8 @@ type Article struct {
 func (Article) TableName() string {
 	return "articles"
 }
+
+var ArticleSearchType = map[string]string{
+	"is_important": "Eq",
+	"state":        "Eq",
+}
