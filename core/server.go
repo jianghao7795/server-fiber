@@ -62,6 +62,6 @@ func RunServer() {
 	router := initialize.Routers()
 	address := fmt.Sprintf(":%d", global.CONFIG.System.Addr)
 	global.LOG.Info("server run success on ", zap.String("address", address))
-	fmt.Println(`Welcome to Fiber API`)
+	log.Println(`Welcome to Fiber API`)
 	global.LOG.Error(router.Listen(address).Error())
 }

@@ -7,3 +7,4 @@ config.yaml
 breakpointDir
 fileDir
 uploads
+vendor

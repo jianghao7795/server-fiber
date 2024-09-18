@@ -1,12 +1,14 @@
 package core
 
 import (
-	"encoding/json"
 	"flag"
 	"fmt"
 	"os"
 	"path/filepath"
+	"server-fiber/global"
+	"server-fiber/utils"
 	"time"
+
 	// json "github.com/bytedance/sonic"
 	"github.com/fsnotify/fsnotify"
 	"github.com/gofiber/fiber/v2"      // fiber
@@ -14,9 +16,6 @@ import (
 	"github.com/songzhibin97/gkit/cache/local_cache"
 	"github.com/spf13/viper" // viper配置文件读取
 	"go.uber.org/zap"
-
-	"server-fiber/global"
-	"server-fiber/utils"
 )
 
 // 读取配置 配置文件config.yaml
@@ -104,8 +103,8 @@ func viperInit(path ...string) (*viper.Viper, error) {
 		local_cache.SetDefaultExpire(time.Second * time.Duration(global.CONFIG.JWT.ExpiresTime)),
 	)
 	{
-		global.RunCONFIG.FiberConfig.JSONEncoder = json.Marshal   // 自定义JSON编码器/解码器
-		global.RunCONFIG.FiberConfig.JSONDecoder = json.Unmarshal // 自定义JSON编码器/解码器
+		// global.RunCONFIG.FiberConfig.JSONEncoder = json.Marshal   // 自定义JSON编码器/解码器
+		// global.RunCONFIG.FiberConfig.JSONDecoder = json.Unmarshal // 自定义JSON编码器/解码器
 		global.RunCONFIG.FiberConfig.ErrorHandler = func(ctx *fiber.Ctx, err error) error {
 			// 状态代码默认为500
 			code := fiber.StatusInternalServerError
