@@ -1,9 +1,8 @@
 package core
 
 import (
-	"fmt"
+	"log"
 	"os"
-
 	"server-fiber/core/internal"
 	"server-fiber/global"
 	"server-fiber/utils"
@@ -14,10 +13,16 @@ import (
 
 // Zap 获取 zap.Logger
 // Author wuhao
-func zapInit() (logger *zap.Logger) {
-	if ok, _ := utils.PathExists(global.CONFIG.Zap.Director); !ok { // 判断是否有Director文件夹
-		fmt.Printf("create %v directory\n", global.CONFIG.Zap.Director)
-		_ = os.Mkdir(global.CONFIG.Zap.Director, os.ModePerm)
+func zapInit() (logger *zap.Logger, err error) {
+	ok, err := utils.PathExists(global.CONFIG.Zap.Director)
+	if !ok { // 判断是否有Director文件夹
+		log.Printf("create %v directory\n", global.CONFIG.Zap.Director)
+		err = os.Mkdir(global.CONFIG.Zap.Director, os.ModePerm)
+		return
+	}
+
+	if err != nil {
+		return
 	}
 
 	cores := internal.Zap.GetZapCores()
@@ -26,7 +31,7 @@ func zapInit() (logger *zap.Logger) {
 	if global.CONFIG.Zap.ShowLine {
 		logger = logger.WithOptions(zap.AddCaller())
 	}
-	return logger
+	return
 }
 
 // func Zap() (logger *zap.Logger) {

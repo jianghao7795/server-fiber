@@ -3,8 +3,8 @@ package core
 import (
 	"database/sql"
 	"fmt"
+	"log"
 	"os"
-
 	"server-fiber/global"
 	"server-fiber/initialize"
 	"server-fiber/service/system"
@@ -16,11 +16,15 @@ func RunServer() {
 	var err error
 	global.VIP, err = viperInit("config.yaml") // 初始化Viper 配置 传入 ...string
 	if err != nil {
-		global.LOG.Error("配置错误：", zap.Error(err))
+		// global.LOG.Error("配置错误：", zap.Error(err))
+		log.Println("配置错误： ", err.Error())
 		os.Exit(1)
 	}
-	global.LOG = zapInit() // 初始化zap日志库
-	//global.Logger = InitLogger()   // 初始化 log 让log标准输出
+	global.LOG, err = zapInit() // 初始化zap日志库
+	if err != nil {
+		log.Println("日志初始化错误： ", err.Error())
+	}
+	// global.Logger = InitLogger()   // 初始化 log 让log标准输出
 	zap.ReplaceGlobals(global.LOG) // 配置部署到全局
 
 	db, err := initialize.Gorm() // gorm连接数据库
@@ -31,7 +35,7 @@ func RunServer() {
 		global.LOG.Error("The database connection failed: " + err.Error())
 		os.Exit(1)
 	}
-	initialize.Timer() //定时 执行任务
+	initialize.Timer() // 定时 执行任务
 	// err = utilsInit.TransInit("zh")
 	// if err != nil {
 	// 	global.LOG.Error("翻译错误：" + err.Error())
