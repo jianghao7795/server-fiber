@@ -1,12 +1,8 @@
 package core
 
 import (
-	"flag"
-	"fmt"
-	"os"
 	"path/filepath"
 	"server-fiber/global"
-	"server-fiber/utils"
 	"time"
 
 	// json "github.com/bytedance/sonic"
@@ -18,53 +14,80 @@ import (
 	"go.uber.org/zap"
 )
 
+var (
+	publicKeyString = `-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQD5aaI0TGfPWVrlX2m6l97j5gIf
+IljZwDbOfJrycOPt+YQyPZFGbGoGYqC9MUFh9NSBHQySY4XrvWbpvuRH62S4IIyu
+2uZ5HwfcbrwLe4vRYZEHNX6lMIvvsTwm+Iw96QhtnDRp5tcT+BCSJ2R/UPCy3sij
+Uis1nNRTyiANM9xwlQIDAQAB
+-----END PUBLIC KEY-----`
+	privateKeyString = `-----BEGIN PRIVATE KEY-----
+MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBAPlpojRMZ89ZWuVf
+abqX3uPmAh8iWNnANs58mvJw4+35hDI9kUZsagZioL0xQWH01IEdDJJjheu9Zum+
+5EfrZLggjK7a5nkfB9xuvAt7i9FhkQc1fqUwi++xPCb4jD3pCG2cNGnm1xP4EJIn
+ZH9Q8LLeyKNSKzWc1FPKIA0z3HCVAgMBAAECgYEAlfGTuq1Um6u0ocFC5xL2xTw6
+ek1D7WVJjcoLvUVxQliHyUyKUjRLaZtR12wNSr7OIvE75aY/lQJBJLXGuBYkbf4O
+d44b3fpnz0u3UWYnIz6EiZrnxeubtcBYwh0oLQYFJrHpPxrs27wYQD7Iou1U5xWC
+sfyCL6qbtjnkbj9um+ECQQD+Sr1vKeBbdetRDqP+5313LNwTiVpBD9VaJ7ilpC8g
++CW6hFKmDYJ9CNu7Tq2Ky6mrI8h9fqG4KIB1i6AUegVrAkEA+xaA6DSx/D4JG44h
+lzM1/ZK90q4gjNEUszKQLRo0N/Y1VLgkHe9rD7fX9JQD1/mNXtPZBEKq/jknIyE9
+BCrh/wJBAI1Did7SPZ+xbysVXgdCJBHrasqzl97i49v0iwABqGjBUXw+/AbhJGc/
+X4m7WG7tWvEGrN8CVOaQIWSrTx9w9ccCQGtnquipceFWoAq7d7731waLOMvgVGgo
+H9SvsmC4rtGpbhK5Wim7+m4U1Dn4/tPqGgEQWeqqof5xcD5kv3cC6P0CQQCx6VXB
+sqMBYlujFPwiaf6KzJY+dg8gNCZEZoytbd8TL7RolhcpQ//wTvsJY47PN5hPV6KD
+nL9o4PchskjTFRVR
+-----END PRIVATE KEY-----`
+)
+
 // 读取配置 配置文件config.yaml
-func viperInit(path ...string) (*viper.Viper, error) {
-	var config string
-	if len(path) == 0 {
-		flag.StringVar(&config, "c", "config.yaml", "choose config file.")
-		flag.Parse()
-		if config == "" { // 优先级: 命令行 > 环境变量 > 默认值
-			if configEnv := os.Getenv(utils.ConfigEnv); configEnv == "" {
-				config = utils.ConfigFile
-				if isFile, err := utils.IsExistFile(config); isFile {
-					fmt.Printf("您正在使用config的默认值,config的路径为%v\n", utils.ConfigFile)
-				} else {
-					panic("请检查配置文件" + config + "是否存在: " + err.Error())
-				}
-			} else {
-				config = configEnv
-				if isFile, err := utils.IsExistFile(config); isFile {
-					fmt.Printf("您正在使用CONFIG环境变量,config的路径为%v\n", config)
-				} else {
-					panic("请检查配置文件" + config + "是否存在: " + err.Error())
-				}
-			}
-		} else {
-			if isFile, err := utils.IsExistFile(config); isFile {
-				fmt.Printf("您正在使用命令行的-c参数传递的值,config的路径为%v\n", config) // server-fiber -c config.yaml
-			} else {
-				panic("请检查配置文件" + config + "是否存在: " + err.Error())
-			}
-		}
-	} else {
-		config = path[0]
-		if isFile, err := utils.IsExistFile(config); isFile {
-			fmt.Printf("您正在使用func Viper()传递的值,config的路径为%v\n", config)
-		} else {
-			panic("请检查配置文件" + config + "是否存在: " + err.Error())
-		}
-	}
+func viperInit() (*viper.Viper, error) {
+	// var config string
+	// if len(path) == 0 {
+	// 	flag.StringVar(&config, "c", "config.yaml", "choose config file.")
+	// 	flag.Parse()
+	// 	if config == "" { // 优先级: 命令行 > 环境变量 > 默认值
+	// 		if configEnv := os.Getenv(utils.ConfigEnv); configEnv == "" {
+	// 			config = utils.ConfigFile
+	// 			if isFile, err := utils.IsExistFile(config); isFile {
+	// 				fmt.Printf("您正在使用config的默认值,config的路径为%v\n", utils.ConfigFile)
+	// 			} else {
+	// 				panic("请检查配置文件" + config + "是否存在: " + err.Error())
+	// 			}
+	// 		} else {
+	// 			config = configEnv
+	// 			if isFile, err := utils.IsExistFile(config); isFile {
+	// 				fmt.Printf("您正在使用CONFIG环境变量,config的路径为%v\n", config)
+	// 			} else {
+	// 				panic("请检查配置文件" + config + "是否存在: " + err.Error())
+	// 			}
+	// 		}
+	// 	} else {
+	// 		if isFile, err := utils.IsExistFile(config); isFile {
+	// 			fmt.Printf("您正在使用命令行的-c参数传递的值,config的路径为%v\n", config) // server-fiber -c config.yaml
+	// 		} else {
+	// 			panic("请检查配置文件" + config + "是否存在: " + err.Error())
+	// 		}
+	// 	}
+	// } else {
+	// 	config = path[0]
+	// 	if isFile, err := utils.IsExistFile(config); isFile {
+	// 		fmt.Printf("您正在使用func Viper()传递的值,config的路径为%v\n", config)
+	// 	} else {
+	// 		panic("请检查配置文件" + config + "是否存在: " + err.Error())
+	// 	}
+	// }
 
 	v := viper.New()
-	v.SetConfigFile(config)
-	v.SetConfigType("yaml")
+	// v.SetConfigFile(config)
+	v.AddConfigPath("./conf") // 配置目录
+	v.SetConfigType("yaml")   // 配置文件类型
+	// // 处理找不到配置文件的情况
 	err := v.ReadInConfig()
 	if err != nil {
 		return nil, err
 	}
-	v.WatchConfig()
-
+	v.WatchConfig() // 监听变化
+	// config 变动之后的回调
 	v.OnConfigChange(func(e fsnotify.Event) {
 		if err := v.Unmarshal(&global.CONFIG); err != nil {
 			global.LOG.Error("config change error: ", zap.Error(err))
@@ -74,19 +97,19 @@ func viperInit(path ...string) (*viper.Viper, error) {
 		return nil, err
 	}
 
-	publicKeyByte, err := os.ReadFile("./rsa_public_key.pem")
+	// , err := os.ReadFile("./rsa_public_key.pem")
 	if err != nil {
 		return nil, err
 	}
-	publicKey, err := jwt.ParseRSAPublicKeyFromPEM(publicKeyByte)
+	publicKey, err := jwt.ParseRSAPublicKeyFromPEM([]byte(publicKeyString))
 	if err != nil {
 		return nil, err
 	}
-	privateKeyByte, err := os.ReadFile("./private_key.pem")
+	// , err := os.ReadFile("./private_key.pem")
 	if err != nil {
 		return nil, err
 	}
-	privateKey, err := jwt.ParseRSAPrivateKeyFromPEM(privateKeyByte)
+	privateKey, err := jwt.ParseRSAPrivateKeyFromPEM([]byte(privateKeyString))
 	if err != nil {
 		return nil, err
 	}

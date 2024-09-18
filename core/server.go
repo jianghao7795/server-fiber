@@ -14,7 +14,7 @@ import (
 
 func RunServer() {
 	var err error
-	global.VIP, err = viperInit("config.yaml") // 初始化Viper 配置 传入 ...string
+	global.VIP, err = viperInit() // 初始化Viper 配置
 	if err != nil {
 		// global.LOG.Error("配置错误：", zap.Error(err))
 		log.Println("配置错误： ", err.Error())

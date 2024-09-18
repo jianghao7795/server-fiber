@@ -5,13 +5,13 @@ import (
 )
 
 type Server struct {
-	JWT     PrivacyJWT `mapstructure:"jwt" json:"jwt" yaml:"jwt"`
-	Zap     Zap        `mapstructure:"zap" json:"zap" yaml:"zap"`
-	Redis   Redis      `mapstructure:"redis" json:"redis" yaml:"redis"`
-	Email   Email      `mapstructure:"email" json:"email" yaml:"email"`
+	JWT     PrivacyJWT `mapstructure:"jwt" json:"jwt" yaml:"jwt"`       // JWT
+	Zap     Zap        `mapstructure:"zap" json:"zap" yaml:"zap"`       // zap 压缩
+	Redis   Redis      `mapstructure:"redis" json:"redis" yaml:"redis"` // Redis
+	Email   Email      `mapstructure:"email" json:"email" yaml:"email"` // email
 	Casbin  Casbin     `mapstructure:"casbin" json:"casbin" yaml:"casbin"`
 	System  System     `mapstructure:"system" json:"system" yaml:"system"`
-	Captcha Captcha    `mapstructure:"captcha" json:"captcha" yaml:"captcha"`
+	Captcha Captcha    `mapstructure:"captcha" json:"captcha" yaml:"captcha"` // 验证码配置
 	// auto
 	AutoCode Autocode `mapstructure:"autocode" json:"autocode" yaml:"autocode"`
 	// gorm
@@ -28,14 +28,13 @@ type Server struct {
 	AwsS3      AwsS3      `mapstructure:"aws-s3" json:"aws-s3" yaml:"aws-s3"`
 
 	Excel Excel `mapstructure:"excel" json:"excel" yaml:"excel"`
-	Timer Timer `mapstructure:"timer" json:"timer" yaml:"timer"`
+	Timer Timer `mapstructure:"timer" json:"timer" yaml:"timer"` // 任务配置
 
 	// 跨域配置
 	Cors CORS `mapstructure:"cors" json:"cors" yaml:"cors"`
 	// 缓存
 	Cache Cache `mapstructure:"cache" json:"cache" yaml:"cache"`
 	// fiber config
-
 }
 
 type RunServer struct {
