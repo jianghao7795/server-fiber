@@ -12,15 +12,14 @@ import (
 	ioutil "io"
 	"os"
 	"path/filepath"
+	"server-fiber/global"
+	"server-fiber/model/system"
+	"server-fiber/utils"
 	"strconv"
 	"strings"
 	"text/template"
 
 	// json "github.com/bytedance/sonic"
-
-	"server-fiber/global"
-	"server-fiber/model/system"
-	"server-fiber/utils"
 
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
@@ -286,11 +285,11 @@ func (autoCodeService *AutoCodeService) CreateTemp(autoCode system.AutoCodeStruc
 			}
 		}
 
-		var gormPath = filepath.Join(global.CONFIG.AutoCode.Root,
+		gormPath := filepath.Join(global.CONFIG.AutoCode.Root,
 			global.CONFIG.AutoCode.Server, global.CONFIG.AutoCode.SInitialize, "gorm.go")
-		var routePath = filepath.Join(global.CONFIG.AutoCode.Root,
+		routePath := filepath.Join(global.CONFIG.AutoCode.Root,
 			global.CONFIG.AutoCode.Server, global.CONFIG.AutoCode.SInitialize, "router.go")
-		var imporStr = fmt.Sprintf("server-fiber/model/%s", autoCode.Package)
+		imporStr := fmt.Sprintf("server-fiber/model/%s", autoCode.Package)
 		_ = ImportReference(routePath, "", "", autoCode.Package, "")
 		_ = ImportReference(gormPath, imporStr, "", "", "")
 

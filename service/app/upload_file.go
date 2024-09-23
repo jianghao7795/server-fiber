@@ -38,7 +38,7 @@ func (e *FileUploadService) UploadFile(header *multipart.FileHeader, noSave stri
 			Tag:  s,
 			Key:  key,
 		}
-		return f, e.Upload(f)
+		return f, e.createdFileRecord(&f)
 	}
 	return
 }
@@ -49,6 +49,6 @@ func (e *FileUploadService) UploadFile(header *multipart.FileHeader, noSave stri
 //@param: file model.ExaFileUploadAndDownload
 //@return: error
 
-func (e *FileUploadService) Upload(file app.FileUploadAndDownload) error {
-	return global.DB.Create(&file).Error
+func (e *FileUploadService) createdFileRecord(file *app.FileUploadAndDownload) error {
+	return global.DB.Create(file).Error
 }

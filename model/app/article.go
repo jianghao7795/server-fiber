@@ -19,6 +19,13 @@ type Article struct {
 	// Username string `json:"username" form:"username" gorm:"column:username;comment:文章内容;"`
 }
 
+// func (*Article) AfterUpdate(tx *gorm.DB) error {
+// 	// const user = c.
+
+// 	fmt.Println("Update articles")
+// 	return nil
+// }
+
 // 表名
 func (Article) TableName() string {
 	return "articles"

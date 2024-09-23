@@ -1,13 +1,14 @@
 package system
 
 import (
-	"github.com/gofiber/fiber/v2"
-	"go.uber.org/zap"
 	"server-fiber/global"
 	"server-fiber/model/common/request"
 	"server-fiber/model/common/response"
 	"server-fiber/model/system"
 	systemReq "server-fiber/model/system/request"
+
+	"github.com/gofiber/fiber/v2"
+	"go.uber.org/zap"
 )
 
 type OperationRecordApi struct{}
@@ -23,7 +24,7 @@ type OperationRecordApi struct{}
 func (s *OperationRecordApi) CreateSysOperationRecord(c *fiber.Ctx) error {
 	var sysOperationRecord system.SysOperationRecord
 	_ = c.BodyParser(&sysOperationRecord)
-	if err := operationRecordService.CreateSysOperationRecord(sysOperationRecord); err != nil {
+	if err := operationRecordService.CreateSysOperationRecord(&sysOperationRecord); err != nil {
 		global.LOG.Error("创建失败!", zap.Error(err))
 		return response.FailWithMessage("创建失败", c)
 	} else {
@@ -122,5 +123,4 @@ func (s *OperationRecordApi) GetSysOperationRecordList(c *fiber.Ctx) error {
 			}, "获取成功", c)
 		}
 	}
-
 }

@@ -35,7 +35,7 @@ func (dictionaryDetailService *DictionaryDetailService) DeleteSysDictionaryDetai
 //@return: err error
 
 func (dictionaryDetailService *DictionaryDetailService) UpdateSysDictionaryDetail(sysDictionaryDetail *system.SysDictionaryDetail) (err error) {
-	err = global.DB.Save(sysDictionaryDetail).Error
+	err = global.DB.Model(&system.SysDictionaryDetail{}).Where("id = ?", sysDictionaryDetail.ID).Save(sysDictionaryDetail).Error
 	return err
 }
 

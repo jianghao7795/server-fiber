@@ -5,7 +5,6 @@ import (
 	"server-fiber/model/app"
 	appReq "server-fiber/model/app/request"
 	"server-fiber/model/common/request"
-
 	"time"
 )
 
@@ -32,7 +31,7 @@ func (*ArticleService) DeleteArticleByIds(ids request.IdsReq) (err error) {
 
 // update
 func (*ArticleService) UpdateArticle(article *app.Article) (err error) {
-	err = global.DB.Save(article).Error
+	err = global.DB.Model(&app.Article{}).Where("id = ?", article.ID).Save(article).Error
 	return err
 }
 

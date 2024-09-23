@@ -12,8 +12,8 @@ import (
 //@param: sysOperationRecord model.SysOperationRecord
 //@return: err error
 
-func (operationRecordService *OperationRecordService) CreateSysOperationRecord(sysOperationRecord system.SysOperationRecord) (err error) {
-	err = global.DB.Create(&sysOperationRecord).Error
+func (operationRecordService *OperationRecordService) CreateSysOperationRecord(sysOperationRecord *system.SysOperationRecord) (err error) {
+	err = global.DB.Create(sysOperationRecord).Error
 	return err
 }
 
@@ -76,7 +76,6 @@ func (operationRecordService *OperationRecordService) GetSysOperationRecordInfoL
 	}
 	err = db.Order("id desc").Limit(limit).Offset(offset).Preload("User").Find(&sysOperationRecords).Error
 	return sysOperationRecords, total, err
-
 }
 
 func (operationRecordService *OperationRecordService) GetSysOperationRecordInfoFrontendList(info systemReq.SysOperationRecordSearch) (list []system.SysOperationRecordFrontend, total int64, err error) {
@@ -104,5 +103,4 @@ func (operationRecordService *OperationRecordService) GetSysOperationRecordInfoF
 	}
 	err = db.Order("id desc").Limit(limit).Offset(offset).Preload("User").Find(&sysOperationRecords).Error
 	return sysOperationRecords, total, err
-
 }

@@ -2,6 +2,9 @@ package middleware
 
 import (
 	"encoding/json"
+	"server-fiber/global"
+	"server-fiber/model/system"
+	"server-fiber/utils"
 	"strconv"
 	"strings"
 	"time"
@@ -9,10 +12,7 @@ import (
 	// json "github.com/bytedance/sonic"
 	"github.com/gofiber/fiber/v2"
 
-	"server-fiber/global"
-	"server-fiber/model/system"
 	systemService "server-fiber/service/system"
-	"server-fiber/utils"
 
 	"go.uber.org/zap"
 )
@@ -93,7 +93,7 @@ func OperationRecord(c *fiber.Ctx) error {
 		}
 		record.Latency = time.Since(time.Now())
 		record.Resp = string(c.Response().Body())
-		if err := operationRecordService.CreateSysOperationRecord(record); err != nil {
+		if err := operationRecordService.CreateSysOperationRecord(&record); err != nil {
 			global.LOG.Error("create operation record error:", zap.Error(err))
 		}
 	}()

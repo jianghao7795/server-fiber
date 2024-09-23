@@ -11,7 +11,7 @@ type ArticleRouter struct{}
 
 // InitArticleRouter 初始化 article 路由信息
 func (s *ArticleRouter) InitArticleRouter(Router fiber.Router) {
-	var articleApi = new(v1.ArticleApi)
+	articleApi := new(v1.ArticleApi)
 	articleRouter := Router.Group("article")
 
 	articleRouter.Post("createArticle", middleware.OperationRecord, articleApi.CreateArticle).Name("createArticle") // 新建article
@@ -23,5 +23,4 @@ func (s *ArticleRouter) InitArticleRouter(Router fiber.Router) {
 	articleRouter.Get("findArticle/:id", articleApi.FindArticle)         // 根据ID获取article
 	articleRouter.Get("getArticleList", articleApi.GetArticleList)       // 获取article列表
 	articleRouter.Get("getArticleReading", articleApi.GetArticleReading) // 获取阅读量
-
 }

@@ -21,11 +21,11 @@ func (*BaseMessageService) CreateBaseMessage(baseMessage *app.BaseMessage) (err 
 /**
  * @description: 更新baseMessage
  * @param {app.BaseMessage} baseMessage
- * @return {*}
+ * @return {error}
  */
 func (*BaseMessageService) UpdateBaseMessage(id int, baseMessage *app.BaseMessage) (err error) {
 	var baseMessageReplica app.BaseMessage
-	db := global.DB.Model(app.BaseMessage{}).Where("id = ?", id).First(&baseMessageReplica)
+	db := global.DB.Model(&app.BaseMessage{}).Where("id = ?", id).First(&baseMessageReplica)
 	if baseMessageReplica.ID == 0 {
 		return errors.New("数据库没有记录")
 	}
