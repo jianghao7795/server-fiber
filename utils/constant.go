@@ -1,6 +1,6 @@
 package utils
 
 const (
-	ConfigEnv  = "CONFIG"
+	ConfigEnv  = "./conf/"
 	ConfigFile = "config.yaml"
 )

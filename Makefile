@@ -3,16 +3,16 @@
 all: build
 
 build:
-	go build -v .
+	go build -v cmd/main.go
 
 start:
 	air
 
 dev:
-	go run cmd/main.go -c config.yaml
+	go run cmd/main.go -c ./conf/
 
 local:
-	go run . -c config.yaml
+	go run . -c ./conf/
 
 tool:
 	go tool vet . |& grep -v vendor; true
