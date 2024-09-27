@@ -11,5 +11,5 @@ COPY . /app
 RUN go build -o server-fiber cmd/main.go
 
 EXPOSE 3100
-CMD ["/app/server-fiber", "-c", "config.yaml"]
+CMD ["/app/server-fiber", "-c", "./conf/"]
 # ENTRYPOINT ["/app/server-fiber", "-c", "config.yaml"]
