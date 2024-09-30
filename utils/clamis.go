@@ -1,8 +1,8 @@
 package utils
 
 import (
+	"errors"
 	"server-fiber/global"
-	"server-fiber/model/common/response"
 	systemReq "server-fiber/model/system/request"
 	"strings"
 
@@ -12,10 +12,14 @@ import (
 
 // GetClaims 从fiber的Context中获取JWT token并解析出CustomClaims结构体
 func GetClaims(c *fiber.Ctx) (*systemReq.CustomClaims, error) {
-	tokenString := c.Get("Authorization")                   // 从请求头中获取token字符串
+	tokenString := c.Get("Authorization") // 从请求头中获取token字符串
+	// fmt.Println("tokenString: ", tokenString)
+	if tokenString == "" {
+		return nil, errors.New("禁止访问")
+	}
 	token := strings.Replace(tokenString, "Bearer ", "", 1) // 去除token字符串中的"Bearer "前缀
 	if token == "" {
-		return nil, response.FailWithMessage401("token 失效， 请重新登录", c) // 若token为空则返回401错误响应
+		return nil, errors.New("token 失效， 请重新登录") // 若token为空则返回401错误响应
 	}
 	j := NewJWT()                      // 初始化JWT对象
 	claims, err := j.ParseToken(token) // 解析token获取CustomClaims结构体和可能的错误
@@ -48,7 +52,7 @@ func GetUserID(c *fiber.Ctx) (uint, error) {
 
 // GetUserUuid 从fiber的Context中获取从jwt解析出来的用户UUID
 func GetUserUuid(c *fiber.Ctx) uuid.UUID {
-	var claims = c.Locals("claims")
+	claims := c.Locals("claims")
 	waitUse, ok := claims.(*systemReq.CustomClaims)
 	if !ok {
 		if cl, err := GetClaims(c); err != nil {
@@ -66,12 +70,11 @@ func GetUserUuid(c *fiber.Ctx) uuid.UUID {
 	} else {
 		return waitUse.UUID
 	}
-
 }
 
 // 从fiber的Context中获取从jwt解析出来的用户角色id
 func GetUserAuthorityId(c *fiber.Ctx) (string, error) {
-	var claims = c.Locals("claims")
+	claims := c.Locals("claims")
 	waitUse, ok := claims.(*systemReq.CustomClaims)
 	if !ok {
 		if cl, err := GetClaims(c); err != nil {
@@ -89,12 +92,11 @@ func GetUserAuthorityId(c *fiber.Ctx) (string, error) {
 	} else {
 		return waitUse.AuthorityId, nil
 	}
-
 }
 
 // 从fiber的Context中获取从jwt解析出来的用户角色id
 func GetUserInfo(c *fiber.Ctx) *systemReq.CustomClaims {
-	var claims = c.Locals("claims")
+	claims := c.Locals("claims")
 	waitUse, ok := claims.(*systemReq.CustomClaims)
 	if !ok {
 		if cl, err := GetClaims(c); err != nil {

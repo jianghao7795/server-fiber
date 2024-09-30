@@ -26,7 +26,7 @@ func (s *FrontendRouter) InitFrontendRouter(Router fiber.Router) {
 	frontendCommentApi := new(v1.CommentApi)
 	{
 		frontend.Get("getArticleComment/:articleId", frontendCommentApi.GetCommentByArticleId)
-		frontend.Post("createdComment", frontendCommentApi.CreatedComment)
+		frontend.Post("createdComment", middleware.OperationRecord, frontendCommentApi.CreatedComment)
 	}
 	frontendUserApi := new(v1.User)
 	{
