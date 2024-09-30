@@ -96,8 +96,7 @@ func GetUserAuthorityId(c *fiber.Ctx) (string, error) {
 
 // 从fiber的Context中获取从jwt解析出来的用户角色id
 func GetUserInfo(c *fiber.Ctx) *systemReq.CustomClaims {
-	claims := c.Locals("claims")
-	waitUse, ok := claims.(*systemReq.CustomClaims)
+	waitUse, ok := c.Locals("claims").(*systemReq.CustomClaims)
 	if !ok {
 		if cl, err := GetClaims(c); err != nil {
 			return nil
