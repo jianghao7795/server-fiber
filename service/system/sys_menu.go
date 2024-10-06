@@ -2,11 +2,10 @@ package system
 
 import (
 	"errors"
-	"strconv"
-
 	"server-fiber/global"
 	"server-fiber/model/common/request"
 	"server-fiber/model/system"
+	"strconv"
 
 	"gorm.io/gorm"
 )
@@ -28,7 +27,7 @@ func (menuService *MenuService) getMenuTreeMap(authorityId string) (treeMap map[
 	if err != nil {
 		return
 	}
-	var btnMap = make(map[uint]map[string]string)
+	btnMap := make(map[uint]map[string]string)
 	for _, v := range btns {
 		if btnMap[v.SysMenuID] == nil {
 			btnMap[v.SysMenuID] = make(map[string]string)
@@ -73,7 +72,7 @@ func (menuService *MenuService) getChildrenList(menu *system.SysMenu, treeMap ma
 //@description: 获取路由分页
 //@return: err error, list interface{}, total int64
 
-func (menuService *MenuService) GetInfoList() (list interface{}, total int64, err error) {
+func (menuService *MenuService) GetInfoList() (list []system.SysBaseMenu, total int64, err error) {
 	var menuList []system.SysBaseMenu
 	treeMap, err := menuService.getBaseMenuTreeMap()
 	menuList = treeMap["0"]

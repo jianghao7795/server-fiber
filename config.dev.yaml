@@ -125,8 +125,9 @@ qiniu:
   use-cdn-domains: false
 redis:
   db: 0
-  addr: 192.168.1.2:6379
+  addr: 192.168.1.2
   password: ""
+  port: "6379"
 system:
   domain: localhost
   env: develop

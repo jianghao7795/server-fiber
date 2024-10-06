@@ -24,6 +24,7 @@ var operationRecordService = new(systemService.OperationRecordService)
 func OperationRecord(c *fiber.Ctx) error {
 	var body []byte
 	var userId int
+	// var err error
 	if c.Method() != fiber.MethodGet {
 		body = c.Request().Body()
 	} else {
@@ -42,7 +43,11 @@ func OperationRecord(c *fiber.Ctx) error {
 		}
 
 	}
-	claims, _ := utils.GetClaims(c)
+	claims, err := utils.GetClaims(c)
+	if err != nil {
+		return c.Status(403).JSON(map[string]string{"msg": err.Error()})
+	}
+	// fmt.Printf("%v\n", claims)
 	if claims.BaseClaims.ID != 0 {
 		userId = int(claims.BaseClaims.ID)
 	} else {
@@ -80,10 +85,6 @@ func OperationRecord(c *fiber.Ctx) error {
 			record.Body = "File or Length out of limit"
 		}
 	}
-	err := c.Next()
-	if err != nil {
-		return err
-	}
 	defer func() {
 		record.Status = c.Response().StatusCode()
 		if record.Status == fiber.StatusInternalServerError {
@@ -97,7 +98,8 @@ func OperationRecord(c *fiber.Ctx) error {
 			global.LOG.Error("create operation record error:", zap.Error(err))
 		}
 	}()
-	return err
+
+	return c.Next()
 }
 
 // func OperationRecordFrontend(c *fiber.Ctx) error {

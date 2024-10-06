@@ -21,7 +21,7 @@
 --
 -- Table structure for table `article_tag`
 --
-
+-- migrate -verbose -source file://migration mysql://user:password@tcp(ip:port)/database_name up 1
 DROP TABLE IF EXISTS `article_tag`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;

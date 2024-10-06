@@ -1,8 +1,12 @@
 package core
 
 import (
+	"flag"
+	"fmt"
+	"os"
 	"path/filepath"
 	"server-fiber/global"
+	"server-fiber/utils"
 	"time"
 
 	// json "github.com/bytedance/sonic"
@@ -41,46 +45,38 @@ nL9o4PchskjTFRVR
 
 // 读取配置 配置文件config.yaml
 func viperInit() (*viper.Viper, error) {
-	// var config string
-	// if len(path) == 0 {
-	// 	flag.StringVar(&config, "c", "config.yaml", "choose config file.")
-	// 	flag.Parse()
-	// 	if config == "" { // 优先级: 命令行 > 环境变量 > 默认值
-	// 		if configEnv := os.Getenv(utils.ConfigEnv); configEnv == "" {
-	// 			config = utils.ConfigFile
-	// 			if isFile, err := utils.IsExistFile(config); isFile {
-	// 				fmt.Printf("您正在使用config的默认值,config的路径为%v\n", utils.ConfigFile)
-	// 			} else {
-	// 				panic("请检查配置文件" + config + "是否存在: " + err.Error())
-	// 			}
-	// 		} else {
-	// 			config = configEnv
-	// 			if isFile, err := utils.IsExistFile(config); isFile {
-	// 				fmt.Printf("您正在使用CONFIG环境变量,config的路径为%v\n", config)
-	// 			} else {
-	// 				panic("请检查配置文件" + config + "是否存在: " + err.Error())
-	// 			}
-	// 		}
-	// 	} else {
-	// 		if isFile, err := utils.IsExistFile(config); isFile {
-	// 			fmt.Printf("您正在使用命令行的-c参数传递的值,config的路径为%v\n", config) // server-fiber -c config.yaml
-	// 		} else {
-	// 			panic("请检查配置文件" + config + "是否存在: " + err.Error())
-	// 		}
-	// 	}
-	// } else {
-	// 	config = path[0]
-	// 	if isFile, err := utils.IsExistFile(config); isFile {
-	// 		fmt.Printf("您正在使用func Viper()传递的值,config的路径为%v\n", config)
-	// 	} else {
-	// 		panic("请检查配置文件" + config + "是否存在: " + err.Error())
-	// 	}
-	// }
+	var config string
+	flag.StringVar(&config, "c", "./conf", "choose config file.")
+	flag.Parse()
+	if config == "" { // 优先级: 命令行 > 环境变量 > 默认值
+		configEnv := os.Getenv(utils.ConfigEnv)
+		if configEnv == "" {
+			config = utils.ConfigFile
+			if isFile, err := utils.IsExistFile(config); isFile {
+				fmt.Printf("您正在使用config的默认值,config的路径为%v\n", utils.ConfigFile)
+			} else {
+				panic("请检查配置文件" + config + "是否存在: " + err.Error())
+			}
+		} else {
+			config = configEnv
+			if isFile, err := utils.IsExistFile(config); isFile {
+				fmt.Printf("您正在使用CONFIG环境变量,config的路径为%v\n", config)
+			} else {
+				panic("请检查配置文件" + config + "是否存在: " + err.Error())
+			}
+		}
+	} else {
+		if isFile, err := utils.IsExistFile(config); isFile {
+			fmt.Printf("您正在使用命令行的-c参数传递的值,config的路径为%v\n", config) // server-fiber -c config.yaml
+		} else {
+			panic("请检查配置文件" + config + "是否存在: " + err.Error())
+		}
+	}
 
 	v := viper.New()
 	// v.SetConfigFile(config)
-	v.AddConfigPath("./conf") // 配置目录
-	v.SetConfigType("yaml")   // 配置文件类型
+	v.AddConfigPath(config) // 配置目录
+	v.SetConfigType("yaml") // 配置文件类型
 	// // 处理找不到配置文件的情况
 	err := v.ReadInConfig()
 	if err != nil {
