@@ -8,7 +8,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-var HuaWeiObs = new(_obs)
+type HuaWeiObs = new(_obs)
 
 type _obs struct{}
 

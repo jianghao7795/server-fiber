@@ -32,7 +32,7 @@ type FileUploadAndDownloadApi struct{}
 
 var fileUploadService = appService.FileUploadServer
 
-// UserApi user
+// UserApi
 type UserApi struct{}
 
 var userService = appService.UserServer

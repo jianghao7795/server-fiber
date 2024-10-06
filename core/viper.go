@@ -98,13 +98,13 @@ func viperInit() (*viper.Viper, error) {
 	}
 
 	// , err := os.ReadFile("./rsa_public_key.pem")
-	if err != nil {
-		return nil, err
-	}
+	// if err != nil {
+	// 	return nil, err
+	// }
 	publicKey, err := jwt.ParseRSAPublicKeyFromPEM([]byte(publicKeyString))
-	if err != nil {
-		return nil, err
-	}
+	// if err != nil {
+	// 	return nil, err
+	// }
 	// , err := os.ReadFile("./private_key.pem")
 	if err != nil {
 		return nil, err
