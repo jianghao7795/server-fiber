@@ -11,15 +11,13 @@ import (
 type ArticleService struct{}
 
 // CreateArticle
-func (*ArticleService) CreateArticle(article *app.Article) (err error) {
-	err = global.DB.Create(article).Error
-	return
+func (*ArticleService) CreateArticle(article *app.Article) error {
+	return global.DB.Create(article).Error
 }
 
 // DeleteArticle delete
-func (*ArticleService) DeleteArticle(id uint) (err error) {
-	err = global.DB.Delete(&app.Article{}, id).Error
-	return
+func (*ArticleService) DeleteArticle(id uint) error {
+	return global.DB.Delete(&app.Article{}, id).Error
 }
 
 // delete by ids

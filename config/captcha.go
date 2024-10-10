@@ -10,5 +10,4 @@ type Captcha struct {
 }
 
 // 图片验证码配置
-type ImageCaptcha struct {
-}
+type ImageCaptcha struct{}
