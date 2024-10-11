@@ -19,13 +19,13 @@ import (
 )
 
 var (
-	publicKeyString = `-----BEGIN PUBLIC KEY-----
+	publicKeyString = []byte(`-----BEGIN PUBLIC KEY-----
 MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQD5aaI0TGfPWVrlX2m6l97j5gIf
 IljZwDbOfJrycOPt+YQyPZFGbGoGYqC9MUFh9NSBHQySY4XrvWbpvuRH62S4IIyu
 2uZ5HwfcbrwLe4vRYZEHNX6lMIvvsTwm+Iw96QhtnDRp5tcT+BCSJ2R/UPCy3sij
 Uis1nNRTyiANM9xwlQIDAQAB
------END PUBLIC KEY-----`
-	privateKeyString = `-----BEGIN PRIVATE KEY-----
+-----END PUBLIC KEY-----`)
+	privateKeyString = []byte(`-----BEGIN PRIVATE KEY-----
 MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBAPlpojRMZ89ZWuVf
 abqX3uPmAh8iWNnANs58mvJw4+35hDI9kUZsagZioL0xQWH01IEdDJJjheu9Zum+
 5EfrZLggjK7a5nkfB9xuvAt7i9FhkQc1fqUwi++xPCb4jD3pCG2cNGnm1xP4EJIn
@@ -40,7 +40,7 @@ X4m7WG7tWvEGrN8CVOaQIWSrTx9w9ccCQGtnquipceFWoAq7d7731waLOMvgVGgo
 H9SvsmC4rtGpbhK5Wim7+m4U1Dn4/tPqGgEQWeqqof5xcD5kv3cC6P0CQQCx6VXB
 sqMBYlujFPwiaf6KzJY+dg8gNCZEZoytbd8TL7RolhcpQ//wTvsJY47PN5hPV6KD
 nL9o4PchskjTFRVR
------END PRIVATE KEY-----`
+-----END PRIVATE KEY-----`)
 )
 
 // 读取配置 配置文件config.yaml
@@ -100,7 +100,7 @@ func viperInit() (*viper.Viper, error) {
 	// if err != nil {
 	// 	return nil, err
 	// }
-	publicKey, err := jwt.ParseRSAPublicKeyFromPEM([]byte(publicKeyString))
+	publicKey, err := jwt.ParseRSAPublicKeyFromPEM(publicKeyString)
 	// if err != nil {
 	// 	return nil, err
 	// }
@@ -108,7 +108,7 @@ func viperInit() (*viper.Viper, error) {
 	if err != nil {
 		return nil, err
 	}
-	privateKey, err := jwt.ParseRSAPrivateKeyFromPEM([]byte(privateKeyString))
+	privateKey, err := jwt.ParseRSAPrivateKeyFromPEM(privateKeyString)
 	if err != nil {
 		return nil, err
 	}
