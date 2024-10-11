@@ -75,8 +75,11 @@ func viperInit() (*viper.Viper, error) {
 
 	v := viper.New()
 	// v.SetConfigFile(config)
+	v.SetConfigName("config") // 指定文件名
+	// v.SetConfigName("base")
 	v.AddConfigPath(config) // 配置目录
 	v.SetConfigType("yaml") // 配置文件类型
+
 	// // 处理找不到配置文件的情况
 	err := v.ReadInConfig()
 	if err != nil {
