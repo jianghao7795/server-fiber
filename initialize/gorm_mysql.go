@@ -19,7 +19,7 @@ func GormMysql() (*gorm.DB, error) {
 	}
 	mysqlConfig := mysql.Config{
 		DSN:                       m.Dsn(), // DSN data source name
-		DefaultStringSize:         191,     // string 类型字段的默认长度
+		DefaultStringSize:         256,     // string 类型字段的默认长度
 		SkipInitializeWithVersion: false,   // 根据版本自动配置
 		// SkipDefaultTransaction:    true,  // 禁用默认事务
 	}
