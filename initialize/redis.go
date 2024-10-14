@@ -3,6 +3,7 @@ package initialize
 import (
 	"context"
 	"server-fiber/global"
+	"strings"
 	"time"
 
 	"github.com/redis/go-redis/v9"
@@ -12,12 +13,13 @@ import (
 func Redis() error {
 	// 初始化时可以指定连接redis的读写超时时间，默认都是3s
 	redisCfg := global.CONFIG.Redis
+	s := []string{redisCfg.Addr, ":", redisCfg.Port}
 	client := redis.NewClient(&redis.Options{
-		Addr:            redisCfg.Addr + ":" + redisCfg.Port, // redis服务ip:port
-		Password:        redisCfg.Password,                   // redis的认证密码
-		DB:              redisCfg.DB,                         // 连接的database
-		ConnMaxIdleTime: 30 * time.Minute,                    // 默认Idle超时时间
-		PoolSize:        100,                                 // 连接池
+		Addr:            strings.Join(s, ""), // redis服务ip:port
+		Password:        redisCfg.Password,   // redis的认证密码
+		DB:              redisCfg.DB,         // 连接的database
+		ConnMaxIdleTime: 30 * time.Minute,    // 默认Idle超时时间
+		PoolSize:        100,                 // 连接池
 	})
 
 	ctx := context.Background()
