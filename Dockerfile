@@ -1,4 +1,4 @@
-FROM golang:latest
+FROM golang:1.22.8
 
 LABEL org.opencontainers.image.authors="jianghao"
 
