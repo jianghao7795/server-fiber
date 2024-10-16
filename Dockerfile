@@ -1,4 +1,4 @@
-FROM golang:1.22.8
+FROM golang:1.22.8 AS builder
 
 LABEL org.opencontainers.image.authors="jianghao"
 
@@ -9,6 +9,14 @@ ENV GO111MODULE=on
 WORKDIR /app
 COPY . /app
 RUN go build -o server-fiber cmd/main.go
+
+FROM rockylinux:9 AS runner
+WORKDIR /app
+
+COPY --from=builder /app/server-fiber .
+COPY --from=builder /app/conf/ ./conf/
+COPY --from=builder /app/rbac_model.conf .
+COPY --from=builder /app/docs/ ./docs/
 
 EXPOSE 3100
 CMD ["/app/server-fiber", "-c", "./conf/"]
