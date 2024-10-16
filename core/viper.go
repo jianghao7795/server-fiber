@@ -43,7 +43,7 @@ nL9o4PchskjTFRVR
 -----END PRIVATE KEY-----`)
 )
 
-// 读取配置 配置文件config.yaml
+// 读取配置 配置文件conf/config.yaml
 func viperInit() (*viper.Viper, error) {
 	var config string
 	flag.StringVar(&config, "c", "./conf", "choose config file.")
