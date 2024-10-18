@@ -15,7 +15,7 @@ func GetClaims(c *fiber.Ctx) (*systemReq.CustomClaims, error) {
 	tokenString := c.Get("Authorization") // 从请求头中获取token字符串
 	// fmt.Println("tokenString: ", tokenString)
 	if tokenString == "" {
-		return nil, errors.New("禁止访问")
+		return nil, errors.New("没有登录，请重新登录")
 	}
 	token := strings.Replace(tokenString, "Bearer ", "", 1) // 去除token字符串中的"Bearer "前缀
 	if token == "" {
