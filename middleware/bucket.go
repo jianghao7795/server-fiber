@@ -2,10 +2,9 @@ package middleware
 
 import (
 	"log"
+	"server-fiber/model/common/response"
 	"sync"
 	"time"
-
-	"server-fiber/model/common/response"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -40,7 +39,6 @@ func (tb *TokenBucket) Allow() bool {
 
 // LimitHandler 允许 连续访问次数
 func LimitHandler(c *fiber.Ctx) error {
-
 	tb := &TokenBucket{
 		capacity:  1000,
 		rate:      1.0,
@@ -51,5 +49,4 @@ func LimitHandler(c *fiber.Ctx) error {
 		return response.FailWithDetailed(fiber.Map{"msg": "服务器需要休息一下，请等几分钟"}, "加载中", c)
 	}
 	return c.Next()
-
 }
