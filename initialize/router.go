@@ -66,9 +66,9 @@ func Routers() *fiber.App {
 	systemRouter := router.SystemRouter
 	exampleRouter := router.ExampleRouter
 	mobile := router.MobileRouter
-	routers := app.Use(swagger.New(cfg), middleware.LimitHandler, logger.New(logger.Config{
+	routers := app.Use(swagger.New(cfg), logger.New(logger.Config{
 		Done: global.Done,
-	}), middleware.LimitHandler) // swagger文档配置
+	})) // swagger文档配置
 	// routers = routers.Use() // log 日志配置
 	routers = routers.Static("/backend/form-generator", "resource/page")
 	routers = routers.Use(middleware.DefaultLimit)

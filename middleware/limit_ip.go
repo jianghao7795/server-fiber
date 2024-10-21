@@ -3,12 +3,11 @@ package middleware
 import (
 	"context"
 	"errors"
+	"server-fiber/global"
+	"server-fiber/model/common/response"
 	"time"
 
 	"go.uber.org/zap"
-
-	"server-fiber/global"
-	"server-fiber/model/common/response"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -27,10 +26,8 @@ type LimitConfig struct {
 func (l LimitConfig) LimitWithTime(c *fiber.Ctx) error {
 	if err := l.CheckOrMark(l.GenerationKey(c), l.Expire, l.Limit); err != nil {
 		return c.Status(fiber.StatusOK).JSON(fiber.Map{"code": response.ERROR, "msg": err})
-
 	}
 	return c.Next()
-
 }
 
 // DefaultGenerationKey 默认生成key

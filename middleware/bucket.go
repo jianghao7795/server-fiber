@@ -21,12 +21,15 @@ func (tb *TokenBucket) Allow() bool {
 	tb.mtx.Lock()
 	defer tb.mtx.Unlock()
 	now := time.Now()
+	log.Println("now is sub oldnow ", now.Sub(tb.lastToken).Seconds())
 	// 计算需要放的令牌数量
 	tb.tokens = tb.tokens + tb.rate*now.Sub(tb.lastToken).Seconds()
 	log.Println("tb.tokens: ", tb.tokens)
 	if tb.tokens > float64(tb.capacity) {
 		tb.tokens = float64(tb.capacity)
 	}
+
+	log.Println("tokens is {}", tb.tokens > 1)
 	// 判断是否允许请求
 	if tb.tokens >= 1 {
 		tb.tokens--
@@ -41,7 +44,7 @@ func (tb *TokenBucket) Allow() bool {
 func LimitHandler(c *fiber.Ctx) error {
 	tb := &TokenBucket{
 		capacity:  1000,
-		rate:      1.0,
+		rate:      10.0,
 		tokens:    0,
 		lastToken: time.Now(),
 	}
