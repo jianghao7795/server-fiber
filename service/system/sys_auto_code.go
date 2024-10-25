@@ -661,10 +661,7 @@ func (vi *Visitor) addStruct(genDecl *ast.GenDecl) ast.Visitor {
 						Names: []*ast.Ident{
 							{
 								Name: vi.StructName,
-								Obj: &ast.Object{
-									Kind: ast.Var,
-									Name: vi.StructName,
-								},
+								Obj:  ast.NewObj(ast.Var, vi.StructName),
 							},
 						},
 						Type: &ast.SelectorExpr{
@@ -725,10 +722,7 @@ func (vi *Visitor) addFuncBodyVar(funDecl *ast.FuncDecl) ast.Visitor {
 			Lhs: []ast.Expr{
 				&ast.Ident{
 					Name: vi.PackageName + "Router",
-					Obj: &ast.Object{
-						Kind: ast.Var,
-						Name: vi.PackageName + "Router",
-					},
+					Obj:  ast.NewObj(ast.Var, vi.PackageName+"Router"),
 				},
 			},
 			Tok: token.DEFINE,
