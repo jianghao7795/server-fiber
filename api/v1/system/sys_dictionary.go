@@ -84,9 +84,9 @@ func (s *DictionaryApi) UpdateSysDictionary(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data query system.SysDictionary true "ID或字典英名"
 // @Success 200 {object} response.Response{data=map[string]interface{},msg=string} "用id查询SysDictionary"
-// @Router /sysDictionary/findSysDictionary/:id [get]
+// @Router /sysDictionary/findSysDictionary [get]
 func (s *DictionaryApi) FindSysDictionary(c *fiber.Ctx) error {
-	fieldType := c.Params("type")
+	fieldType := c.Query("type")
 	if fieldType == "" {
 		global.LOG.Error("field 获取失败!")
 		return response.FailWithMessage("field 获取失败", c)
