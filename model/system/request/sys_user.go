@@ -50,14 +50,13 @@ type SetUserAuthorities struct {
 }
 
 type ChangeUserInfo struct {
-	ID           uint     `gorm:"primarykey"`                                // 主键ID
-	NickName     string   `json:"nickName" gorm:"default:系统用户;comment:用户昵称"` // 用户昵称
-	Phone        string   `json:"phone"  gorm:"comment:用户手机号"`               // 用户角色ID
-	AuthorityIds []string `json:"authorityIds" gorm:"-"`                     // 角色ID
-	Email        string   `json:"email"  gorm:"comment:用户邮箱"`                // 用户邮箱
-	HeaderImg    string   `json:"headerImg" gorm:"default:public/logo.png
-;comment:用户头像"` // 用户头像
-	Authorities []model.SysAuthority `json:"-" gorm:"many2many:sys_user_authority;"`
+	ID           uint                 `gorm:"primarykey"`                                            // 主键ID
+	NickName     string               `json:"nickName" gorm:"default:系统用户;comment:用户昵称"`             // 用户昵称
+	Phone        string               `json:"phone"  gorm:"comment:用户手机号"`                           // 用户角色ID
+	AuthorityIds []string             `json:"authorityIds" gorm:"-"`                                 // 角色ID
+	Email        string               `json:"email"  gorm:"comment:用户邮箱"`                            // 用户邮箱
+	HeaderImg    string               `json:"headerImg" gorm:"default:public/logo.png;comment:用户头像"` // 用户头像
+	Authorities  []model.SysAuthority `json:"-" gorm:"many2many:sys_user_authority;"`
 }
 
 type SearchInfo struct {

@@ -87,11 +87,12 @@ func (s *DictionaryApi) UpdateSysDictionary(c *fiber.Ctx) error {
 // @Router /sysDictionary/findSysDictionary [get]
 func (s *DictionaryApi) FindSysDictionary(c *fiber.Ctx) error {
 	fieldType := c.Query("type")
-	if fieldType == "" {
-		global.LOG.Error("field 获取失败!")
-		return response.FailWithMessage("field 获取失败", c)
+	fieldID := c.Query("ID")
+	if fieldType == "" && fieldID == "" {
+		global.LOG.Error("获取参数失败!")
+		return response.FailWithMessage("获取参数失败", c)
 	}
-	if sysDictionary, err := dictionaryService.GetSysDictionary(fieldType); err != nil {
+	if sysDictionary, err := dictionaryService.GetSysDictionary(fieldType, fieldID); err != nil {
 		global.LOG.Error("查询失败!", zap.Error(err))
 		return response.FailWithMessage("查询失败", c)
 	} else {
