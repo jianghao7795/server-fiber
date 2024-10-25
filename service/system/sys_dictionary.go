@@ -2,7 +2,6 @@ package system
 
 import (
 	"errors"
-
 	"server-fiber/global"
 	"server-fiber/model/system"
 	"server-fiber/model/system/request"
@@ -84,8 +83,8 @@ func (dictionaryService *DictionaryService) UpdateSysDictionary(sysDictionary *s
 //		err = global.DB.Where("type = ? OR id = ? and status = ?", Type, Id, true).Preload("SysDictionaryDetails", "status = ?", true).First(&sysDictionary).Error
 //		return
 //	}
-func (dictionaryService *DictionaryService) GetSysDictionary(Id uint) (sysDictionary system.SysDictionary, err error) {
-	err = global.DB.Where("id = ? and status = ?", Id, true).Preload("SysDictionaryDetails", "status = ?", true).First(&sysDictionary).Error
+func (dictionaryService *DictionaryService) GetSysDictionary(fieldType string) (sysDictionary system.SysDictionary, err error) {
+	err = global.DB.Where("type = ? and status = ?", fieldType, true).Preload("SysDictionaryDetails", "status = ?", true).First(&sysDictionary).Error
 	return
 }
 

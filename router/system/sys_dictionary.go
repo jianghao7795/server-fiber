@@ -17,6 +17,6 @@ func (s *DictionaryRouter) InitSysDictionaryRouter(Router fiber.Router) {
 	sysDictionaryRouter.Delete("deleteSysDictionary/:id", middleware.OperationRecord, sysDictionaryApi.DeleteSysDictionary) // 删除SysDictionary
 	sysDictionaryRouter.Put("updateSysDictionary/:id", middleware.OperationRecord, sysDictionaryApi.UpdateSysDictionary)    // 更新SysDictionary
 
-	sysDictionaryRouter.Get("findSysDictionary/:id", sysDictionaryApi.FindSysDictionary)   // 根据ID获取SysDictionary
+	sysDictionaryRouter.Get("findSysDictionary/:type", sysDictionaryApi.FindSysDictionary) // 根据type获取SysDictionary
 	sysDictionaryRouter.Get("getSysDictionaryList", sysDictionaryApi.GetSysDictionaryList) // 获取SysDictionary列表
 }
