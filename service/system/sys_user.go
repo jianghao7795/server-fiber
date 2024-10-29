@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"log"
-
 	"server-fiber/global"
 	"server-fiber/model/system"
 	"server-fiber/model/system/request"
@@ -25,8 +24,8 @@ func (userService *UserService) Register(u *system.SysUser) (userInter *system.S
 	if !errors.Is(global.DB.Where("username = ?", u.Username).First(&user).Error, gorm.ErrRecordNotFound) { // 判断用户名是否注册
 		return userInter, errors.New("用户名已注册")
 	}
-	// 否则 附加uuid 密码md5简单加密 注册
-	u.Password = utils.MD5V([]byte(u.Password))
+	// 否则 附加uuid 密码sha512简单加密 注册
+	u.Password = utils.Sha512V(u.Password)
 	u.UUID = uuid.New()
 	// u.ExpirationDate = time.Now().Format("2006-01-02 15:04:05")
 	err = global.DB.Create(&u).Error
@@ -76,7 +75,7 @@ func (userService *UserService) LoginToken(u *system.SysUser) (userInter *system
 	var user system.SysUser
 	log.Println("user: ", u.Username, u.Password)
 	// u.Password = utils.MD5V([]byte(u.Password))
-	err = global.DB.Where("username = ? AND password = ?", u.Username, utils.MD5V([]byte(u.Password))).Preload("Authorities").Preload("Authority").First(&user).Error
+	err = global.DB.Where("username = ? AND password = ?", u.Username, utils.Sha512V(u.Password)).Preload("Authorities").Preload("Authority").First(&user).Error
 	if err == nil {
 		var am system.SysMenu
 		ferry := global.DB.First(&am, "name = ? AND authority_id = ?", user.Authority.DefaultRouter, user.AuthorityId).Error
@@ -248,7 +247,7 @@ func (userService *UserService) FindUserByUuid(uuid string) (user *system.SysUse
 //@return: err error
 
 func (userService *UserService) ResetPassword(ID uint) (err error) {
-	err = global.DB.Model(&system.SysUser{}).Where("id = ?", ID).Update("password", utils.MD5V([]byte("123456"))).Error
+	err = global.DB.Model(&system.SysUser{}).Where("id = ?", ID).Update("password", utils.Sha512V("123456")).Error
 	return err
 }
 

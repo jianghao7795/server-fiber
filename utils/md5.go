@@ -21,6 +21,6 @@ func MD5VString(val string, b string) string {
 	v := []byte(val)
 	d := []byte(b)
 	h.Write(v)
-
+	// f4b68e0c8a85ddac35085eb95feb398361fe5c0421922c52dc7797c699664ee13aa4297dc7f20a9cd6615bf000dde6e91cc164988f7c55fc3b4c4c516b8d78c3 /
 	return hex.EncodeToString(h.Sum(d)) // EncodeToString byte切片转换成字符串的编码工具库
 }

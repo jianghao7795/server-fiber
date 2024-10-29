@@ -10,7 +10,7 @@ WORKDIR /app
 COPY . /app
 RUN go build -o server-fiber cmd/main.go
 
-FROM rockylinux:9 AS runner
+FROM rockylinux:9-minimal AS runner
 WORKDIR /app
 
 COPY --from=builder /app/server-fiber .
