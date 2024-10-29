@@ -2,18 +2,19 @@ package system
 
 import (
 	"errors"
-	"strconv"
-
 	"server-fiber/global"
 	"server-fiber/model/common/response"
 	"server-fiber/model/system"
+	"server-fiber/utils"
+	"strconv"
+
 	systemReq "server-fiber/model/system/request"
 	systemRes "server-fiber/model/system/response"
-	"server-fiber/utils"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/redis/go-redis/v9"
 	"go.uber.org/zap"
+	"gorm.io/gorm"
 )
 
 // Login
@@ -33,9 +34,13 @@ func (b *BaseApi) Login(c *fiber.Ctx) error {
 		return response.FailWithMessage(err.Error(), c)
 	}
 	if store.Verify(l.CaptchaId, l.Captcha, true) {
-		if user, err := userService.Login(l.Username, l.Password); err != nil {
+		if user, err := userService.Login(l.Username, utils.Sha512V(l.Password)); err != nil {
 			global.LOG.Error(err.Error(), zap.Error(err))
-			return response.FailWithMessage(err.Error(), c)
+			errorMessage := err.Error()
+			if err == gorm.ErrRecordNotFound {
+				errorMessage = "账户或密码错误"
+			}
+			return response.FailWithMessage("登录失败："+errorMessage, c)
 		} else {
 			return b.tokenNext(c, user)
 		}

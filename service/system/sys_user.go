@@ -52,6 +52,8 @@ func (userService *UserService) Login(username, password string) (*system.SysUse
 		if errors.Is(ferr, gorm.ErrRecordNotFound) {
 			user.Authority.DefaultRouter = "404"
 		}
+	} else {
+		return nil, err
 	}
 
 	// if user.UpdatedAt.AddDate(0, 3, 0).After(time.Now()) {
