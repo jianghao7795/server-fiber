@@ -2,12 +2,11 @@ package example
 
 import (
 	"server-fiber/global"
-	"server-fiber/model/system"
 )
 
 type ExcelInfo struct {
-	FileName string               `json:"fileName" form:"fileName"` // 文件名
-	InfoList []system.SysBaseMenu `json:"infoList" form:"infoList"`
+	FileName string             `json:"fileName" form:"fileName"` // 文件名
+	InfoList []FielUploadImport `json:"infoList" form:"infoList"`
 }
 
 type FielUploadImport struct {

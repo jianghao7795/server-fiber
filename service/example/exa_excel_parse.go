@@ -4,51 +4,52 @@ import (
 	"errors"
 	"fmt"
 	"os"
-	"server-fiber/model/example"
-	"strconv"
-
 	"server-fiber/global"
 	"server-fiber/model/common/request"
+	"server-fiber/model/example"
 	"server-fiber/model/system"
+	"strconv"
 
 	"github.com/xuri/excelize/v2"
 )
 
 type ExcelService struct{}
 
-func (exa *ExcelService) ParseInfoList2Excel(infoList []system.SysBaseMenu, filePath string) error {
+func (exa *ExcelService) ParseInfoList2Excel(infoList []example.FielUploadImport, filePath string) error {
 	excel := excelize.NewFile()
-	excel.SetSheetRow("router", "A1", &[]string{"ID", "路由Name", "路由Path", "是否隐藏", "父节点", "排序", "文件名称"})
+	excel.SetSheetRow("router", "A1", &[]string{"ID", "FilePath", "FileSize", "FileType", "Filename", "FilenameMD5", "是否启用"})
 	b := 0
-	for i, menu := range infoList {
+	for i, fileMerge := range infoList {
 		axis := fmt.Sprintf("A%d", i+b+2)
 		excel.SetSheetRow("router", axis, &[]interface{}{
-			menu.ID,
-			menu.Name,
-			menu.Path,
-			menu.Hidden,
-			menu.ParentId,
-			menu.Sort,
-			menu.Component,
+			fileMerge.ID,
+			fileMerge.FilePath,
+			fileMerge.FileSize,
+			fileMerge.FileType,
+			fileMerge.FileName,
+			fileMerge.FileNameMd5,
+			fileMerge.State,
 		})
-		if menu.Children != nil {
-			for _, m := range menu.Children {
-				b += 1
-				a := fmt.Sprintf("A%d", i+b+2)
-				excel.SetSheetRow("router", a, &[]interface{}{
-					m.ID,
-					m.Name,
-					m.Path,
-					m.Hidden,
-					m.ParentId,
-					m.Sort,
-					m.Component,
-				})
+		// log.Println("i: ", i)
+		// if menu.Children != nil {
+		// 	for _, m := range menu.Children {
+		// 		b += 1
+		// 		a := fmt.Sprintf("A%d", i+b+2)
+		// 		excel.SetSheetRow("router", a, &[]interface{}{
+		// 			m.ID,
+		// 			m.Name,
+		// 			m.Path,
+		// 			m.Hidden,
+		// 			m.ParentId,
+		// 			m.Sort,
+		// 			m.Component,
+		// 		})
 
-			}
+		// 	}
 
-		}
+		// }
 	}
+	// log.Println("filepath: ", filePath)
 	err := excel.SaveAs(filePath)
 	return err
 }
@@ -142,7 +143,6 @@ func (exa *ExcelService) DeleteFile(id int64) error {
 		return err
 	}
 	err = global.DB.Delete(&file).Error
-
 	if err != nil {
 		return err
 	}

@@ -2,14 +2,13 @@ package example
 
 import (
 	"os"
-	"strings"
-	"time"
-
 	"server-fiber/global"
 	"server-fiber/model/common/request"
 	"server-fiber/model/common/response"
 	"server-fiber/model/example"
 	"server-fiber/utils"
+	"strings"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
@@ -29,8 +28,8 @@ import (
 // @Success 200
 // @Router /excel/exportExcel [post]
 
-func (e *ExcelApi) ExportExcel(c *fiber.Ctx) error {
-	var excelInfo example.ExcelInfo = example.ExcelInfo{
+func (e *ExcelApi) ExportExcel(c *fiber.Ctx) (err error) {
+	excelInfo := example.ExcelInfo{
 		FileName: "",
 		InfoList: nil,
 	}
@@ -38,6 +37,7 @@ func (e *ExcelApi) ExportExcel(c *fiber.Ctx) error {
 		global.LOG.Error("获取数据失败", zap.Error(err))
 		return response.FailWithMessage(err.Error(), c)
 	}
+	// log.Println("excelInfo: ", excelInfo.InfoList)
 
 	if excelInfo.FileName == "" {
 		return response.FailWithMessage("请传参数filename", c)
@@ -45,11 +45,11 @@ func (e *ExcelApi) ExportExcel(c *fiber.Ctx) error {
 	if strings.Contains(excelInfo.FileName, "..") {
 		return response.FailWithMessage("包含非法字符", c)
 	}
-	err := excelService.GetMenuData(&excelInfo.InfoList)
-	if err != nil {
-		global.LOG.Error("获取失败!", zap.Error(err))
-		return response.FailWithMessage("获取失败", c)
-	}
+	// err := excelService.GetMenuData(&excelInfo.InfoList)
+	// if err != nil {
+	// 	global.LOG.Error("获取失败!", zap.Error(err))
+	// 	return response.FailWithMessage("获取失败", c)
+	// }
 	filePath := global.CONFIG.Excel.Dir + excelInfo.FileName
 	err = excelService.ParseInfoList2Excel(excelInfo.InfoList, filePath)
 	if err != nil {
@@ -74,9 +74,9 @@ func (e *ExcelApi) ImportExcel(c *fiber.Ctx) error {
 		global.LOG.Error("接收文件失败!", zap.Error(err))
 		return response.FailWithMessage("接收文件失败", c)
 	}
-	var filepath_time = time.Now().Format("2006/01/02")
-	var filenameMd5 = utils.MD5V([]byte(header.Filename)) + "_" + time.Now().Format("20060102150405") + "." + strings.Split(header.Filename, ".")[len(strings.Split(header.Filename, "."))-1]
-	var fileTypeName = strings.Split(header.Filename, ".")[len(strings.Split(header.Filename, "."))-1]
+	filepath_time := time.Now().Format("2006/01/02")
+	filenameMd5 := utils.MD5V([]byte(header.Filename)) + "_" + time.Now().Format("20060102150405") + "." + strings.Split(header.Filename, ".")[len(strings.Split(header.Filename, "."))-1]
+	fileTypeName := strings.Split(header.Filename, ".")[len(strings.Split(header.Filename, "."))-1]
 	importExcel := example.FielUploadImport{
 		FileName:    header.Filename,
 		FileNameMd5: filenameMd5,
