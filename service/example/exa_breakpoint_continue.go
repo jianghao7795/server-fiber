@@ -3,7 +3,6 @@ package example
 import (
 	"errors"
 	"os"
-
 	"server-fiber/global"
 	"server-fiber/model/example"
 
@@ -58,7 +57,7 @@ func (e *FileUploadAndDownloadService) CreateFileChunk(id uint, fileChunkPath st
 func (e *FileUploadAndDownloadService) DeleteFileChunk(fileMd5 string, fileName string, filePath string) error {
 	var chunks []example.ExaFileChunk
 	var file example.ExaFile
-	err := global.DB.Where("file_md5 = ? ", fileMd5).First(&file).Update("IsFinish", true).Update("file_path", filePath).Error
+	err := global.DB.Where("file_md5 = ? ", fileMd5).First(&file).Update("is_finish", true).Update("file_path", filePath).Error
 	if err != nil {
 		return err
 	}

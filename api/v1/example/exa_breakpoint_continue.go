@@ -108,6 +108,7 @@ func (u *FileUploadAndDownloadApi) FindFile(c *fiber.Ctx) error {
 // @Router /fileUploadAndDownload/findFile [post]
 func (b *FileUploadAndDownloadApi) BreakpointContinueFinish(c *fiber.Ctx) error {
 	var file request.BreakPoint
+	// filepath := c.Body("filePath")
 	err := c.BodyParser(&file)
 	if err != nil {
 		global.LOG.Error("获取文件信息错误", zap.Error(err))
@@ -115,13 +116,17 @@ func (b *FileUploadAndDownloadApi) BreakpointContinueFinish(c *fiber.Ctx) error 
 	}
 	// log.Println("filename: ", file.FileName, " fileMd5: ", file.FileMd5)
 	filePath, err := utils.MakeFile(file.FileName, file.FileMd5)
-
 	if err != nil {
 		global.LOG.Error("文件创建失败!", zap.Error(err))
 		return response.FailWithDetailed(exampleRes.FilePathResponse{FilePath: filePath}, "文件创建失败", c)
-	} else {
-		return response.OkWithDetailed(exampleRes.FilePathResponse{FilePath: filePath}, "文件创建成功", c)
 	}
+	err = fileUploadAndDownloadService.DeleteFileChunk(file.FileMd5, file.FileName, filePath)
+	if err != nil {
+		global.LOG.Error("删除切片失败", zap.Error(err))
+		return response.FailWithDetailed(exampleRes.FilePathResponse{FilePath: filePath}, "删除切片失败", c)
+	}
+
+	return response.OkWithDetailed(exampleRes.FilePathResponse{FilePath: filePath}, "文件创建成功", c)
 }
 
 // @Tags ExaFileUploadAndDownload
