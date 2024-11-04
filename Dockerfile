@@ -8,16 +8,16 @@ ENV GO111MODULE=on
 
 WORKDIR /app
 COPY . /app
-RUN go build -o server-fiber cmd/main.go
+RUN go build -o fiber cmd/main.go
 
 FROM rockylinux:9-minimal AS runner
 WORKDIR /app
 
-COPY --from=builder /app/server-fiber .
-COPY --from=builder /app/conf/ ./conf/
+COPY --from=builder /app/fiber .
+COPY --from=builder /app/config.yaml ./conf/config.yaml
 COPY --from=builder /app/rbac_model.conf .
 COPY --from=builder /app/docs/ ./docs/
 
 EXPOSE 3100
-CMD ["/app/server-fiber", "-c", "./conf/"]
+CMD ["/app/fiber", "-c", "./conf/"]
 # ENTRYPOINT ["/app/server-fiber", "-c", "config.yaml"]
