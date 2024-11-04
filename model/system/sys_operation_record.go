@@ -2,10 +2,9 @@
 package system
 
 import (
-	"time"
-
 	"server-fiber/global"
 	"server-fiber/model/frontend"
+	"time"
 )
 
 type PolicyType int
@@ -24,7 +23,7 @@ type SysOperationRecord struct {
 	Resp         string        `json:"resp" form:"resp" gorm:"type:text;column:resp;comment:响应Body"`                 // 响应Body
 	UserID       int           `json:"user_id" form:"user_id" gorm:"column:user_id;comment:用户id"`                    // 用户id
 	User         SysUser       `json:"user" form:"user" gorm:"foreignKey:UserID"`
-	TypePort     PolicyType    `json:"type_port" form:"type_port" gorm:"column:type_port;comment:区别前端后台移动端"`
+	TypePort     PolicyType    `query:"type_port" json:"type_port" form:"type_port" gorm:"column:type_port;comment:区别前端后台移动端"`
 }
 
 const (
@@ -51,7 +50,7 @@ type SysOperationRecordFrontend struct {
 	Resp         string        `json:"resp" form:"resp" gorm:"type:text;column:resp;comment:响应Body"`                 // 响应Body
 	UserID       int           `json:"user_id" form:"user_id" gorm:"column:user_id;comment:用户id"`                    // 用户id
 	User         frontend.User `json:"user"`
-	TypePort     PolicyType    `json:"type_port" form:"type_port" gorm:"column:type_port;comment:区别前后台"`
+	TypePort     PolicyType    `query:"type_port" json:"type_port" form:"type_port" gorm:"column:type_port;comment:区别前后台"`
 }
 
 func (SysOperationRecordFrontend) TableName() string {

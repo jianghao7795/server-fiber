@@ -1,7 +1,6 @@
 package app
 
 import (
-	"log"
 	"server-fiber/global"
 	"server-fiber/model/app"
 	appReq "server-fiber/model/app/request"
@@ -61,7 +60,6 @@ func (*ArticleApi) DeleteArticle(c *fiber.Ctx) error {
 
 	}
 	return response.OkWithMessage("删除成功", c)
-
 }
 
 // DeleteArticleByIds 批量删除Article
@@ -88,7 +86,6 @@ func (a *ArticleApi) DeleteArticleByIds(c *fiber.Ctx) error {
 
 	}
 	return response.OkWithMessage("批量删除成功", c)
-
 }
 
 // UpdateArticle 更新Article
@@ -123,7 +120,6 @@ func (*ArticleApi) UpdateArticle(c *fiber.Ctx) error {
 
 	}
 	return response.OkWithMessage("更新成功", c)
-
 }
 
 // FindArticle get单个Article
@@ -149,7 +145,6 @@ func (*ArticleApi) FindArticle(c *fiber.Ctx) error {
 	} else {
 		return response.OkWithData(articles, c)
 	}
-
 }
 
 // GetArticleList 分页获取article列表
@@ -195,7 +190,8 @@ func (*ArticleApi) GetArticleList(c *fiber.Ctx) error {
 func (*ArticleApi) PutArticleByIds(c *fiber.Ctx) error {
 	var IDS request.IdsReq
 	if err := c.BodyParser(&IDS); err != nil {
-		log.Println("ids 获取失败")
+		// log.Println("ids 获取失败")
+		global.LOG.Fatal("ids 获取失败", zap.Error(err))
 		return response.FailWithMessage("ids 获取失败", c)
 	}
 	if err := articleService.PutArticleByIds(&IDS); err != nil {

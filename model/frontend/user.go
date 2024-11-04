@@ -14,7 +14,7 @@ type User struct {
 	AuthorityId  string `json:"authorityId" gorm:"default:888;comment:用户角色ID"`         // 用户角色ID
 	Phone        string `json:"phone"  gorm:"comment:用户手机号"`                           // 用户手机号
 	Email        string `json:"email"  gorm:"comment:用户邮箱"`                            // 用户邮箱
-	HeadImg      string `json:"head_img" gorm:"comment:背景图"`
+	HeadImg      string `query:"" json:"head_img" gorm:"comment:背景图"`
 	Introduction string `json:"introduction" gorm:"comment:简介"`
 	Content      string `json:"content" gorm:"comment:介绍"`
 }
@@ -29,8 +29,8 @@ type ArticleUser struct {
 type ResetPassword struct {
 	ID                uint   `json:"id" form:"id"`
 	Password          string `json:"password" form:"password"`
-	NewPassword       string `json:"new_password" form:"new_password"`
-	RepeatNewPassword string `json:"repeat_new_password" form:"repeat_new_password"`
+	NewPassword       string `query:"new_password" json:"new_password" form:"new_password"`
+	RepeatNewPassword string `query:"repeat_new_password" json:"repeat_new_password" form:"repeat_new_password"`
 }
 
 func (User) TableName() string {

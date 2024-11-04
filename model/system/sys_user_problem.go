@@ -6,7 +6,7 @@ import (
 
 type SysUserProblem struct {
 	global.MODEL
-	SysUserId int    `json:"sys_user_id" form:"sys_user_id" gorm:"column:sys_user_id;comment:用户的ID"`
+	SysUserId int    `query:"sys_user_id" json:"sys_user_id" form:"sys_user_id" gorm:"column:sys_user_id;comment:用户的ID"`
 	Problem   string `json:"problem" form:"problem" gorm:"column:problem;comment:问题"`
 	Answer    string `json:"answer" form:"answer" gorm:"column:answer;comment:答案"`
 }

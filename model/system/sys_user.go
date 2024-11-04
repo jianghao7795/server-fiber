@@ -21,7 +21,7 @@ type SysUser struct {
 	Authorities  []SysAuthority `json:"authorities" gorm:"many2many:sys_user_authority;"`
 	Phone        string         `json:"phone"  gorm:"comment:用户手机号"` // 用户手机号
 	Email        string         `json:"email"  gorm:"comment:用户邮箱"`  // 用户邮箱
-	HeadImg      string         `json:"head_img" gorm:"comment:背景图"`
+	HeadImg      string         `query:"head_img" json:"head_img" gorm:"comment:背景图"`
 	Introduction string         `json:"introduction" gorm:"comment:简介"`
 	Content      string         `json:"content" gorm:"comment:介绍"`
 }

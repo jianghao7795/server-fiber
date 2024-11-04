@@ -3,14 +3,13 @@ package example
 import (
 	ioutil "io"
 	"mime/multipart"
-
 	"server-fiber/global"
 	"server-fiber/model/common/response"
 	"server-fiber/model/example"
 	"server-fiber/model/example/request"
-	exampleRes "server-fiber/model/example/response"
-
 	"server-fiber/utils"
+
+	exampleRes "server-fiber/model/example/response"
 
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
@@ -114,6 +113,7 @@ func (b *FileUploadAndDownloadApi) BreakpointContinueFinish(c *fiber.Ctx) error 
 		global.LOG.Error("获取文件信息错误", zap.Error(err))
 		return response.FailWithMessage("获取文件信息错误: "+err.Error(), c)
 	}
+	// log.Println("filename: ", file.FileName, " fileMd5: ", file.FileMd5)
 	filePath, err := utils.MakeFile(file.FileName, file.FileMd5)
 
 	if err != nil {

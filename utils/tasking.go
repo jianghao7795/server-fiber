@@ -2,7 +2,6 @@ package utils
 
 import (
 	"errors"
-	"log"
 	"time"
 )
 
@@ -20,6 +19,6 @@ func Tasking(taskName string, output string, interval string) error {
 	if duration < 0 {
 		return errors.New("parse duration < 0")
 	}
-	log.Println("taskName: ", taskName, ", output: ", output, ", duration: ", duration)
+	// log.Println("taskName: ", taskName, ", output: ", output, ", duration: ", duration)
 	return err
 }

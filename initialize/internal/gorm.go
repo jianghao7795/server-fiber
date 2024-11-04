@@ -3,9 +3,8 @@ package internal
 import (
 	"log"
 	"os"
-	"time"
-
 	"server-fiber/global"
+	"time"
 
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"

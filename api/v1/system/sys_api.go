@@ -74,6 +74,7 @@ func (s *SystemApiApi) DeleteApi(c *fiber.Ctx) error {
 func (s *SystemApiApi) GetApiList(c *fiber.Ctx) error {
 	var pageInfo systemReq.SearchApiParams
 	_ = c.QueryParser(&pageInfo)
+	// log.Println("pageInfo: ", pageInfo.ApiGroup)
 	if list, total, err := apiService.GetAPIInfoList(&pageInfo); err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		return response.FailWithMessage("获取失败", c)

@@ -3,7 +3,6 @@ package system
 import (
 	"errors"
 	"fmt"
-	"log"
 	"server-fiber/global"
 	"server-fiber/model/system"
 	"server-fiber/model/system/request"
@@ -75,7 +74,7 @@ func (userService *UserService) LoginToken(u *system.SysUser) (userInter *system
 	}
 
 	var user system.SysUser
-	log.Println("user: ", u.Username, u.Password)
+	// log.Println("user: ", u.Username, u.Password)
 	// u.Password = utils.MD5V([]byte(u.Password))
 	err = global.DB.Where("username = ? AND password = ?", u.Username, utils.Sha512V(u.Password)).Preload("Authorities").Preload("Authority").First(&user).Error
 	if err == nil {
