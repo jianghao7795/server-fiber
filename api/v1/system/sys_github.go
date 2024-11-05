@@ -2,17 +2,17 @@ package system
 
 import (
 	// json "github.com/bytedance/sonic"
-	"github.com/gofiber/fiber/v2"
-	"go.uber.org/zap"
 	"encoding/json"
 	"io"
 	"net/http"
-	"time"
-
 	"server-fiber/global"
 	"server-fiber/model/common/request"
 	"server-fiber/model/common/response"
 	"server-fiber/model/system"
+	"time"
+
+	"github.com/gofiber/fiber/v2"
+	"go.uber.org/zap"
 )
 
 type SystemGithubApi struct{}
@@ -40,7 +40,6 @@ func (g *SystemGithubApi) CreateGithub(c *fiber.Ctx) error {
 	resp, err := http.Get("https://api.github.com/repos/JiangHaoCode/server-web/commits?page=" + page + "&per_page=" + per_page)
 	defer func() {
 		_ = resp.Body.Close()
-
 	}()
 	if err != nil {
 		global.LOG.Error("请求Commit错误", zap.Error(err))
@@ -62,6 +61,6 @@ func (g *SystemGithubApi) CreateGithub(c *fiber.Ctx) error {
 		global.LOG.Error("创建commit有错误!", zap.Error(err))
 		return response.FailWithMessage("创建commit有错误!", c)
 	} else {
-		return response.OkWithData(total, c)
+		return response.OkWithData(map[string]int{"total": total}, c)
 	}
 }
