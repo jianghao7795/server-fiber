@@ -9,6 +9,7 @@ import (
 	"server-fiber/model/common/request"
 	"server-fiber/model/common/response"
 	"server-fiber/model/system"
+	"server-fiber/utils"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -33,6 +34,11 @@ func (g *SystemGithubApi) GetGithubList(c *fiber.Ctx) error {
 }
 
 func (g *SystemGithubApi) CreateGithub(c *fiber.Ctx) error {
+	isCheck := utils.NetWorkStatus()
+	if !isCheck {
+		global.LOG.Error("网络错误：networking not work")
+		return response.FailWithMessage("网络错误： networking not work", c)
+	}
 	data := make([]system.SysGithub, 1)
 
 	page := "1"
