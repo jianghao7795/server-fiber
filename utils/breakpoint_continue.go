@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"errors"
 	ioutil "io"
 	"math"
 	"os"
@@ -14,8 +15,8 @@ import (
 // 前端告知是否为最后一片且是否完成
 
 const (
-	breakpointDir = "./breakpointDir/"
-	finishDir     = "./fileDir/"
+	breakpointDir = "uploads/breakpointDir/"
+	finishDir     = "uploads/fileDir/"
 )
 
 //@author:wuhao
@@ -123,7 +124,10 @@ func MakeFile(fileName string, FileMd5 string) (string, error) {
 //@return: error
 
 func RemoveChunk(FileMd5 string) error {
-	err := os.RemoveAll(breakpointDir + FileMd5) //RemoveAll删除path指定的文件，或目录及它包含的任何下级对象。它会尝试删除所有东西，除非遇到错误并返回。如果path指定的对象不存在，RemoveAll会返回nil而不返回错误。
+	if FileMd5 == "" {
+		return errors.New("路径错误")
+	}
+	err := os.RemoveAll(breakpointDir + FileMd5) // RemoveAll删除path指定的文件，或目录及它包含的任何下级对象。它会尝试删除所有东西，除非遇到错误并返回。如果path指定的对象不存在，RemoveAll会返回nil而不返回错误。
 	return err
 }
 
@@ -135,7 +139,7 @@ func RemoveChunk(FileMd5 string) error {
 // 如果客户端未上传完整的文件，则服务器端会将该文件从断点续传目录删除，并返回错误信息。
 func FileSeparateMerge(file_path string, chunk_size ...int) error {
 	const chunkSize = 1 << (10 * 2)
-	var chunk_num = chunkSize
+	chunk_num := chunkSize
 	if len(chunk_size) > 0 {
 		chunk_num = chunk_size[0]
 	}
@@ -171,18 +175,15 @@ func FileSeparateMerge(file_path string, chunk_size ...int) error {
 
 	fii, err := os.OpenFile("all.mp4", os.O_CREATE|os.O_WRONLY|os.O_APPEND, os.ModePerm)
 	if err != nil {
-
 		return err
 	}
 	for i := 1; i <= int(num); i++ {
 		f, err := os.OpenFile("./"+strconv.Itoa(int(i))+".db", os.O_RDONLY, os.ModePerm)
 		if err != nil {
-
 			return err
 		}
 		b, err := ioutil.ReadAll(f)
 		if err != nil {
-
 			return err
 		}
 		fii.Write(b)
