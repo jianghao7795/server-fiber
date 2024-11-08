@@ -120,11 +120,11 @@ func (b *FileUploadAndDownloadApi) BreakpointContinueFinish(c *fiber.Ctx) error 
 		global.LOG.Error("文件创建失败!", zap.Error(err))
 		return response.FailWithDetailed(exampleRes.FilePathResponse{FilePath: filePath}, "文件创建失败", c)
 	}
-	err = fileUploadAndDownloadService.DeleteFileChunk(file.FileMd5, file.FileName, filePath)
-	if err != nil {
-		global.LOG.Error("删除切片失败", zap.Error(err))
-		return response.FailWithDetailed(exampleRes.FilePathResponse{FilePath: filePath}, "删除切片失败", c)
-	}
+	// err = fileUploadAndDownloadService.DeleteFileChunk(file.FileMd5, file.FileName, filePath)
+	// if err != nil {
+	// 	global.LOG.Error("删除切片失败", zap.Error(err))
+	// 	return response.FailWithDetailed(exampleRes.FilePathResponse{FilePath: filePath}, "删除切片失败", c)
+	// }
 
 	return response.OkWithDetailed(exampleRes.FilePathResponse{FilePath: filePath}, "文件创建成功", c)
 }
@@ -147,7 +147,7 @@ func (u *FileUploadAndDownloadApi) RemoveChunk(c *fiber.Ctx) error {
 	err = utils.RemoveChunk(file.FileMd5)
 	if err != nil {
 		global.LOG.Error("缓存切片文件删除失败!", zap.Error(err))
-		return response.FailWithDetailed(err, "缓存切片文件删除失败", c)
+		return response.FailWithDetailed(fiber.Map{"msg": err.Error()}, "缓存切片文件删除失败", c)
 	}
 	err = fileUploadAndDownloadService.DeleteFileChunk(file.FileMd5, file.FileName, file.FilePath)
 	if err != nil {
