@@ -51,6 +51,14 @@ func (userService *UserService) Login(username, password string) (*system.SysUse
 		if errors.Is(ferr, gorm.ErrRecordNotFound) {
 			user.Authority.DefaultRouter = "404"
 		}
+		if user.HeaderImg == "" {
+			user.HeaderImg = "public/logo.png"
+		} else {
+			if isNotExit, _ := utils.PathExists(user.HeaderImg); !isNotExit {
+				user.HeaderImg = "public/logo.png"
+			}
+		}
+
 	} else {
 		return nil, err
 	}
