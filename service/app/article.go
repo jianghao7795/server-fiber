@@ -6,6 +6,8 @@ import (
 	appReq "server-fiber/model/app/request"
 	"server-fiber/model/common/request"
 	"time"
+
+	"gorm.io/gorm"
 )
 
 type ArticleService struct{}
@@ -17,7 +19,17 @@ func (*ArticleService) CreateArticle(article *app.Article) error {
 
 // DeleteArticle delete
 func (*ArticleService) DeleteArticle(id uint) error {
-	return global.DB.Delete(&app.Article{}, id).Error
+	return global.DB.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Delete(&app.Article{}, id).Error; err != nil {
+			return err
+		}
+
+		if err := tx.Delete(&app.Comment{}, "article_id = ?", id).Error; err != nil {
+			return err
+		}
+
+		return nil
+	})
 }
 
 // delete by ids
