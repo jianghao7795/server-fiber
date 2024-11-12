@@ -34,7 +34,7 @@ func (b *BaseApi) Login(c *fiber.Ctx) error {
 		return response.FailWithMessage(err.Error(), c)
 	}
 	if store.Verify(l.CaptchaId, l.Captcha, true) {
-		if user, err := userService.Login(l.Username, utils.Sha512V(l.Password)); err != nil {
+		if user, err := userService.Login(l.Username, l.Password); err != nil {
 			global.LOG.Error(err.Error(), zap.Error(err))
 			errorMessage := err.Error()
 			if err == gorm.ErrRecordNotFound {
