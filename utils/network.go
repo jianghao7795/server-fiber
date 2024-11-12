@@ -3,7 +3,7 @@ package utils
 import "os/exec"
 
 func NetWorkStatus() bool {
-	cmd := exec.Command("ping", "www.baidu.com", "-c", "4", "-W", "5")
+	cmd := exec.Command("curl", "www.baidu.com")
 
 	err := cmd.Run()
 	if err != nil {
