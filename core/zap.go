@@ -14,14 +14,15 @@ import (
 // Author wuhao
 func zapInit() (logger *zap.Logger, err error) {
 	ok, err := utils.PathExists(global.CONFIG.Zap.Director)
+	if err != nil {
+		return
+	}
 	if !ok { // 判断是否有Director文件夹
 		// log.Printf("create %v directory\n", global.CONFIG.Zap.Director)
 		err = os.Mkdir(global.CONFIG.Zap.Director, os.ModePerm)
-		return
-	}
-
-	if err != nil {
-		return
+		if err != nil {
+			return
+		}
 	}
 
 	cores := internal.Zap.GetZapCores()

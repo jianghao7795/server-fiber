@@ -1,12 +1,10 @@
 package utils
 
 import (
-	"time"
-
+	"crypto/rsa"
 	"server-fiber/global"
 	"server-fiber/model/system/request"
-
-	"crypto/rsa"
+	"time"
 
 	jwt "github.com/golang-jwt/jwt/v5"
 )
