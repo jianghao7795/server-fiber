@@ -54,7 +54,7 @@ func (userService *UserService) Login(username, password string) (*system.SysUse
 		if user.HeaderImg == "" {
 			user.HeaderImg = "public/logo.png"
 		} else {
-			if isNotExit, _ := utils.PathExists(user.HeaderImg); !isNotExit {
+			if isNotExit, _ := utils.PathExistsFile(user.HeaderImg); !isNotExit {
 				user.HeaderImg = "public/logo.png"
 			}
 		}

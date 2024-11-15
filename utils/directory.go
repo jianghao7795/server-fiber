@@ -3,7 +3,6 @@ package utils
 import (
 	"errors"
 	"os"
-
 	"server-fiber/global"
 
 	"go.uber.org/zap"
@@ -11,7 +10,7 @@ import (
 
 //@author: wuhao
 //@function: PathExists
-//@description: 文件目录是否存在
+//@description: 目录是否存在
 //@param: path string
 //@return: bool, error
 
@@ -27,6 +26,23 @@ func PathExists(path string) (bool, error) {
 		return false, nil
 	}
 	return false, err
+}
+
+// @author: wuhao
+// @function: PathExistsFile
+// @description: 文件是否存在
+// @param: path string
+// @return: bool, error
+func PathExistsFile(path string) (bool, error) {
+	_, err := os.Stat(path)
+	if err == nil {
+		return true, nil
+	}
+	if os.IsNotExist(err) {
+		return false, nil
+	}
+
+	return true, nil
 }
 
 //@author: wuhao
