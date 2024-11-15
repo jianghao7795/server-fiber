@@ -10,4 +10,4 @@ docker rm fiber
 docker rmi fiber
 
 docker build --progress=plain -t fiber .
-docker run --name fiber -d -v ./log/:/app/log/ -v ./uploads:/app/uploads -p 3100:3100 fiber
+docker run --name fiber -d -v ./logs/:/app/logs/ -v ./uploads:/app/uploads -p 3100:3100 fiber
