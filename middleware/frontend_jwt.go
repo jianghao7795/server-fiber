@@ -21,6 +21,7 @@ func JWTAuthMiddleware(c *fiber.Ctx) error {
 		return response.FailWithMessage401("token 失效， 请重新登录", c)
 	}
 	_, err := frontend.ParseToken(token)
+	// c.Locals("frontend_user_id", user.ID)
 	if err != nil {
 		return response.FailWithMessage("token 失效， 请重新登录", c)
 	}

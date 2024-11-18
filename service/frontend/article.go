@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"errors"
 	"net/url"
+	"server-fiber/global"
+	"server-fiber/model/frontend"
 	"strconv"
 	"strings"
 	"time"
@@ -11,8 +13,6 @@ import (
 	// json "github.com/bytedance/sonic"
 	"github.com/gofiber/fiber/v2"
 
-	"server-fiber/global"
-	"server-fiber/model/frontend"
 	frontendReq "server-fiber/model/frontend/request"
 
 	"github.com/redis/go-redis/v9"
@@ -22,7 +22,7 @@ import (
 type Article struct{}
 
 func (s *Article) GetArticleList(info *frontendReq.ArticleSearch, c *fiber.Ctx) (list []frontend.Article, total int64, err error) {
-	var cacheTime = global.CONFIG.Cache.Time
+	cacheTime := global.CONFIG.Cache.Time
 	var articleStr string
 	db := global.DB.Model(&frontend.Article{})
 	err = db.Count(&total).Error
@@ -95,6 +95,7 @@ func (s *Article) GetArticleDetail(articleId int, c *fiber.Ctx) (articleDetail f
 	if errors.Is(dbIp.Error, gorm.ErrRecordNotFound) {
 		ipUser.ArticleID = uint(articleId)
 		ipUser.Ip = reqIP
+		ipUser.UserID = 0
 		err = global.DB.Transaction(func(tx *gorm.DB) error {
 			if err := tx.Create(&ipUser).Error; err != nil {
 				return err
@@ -109,7 +110,12 @@ func (s *Article) GetArticleDetail(articleId int, c *fiber.Ctx) (articleDetail f
 		}
 	}
 	err = db.Where("id = ?", articleId).Preload("Tags").Preload("User").First(&articleDetail).Error
+	if err != nil {
+		return articleDetail, err
+	}
+	err = dbIp.Update("user_id", articleDetail.UserId).Error
 	return articleDetail, err
+
 	// var cacheTime = global.CONFIG.Cache.Time
 	// var articleDetailStr string
 	// articleDetailStr, err = global.REDIS.Get(c, "article"+strconv.Itoa(articleId)).Result()
@@ -155,7 +161,7 @@ func (s *Article) GetSearchArticle(info *frontendReq.ArticleSearch) (list []fron
 	//     Name  string
 	//     Users []*User `gorm:"many2many:user_languages;"`
 	// }
-	var sortField = make(map[string]string)
+	sortField := make(map[string]string)
 	sortField["read"] = "reading_quantity"
 	sortField["time"] = "created_at"
 	text, err := url.QueryUnescape(info.Value)
