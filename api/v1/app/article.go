@@ -215,7 +215,7 @@ func (*ArticleApi) PutArticleByIds(c *fiber.Ctx) error {
 // @Success 200 {string} {object} response.Response{msg=string,data=number,code=number} "获取成功"
 // @Router /article/getArticleReading [get]
 func (*ArticleApi) GetArticleReading(c *fiber.Ctx) error {
-	count, err := articleService.GetArticleReading()
+	count, err := articleService.GetArticleReading(c.Locals("user_id").(uint))
 	if err != nil {
 		global.LOG.Error("获取阅读量失败!", zap.Error(err))
 		return response.FailWithDetailed(fiber.Map{

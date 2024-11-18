@@ -78,10 +78,10 @@ func (*ArticleService) PutArticleByIds(ids *request.IdsReq) (err error) {
 	return
 }
 
-func (*ArticleService) GetArticleReading() (count int64, err error) {
+func (*ArticleService) GetArticleReading(userId uint) (count int64, err error) {
 	t := time.Now()
 	startTime := time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
 	endTime := time.Date(t.Year(), t.Month(), t.Day(), 23, 59, 59, 99, t.Location())
-	err = global.DB.Model(&app.Ip{}).Where("created_at > ? and created_at < ?", startTime, endTime).Count(&count).Error
+	err = global.DB.Model(&app.Ip{}).Where("user_id = ?", userId).Where("created_at > ? and created_at < ?", startTime, endTime).Count(&count).Error
 	return
 }
