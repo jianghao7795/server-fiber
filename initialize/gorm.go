@@ -2,7 +2,6 @@ package initialize
 
 import (
 	"os"
-
 	"server-fiber/global"
 
 	"go.uber.org/zap"
@@ -22,7 +21,7 @@ func Gorm() (*gorm.DB, error) {
 	}
 }
 
-// RegisterTables 注册数据库表专用
+// RegisterTables 注册数据库表专用 初始化数据表
 // Author SliverHorn
 func RegisterTables(db *gorm.DB) {
 	err := db.AutoMigrate(
