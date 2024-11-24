@@ -66,7 +66,6 @@ func (s *ArticleApi) GetArticleDetail(c *fiber.Ctx) error {
 	articleDetail, err := articleServiceApp.GetArticleDetail(id, c)
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return response.FailWithMessage("文章没有，请重新查询", c)
-
 	}
 	if err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))

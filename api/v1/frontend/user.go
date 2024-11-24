@@ -7,7 +7,6 @@ import (
 	"server-fiber/model/frontend"
 	loginRequest "server-fiber/model/frontend/request"
 	"server-fiber/model/system"
-
 	"server-fiber/utils"
 
 	systemReq "server-fiber/model/system/request"
@@ -77,6 +76,7 @@ func (u *User) tokenNext(c *fiber.Ctx, user system.SysUser) error {
 		global.LOG.Error("获取token失败!", zap.Error(err))
 		return response.FailWithMessage("获取token失败", c)
 	}
+	c.Locals("frontend_user", user)
 	if !global.CONFIG.System.UseMultipoint {
 		return response.OkWithDetailed(systemRes.LoginResponse{
 			User:      user,

@@ -6,6 +6,7 @@ import (
 	"net/url"
 	"server-fiber/global"
 	"server-fiber/model/frontend"
+	"server-fiber/model/system"
 	"strconv"
 	"strings"
 	"time"
@@ -93,9 +94,15 @@ func (s *Article) GetArticleDetail(articleId int, c *fiber.Ctx) (articleDetail f
 	db := global.DB.Model(&frontend.Article{})
 	dbIp := global.DB.Model(&frontend.Ip{}).Where("ip = ? and article_id = ?", reqIP, articleId).Where("created_at > ?", startTime).First(&ipUser)
 	if errors.Is(dbIp.Error, gorm.ErrRecordNotFound) {
+		locals := c.Locals("frontend_user")
+		if locals != nil {
+			ipUser.UserID = locals.(system.SysUser).ID
+		} else {
+			ipUser.UserID = 0
+		}
 		ipUser.ArticleID = uint(articleId)
 		ipUser.Ip = reqIP
-		ipUser.UserID = 0
+
 		err = global.DB.Transaction(func(tx *gorm.DB) error {
 			if err := tx.Create(&ipUser).Error; err != nil {
 				return err
@@ -110,10 +117,6 @@ func (s *Article) GetArticleDetail(articleId int, c *fiber.Ctx) (articleDetail f
 		}
 	}
 	err = db.Where("id = ?", articleId).Preload("Tags").Preload("User").First(&articleDetail).Error
-	if err != nil {
-		return articleDetail, err
-	}
-	err = dbIp.Update("user_id", articleDetail.UserId).Error
 	return articleDetail, err
 
 	// var cacheTime = global.CONFIG.Cache.Time
