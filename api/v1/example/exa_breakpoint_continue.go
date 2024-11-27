@@ -158,6 +158,14 @@ func (u *FileUploadAndDownloadApi) RemoveChunk(c *fiber.Ctx) error {
 	}
 }
 
+// @Tags ExaFileUploadAndDownload
+// @Summary 查找缓存文件
+// @Security ApiKeyAuth
+// @accept multipart/form-data
+// @Produce  application/json
+// @Param file formData file true "Find the file, 查找缓存文件列表"
+// @Success 200 {object} response.Response{data=exampleRes.FileResponse,msg=string} "查找缓存文件列表"
+// @Router /fileUploadAndDownload/findFileBreakpoint [get]
 func (u *FileUploadAndDownloadApi) FindFileBreakpoint(c *fiber.Ctx) error {
 	page := c.QueryInt("page", 1)
 	pageSize := c.QueryInt("pageSize", 10)
@@ -175,6 +183,14 @@ func (u *FileUploadAndDownloadApi) FindFileBreakpoint(c *fiber.Ctx) error {
 	}
 }
 
+// @Tags ExaFileUploadAndDownload
+// @Summary 删除文件
+// @Security ApiKeyAuth
+// @accept multipart/form-data
+// @Produce  application/json
+// @Param file formData file true "Find the file, 删除缓存文件"
+// @Success 200 {object} response.Response{data=exampleRes.FileResponse,msg=string} "删除缓存文件"
+// @Router /fileUploadAndDownload/findFile [get]
 func (u *FileUploadAndDownloadApi) DeleteFileBreakpoint(c *fiber.Ctx) error {
 	id, err := c.ParamsInt("id")
 	if err != nil {
