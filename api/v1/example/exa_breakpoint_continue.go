@@ -190,7 +190,7 @@ func (u *FileUploadAndDownloadApi) FindFileBreakpoint(c *fiber.Ctx) error {
 // @Produce  application/json
 // @Param file formData file true "Find the file, 删除缓存文件"
 // @Success 200 {object} response.Response{data=exampleRes.FileResponse,msg=string} "删除缓存文件"
-// @Router /fileUploadAndDownload/findFile [get]
+// @Router /fileUploadAndDownload/deleteFileBreakpoint [delete]
 func (u *FileUploadAndDownloadApi) DeleteFileBreakpoint(c *fiber.Ctx) error {
 	id, err := c.ParamsInt("id")
 	if err != nil {
