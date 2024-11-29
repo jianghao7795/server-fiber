@@ -1,9 +1,9 @@
 package middleware
 
 import (
-	"net/http"
 	"server-fiber/config"
 	"server-fiber/global"
+	"server-fiber/model/common/response"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -15,8 +15,12 @@ func Cors(c *fiber.Ctx) error {
 	if method == "OPTIONS" {
 		return c.Next()
 	}
-	origin := c.Get("Origin")
-	c.Set("Access-Control-Allow-Origin", origin)
+	origin := c.Get("access-control-allow-origin")
+	if origin == "" {
+		c.Set("Access-Control-Allow-Origin", "*")
+	} else {
+		c.Set("Access-Control-Allow-Origin", origin)
+	}
 	c.Set("Access-Control-Allow-Headers", "Content-Type,AccessToken,X-CSRF-Token, Authorization, Token,X-Token,X-User-Id")
 	c.Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS,DELETE,PUT")
 	c.Set("Access-Control-Expose-Headers", "Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Content-Type")
@@ -32,8 +36,7 @@ func CorsByRules(c *fiber.Ctx) error {
 	if global.CONFIG.Cors.Mode == "allow-all" {
 		return Cors(c)
 	}
-	whitelist := checkCors(c.Get("origin"))
-
+	whitelist := checkCors(c.Get("access-control-allow-origin"))
 	// 通过检查, 添加请求头
 	if whitelist != nil {
 		c.Set("Access-Control-Allow-Origin", whitelist.AllowOrigin)
@@ -46,12 +49,12 @@ func CorsByRules(c *fiber.Ctx) error {
 	}
 
 	// 严格白名单模式且未通过检查，直接拒绝处理请求
-	if whitelist == nil && global.CONFIG.Cors.Mode == "strict-whitelist" && !(c.Method() == "GET" && c.Path() == "/health") {
-		c.Status(http.StatusForbidden)
+	if whitelist == nil && global.CONFIG.Cors.Mode == "strict-whitelist" {
+		return response.FailWithMessage403("域名拒绝访问", c)
 	} else {
 		// 非严格白名单模式，无论是否通过检查均放行所有 OPTIONS 方法
 		if c.Method() == "OPTIONS" {
-			c.Status(http.StatusNoContent)
+			c.Status(fiber.StatusOK)
 		}
 	}
 

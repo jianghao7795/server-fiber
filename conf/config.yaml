@@ -40,9 +40,9 @@ captcha:
 casbin:
   model-path: ./rbac_model.conf
 cors:
-  mode: allow-all # whitelist 白名单 allow-all允许全部
+  mode: allow-all # whitelist 白名单 allow-all允许全部 固定域名 strict-whitelist
   whitelist:
-    - allow-origin: example1.com # 允许访问的域名
+    - allow-origin: www.wutong.com # 允许访问的域名
       allow-methods: GET, POST, PUT, DELETE, PATCH
       allow-headers: content-type
       expose-headers:
@@ -105,7 +105,7 @@ mysql: # mysql 配置
   max-open-conns: 1000
   log-mode: error # silent
   log-zap: true
-  debug: true
+  debug: false
 pgsql:
   path: ""
   port: ""
