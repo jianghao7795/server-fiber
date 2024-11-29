@@ -102,7 +102,7 @@ func (*ArticleApi) UpdateArticle(c *fiber.Ctx) error {
 	err := c.BodyParser(&article)
 	if err != nil {
 		global.LOG.Error("获取数据失败!", zap.Error(err))
-		return response.FailWithMessage("获取数据失败", c)
+		return response.FailWithMessage("获取数据失败: "+err.Error(), c)
 	}
 	var id int
 	id, err = c.ParamsInt("id")
