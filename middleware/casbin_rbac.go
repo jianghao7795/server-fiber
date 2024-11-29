@@ -33,7 +33,7 @@ func CasbinHandler(c *fiber.Ctx) error {
 	if success {
 		return c.Next()
 	} else {
-		// 上传文件 由于是ajxs 必须返回400 错误 才能展示错误信息
+		// 上传文件 由于是ajxs 必须返回403 错误 才能展示错误信息
 		return response.FailWithMessage403("权限不足", c)
 	}
 }
