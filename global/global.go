@@ -11,22 +11,21 @@ import (
 	"github.com/songzhibin97/gkit/cache/local_cache"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
-	"golang.org/x/sync/singleflight"
 	"gorm.io/gorm"
 )
 
 // Cache config.Cache 使用 redis
 
 var (
-	DB                 *gorm.DB // gorm
-	DBList             map[string]*gorm.DB
-	REDIS              *redis.Client    // redis
-	CONFIG             config.Server    // 配置 文件配置
-	RunCONFIG          config.RunServer // 运行配置 读取库配置
-	VIP                *viper.Viper     // 读写配置文件
-	LOG                *zap.Logger      // 日志 打印日志 debug fatal error info warn 等几种方式
-	Timer              = timer.NewTimerTask()
-	ConcurrencyControl = &singleflight.Group{} // 记录token
+	DB        *gorm.DB            // gorm
+	DBList    map[string]*gorm.DB // 数据库
+	REDIS     *redis.Client       // redis
+	CONFIG    config.Server       // 配置 文件配置
+	RunCONFIG config.RunServer    // 运行配置 读取库配置
+	VIP       *viper.Viper        // 读写配置文件
+	LOG       *zap.Logger         // 日志 打印日志 debug fatal error info warn 等几种方式
+	Timer     = timer.NewTimerTask()
+	// ConcurrencyControl = &singleflight.Group{} // 记录token
 
 	BlackCache local_cache.Cache // 缓存
 	// Validate lock       sync.RWMutex
