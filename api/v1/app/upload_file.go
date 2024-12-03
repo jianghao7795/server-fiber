@@ -8,7 +8,7 @@
 package app
 
 import (
-	"server-fiber/global"
+	global "server-fiber/model"
 	responseUploadFile "server-fiber/model/app/response"
 	"server-fiber/model/common/response"
 

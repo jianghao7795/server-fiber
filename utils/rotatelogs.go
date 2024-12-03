@@ -3,7 +3,7 @@ package utils
 import (
 	"os"
 
-	"server-fiber/global"
+	global "server-fiber/model"
 
 	"github.com/natefinch/lumberjack"
 	"go.uber.org/zap/zapcore"

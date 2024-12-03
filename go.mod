@@ -34,7 +34,6 @@ require (
 	github.com/xuri/excelize/v2 v2.4.1
 	go.uber.org/zap v1.21.0
 	golang.org/x/image v0.20.0
-	golang.org/x/sync v0.8.0
 	golang.org/x/text v0.19.0
 	gorm.io/driver/mysql v1.2.3
 	gorm.io/driver/postgres v1.2.3
@@ -42,6 +41,7 @@ require (
 )
 
 require (
+	golang.org/x/sync v0.8.0 // indirect
 	github.com/BurntSushi/toml v1.3.2 // indirect
 	github.com/KyleBanks/depth v1.2.1 // indirect
 	github.com/andybalholm/brotli v1.1.1 // indirect

@@ -2,9 +2,9 @@ package system
 
 import (
 	"errors"
-
-	"server-fiber/global"
 	"server-fiber/model/system"
+
+	global "server-fiber/model"
 
 	"gorm.io/gorm"
 )

@@ -1,7 +1,7 @@
 package system
 
 import (
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/model/system"
 	"server-fiber/model/system/response"
 	"strconv"
@@ -39,7 +39,6 @@ func (*Problem) SetUserProblemSetting(problem []system.SysUserProblem) (string, 
 			db := global.DB.Model(&system.SysUserProblem{})
 			var dataProblemFirst system.SysUserProblem
 			err := db.Where("id = ?", item.ID).First(&dataProblemFirst).Error
-
 			if err != nil {
 				return "", err
 			}

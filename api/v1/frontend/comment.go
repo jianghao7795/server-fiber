@@ -1,11 +1,12 @@
 package frontend
 
 import (
-	"github.com/gofiber/fiber/v2"
-	"go.uber.org/zap"
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/model/common/response"
 	"server-fiber/model/frontend"
+
+	"github.com/gofiber/fiber/v2"
+	"go.uber.org/zap"
 )
 
 type CommentApi struct{}
@@ -36,5 +37,4 @@ func (s *CommentApi) CreatedComment(c *fiber.Ctx) error {
 	} else {
 		return response.OkWithId("评论成功", comment.ID, c)
 	}
-
 }

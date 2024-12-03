@@ -1,7 +1,7 @@
 package frontend
 
 import (
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/model/common/response"
 
 	"github.com/gofiber/fiber/v2"

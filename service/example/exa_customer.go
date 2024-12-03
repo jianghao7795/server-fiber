@@ -2,7 +2,7 @@ package example
 
 import (
 	"errors"
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/model/example"
 	"server-fiber/model/example/request"
 	"server-fiber/model/system"

@@ -3,7 +3,7 @@ package frontend
 import (
 	"encoding/json"
 	"errors"
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/model/frontend"
 	"strconv"
 	"time"
@@ -19,7 +19,7 @@ type Tag struct{}
 func (s *Tag) GetTagList(c *fiber.Ctx) (list []frontend.Tag, err error) {
 	var tagListStr string
 	tagListStr, err = global.REDIS.Get(c.Context(), "tag-list").Result()
-	var cacheTime = global.CONFIG.Cache.Time
+	cacheTime := global.CONFIG.Cache.Time
 	if errors.Is(err, redis.Nil) {
 		db := global.DB.Model(&frontend.Tag{})
 		err = db.Order("id desc").Find(&list).Error

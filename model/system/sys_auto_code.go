@@ -2,7 +2,7 @@ package system
 
 import (
 	"errors"
-	"server-fiber/global"
+	global "server-fiber/model"
 )
 
 // AutoCodeStruct 初始版本自动化代码工具

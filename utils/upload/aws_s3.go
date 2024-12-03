@@ -6,7 +6,7 @@ import (
 	"mime/multipart"
 	"time"
 
-	"server-fiber/global"
+	global "server-fiber/model"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"

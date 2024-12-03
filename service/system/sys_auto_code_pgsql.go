@@ -1,7 +1,7 @@
 package system
 
 import (
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/model/system/response"
 
 	"github.com/pkg/errors"
@@ -75,8 +75,8 @@ func (a *autoCodePgsql) GetColumn(tableName string, dbName string) (data []respo
 	if _err != nil {
 		return nil, errors.Wrapf(err, "[pgsql] 连接 数据库(%s)的表(%s)失败!", dbName, tableName)
 	}
-	//sql = strings.ReplaceAll(sql, "@table_catalog", dbName)
-	//sql = strings.ReplaceAll(sql, "@table_name", tableName)
+	// sql = strings.ReplaceAll(sql, "@table_catalog", dbName)
+	// sql = strings.ReplaceAll(sql, "@table_name", tableName)
 	err = db.Raw(sql, dbName, tableName).Scan(&entities).Error
 	return entities, err
 }

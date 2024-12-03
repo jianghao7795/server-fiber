@@ -2,7 +2,7 @@ package initialize
 
 import (
 	"server-fiber/config"
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/utils"
 
 	"go.uber.org/zap"

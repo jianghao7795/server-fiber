@@ -1,7 +1,7 @@
 package system
 
 import (
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/model/common/response"
 	systemRes "server-fiber/model/system/response"
 

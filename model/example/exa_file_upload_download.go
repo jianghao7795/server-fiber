@@ -1,7 +1,7 @@
 package example
 
 import (
-	"server-fiber/global"
+	global "server-fiber/model"
 )
 
 type ExaFileUploadAndDownload struct {

@@ -2,7 +2,7 @@ package utils
 
 import (
 	"errors"
-	"server-fiber/global"
+	global "server-fiber/model"
 	systemReq "server-fiber/model/system/request"
 	"strings"
 

@@ -9,7 +9,7 @@ import (
 	"net/url"
 	"time"
 
-	"server-fiber/global"
+	global "server-fiber/model"
 
 	"github.com/tencentyun/cos-go-sdk-v5"
 	"go.uber.org/zap"
@@ -41,7 +41,6 @@ func (*TencentCOS) DeleteFile(key string) error {
 	client := NewClient()
 	name := global.CONFIG.TencentCOS.PathPrefix + "/" + key
 	_, err := client.Object.Delete(context.Background(), name)
-
 	if err != nil {
 		global.LOG.Error("function bucketManager.Delete() Filed", zap.Any("err", err.Error()))
 		return errors.New("function bucketManager.Delete() Filed, err:" + err.Error())

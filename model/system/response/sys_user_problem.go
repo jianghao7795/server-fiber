@@ -1,6 +1,6 @@
 package response
 
-import "server-fiber/global"
+import global "server-fiber/model"
 
 type SysUserProblemSetting struct {
 	global.MODEL

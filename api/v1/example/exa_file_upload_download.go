@@ -5,14 +5,15 @@ import (
 	_ "image/gif"
 	_ "image/jpeg"
 	_ "image/png"
-
-	"server-fiber/global"
 	"server-fiber/model/common/request"
 	"server-fiber/model/common/response"
 	"server-fiber/model/example"
+	"strconv"
+
+	global "server-fiber/model"
+
 	fileDimensionReq "server-fiber/model/example/request"
 	exampleRes "server-fiber/model/example/response"
-	"strconv"
 
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"

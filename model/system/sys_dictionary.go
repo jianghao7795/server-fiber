@@ -2,7 +2,7 @@
 package system
 
 import (
-	"server-fiber/global"
+	global "server-fiber/model"
 )
 
 // 如果含有time.Time 请自行import time包

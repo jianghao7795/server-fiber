@@ -2,7 +2,7 @@ package system
 
 import (
 	"errors"
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/model/common/request"
 	"server-fiber/model/system"
 	"strconv"

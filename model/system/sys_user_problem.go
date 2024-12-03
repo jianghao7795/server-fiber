@@ -1,7 +1,7 @@
 package system
 
 import (
-	"server-fiber/global"
+	global "server-fiber/model"
 )
 
 type SysUserProblem struct {

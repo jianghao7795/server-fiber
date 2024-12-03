@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/utils"
 	"time"
 

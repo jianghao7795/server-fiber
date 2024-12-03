@@ -3,7 +3,7 @@ package example
 import (
 	ioutil "io"
 	"mime/multipart"
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/model/common/response"
 	"server-fiber/model/example"
 	"server-fiber/model/example/request"

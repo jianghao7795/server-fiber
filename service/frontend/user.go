@@ -3,7 +3,7 @@ package frontend
 import (
 	"crypto/rsa"
 	"errors"
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/model/app"
 	"server-fiber/model/frontend"
 	frontendRequest "server-fiber/model/frontend/request"
@@ -123,7 +123,8 @@ func MakeToken(data frontendRequest.LoginForm, id uint) (tokenString string, exp
 			IssuedAt:  jwt.NewNumericDate(time.Now()),                                                               // 签发时间
 			NotBefore: jwt.NewNumericDate(time.Now()),                                                               // 生效时间
 			Issuer:    global.CONFIG.JWT.Issuer,
-		}}
+		},
+	}
 	// token := jwt.NewWithClaims(jwt.SigningMethodHS256, claim) // 使用HS256算法
 	token := jwt.NewWithClaims(jwt.SigningMethodRS256, claim) // 使用RS256算法
 	tokenString, err = token.SignedString(MySecret)

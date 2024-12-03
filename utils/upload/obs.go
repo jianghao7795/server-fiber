@@ -2,7 +2,7 @@ package upload
 
 import (
 	"mime/multipart"
-	"server-fiber/global"
+	global "server-fiber/model"
 
 	"github.com/huaweicloud/huaweicloud-sdk-go-obs/obs"
 	"github.com/pkg/errors"

@@ -5,7 +5,7 @@ import (
 	"mime/multipart"
 	"time"
 
-	"server-fiber/global"
+	global "server-fiber/model"
 
 	"github.com/aliyun/aliyun-oss-go-sdk/oss"
 	"go.uber.org/zap"

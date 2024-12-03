@@ -2,7 +2,7 @@
 package app
 
 import (
-	"server-fiber/global"
+	global "server-fiber/model"
 )
 
 // User 结构体

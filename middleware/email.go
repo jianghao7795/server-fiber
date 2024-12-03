@@ -1,10 +1,7 @@
 package middleware
 
 import (
-
-	// "io/ioutil"
-
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/model/system"
 	"server-fiber/plugin/email/utils"
 	systemService "server-fiber/service/system"

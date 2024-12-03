@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/model/common/request"
 	"server-fiber/model/common/response"
 	"server-fiber/model/system"

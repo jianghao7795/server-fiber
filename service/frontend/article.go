@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"net/url"
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/model/frontend"
 	"server-fiber/model/system"
 	"strconv"

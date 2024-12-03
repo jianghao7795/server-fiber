@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"server-fiber/config"
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/model/common/response"
 
 	"github.com/gofiber/fiber/v2"

@@ -3,7 +3,7 @@ package internal
 import (
 	"os"
 
-	"server-fiber/global"
+	global "server-fiber/model"
 
 	"go.uber.org/zap/zapcore"
 )

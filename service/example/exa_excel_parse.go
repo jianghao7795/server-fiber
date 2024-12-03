@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/model/common/request"
 	"server-fiber/model/example"
 	"server-fiber/model/system"

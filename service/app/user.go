@@ -2,17 +2,17 @@ package app
 
 import (
 	"errors"
-
-	"server-fiber/global"
 	"server-fiber/model/app"
-	appReq "server-fiber/model/app/request"
 	"server-fiber/model/common/request"
+
+	global "server-fiber/model"
+
+	appReq "server-fiber/model/app/request"
 
 	"gorm.io/gorm"
 )
 
-type UserService struct {
-}
+type UserService struct{}
 
 // CreateUser 创建User记录
 // Author wuhao

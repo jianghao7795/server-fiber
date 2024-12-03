@@ -2,7 +2,7 @@ package initialize
 
 import (
 	"context"
-	"server-fiber/global"
+	global "server-fiber/model"
 	"strings"
 	"time"
 

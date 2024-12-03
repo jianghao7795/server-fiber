@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"server-fiber/global"
+	global "server-fiber/model"
 
 	"github.com/mojocn/base64Captcha"
 	"go.uber.org/zap"

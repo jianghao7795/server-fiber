@@ -3,7 +3,7 @@ package internal
 import (
 	"fmt"
 
-	"server-fiber/global"
+	global "server-fiber/model"
 
 	"gorm.io/gorm/logger"
 )

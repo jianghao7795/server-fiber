@@ -1,6 +1,6 @@
 package mobile
 
-import "server-fiber/global"
+import global "server-fiber/model"
 
 type Register struct {
 	global.MODEL

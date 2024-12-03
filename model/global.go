@@ -1,4 +1,4 @@
-package global
+package model
 
 import (
 	"server-fiber/config"

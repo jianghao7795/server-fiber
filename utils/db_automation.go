@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/model/system"
 	"sort"
 	"time"
@@ -58,7 +58,6 @@ func UpdateTable(db *gorm.DB, tableName string, compareField string, interval st
 	resp, err := http.Get("https://api.github.com/repos/JiangHaoCode/server-fiber/commits?page=" + page + "&per_page=" + per_page)
 	defer func() {
 		_ = resp.Body.Close()
-
 	}()
 	if err != nil {
 		global.LOG.Error("请求Commit错误", zap.Error(err))
@@ -90,7 +89,7 @@ func UpdateTable(db *gorm.DB, tableName string, compareField string, interval st
 	}
 	db.Limit(20).Order("id desc").Find(&dataGithub)
 	dataInsert := []system.SysGithub{}
-	var isExist = true
+	isExist := true
 	for _, item := range data {
 		for _, itemGithub := range dataGithub {
 			if itemGithub.CommitTime == item.CommitTime {
@@ -99,7 +98,6 @@ func UpdateTable(db *gorm.DB, tableName string, compareField string, interval st
 			} else {
 				isExist = true
 			}
-
 		}
 		if isExist {
 			dataInsert = append(dataInsert, item)

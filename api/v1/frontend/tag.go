@@ -1,11 +1,12 @@
 package frontend
 
 import (
-	"github.com/gofiber/fiber/v2"
-	"go.uber.org/zap"
-	"server-fiber/global"
+	global "server-fiber/model"
 	appReq "server-fiber/model/app/request"
 	"server-fiber/model/common/response"
+
+	"github.com/gofiber/fiber/v2"
+	"go.uber.org/zap"
 )
 
 type TagApi struct{}

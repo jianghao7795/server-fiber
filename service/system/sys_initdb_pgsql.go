@@ -6,13 +6,12 @@ import (
 	"fmt"
 	"path/filepath"
 	"server-fiber/config"
+	"server-fiber/model/system/request"
+	"server-fiber/utils"
 
 	"github.com/gookit/color"
 
-	"server-fiber/utils"
-
-	"server-fiber/global"
-	"server-fiber/model/system/request"
+	global "server-fiber/model"
 
 	uuid "github.com/google/uuid"
 	"gorm.io/driver/postgres"

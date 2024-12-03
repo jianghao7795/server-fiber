@@ -1,7 +1,7 @@
 package frontend
 
 import (
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/model/frontend"
 )
 

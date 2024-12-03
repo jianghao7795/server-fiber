@@ -1,6 +1,6 @@
 package app
 
-import "server-fiber/global"
+import global "server-fiber/model"
 
 type Praise struct {
 	global.MODEL

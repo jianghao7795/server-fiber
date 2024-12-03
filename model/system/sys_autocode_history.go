@@ -1,11 +1,11 @@
 package system
 
 import (
+	"server-fiber/model/common/request"
 	"strconv"
 	"strings"
 
-	"server-fiber/global"
-	"server-fiber/model/common/request"
+	global "server-fiber/model"
 )
 
 // SysAutoCodeHistory 自动迁移代码记录,用于回滚,重放使用

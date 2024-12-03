@@ -3,7 +3,7 @@ package upload
 import (
 	"mime/multipart"
 
-	"server-fiber/global"
+	global "server-fiber/model"
 )
 
 // OSS 对象存储接口

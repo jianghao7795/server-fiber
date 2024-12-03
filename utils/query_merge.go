@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"server-fiber/global"
+	global "server-fiber/model"
 
 	"gorm.io/gorm"
 )

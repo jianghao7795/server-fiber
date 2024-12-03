@@ -3,7 +3,7 @@ package system
 import (
 	"errors"
 	"fmt"
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/model/system"
 	"server-fiber/model/system/request"
 	"server-fiber/utils"

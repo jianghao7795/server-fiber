@@ -1,6 +1,6 @@
 package system
 
-import "server-fiber/global"
+import global "server-fiber/model"
 
 type SysBaseMenuBtn struct {
 	global.MODEL

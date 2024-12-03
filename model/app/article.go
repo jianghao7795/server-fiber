@@ -1,7 +1,7 @@
 package app
 
 import (
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/model/system"
 )
 

@@ -7,8 +7,8 @@
 package initialize
 
 import (
-	"server-fiber/global"
 	"server-fiber/middleware"
+	global "server-fiber/model"
 	"server-fiber/router"
 	"time"
 

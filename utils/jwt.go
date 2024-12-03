@@ -2,7 +2,7 @@ package utils
 
 import (
 	"crypto/rsa"
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/model/system/request"
 	"time"
 

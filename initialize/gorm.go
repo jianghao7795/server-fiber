@@ -2,7 +2,7 @@ package initialize
 
 import (
 	"os"
-	"server-fiber/global"
+	global "server-fiber/model"
 
 	"go.uber.org/zap"
 	"gorm.io/gorm"

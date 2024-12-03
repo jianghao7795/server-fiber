@@ -2,7 +2,7 @@ package system
 
 import (
 	"errors"
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/model/system"
 	"server-fiber/model/system/request"
 	"server-fiber/model/system/response"

@@ -3,7 +3,7 @@ package middleware
 import (
 	"context"
 	"errors"
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/model/common/response"
 	"time"
 

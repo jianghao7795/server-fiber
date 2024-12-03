@@ -2,12 +2,12 @@ package system
 
 import (
 	"errors"
-	"strconv"
-
-	"server-fiber/global"
 	"server-fiber/model/common/request"
 	"server-fiber/model/system"
 	"server-fiber/model/system/response"
+	"strconv"
+
+	global "server-fiber/model"
 
 	"gorm.io/gorm"
 )
@@ -66,7 +66,6 @@ func (authorityService *AuthorityService) CopyAuthority(copyInfo response.SysAut
 			btns[i].AuthorityId = copyInfo.Authority.AuthorityId
 		}
 		err = global.DB.Create(&btns).Error
-
 		if err != nil {
 			return
 		}

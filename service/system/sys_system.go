@@ -2,7 +2,7 @@ package system
 
 import (
 	"server-fiber/config"
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/model/system"
 	"server-fiber/utils"
 

@@ -2,7 +2,7 @@ package app
 
 import (
 	"errors"
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/model/app"
 )
 

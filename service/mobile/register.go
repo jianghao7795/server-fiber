@@ -1,7 +1,7 @@
 package mobile
 
 import (
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/model/mobile"
 )
 

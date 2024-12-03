@@ -1,7 +1,7 @@
 package system
 
 import (
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/model/common/request"
 	"server-fiber/model/system"
 	"sort"
@@ -18,7 +18,7 @@ func (g *GithubService) CreateGithub(github *[]system.SysGithub) (total int, err
 	}
 	db.Order("id desc").Find(&data)
 	dataInsert := []system.SysGithub{}
-	var isExist = true
+	isExist := true
 	for _, item := range *github {
 		for _, itemGithub := range data {
 			if itemGithub.CommitTime == item.CommitTime {
@@ -27,7 +27,6 @@ func (g *GithubService) CreateGithub(github *[]system.SysGithub) (total int, err
 			} else {
 				isExist = true
 			}
-
 		}
 		if isExist {
 			dataInsert = append(dataInsert, item)

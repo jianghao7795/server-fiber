@@ -3,11 +3,12 @@ package system
 import (
 	"errors"
 	"fmt"
-	"gorm.io/gorm"
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/model/common/request"
 	"server-fiber/model/system"
 	systemReq "server-fiber/model/system/request"
+
+	"gorm.io/gorm"
 )
 
 //
@@ -61,14 +62,13 @@ func (apiService *ApiService) GetAPIInfoList(info *systemReq.SearchApiParams) (l
 	if err != nil {
 		return list, total, err
 	}
-	var sort = "id"
+	sort := "id"
 	if info.OrderKey != "" {
 		if info.Desc == "true" {
 			sort = fmt.Sprintf("%s %s", info.OrderKey, "desc")
 		} else {
 			sort = info.OrderKey
 		}
-
 	}
 	err = db.Limit(limit).Offset(offset).Order(sort).Find(&list).Error
 	return

@@ -4,7 +4,7 @@ import (
 	"errors"
 	"strconv"
 
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/model/common/response"
 	"server-fiber/model/mobile"
 	"server-fiber/model/mobile/request"

@@ -1,7 +1,7 @@
 package initialize
 
 import (
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/plugin/email"
 	"server-fiber/utils/plugin"
 

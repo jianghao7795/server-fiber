@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/model/system/request"
 	"sort"
 

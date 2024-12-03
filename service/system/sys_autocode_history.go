@@ -4,16 +4,15 @@ import (
 	"errors"
 	"fmt"
 	"path/filepath"
+	"server-fiber/model/common/request"
+	"server-fiber/model/system"
 	systemReq "server-fiber/model/system/request"
+	"server-fiber/model/system/response"
+	"server-fiber/utils"
 	"strings"
 	"time"
 
-	"server-fiber/model/system/response"
-
-	"server-fiber/global"
-	"server-fiber/model/common/request"
-	"server-fiber/model/system"
-	"server-fiber/utils"
+	global "server-fiber/model"
 
 	"go.uber.org/zap"
 )

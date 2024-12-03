@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"server-fiber/global"
 	"server-fiber/initialize"
+	global "server-fiber/model"
 	"server-fiber/service/system"
 
 	"go.uber.org/zap"

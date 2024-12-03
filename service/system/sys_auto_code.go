@@ -12,7 +12,7 @@ import (
 	ioutil "io"
 	"os"
 	"path/filepath"
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/model/system"
 	"server-fiber/utils"
 	"strconv"

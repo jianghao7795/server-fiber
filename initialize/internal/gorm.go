@@ -3,7 +3,7 @@ package internal
 import (
 	"log"
 	"os"
-	"server-fiber/global"
+	global "server-fiber/model"
 	"time"
 
 	"gorm.io/gorm"

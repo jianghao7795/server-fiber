@@ -9,7 +9,7 @@ package app
 
 import (
 	"mime/multipart"
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/model/app"
 	"server-fiber/utils/upload"
 	"strings"

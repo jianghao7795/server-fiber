@@ -3,7 +3,7 @@ package example
 import (
 	"errors"
 	"os"
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/model/example"
 
 	"gorm.io/gorm"

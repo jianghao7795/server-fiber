@@ -3,13 +3,14 @@ package example
 import (
 	"errors"
 	"mime/multipart"
-	"strings"
-
-	"server-fiber/global"
 	"server-fiber/model/common/request"
 	"server-fiber/model/example"
-	fileDimensionReq "server-fiber/model/example/request"
 	"server-fiber/utils/upload"
+	"strings"
+
+	global "server-fiber/model"
+
+	fileDimensionReq "server-fiber/model/example/request"
 )
 
 //@author: wuhao

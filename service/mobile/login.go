@@ -2,7 +2,7 @@ package mobile
 
 import (
 	"errors"
-	"server-fiber/global"
+	global "server-fiber/model"
 	"server-fiber/model/mobile"
 	"server-fiber/model/mobile/request"
 	"server-fiber/model/mobile/response"

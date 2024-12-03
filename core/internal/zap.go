@@ -3,7 +3,7 @@ package internal
 import (
 	"time"
 
-	"server-fiber/global"
+	global "server-fiber/model"
 
 	gozap "go.uber.org/zap"
 	"go.uber.org/zap/zapcore"

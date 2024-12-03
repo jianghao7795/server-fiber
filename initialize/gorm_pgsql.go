@@ -3,8 +3,8 @@ package initialize
 import (
 	"errors"
 	"server-fiber/config"
-	"server-fiber/global"
 	"server-fiber/initialize/internal"
+	global "server-fiber/model"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
