@@ -26,6 +26,7 @@ type ArticleApi struct{}
 func (s *ArticleApi) GetArticleList(c *fiber.Ctx) error {
 	var pageInfo request.ArticleSearch
 	_ = c.QueryParser(&pageInfo)
+	// log.Println("is_promint: ", pageInfo.IsImportant)
 	if pageInfo.Page == 0 {
 		pageInfo.Page = 1
 	}

@@ -30,9 +30,12 @@ func (s *Article) GetArticleList(info *frontendReq.ArticleSearch, c *fiber.Ctx) 
 	if err != nil {
 		return list, 0, errors.New("总数请求失败")
 	}
-	if info.IsImportant == 0 {
+	switch info.IsImportant {
+	case 1:
 		articleStr, err = global.REDIS.Get(c.Context(), "article-list-home").Result()
-	} else {
+	case 2:
+		articleStr, err = global.REDIS.Get(c.Context(), "article-list"+strconv.Itoa(info.Page)).Result()
+	default:
 		articleStr, err = global.REDIS.Get(c.Context(), "article-list"+strconv.Itoa(info.Page)).Result()
 	}
 
