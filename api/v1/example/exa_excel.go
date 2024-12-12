@@ -69,19 +69,19 @@ func (e *ExcelApi) ExportExcel(c *fiber.Ctx) (err error) {
 // @Success 200 {object} response.Response{msg=string} "导入Excel文件"
 // @Router /excel/importExcel [post]
 func (e *ExcelApi) ImportExcel(c *fiber.Ctx) error {
-	header, err := c.FormFile("file")
+	file, err := c.FormFile("file")
 	if err != nil {
 		global.LOG.Error("接收文件失败!", zap.Error(err))
 		return response.FailWithMessage("接收文件失败", c)
 	}
 	filepath_time := time.Now().Format("2006/01/02")
-	filenameMd5 := utils.MD5V([]byte(header.Filename)) + "_" + time.Now().Format("20060102150405") + "." + strings.Split(header.Filename, ".")[len(strings.Split(header.Filename, "."))-1]
-	fileTypeName := strings.Split(header.Filename, ".")[len(strings.Split(header.Filename, "."))-1]
+	filenameMd5 := utils.MD5V([]byte(file.Filename)) + "_" + time.Now().Format("20060102150405") + "." + strings.Split(file.Filename, ".")[len(strings.Split(file.Filename, "."))-1]
+	fileTypeName := strings.Split(file.Filename, ".")[len(strings.Split(file.Filename, "."))-1]
 	importExcel := example.FielUploadImport{
-		FileName:    header.Filename,
+		FileName:    file.Filename,
 		FileNameMd5: filenameMd5,
 		State:       1,
-		FileSize:    header.Size,
+		FileSize:    file.Size,
 		FilePath:    global.CONFIG.Excel.Dir + filepath_time + "/" + filenameMd5,
 		FileType:    fileTypeName,
 	}
@@ -94,7 +94,7 @@ func (e *ExcelApi) ImportExcel(c *fiber.Ctx) error {
 	if mkdirErr != nil {
 		global.LOG.Error("创建目录失败：", zap.Any("err", mkdirErr.Error()))
 	}
-	err = c.SaveFile(header, global.CONFIG.Excel.Dir+filepath_time+"/"+filenameMd5)
+	err = c.SaveFile(file, global.CONFIG.Excel.Dir+filepath_time+"/"+filenameMd5)
 	if err != nil {
 		global.LOG.Error("保存文件失败：", zap.Any("err", err.Error()))
 	}
