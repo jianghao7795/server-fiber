@@ -1,9 +1,9 @@
-package initialize
+package init_load
 
 import (
 	"errors"
 	"server-fiber/config"
-	"server-fiber/initialize/internal"
+	"server-fiber/init_load/gorm_log"
 	global "server-fiber/model"
 
 	"gorm.io/driver/mysql"
@@ -23,7 +23,7 @@ func GormMysql() (*gorm.DB, error) {
 		SkipInitializeWithVersion: false,   // 根据版本自动配置
 		// SkipDefaultTransaction:    true,  // 禁用默认事务
 	}
-	if db, err := gorm.Open(mysql.New(mysqlConfig), internal.Gorm.Config()); err != nil {
+	if db, err := gorm.Open(mysql.New(mysqlConfig), gorm_log.Gorm.Config()); err != nil {
 		return nil, err
 	} else {
 
@@ -49,7 +49,7 @@ func GormMysqlByConfig(m config.DB) (*gorm.DB, error) {
 		SkipInitializeWithVersion: false,   // 根据版本自动配置
 		DisableDatetimePrecision:  true,    // 禁用datetime 精度
 	}
-	if db, err := gorm.Open(mysql.New(mysqlConfig), internal.Gorm.Config()); err != nil {
+	if db, err := gorm.Open(mysql.New(mysqlConfig), gorm_log.Gorm.Config()); err != nil {
 		return nil, err
 	} else {
 		sqlDB, err := db.DB()

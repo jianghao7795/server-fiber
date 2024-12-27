@@ -1,9 +1,9 @@
-package initialize
+package init_load
 
 import (
 	"errors"
 	"server-fiber/config"
-	"server-fiber/initialize/internal"
+	"server-fiber/init_load/gorm_log"
 	global "server-fiber/model"
 
 	"gorm.io/driver/postgres"
@@ -20,7 +20,7 @@ func GormPgSql() (*gorm.DB, error) {
 		DSN:                  p.Dsn(), // DSN data source name
 		PreferSimpleProtocol: false,
 	}
-	if db, err := gorm.Open(postgres.New(pgsqlConfig), internal.Gorm.Config()); err != nil {
+	if db, err := gorm.Open(postgres.New(pgsqlConfig), gorm_log.Gorm.Config()); err != nil {
 		return nil, err
 	} else {
 		sqlDB, _ := db.DB()
@@ -39,7 +39,7 @@ func GormPgSqlByConfig(p config.DB) *gorm.DB {
 		DSN:                  p.Dsn(), // DSN data source name
 		PreferSimpleProtocol: false,
 	}
-	if db, err := gorm.Open(postgres.New(pgsqlConfig), internal.Gorm.Config()); err != nil {
+	if db, err := gorm.Open(postgres.New(pgsqlConfig), gorm_log.Gorm.Config()); err != nil {
 		panic(err)
 	} else {
 		sqlDB, _ := db.DB()

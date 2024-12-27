@@ -1,4 +1,4 @@
-package internal
+package gorm_log
 
 import (
 	"fmt"

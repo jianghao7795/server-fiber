@@ -1,4 +1,4 @@
-package initialize
+package init_load
 
 import (
 	"server-fiber/config"

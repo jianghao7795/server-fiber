@@ -93,7 +93,7 @@ DROP TABLE IF EXISTS `authority_menu`;
 /*!50001 DROP VIEW IF EXISTS `authority_menu`*/;
 SET @saved_cs_client     = @@character_set_client;
 /*!50503 SET character_set_client = utf8mb4 */;
-/*!50001 CREATE VIEW `authority_menu` AS SELECT 
+/*!50001 CREATE VIEW `authority_menu` AS SELECT
  1 AS `id`,
  1 AS `path`,
  1 AS `icon`,

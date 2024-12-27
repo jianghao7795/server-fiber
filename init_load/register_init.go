@@ -1,4 +1,4 @@
-package initialize
+package init_load
 
 // import (
 // 	_ "server-fiber/source/example"

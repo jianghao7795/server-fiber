@@ -5,7 +5,8 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"server-fiber/initialize"
+
+	"server-fiber/init_load"
 	global "server-fiber/model"
 	"server-fiber/service/system"
 
@@ -27,7 +28,7 @@ func RunServer() {
 	// global.Logger = InitLogger()   // 初始化 log 让log标准输出
 	zap.ReplaceGlobals(global.LOG) // 配置部署到全局
 
-	db, err := initialize.Gorm() // gorm连接数据库
+	db, err := init_load.Gorm() // gorm连接数据库
 	if err == nil {
 		global.DB = db
 		global.LOG.Info("Database connection success", zap.String("port", global.CONFIG.Mysql.Port))
@@ -35,7 +36,7 @@ func RunServer() {
 		global.LOG.Error("The database connection failed: " + err.Error())
 		os.Exit(1)
 	}
-	initialize.Timer() // 定时 执行任务
+	init_load.Timer() // 定时 执行任务
 	// err = utilsInit.TransInit("zh")
 	// if err != nil {
 	// 	global.LOG.Error("翻译错误：" + err.Error())
@@ -53,13 +54,13 @@ func RunServer() {
 		}(db)
 	}
 	if global.CONFIG.System.UseMultipoint || global.CONFIG.System.UseRedis {
-		err = initialize.Redis()
+		err = init_load.Redis()
 		if err != nil {
 			global.LOG.Error("Redis init failed: " + err.Error())
 			os.Exit(1)
 		}
 	}
-	router := initialize.Routers()
+	router := init_load.Routers()
 	address := fmt.Sprintf(":%d", global.CONFIG.System.Addr)
 	global.LOG.Info("server run success on ", zap.String("address", address))
 	log.Println(`Welcome to Fiber API`)

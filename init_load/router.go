@@ -4,7 +4,7 @@
  * @LastEditors: jianghao
  * @LastEditTime: 2022-10-17 11:27:44
  */
-package initialize
+package init_load
 
 import (
 	"server-fiber/middleware"
