@@ -1,6 +1,8 @@
 module server-fiber
 
-go 1.22
+go 1.22.0
+
+toolchain go1.22.10
 
 require (
 	github.com/aliyun/aliyun-oss-go-sdk v2.1.6+incompatible
@@ -41,7 +43,6 @@ require (
 )
 
 require (
-	golang.org/x/sync v0.8.0 // indirect
 	github.com/BurntSushi/toml v1.3.2 // indirect
 	github.com/KyleBanks/depth v1.2.1 // indirect
 	github.com/andybalholm/brotli v1.1.1 // indirect
@@ -121,6 +122,7 @@ require (
 	golang.org/x/crypto v0.28.0 // indirect
 	golang.org/x/exp v0.0.0-20240909161429-701f63a606c0 // indirect
 	golang.org/x/net v0.30.0 // indirect
+	golang.org/x/sync v0.8.0 // indirect
 	golang.org/x/sys v0.26.0 // indirect
 	golang.org/x/time v0.5.0 // indirect
 	golang.org/x/tools v0.25.0 // indirect

@@ -43,6 +43,56 @@ nL9o4PchskjTFRVR
 -----END PRIVATE KEY-----`)
 )
 
+// // mergeConfigs 合并两个LogConfig结构体，优先级以src为主
+// func mergeConfigs(dst, src LogConfig) LogConfig {
+// 	if src.Level != zap.DebugLevel {
+// 		dst.Level = src.Level
+// 	}
+// 	if src.Development {
+// 		dst.Development = src.Development
+// 	}
+// 	if src.Encoding != "" {
+// 		dst.Encoding = src.Encoding
+// 	}
+// 	if len(src.OutputPaths) > 0 {
+// 		dst.OutputPaths = src.OutputPaths
+// 	}
+// 	if len(src.ErrorOutputPaths) > 0 {
+// 		dst.ErrorOutputPaths = src.ErrorOutputPaths
+// 	}
+// 	// 合并更多字段...
+// 	return dst
+// }
+
+// // loadConfigsFromDir 从指定目录中加载所有配置文件
+// func loadConfigsFromDir(dir string) (LogConfig, error) {
+// 	files, err := io.ReadDir(dir)
+// 	if err != nil {
+// 		return defaultLogConfig, fmt.Errorf("failed to read directory: %v", err)
+// 	}
+
+// 	var mergedConfig = defaultLogConfig
+
+// 	for _, file := range files {
+// 		if !file.IsDir() && filepath.Ext(file.Name()) == ".json" {
+// 			filePath := filepath.Join(dir, file.Name())
+// 			configData, err := ioutil.ReadFile(filePath)
+// 			if err != nil {
+// 				return defaultLogConfig, fmt.Errorf("failed to read config file: %v", err)
+// 			}
+
+// 			var config LogConfig
+// 			if err := json.Unmarshal(configData, &config); err != nil {
+// 				return defaultLogConfig, fmt.Errorf("failed to unmarshal config file: %v", err)
+// 			}
+
+// 			mergedConfig = mergeConfigs(mergedConfig, config)
+// 		}
+// 	}
+
+// 	return mergedConfig, nil
+// }
+
 // 读取配置 配置文件conf/config.yaml
 func viperInit() (*viper.Viper, error) {
 	var config string
