@@ -46,6 +46,7 @@ func (u *FileUploadAndDownloadApi) BreakpointContinue(c *fiber.Ctx) error {
 			global.LOG.Error("文件关闭失败!", zap.Error(err))
 		}
 	}(f)
+
 	cen, err := ioutil.ReadAll(f)
 	if err != nil {
 		global.LOG.Error("文件分段读取失败!", zap.Error(err))
