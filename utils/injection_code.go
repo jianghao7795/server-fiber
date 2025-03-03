@@ -106,8 +106,8 @@ func AutoInjectionCode(filepath string, funcName string, codeData string) error 
 	// 插入数据
 	indexPos := endCommentPos - 1
 	insertData := []byte(append([]byte(codeData+"\n"), reverseSpace...))
-
-	remainData := append([]byte{}, srcData[indexPos:]...)
+	remainData := []byte{}
+	remainData = append(remainData, srcData[indexPos:]...)
 	srcData = append(append(srcData[:indexPos], insertData...), remainData...)
 
 	// 写回数据

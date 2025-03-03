@@ -57,7 +57,7 @@ func TrimSpace(target any) {
 	}
 	t = t.Elem()
 	v := reflect.ValueOf(target).Elem()
-	for i := 0; i < t.NumField(); i++ {
+	for i := range t.NumField() {
 		switch v.Field(i).Kind() {
 		case reflect.String:
 			v.Field(i).SetString(strings.TrimSpace(v.Field(i).String()))

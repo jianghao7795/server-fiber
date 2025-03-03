@@ -122,7 +122,7 @@ func Verify(st any, roleMap Rules) (err error) {
 	}
 	num := val.NumField()
 	// 遍历结构体的所有字段
-	for i := 0; i < num; i++ {
+	for i := range num {
 		tagVal := typ.Field(i)
 		val := val.Field(i)
 		if len(roleMap[tagVal.Name]) > 0 {

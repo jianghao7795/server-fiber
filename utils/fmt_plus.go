@@ -17,7 +17,7 @@ func StructToMap(obj any) map[string]any {
 	obj2 := reflect.ValueOf(obj)
 
 	data := make(map[string]any)
-	for i := 0; i < obj1.NumField(); i++ {
+	for i := range obj1.NumField() {
 		if obj1.Field(i).Tag.Get("mapstructure") != "" {
 			data[obj1.Field(i).Tag.Get("mapstructure")] = obj2.Field(i).Interface()
 		} else {

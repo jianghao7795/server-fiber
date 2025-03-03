@@ -25,7 +25,7 @@ func (tb *TokenBucket) Allow() bool {
 	// 计算需要放的令牌数量
 	tb.tokens = tb.tokens + tb.rate*now.Sub(tb.lastToken).Seconds()
 	// log.Println("tb.tokens: ", tb.tokens)
-	if tb.tokens > float64(tb.capacity) {
+	if max(tb.tokens, float64(tb.capacity)) != tb.tokens {
 		tb.tokens = float64(tb.capacity)
 	}
 

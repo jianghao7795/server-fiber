@@ -32,7 +32,7 @@ func NewCutter(director string, level string, options ...CutterOption) *Cutter {
 		Director: director,
 		mutex:    new(sync.RWMutex),
 	}
-	for i := 0; i < len(options); i++ {
+	for i := range len(options) {
 		options[i](rotate)
 	}
 	return rotate
