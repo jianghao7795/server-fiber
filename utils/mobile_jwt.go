@@ -35,13 +35,13 @@ func (j *JWT) MakeToken(data mobile.Login, id uint) (tokenString string, expires
 }
 
 func (j *JWT) Secret() jwt.Keyfunc {
-	return func(token *jwt.Token) (interface{}, error) {
+	return func(token *jwt.Token) (any, error) {
 		return j.PublicKey, nil // 这是我的secret
 	}
 }
 
 func (j *JWT) ParseTokenMobile(tokenss string) (*MobileClaims, error) {
-	token, err := jwt.ParseWithClaims(tokenss, &MobileClaims{}, func(token *jwt.Token) (interface{}, error) {
+	token, err := jwt.ParseWithClaims(tokenss, &MobileClaims{}, func(token *jwt.Token) (any, error) {
 		return j.PublicKey, nil // 这是我的secret
 	})
 	if err != nil {

@@ -100,10 +100,10 @@ func Gt(mark string) string {
 
 //@function: Verify
 //@description: 校验方法
-//@param: st interface{}, roleMap Rules(入参实例，规则map)
+//@param: st any, roleMap Rules(入参实例，规则map)
 //@return: err error
 
-func Verify(st interface{}, roleMap Rules) (err error) {
+func Verify(st any, roleMap Rules) (err error) {
 	compareMap := map[string]bool{
 		"lt": true,
 		"le": true,
@@ -192,10 +192,10 @@ func isBlank(value reflect.Value) bool {
 
 //@function: compare
 //@description: 比较函数
-//@param: value interface{}, VerifyStr string
+//@param: value any, VerifyStr string
 //@return: bool
 
-func compare(value interface{}, VerifyStr string) bool {
+func compare(value any, VerifyStr string) bool {
 	VerifyStrArr := strings.Split(VerifyStr, "=")
 	val := reflect.ValueOf(value)
 	switch val.Kind() {

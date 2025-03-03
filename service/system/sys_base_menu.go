@@ -54,7 +54,7 @@ func (baseMenuService *BaseMenuService) DeleteBaseMenu(id int) (err error) {
 
 func (baseMenuService *BaseMenuService) UpdateBaseMenu(menu system.SysBaseMenu) (err error) {
 	var oldMenu system.SysBaseMenu
-	upDateMap := make(map[string]interface{})
+	upDateMap := make(map[string]any)
 	upDateMap["keep_alive"] = menu.KeepAlive
 	upDateMap["close_tab"] = menu.CloseTab
 	upDateMap["default_menu"] = menu.DefaultMenu

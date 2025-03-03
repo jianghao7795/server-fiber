@@ -54,7 +54,7 @@ func (dictionaryDetailService *DictionaryDetailService) GetSysDictionaryDetail(i
 //@function: GetSysDictionaryDetailInfoList
 //@description: 分页获取字典详情列表
 //@param: info request.SysDictionaryDetailSearch
-//@return: err error, list interface{}, total int64
+//@return: err error, list any, total int64
 
 func (dictionaryDetailService *DictionaryDetailService) GetSysDictionaryDetailInfoList(info request.SysDictionaryDetailSearch) (list []system.SysDictionaryDetail, total int64, err error) {
 	limit := info.PageSize

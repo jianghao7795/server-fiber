@@ -11,8 +11,8 @@ type MobileUserSearch struct {
 }
 
 type MobileUpdate struct {
-	Field string      `json:"field" form:"field"`
-	Value interface{} `json:"value" form:"value"`
+	Field string `json:"field" form:"field"`
+	Value any    `json:"value" form:"value"`
 }
 
 // update password struct

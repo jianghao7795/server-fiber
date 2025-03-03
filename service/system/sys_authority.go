@@ -138,7 +138,7 @@ func (authorityService *AuthorityService) DeleteAuthority(auth *system.SysAuthor
 //@function: GetAuthorityInfoList
 //@description: 分页获取数据
 //@param: info request.PageInfo
-//@return: err error, list interface{}, total int64
+//@return: err error, list any, total int64
 
 func (authorityService *AuthorityService) GetAuthorityInfoList(info request.PageInfo) (list []system.SysAuthority, total int64, err error) {
 	limit := info.PageSize

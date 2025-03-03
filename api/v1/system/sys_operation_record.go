@@ -75,7 +75,7 @@ func (s *OperationRecordApi) DeleteSysOperationRecordByIds(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data query system.SysOperationRecord true "Id"
-// @Success 200 {object} response.Response{data=map[string]interface{},msg=string} "用id查询SysOperationRecord"
+// @Success 200 {object} response.Response{data=map[string]any,msg=string} "用id查询SysOperationRecord"
 // @Router /sysOperationRecord/findSysOperationRecord/:id [get]
 func (s *OperationRecordApi) FindSysOperationRecord(c *fiber.Ctx) error {
 	id, _ := c.ParamsInt("id")

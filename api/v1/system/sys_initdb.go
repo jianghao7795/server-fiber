@@ -43,7 +43,7 @@ func (i *DBApi) InitDB(c *fiber.Ctx) error {
 // @Tags CheckDB
 // @Summary 是否进行初始化
 // @Produce  application/json
-// @Success 200 {object} response.Response{data=map[string]interface{},msg=string} "初始化用户数据库"
+// @Success 200 {object} response.Response{data=map[string]any,msg=string} "初始化用户数据库"
 // @Router /init/checkdb [get]
 func (i *DBApi) CheckDB(c *fiber.Ctx) error {
 	var (
@@ -69,7 +69,7 @@ func (i *DBApi) CheckDB(c *fiber.Ctx) error {
 
 // hasTable检查数据库中是否存在表
 func (initDB *DBApi) hasTable() bool {
-	tables := []interface{}{
+	tables := []any{
 		sysModel.SysApi{},
 		sysModel.SysUser{},
 		sysModel.SysBaseMenu{},

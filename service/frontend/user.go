@@ -100,7 +100,7 @@ func (u *FrontendUser) UpdateUserBackgroudImage(data *frontend.User) (err error)
 }
 
 func (u *FrontendUser) UpdateUser(data *frontend.User) (err error) {
-	err = global.DB.Model(data).Updates(map[string]interface{}{"header_img": data.HeaderImg, "introduction": data.Introduction, "content": data.Content}).Error
+	err = global.DB.Model(data).Updates(map[string]any{"header_img": data.HeaderImg, "introduction": data.Introduction, "content": data.Content}).Error
 	return
 }
 
@@ -132,7 +132,7 @@ func MakeToken(data frontendRequest.LoginForm, id uint) (tokenString string, exp
 }
 
 func Secret() jwt.Keyfunc {
-	return func(token *jwt.Token) (interface{}, error) {
+	return func(token *jwt.Token) (any, error) {
 		return MySecret, nil // 这是我的secret
 	}
 }

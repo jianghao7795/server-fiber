@@ -75,7 +75,7 @@ func (s *DictionaryDetailApi) UpdateSysDictionaryDetail(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data query system.SysDictionaryDetail true "用id查询SysDictionaryDetail"
-// @Success 200 {object} response.Response{data=map[string]interface{},msg=string} "用id查询SysDictionaryDetail"
+// @Success 200 {object} response.Response{data=map[string]any,msg=string} "用id查询SysDictionaryDetail"
 // @Router /sysDictionaryDetail/findSysDictionaryDetail/:id [get]
 func (s *DictionaryDetailApi) FindSysDictionaryDetail(c *fiber.Ctx) error {
 	var detail system.SysDictionaryDetail

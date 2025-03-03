@@ -112,9 +112,9 @@ func (userService *UserService) ChangePassword(u *system.SysUser, newPassword st
 //@function: GetUserInfoList
 //@description: 分页获取数据
 //@param: info request.PageInfo
-//@return: err error, list interface{}, total int64
+//@return: err error, list any, total int64
 
-func (userService *UserService) GetUserInfoList(info request.SearchInfo) (list interface{}, total int64, err error) {
+func (userService *UserService) GetUserInfoList(info request.SearchInfo) (list any, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	db := global.DB.Model(&system.SysUser{})

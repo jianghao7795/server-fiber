@@ -70,7 +70,7 @@ func (menuService *MenuService) getChildrenList(menu *system.SysMenu, treeMap ma
 
 //@function: GetInfoList
 //@description: 获取路由分页
-//@return: err error, list interface{}, total int64
+//@return: err error, list any, total int64
 
 func (menuService *MenuService) GetInfoList() (list []system.SysBaseMenu, total int64, err error) {
 	var menuList []system.SysBaseMenu

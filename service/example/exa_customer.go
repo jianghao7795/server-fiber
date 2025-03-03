@@ -62,7 +62,7 @@ func (exa *CustomerService) GetExaCustomer(id uint) (customer example.ExaCustome
 //@function: GetCustomerInfoList
 //@description: 分页获取客户列表
 //@param: sysUserAuthorityID string, info request.PageInfo
-//@return: err error, list interface{}, total int64
+//@return: err error, list any, total int64
 
 func (exa *CustomerService) GetCustomerInfoList(sysUserAuthorityID string, info *request.SearchCustomerParams) (list []example.ExaCustomer, total int64, err error) {
 	limit := info.PageSize

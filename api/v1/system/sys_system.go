@@ -69,7 +69,7 @@ func (s *SystemApi) ReloadSystem(c *fiber.Ctx) error {
 // @Summary 获取服务器信息
 // @Security ApiKeyAuth
 // @Produce  application/json
-// @Success 200 {object} response.Response{data=map[string]interface{},msg=string} "获取服务器信息"
+// @Success 200 {object} response.Response{data=map[string]any,msg=string} "获取服务器信息"
 // @Router /system/getServerInfo [post]
 func (s *SystemApi) GetServerInfo(c *fiber.Ctx) error {
 	if server, err := systemConfigService.GetServerInfo(); err != nil {

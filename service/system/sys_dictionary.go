@@ -57,7 +57,7 @@ func (dictionaryService *DictionaryService) DeleteSysDictionary(id uint) (err er
 
 func (dictionaryService *DictionaryService) UpdateSysDictionary(sysDictionary *system.SysDictionary) (err error) {
 	var dict system.SysDictionary
-	sysDictionaryMap := map[string]interface{}{
+	sysDictionaryMap := map[string]any{
 		"Name":   sysDictionary.Name,
 		"Type":   sysDictionary.Type,
 		"Status": sysDictionary.Status,
@@ -93,9 +93,9 @@ func (dictionaryService *DictionaryService) GetSysDictionary(fieldType string, f
 //@function: GetSysDictionaryInfoList
 //@description: 分页获取字典列表
 //@param: info request.SysDictionarySearch
-//@return: err error, list interface{}, total int64
+//@return: err error, list any, total int64
 
-func (dictionaryService *DictionaryService) GetSysDictionaryInfoList(info request.SysDictionarySearch) (list interface{}, total int64, err error) {
+func (dictionaryService *DictionaryService) GetSysDictionaryInfoList(info request.SysDictionarySearch) (list any, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	// 创建db

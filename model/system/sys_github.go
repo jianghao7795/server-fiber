@@ -41,10 +41,10 @@ type GithubCommit struct {
 		} `json:"tree"`
 		CommentCount int `json:"comment_count"`
 		Verification struct {
-			Verified  bool        `json:"verified"`
-			Reason    string      `json:"reason"`
-			Signature interface{} `json:"signature"`
-			Payload   interface{} `json:"payload"`
+			Verified  bool   `json:"verified"`
+			Reason    string `json:"reason"`
+			Signature any    `json:"signature"`
+			Payload   any    `json:"payload"`
 		} `json:"verification"`
 	} `json:"commit"`
 	Author struct {

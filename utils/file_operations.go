@@ -50,7 +50,7 @@ func DeLFile(filePath string) error {
 //@param: target interface (target: 目标结构体,传入必须是指针类型)
 //@return: null
 
-func TrimSpace(target interface{}) {
+func TrimSpace(target any) {
 	t := reflect.TypeOf(target)
 	if t.Kind() != reflect.Ptr {
 		return

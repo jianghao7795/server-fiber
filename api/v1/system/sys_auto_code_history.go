@@ -19,7 +19,7 @@ type AutoCodeHistoryApi struct{}
 // @accept application/json
 // @Produce application/json
 // @Param data body request.GetById true "请求参数"
-// @Success 200 {object} response.Response{data=map[string]interface{},msg=string} "获取meta信息"
+// @Success 200 {object} response.Response{data=map[string]any,msg=string} "获取meta信息"
 // @Router /autoCode/getMeta [get]
 func (a *AutoCodeHistoryApi) First(c *fiber.Ctx) error {
 	var info request.GetById

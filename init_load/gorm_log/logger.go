@@ -20,7 +20,7 @@ func NewWriter(w logger.Writer) *Writer {
 
 // Printf 格式化打印日志
 
-func (w *Writer) Printf(message string, data ...interface{}) {
+func (w *Writer) Printf(message string, data ...any) {
 	var logZap bool
 	switch global.CONFIG.System.DbType {
 	case "mysql":

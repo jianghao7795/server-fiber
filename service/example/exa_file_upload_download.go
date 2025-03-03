@@ -64,7 +64,7 @@ func (e *FileUploadAndDownloadService) EditFileName(file *example.ExaFileUploadA
 //@function: GetFileRecordInfoList
 //@description: 分页获取数据
 //@param: info request.PageInfo
-//@return: err error, list interface{}, total int64
+//@return: err error, list any, total int64
 
 func (e *FileUploadAndDownloadService) GetFileRecordInfoList(info *request.PageInfo) (list []example.ExaFileUploadAndDownload, total int64, err error) {
 	limit := info.PageSize

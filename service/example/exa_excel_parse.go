@@ -21,7 +21,7 @@ func (exa *ExcelService) ParseInfoList2Excel(infoList []example.FielUploadImport
 	b := 0
 	for i, fileMerge := range infoList {
 		axis := fmt.Sprintf("A%d", i+b+2)
-		excel.SetSheetRow("router", axis, &[]interface{}{
+		excel.SetSheetRow("router", axis, &[]any{
 			fileMerge.ID,
 			fileMerge.FilePath,
 			fileMerge.FileSize,
@@ -35,7 +35,7 @@ func (exa *ExcelService) ParseInfoList2Excel(infoList []example.FielUploadImport
 		// 	for _, m := range menu.Children {
 		// 		b += 1
 		// 		a := fmt.Sprintf("A%d", i+b+2)
-		// 		excel.SetSheetRow("router", a, &[]interface{}{
+		// 		excel.SetSheetRow("router", a, &[]any{
 		// 			m.ID,
 		// 			m.Name,
 		// 			m.Path,

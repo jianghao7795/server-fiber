@@ -5,9 +5,9 @@ import (
 )
 
 type ResponseMobile struct {
-	Code int         `json:"code"`
-	Data interface{} `json:"data"`
-	Msg  string      `json:"msg"`
+	Code int    `json:"code"`
+	Data any    `json:"data"`
+	Msg  string `json:"msg"`
 }
 
 const (
@@ -15,6 +15,6 @@ const (
 )
 
 // 返回401 错误信息 data 和 string message信息返回
-func FailWithDetailed401(data interface{}, message string, c *fiber.Ctx) error {
+func FailWithDetailed401(data any, message string, c *fiber.Ctx) error {
 	return Result(ERROR401, data, message, c)
 }

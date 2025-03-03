@@ -83,7 +83,7 @@ func (a *AuthorityMenuApi) AddMenuAuthority(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data body request.GetAuthorityId true "角色ID"
-// @Success 200 {object} response.Response{data=map[string]interface{},msg=string} "获取指定角色menu"
+// @Success 200 {object} response.Response{data=map[string]any,msg=string} "获取指定角色menu"
 // @Router /menu/getMenuAuthority [get]
 func (a *AuthorityMenuApi) GetMenuAuthority(c *fiber.Ctx) error {
 	var param request.GetAuthorityId

@@ -40,7 +40,7 @@ func (e *ensureTables) MigrateTable(ctx context.Context) (context.Context, error
 	if !ok {
 		return ctx, system.ErrMissingDBContext
 	}
-	tables := []interface{}{
+	tables := []any{
 		// sysModel.SysApi{},
 		// sysModel.SysUser{},
 		// sysModel.SysBaseMenu{},
@@ -76,7 +76,7 @@ func (e *ensureTables) TableCreated(ctx context.Context) bool {
 	if !ok {
 		return false
 	}
-	tables := []interface{}{
+	tables := []any{
 		sysModel.SysApi{},
 		sysModel.SysUser{},
 		sysModel.SysBaseMenu{},

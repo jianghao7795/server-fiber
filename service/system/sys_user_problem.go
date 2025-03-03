@@ -7,14 +7,14 @@ import (
 	"strconv"
 )
 
-func (*Problem) GetUserProblemList(info *system.SysUserProblem) (list interface{}, err error) {
+func (*Problem) GetUserProblemList(info *system.SysUserProblem) (list any, err error) {
 	db := global.DB.Model(&system.SysUserProblem{})
 	var problemList []response.SysUserProblem
 	err = db.Where("sys_user_id = ?", info.SysUserId).Find(&problemList).Error
 	return problemList, err
 }
 
-func (*Problem) GetUserProblemSettingList(info *system.SysUserProblem) (list interface{}, err error) {
+func (*Problem) GetUserProblemSettingList(info *system.SysUserProblem) (list any, err error) {
 	db := global.DB.Model(&system.SysUserProblem{})
 	var problemList []response.SysUserProblemSetting
 	err = db.Where("sys_user_id = ?", info.SysUserId).Find(&problemList).Error

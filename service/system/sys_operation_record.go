@@ -50,7 +50,7 @@ func (operationRecordService *OperationRecordService) GetSysOperationRecord(id u
 //@function: GetSysOperationRecordInfoList
 //@description: 分页获取操作记录列表
 //@param: info systemReq.SysOperationRecordSearch
-//@return: err error, list interface{}, total int64
+//@return: err error, list any, total int64
 
 func (operationRecordService *OperationRecordService) GetSysOperationRecordInfoList(info *systemReq.SysOperationRecordSearch) (list []system.SysOperationRecord, total int64, err error) {
 	// time.Sleep(3 * time.Second)
