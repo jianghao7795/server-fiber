@@ -48,18 +48,7 @@ func initConfig() {
 	// if err != nil {
 	// 	global.LOG.Error("翻译错误：" + err.Error())
 	// }
-	if global.DB != nil {
-		system.LoadAll() // 加载所有的 拉黑的jwt数据 避免盗用jwt
-		// initialize.RegisterTables(global.DB) // 初始化表
-		// 程序结束前关闭数据库链接
-		db, _ := global.DB.DB()
-		defer func(db *sql.DB) {
-			err := db.Close()
-			if err != nil {
-				global.LOG.Error("数据库关闭失败: " + err.Error())
-			}
-		}(db)
-	}
+
 	if global.CONFIG.System.UseMultipoint || global.CONFIG.System.UseRedis {
 		err = init_load.Redis()
 		if err != nil {
@@ -76,6 +65,19 @@ func RunServerElectron(app *fiber.App) {
 	global.LOG.Info("server run success on ", zap.String("address", address))
 	log.Println(`Welcome to Fiber API`)
 	global.LOG.Error(router.Listen(address).Error())
+
+	if global.DB != nil {
+		system.LoadAll() // 加载所有的 拉黑的jwt数据 避免盗用jwt
+		// initialize.RegisterTables(global.DB) // 初始化表
+		// 程序结束前关闭数据库链接
+		db, _ := global.DB.DB()
+		defer func(db *sql.DB) {
+			err := db.Close()
+			if err != nil {
+				global.LOG.Error("数据库关闭失败: " + err.Error())
+			}
+		}(db)
+	}
 }
 
 func RunServer() {
