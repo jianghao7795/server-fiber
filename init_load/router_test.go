@@ -7,24 +7,8 @@
 package init_load
 
 import (
-	"reflect"
 	"testing"
-
-	"github.com/gofiber/fiber/v2"
 )
 
 func TestRouters(t *testing.T) {
-	tests := []struct {
-		name string
-		want *fiber.App
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := Routers(); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Routers() = %v, want %v", got, tt.want)
-			}
-		})
-	}
 }

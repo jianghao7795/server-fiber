@@ -1,19 +1,24 @@
 package core
 
 import (
+	"context"
 	"database/sql"
 	"fmt"
 	"log"
 	"os"
+	"os/signal"
+	"syscall"
+	"time"
 
 	"server-fiber/init_load"
 	global "server-fiber/model"
 	"server-fiber/service/system"
 
+	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
 )
 
-func RunServer() {
+func initConfig() {
 	var err error
 	global.VIP, err = viperInit() // 初始化Viper 配置
 	if err != nil {
@@ -24,6 +29,8 @@ func RunServer() {
 	global.LOG, err = zapInit() // 初始化zap日志库
 	if err != nil {
 		log.Println("日志初始化错误： ", err.Error())
+		// 日志初始化错误 退出程序
+		os.Exit(1)
 	}
 	// global.Logger = InitLogger()   // 初始化 log 让log标准输出
 	zap.ReplaceGlobals(global.LOG) // 配置部署到全局
@@ -60,9 +67,33 @@ func RunServer() {
 			os.Exit(1)
 		}
 	}
-	router := init_load.Routers()
+
+}
+
+func RunServerElectron(app *fiber.App) {
+	router := init_load.Routers(app)
 	address := fmt.Sprintf(":%d", global.CONFIG.System.Addr)
 	global.LOG.Info("server run success on ", zap.String("address", address))
 	log.Println(`Welcome to Fiber API`)
 	global.LOG.Error(router.Listen(address).Error())
+}
+
+func RunServer() {
+	initConfig()
+	app := fiber.New(global.RunCONFIG.FiberConfig)
+	go RunServerElectron(app)
+
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
+	<-quit
+
+	timeout := 5 * time.Second
+	ctx, cancel := context.WithTimeout(context.Background(), timeout)
+	defer cancel()
+
+	if err := app.ShutdownWithContext(ctx); err != nil {
+		global.LOG.Error("Server Shutdown: ", zap.Error(err))
+		os.Exit(1)
+	}
+	global.LOG.Info("Server exiting")
 }
