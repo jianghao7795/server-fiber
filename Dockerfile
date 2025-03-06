@@ -8,7 +8,7 @@ ENV GO111MODULE=on
 
 WORKDIR /app
 COPY . /app
-RUN go build -o fiber cmd/main.go
+RUN CGO_ENABLED=0 go build -o fiber -ldflags="-s -w" cmd/main.go
 
 FROM rockylinux:9-minimal AS runner
 WORKDIR /app
