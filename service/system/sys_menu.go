@@ -49,7 +49,7 @@ func (menuService *MenuService) getMenuTreeMap(authorityId string) (treeMap map[
 func (menuService *MenuService) GetMenuTree(authorityId string) (menus []system.SysMenu, err error) {
 	menuTree, err := menuService.getMenuTreeMap(authorityId)
 	menus = menuTree["0"]
-	for i := 0; i < len(menus); i++ {
+	for i := range len(menus) {
 		err = menuService.getChildrenList(&menus[i], menuTree)
 	}
 	return menus, err
@@ -62,7 +62,7 @@ func (menuService *MenuService) GetMenuTree(authorityId string) (menus []system.
 
 func (menuService *MenuService) getChildrenList(menu *system.SysMenu, treeMap map[string][]system.SysMenu) (err error) {
 	menu.Children = treeMap[menu.MenuId]
-	for i := 0; i < len(menu.Children); i++ {
+	for i := range len(menu.Children) {
 		err = menuService.getChildrenList(&menu.Children[i], treeMap)
 	}
 	return err
@@ -76,7 +76,7 @@ func (menuService *MenuService) GetInfoList() (list []system.SysBaseMenu, total 
 	var menuList []system.SysBaseMenu
 	treeMap, err := menuService.getBaseMenuTreeMap()
 	menuList = treeMap["0"]
-	for i := 0; i < len(menuList); i++ {
+	for i := range len(menuList) {
 		err = menuService.getBaseChildrenList(&menuList[i], treeMap)
 	}
 	return menuList, total, err
@@ -89,7 +89,7 @@ func (menuService *MenuService) GetInfoList() (list []system.SysBaseMenu, total 
 
 func (menuService *MenuService) getBaseChildrenList(menu *system.SysBaseMenu, treeMap map[string][]system.SysBaseMenu) (err error) {
 	menu.Children = treeMap[strconv.Itoa(int(menu.ID))]
-	for i := 0; i < len(menu.Children); i++ {
+	for i := range len(menu.Children) {
 		err = menuService.getBaseChildrenList(&menu.Children[i], treeMap)
 	}
 	return err
@@ -128,7 +128,7 @@ func (menuService *MenuService) getBaseMenuTreeMap() (treeMap map[string][]syste
 func (menuService *MenuService) GetBaseMenuTree() (menus []system.SysBaseMenu, err error) {
 	treeMap, err := menuService.getBaseMenuTreeMap()
 	menus = treeMap["0"]
-	for i := 0; i < len(menus); i++ {
+	for i := range len(menus) {
 		err = menuService.getBaseChildrenList(&menus[i], treeMap)
 	}
 	return menus, err

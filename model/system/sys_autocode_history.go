@@ -31,7 +31,7 @@ func (m *SysAutoCodeHistory) ToRequestIds() request.IdsReq {
 	slice := strings.Split(m.ApiIDs, ";")
 	ids := make([]int, 0, len(slice))
 	length := len(slice)
-	for i := 0; i < length; i++ {
+	for i := range length {
 		id, _ := strconv.ParseInt(slice[i], 10, 32)
 		ids = append(ids, int(id))
 	}

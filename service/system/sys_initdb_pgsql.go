@@ -74,7 +74,7 @@ func (h PgsqlInitHandler) InitTables(ctx context.Context, inits initSlice) error
 func (h PgsqlInitHandler) InitData(ctx context.Context, inits initSlice) error {
 	next, cancel := context.WithCancel(ctx)
 	defer func(c func()) { c() }(cancel)
-	for i := 0; i < len(inits); i++ {
+	for i := range len(inits) {
 		if inits[i].DataInserted(next) {
 			color.Info.Printf(InitDataExist, Pgsql, inits[i].InitializerName())
 			continue

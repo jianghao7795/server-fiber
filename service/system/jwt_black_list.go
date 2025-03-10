@@ -70,7 +70,7 @@ func LoadAll() {
 		global.LOG.Error("加载数据库jwt黑名单失败!", zap.Error(err))
 		return
 	}
-	for i := 0; i < len(data); i++ {
+	for i := range len(data) {
 		global.BlackCache.SetDefault(data[i], struct{}{})
 	} // jwt黑名单 加入 BlackCache 中
 }
