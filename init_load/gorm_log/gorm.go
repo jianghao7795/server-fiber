@@ -14,15 +14,15 @@ type DBBASE interface {
 	GetLogMode() string
 }
 
-var Gorm = new(_gorm)
+var Gorm = new(gormDB)
 
-type _gorm struct{}
+type gormDB struct{}
 
 // Config 记录 gorm sql语句
 // gorm 自定义配置
 // 注意 QueryFields 模式会根据当前 model 的所有字段名称进行 select
 // DisableForeignKeyConstraintWhenMigrating 在 AutoMigrate 或 CreateTable 时，GORM 会自动创建外键约束，若要禁用该特性，可将其设置为 true
-func (g *_gorm) Config() *gorm.Config {
+func (g *gormDB) Config() *gorm.Config {
 	config := &gorm.Config{DisableForeignKeyConstraintWhenMigrating: true, QueryFields: true}
 	_default := logger.New(NewWriter(log.New(os.Stdout, "\n", log.LstdFlags)), logger.Config{
 		SlowThreshold: 200 * time.Millisecond,
