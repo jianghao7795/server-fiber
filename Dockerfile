@@ -1,4 +1,4 @@
-FROM golang:1.22.10-alpine AS builder
+FROM golang:1.24.1-alpine AS builder
 
 LABEL org.opencontainers.image.authors="jianghao"
 
