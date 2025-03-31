@@ -66,6 +66,10 @@ func TrimSpace(target any) {
 	}
 }
 
+// @function: FileExist
+// @description: 判断文件是否存在
+// @param: path string (path: 文件路径)
+// @return: bool (true: 文件存在, false: 文件不存在)
 // FileExist 判断文件是否存在
 func FileExist(path string) bool {
 	fi, err := os.Lstat(path)
@@ -76,6 +80,11 @@ func FileExist(path string) bool {
 }
 
 // 读取文件 并按行读取 并执行回调函数
+// @function: ReadFile
+// @description: 读取文件 并按行读取 并执行回调函数
+// @param: path string (path: 文件路径)
+// @param: fn func(string) error (fn: 回调函数, 传入每行内容)
+// @return: error (nil: 读取成功, 其他: 读取失败)
 func ReadFile(path string, fn func(string) error) error {
 	const BufferSize = 100 // 缓冲区大小
 	f, err := os.Open(path)
