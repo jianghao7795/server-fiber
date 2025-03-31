@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"io"
 	"os"
 	"path/filepath"
 	"reflect"
@@ -72,4 +73,29 @@ func FileExist(path string) bool {
 		return !fi.IsDir()
 	}
 	return !os.IsNotExist(err)
+}
+
+// 读取文件 并按行读取 并执行回调函数
+func ReadFile(path string, fn func(string) error) error {
+	const BufferSize = 100 // 缓冲区大小
+	f, err := os.Open(path)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+	b := make([]byte, BufferSize)
+	for {
+		n, err := f.Read(b)
+		if err != nil {
+			if err == io.EOF {
+				break
+			}
+			return err
+		}
+		err = fn(string(b[:n]))
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
