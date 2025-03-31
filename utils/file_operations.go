@@ -96,6 +96,10 @@ func ReadFile(path string, fn func(string) error) error {
 		if err != nil {
 			return err
 		}
+
+		if n < BufferSize {
+			break
+		}
 	}
 	return nil
 }
