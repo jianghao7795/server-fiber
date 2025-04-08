@@ -15,13 +15,13 @@ import (
 func GormMysql() (*gorm.DB, error) {
 	m := global.CONFIG.Mysql
 	if m.Dbname == "" {
-		return nil, errors.New("no database")
+		return nil, errors.New("no config database")
 	}
 	mysqlConfig := mysql.Config{
 		DSN:                       m.Dsn(), // DSN data source name
 		DefaultStringSize:         256,     // string 类型字段的默认长度
 		SkipInitializeWithVersion: false,   // 根据版本自动配置
-		// SkipDefaultTransaction:    true,  // 禁用默认事务
+		// SkipDefaultTransaction:    m.SkipTransaction, // 禁用默认事务
 	}
 	if db, err := gorm.Open(mysql.New(mysqlConfig), gorm_log.Gorm.Config()); err != nil {
 		return nil, err
