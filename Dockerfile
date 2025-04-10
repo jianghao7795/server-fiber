@@ -16,7 +16,7 @@ WORKDIR /app
 COPY --from=builder /app/fiber .
 COPY --from=builder /app/config.yaml ./conf/config.yaml
 COPY --from=builder /app/rbac_model.conf .
-# COPY --from=builder /app/docs/ ./docs/
+COPY --from=builder /app/docs/ ./docs/
 
 EXPOSE 3100
 CMD ["/app/fiber", "-c", "./conf/"]
