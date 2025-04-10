@@ -2,8 +2,6 @@ module server-fiber
 
 go 1.24
 
-toolchain go1.24.1
-
 require (
 	github.com/aliyun/aliyun-oss-go-sdk v2.1.6+incompatible
 	github.com/aws/aws-sdk-go v1.45.14
