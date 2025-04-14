@@ -34,7 +34,7 @@ func (g *SystemGithubApi) GetGithubList(c *fiber.Ctx) error {
 }
 
 func (g *SystemGithubApi) CreateGithub(c *fiber.Ctx) error {
-	isCheck := utils.NetWorkStatus()
+	isCheck := utils.NetWorkStatus("https://api.github.com")
 	if !isCheck {
 		global.LOG.Error("网络错误：networking not work")
 		return response.FailWithMessage("网络错误： networking not work", c)

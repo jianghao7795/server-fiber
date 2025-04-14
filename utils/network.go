@@ -2,8 +2,9 @@ package utils
 
 import "os/exec"
 
-func NetWorkStatus() bool {
-	cmd := exec.Command("curl", "www.baidu.com")
+// NetWorkStatus check network status by curl 测试网址是否联网
+func NetWorkStatus(path string) bool {
+	cmd := exec.Command("curl", path)
 
 	err := cmd.Run()
 	if err != nil {
