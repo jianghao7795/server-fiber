@@ -11,6 +11,12 @@ import (
 
 type CommentApi struct{}
 
+/**
+ * @api {get} /comment/:articleId 获取文章评论
+ * @apiName GetCommentByArticleId
+ * @apiGroup commentServiceApp
+ * @apiParam {Number} articleId 文章ID
+ */
 func (s *CommentApi) GetCommentByArticleId(c *fiber.Ctx) error {
 	id, err := c.ParamsInt("articleId")
 	if err != nil {
@@ -25,6 +31,13 @@ func (s *CommentApi) GetCommentByArticleId(c *fiber.Ctx) error {
 	}
 }
 
+/**
+ * @api {post} /comment 创建评论
+ * @apiName CreatedComment
+ * @apiGroup commentServiceApp
+ * @apiParam {Number} articleId 文章
+ * @apiParam {String} content 评论内容
+ */
 func (s *CommentApi) CreatedComment(c *fiber.Ctx) error {
 	var comment frontend.Comment
 	if err := c.BodyParser(&comment); err != nil {

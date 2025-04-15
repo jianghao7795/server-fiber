@@ -11,7 +11,7 @@ type BaseMessageService struct{}
 /**
  * @description: 创建baseMessage
  * @param {app.BaseMessage} baseMessage
- * @return {*}
+ * @return {error}
  */
 func (*BaseMessageService) CreateBaseMessage(baseMessage *app.BaseMessage) (err error) {
 	err = global.DB.Create(baseMessage).Error
@@ -20,7 +20,7 @@ func (*BaseMessageService) CreateBaseMessage(baseMessage *app.BaseMessage) (err 
 
 /**
  * @description: 更新baseMessage
- * @param {app.BaseMessage} baseMessage
+ * @param {int, app.BaseMessage} id, baseMessage
  * @return {error}
  */
 func (*BaseMessageService) UpdateBaseMessage(id int, baseMessage *app.BaseMessage) (err error) {
@@ -34,7 +34,8 @@ func (*BaseMessageService) UpdateBaseMessage(id int, baseMessage *app.BaseMessag
 
 /**
  * @description: 获取baseMessage
- * @return {*}
+ * @param {uint} id
+ * @return {app.BaseMessage, error}
  */
 func (*BaseMessageService) FindBaseMessage(id uint) (app.BaseMessage, error) {
 	var base app.BaseMessage
