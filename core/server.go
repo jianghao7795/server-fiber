@@ -64,7 +64,11 @@ func RunServerElectron(app *fiber.App) {
 	address := fmt.Sprintf(":%d", global.CONFIG.System.Addr)
 	global.LOG.Info("server run success on ", zap.String("address", address))
 	log.Println(`Welcome to Fiber API`)
-	global.LOG.Error(router.Listen(address).Error())
+	err := router.Listen(address)
+	if err != nil {
+		global.LOG.Error("Server run failed: " + err.Error())
+		os.Exit(1)
+	}
 
 	if global.DB != nil {
 		system.LoadAll() // 加载所有的 拉黑的jwt数据 避免盗用jwt
