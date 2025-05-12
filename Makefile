@@ -21,6 +21,9 @@ tool:
 clean:
 	go clean -i .
 
+air:
+	air -c .air.toml
+
 help:
 	@echo "make: compile packages and dependencies"
 	@echo "make tool: run specified go tool"
