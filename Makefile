@@ -3,7 +3,7 @@
 all: build
 
 build:
-	go build -v cmd/main.go
+	 GOEXPERIMENT=jsonv2 CGO_ENABLED=0 GOOS=linux go build -tags=jsoniter -trimpath -o fiber -ldflags="-s -w" cmd/main.go
 
 start:
 	air

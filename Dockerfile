@@ -1,4 +1,4 @@
-FROM golang:latest AS builder
+FROM golang:1.25.0 AS builder
 
 LABEL org.opencontainers.image.authors="jianghao"
 
@@ -8,7 +8,7 @@ ENV GO111MODULE=on
 
 WORKDIR /app
 COPY . /app
-RUN CGO_ENABLED=0 GOOS=linux go build -tags=jsoniter -trimpath -o fiber -ldflags="-s -w" cmd/main.go #CGO_ENABLED=0 go build -trimpath -ldflags="-s -w" -o fiber cmd/main.go
+RUN GOEXPERIMENT=jsonv2 CGO_ENABLED=0 GOOS=linux go build -tags=jsoniter -trimpath -o fiber -ldflags="-s -w" cmd/main.go #CGO_ENABLED=0 go build -trimpath -ldflags="-s -w" -o fiber cmd/main.go
 
 FROM rockylinux:9-minimal AS runner
 WORKDIR /app
@@ -32,7 +32,7 @@ CMD ["/app/fiber", "-c", "./conf/"]
 # 指定目标操作系统为 Linux，支持跨平台编译。
 #
 # -tags=jsoniter
-# 启用 jsoniter 标签，使用 jsoniter 库替代 Go 标准库的 encoding/json，适用于需要高性能 JSON 解析的场景。
+# 启用 jsoniter 标签，使用 jsoniter 库替代 Go 标准库的 encoding/json/v2，适用于需要高性能 JSON 解析的场景。
 #
 # -a
 # 强制重新编译所有依赖包（即使已是最新），避免因缓存导致的潜在问题，但会增加编译时间。
