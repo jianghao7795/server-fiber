@@ -1,0 +1,715 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Server-Fiber API",
+    "description": "基于 Fiber 框架的后端服务 API 文档",
+    "version": "1.0.0",
+    "contact": {
+      "name": "API Support",
+      "email": "support@example.com"
+    }
+  },
+  "host": "localhost:8888",
+  "basePath": "/",
+  "schemes": ["http", "https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "securityDefinitions": {
+    "ApiKeyAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Bearer {token}"
+    }
+  },
+  "tags": [
+    {
+      "name": "Base",
+      "description": "基础功能接口"
+    },
+    {
+      "name": "User",
+      "description": "用户管理接口"
+    },
+    {
+      "name": "Article",
+      "description": "文章管理接口"
+    },
+    {
+      "name": "Casbin",
+      "description": "权限管理接口"
+    },
+    {
+      "name": "Authority",
+      "description": "角色权限接口"
+    },
+    {
+      "name": "Menu",
+      "description": "菜单管理接口"
+    },
+    {
+      "name": "System",
+      "description": "系统管理接口"
+    }
+  ],
+  "paths": {
+    "/base/login": {
+      "post": {
+        "tags": ["Base"],
+        "summary": "用户登录",
+        "description": "用户登录获取 token",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "登录成功",
+            "schema": {
+              "$ref": "#/definitions/LoginResponse"
+            }
+          },
+          "400": {
+            "description": "参数错误"
+          },
+          "401": {
+            "description": "登录失败"
+          }
+        }
+      }
+    },
+    "/base/getToken/login": {
+      "post": {
+        "tags": ["Base"],
+        "summary": "用户登录获取token",
+        "description": "用户登录获取 token",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginTokenRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "登录成功",
+            "schema": {
+              "$ref": "#/definitions/LoginResponse"
+            }
+          },
+          "400": {
+            "description": "参数错误"
+          },
+          "401": {
+            "description": "登录失败"
+          }
+        }
+      }
+    },
+    "/backend/user/admin_register": {
+      "post": {
+        "tags": ["User"],
+        "summary": "管理员注册账号",
+        "description": "管理员注册新用户账号",
+        "security": [{"ApiKeyAuth": []}],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RegisterRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "注册成功",
+            "schema": {
+              "$ref": "#/definitions/Response"
+            }
+          }
+        }
+      }
+    },
+    "/backend/user/changePassword": {
+      "post": {
+        "tags": ["User"],
+        "summary": "用户修改密码",
+        "description": "用户修改登录密码",
+        "security": [{"ApiKeyAuth": []}],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ChangePasswordRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "修改成功",
+            "schema": {
+              "$ref": "#/definitions/Response"
+            }
+          }
+        }
+      }
+    },
+    "/backend/user/getUserList": {
+      "get": {
+        "tags": ["User"],
+        "summary": "分页获取用户列表",
+        "description": "分页获取用户列表信息",
+        "security": [{"ApiKeyAuth": []}],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "default": 1,
+            "description": "页码"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "type": "integer",
+            "default": 10,
+            "description": "每页数量"
+          },
+          {
+            "name": "username",
+            "in": "query",
+            "type": "string",
+            "description": "用户名搜索"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "获取成功",
+            "schema": {
+              "$ref": "#/definitions/UserListResponse"
+            }
+          }
+        }
+      }
+    },
+    "/backend/user/getUserInfo": {
+      "get": {
+        "tags": ["User"],
+        "summary": "获取自身信息",
+        "description": "获取当前登录用户信息",
+        "security": [{"ApiKeyAuth": []}],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "获取成功",
+            "schema": {
+              "$ref": "#/definitions/UserInfoResponse"
+            }
+          }
+        }
+      }
+    },
+    "/backend/article/createArticle": {
+      "post": {
+        "tags": ["Article"],
+        "summary": "创建文章",
+        "description": "创建新的文章",
+        "security": [{"ApiKeyAuth": []}],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ArticleRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "创建成功",
+            "schema": {
+              "$ref": "#/definitions/Response"
+            }
+          }
+        }
+      }
+    },
+    "/backend/article/findArticle/{id}": {
+      "get": {
+        "tags": ["Article"],
+        "summary": "根据ID获取文章",
+        "description": "根据文章ID获取文章详情",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "文章ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "获取成功",
+            "schema": {
+              "$ref": "#/definitions/ArticleResponse"
+            }
+          }
+        }
+      }
+    },
+    "/backend/article/getArticleList": {
+      "get": {
+        "tags": ["Article"],
+        "summary": "获取文章列表",
+        "description": "分页获取文章列表",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "default": 1,
+            "description": "页码"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "type": "integer",
+            "default": 10,
+            "description": "每页数量"
+          },
+          {
+            "name": "title",
+            "in": "query",
+            "type": "string",
+            "description": "文章标题搜索"
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "type": "integer",
+            "description": "文章状态"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "获取成功",
+            "schema": {
+              "$ref": "#/definitions/ArticleListResponse"
+            }
+          }
+        }
+      }
+    },
+    "/backend/casbin/UpdateCasbin": {
+      "post": {
+        "tags": ["Casbin"],
+        "summary": "更新角色API权限",
+        "description": "更新角色的API权限配置",
+        "security": [{"ApiKeyAuth": []}],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CasbinUpdateRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "更新成功",
+            "schema": {
+              "$ref": "#/definitions/Response"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Response": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "description": "响应状态码"
+        },
+        "msg": {
+          "type": "string",
+          "description": "响应消息"
+        },
+        "data": {
+          "type": "object",
+          "description": "响应数据"
+        }
+      }
+    },
+    "LoginRequest": {
+      "type": "object",
+      "required": ["username", "password", "captcha", "captchaId"],
+      "properties": {
+        "username": {
+          "type": "string",
+          "description": "用户名"
+        },
+        "password": {
+          "type": "string",
+          "description": "密码"
+        },
+        "captcha": {
+          "type": "string",
+          "description": "验证码"
+        },
+        "captchaId": {
+          "type": "string",
+          "description": "验证码ID"
+        }
+      }
+    },
+    "LoginTokenRequest": {
+      "type": "object",
+      "required": ["username", "password"],
+      "properties": {
+        "username": {
+          "type": "string",
+          "description": "用户名"
+        },
+        "password": {
+          "type": "string",
+          "description": "密码"
+        }
+      }
+    },
+    "LoginResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer"
+        },
+        "msg": {
+          "type": "string"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "user": {
+              "$ref": "#/definitions/SysUser"
+            },
+            "token": {
+              "type": "string"
+            },
+            "expiresAt": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "RegisterRequest": {
+      "type": "object",
+      "required": ["userName", "passWord"],
+      "properties": {
+        "userName": {
+          "type": "string",
+          "description": "用户名"
+        },
+        "passWord": {
+          "type": "string",
+          "description": "密码"
+        },
+        "nickName": {
+          "type": "string",
+          "description": "昵称"
+        },
+        "headerImg": {
+          "type": "string",
+          "description": "头像"
+        },
+        "authorityId": {
+          "type": "string",
+          "description": "权限ID"
+        },
+        "phone": {
+          "type": "string",
+          "description": "手机号"
+        },
+        "email": {
+          "type": "string",
+          "description": "邮箱"
+        }
+      }
+    },
+    "ChangePasswordRequest": {
+      "type": "object",
+      "required": ["username", "password", "newPassword"],
+      "properties": {
+        "username": {
+          "type": "string",
+          "description": "用户名"
+        },
+        "password": {
+          "type": "string",
+          "description": "原密码"
+        },
+        "newPassword": {
+          "type": "string",
+          "description": "新密码"
+        }
+      }
+    },
+    "SysUser": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "用户ID"
+        },
+        "uuid": {
+          "type": "string",
+          "description": "用户UUID"
+        },
+        "username": {
+          "type": "string",
+          "description": "用户名"
+        },
+        "nickName": {
+          "type": "string",
+          "description": "昵称"
+        },
+        "headerImg": {
+          "type": "string",
+          "description": "头像"
+        },
+        "authorityId": {
+          "type": "string",
+          "description": "权限ID"
+        },
+        "phone": {
+          "type": "string",
+          "description": "手机号"
+        },
+        "email": {
+          "type": "string",
+          "description": "邮箱"
+        }
+      }
+    },
+    "UserListResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer"
+        },
+        "msg": {
+          "type": "string"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "list": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SysUser"
+              }
+            },
+            "total": {
+              "type": "integer"
+            },
+            "page": {
+              "type": "integer"
+            },
+            "pageSize": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "UserInfoResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer"
+        },
+        "msg": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/SysUser"
+        }
+      }
+    },
+    "ArticleRequest": {
+      "type": "object",
+      "required": ["title", "content"],
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "文章标题"
+        },
+        "desc": {
+          "type": "string",
+          "description": "文章简述"
+        },
+        "content": {
+          "type": "string",
+          "description": "文章内容"
+        },
+        "state": {
+          "type": "integer",
+          "description": "文章状态"
+        },
+        "isImportant": {
+          "type": "integer",
+          "description": "是否首页显示"
+        }
+      }
+    },
+    "ArticleResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer"
+        },
+        "msg": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/Article"
+        }
+      }
+    },
+    "ArticleListResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer"
+        },
+        "msg": {
+          "type": "string"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "list": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Article"
+              }
+            },
+            "total": {
+              "type": "integer"
+            },
+            "page": {
+              "type": "integer"
+            },
+            "pageSize": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "Article": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "文章ID"
+        },
+        "title": {
+          "type": "string",
+          "description": "文章标题"
+        },
+        "desc": {
+          "type": "string",
+          "description": "文章简述"
+        },
+        "content": {
+          "type": "string",
+          "description": "文章内容"
+        },
+        "state": {
+          "type": "integer",
+          "description": "文章状态"
+        },
+        "userId": {
+          "type": "integer",
+          "description": "作者ID"
+        },
+        "isImportant": {
+          "type": "integer",
+          "description": "是否首页显示"
+        },
+        "readingQuantity": {
+          "type": "integer",
+          "description": "阅读量"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "CasbinUpdateRequest": {
+      "type": "object",
+      "properties": {
+        "authorityId": {
+          "type": "string",
+          "description": "权限ID"
+        },
+        "casbinInfos": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "description": "API路径"
+              },
+              "method": {
+                "type": "string",
+                "description": "HTTP方法"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

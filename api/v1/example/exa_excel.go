@@ -19,15 +19,19 @@ import (
 // /excel/exportExcel 接口，用于读取前端传来的tableData，生成Excel文件并返回
 // /excel/downloadTemplate 接口，用于下载resource/excel目录下的 ExcelTemplate.xlsx 文件，作为导入的模板
 
+// ExportExcel 导出Excel
 // @Tags excel
 // @Summary 导出Excel
+// @Description 根据提供的数据导出Excel文件
 // @Security ApiKeyAuth
-// @accept application/json
-// @Produce  application/octet-stream
+// @Accept application/json
+// @Produce application/octet-stream
 // @Param data body example.ExcelInfo true "导出Excel文件信息"
-// @Success 200
+// @Success 200 {file} file "Excel文件"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response "服务器错误"
 // @Router /excel/exportExcel [post]
-
 func (e *ExcelApi) ExportExcel(c *fiber.Ctx) (err error) {
 	excelInfo := example.ExcelInfo{
 		FileName: "",
@@ -60,13 +64,18 @@ func (e *ExcelApi) ExportExcel(c *fiber.Ctx) (err error) {
 	return c.SendFile(filePath)
 }
 
+// ImportExcel 导入Excel文件
 // @Tags excel
 // @Summary 导入Excel文件
+// @Description 上传并导入Excel文件到系统
 // @Security ApiKeyAuth
-// @accept multipart/form-data
-// @Produce  application/json
+// @Accept multipart/form-data
+// @Produce application/json
 // @Param file formData file true "导入Excel文件"
-// @Success 200 {object} response.Response{msg=string} "导入Excel文件"
+// @Success 200 {object} response.Response{msg=string} "导入Excel文件成功"
+// @Failure 400 {object} response.Response "文件格式错误"
+// @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response "服务器错误"
 // @Router /excel/importExcel [post]
 func (e *ExcelApi) ImportExcel(c *fiber.Ctx) error {
 	file, err := c.FormFile("file")

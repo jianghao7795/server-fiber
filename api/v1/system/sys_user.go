@@ -17,12 +17,16 @@ import (
 	"gorm.io/gorm"
 )
 
-// Login
+// Login 用户登录
 // @Tags Base
 // @Summary 用户登录
-// @Produce  application/json
-// @Param data body systemReq.Login true "用户名, 密码, 验证码"
-// @Success 200 {object} response.Response{msg=string} "返回包括用户信息,token,过期时间"
+// @Description 用户登录获取 token 和用户信息
+// @Accept application/json
+// @Produce application/json
+// @Param data body systemReq.Login true "登录信息"
+// @Success 200 {object} response.Response{msg=string,data=systemRes.LoginResponse} "登录成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "登录失败"
 // @Router /base/login [post]
 func (b *BaseApi) Login(c *fiber.Ctx) error {
 	var l systemReq.Login
@@ -49,12 +53,16 @@ func (b *BaseApi) Login(c *fiber.Ctx) error {
 	}
 }
 
-// LoginToken
+// LoginToken 用户登录获取token
 // @Tags Base
-// @Summary 用户登录 获取token
-// @Produce  application/json
-// @Param data body systemReq.Login true "用户名, 密码"
-// @Success 200 {object} response.Response{msg=string} "返回包括用户信息,token,过期时间"
+// @Summary 用户登录获取token
+// @Description 用户登录获取 token，无需验证码
+// @Accept application/json
+// @Produce application/json
+// @Param data body systemReq.LoginToken true "登录信息"
+// @Success 200 {object} response.Response{msg=string,data=systemRes.LoginResponse} "登录成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "登录失败"
 // @Router /base/getToken/login [post]
 func (b *BaseApi) LoginToken(c *fiber.Ctx) error {
 	var l systemReq.LoginToken
@@ -204,14 +212,17 @@ func (b *BaseApi) GetUserList(c *fiber.Ctx) error {
 	}
 }
 
-// SetUserAuthority
+// SetUserAuthority 更改用户权限
 // @Tags SysUser
 // @Summary 更改用户权限
+// @Description 更改指定用户的角色权限
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param data body systemReq.SetUserAuth true "用户UUID, 角色ID"
-// @Success 200 {object} response.Response{msg=string} "设置用户权限"
+// @Param data body systemReq.SetUserAuth true "用户权限信息"
+// @Success 200 {object} response.Response{msg=string} "设置用户权限成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
 // @Router /user/setUserAuthority [post]
 func (b *BaseApi) SetUserAuthority(c *fiber.Ctx) error {
 	var sua systemReq.SetUserAuth
@@ -240,14 +251,17 @@ func (b *BaseApi) SetUserAuthority(c *fiber.Ctx) error {
 	}
 }
 
-// SetUserAuthorities
+// SetUserAuthorities 设置用户权限
 // @Tags SysUser
 // @Summary 设置用户权限
+// @Description 设置指定用户的多个角色权限
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param data body systemReq.SetUserAuthorities true "用户UUID, 角色ID"
-// @Success 200 {object} response.Response{msg=string} "设置用户权限"
+// @Param data body systemReq.SetUserAuthorities true "用户权限信息"
+// @Success 200 {object} response.Response{msg=string} "设置用户权限成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
 // @Router /user/setUserAuthorities [post]
 func (b *BaseApi) SetUserAuthorities(c *fiber.Ctx) error {
 	var sua systemReq.SetUserAuthorities
@@ -260,15 +274,19 @@ func (b *BaseApi) SetUserAuthorities(c *fiber.Ctx) error {
 	}
 }
 
-// DeleteUser
+// DeleteUser 删除用户
 // @Tags SysUser
 // @Summary 删除用户
+// @Description 根据用户ID删除指定用户
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param data body request.GetById true "用户ID"
-// @Success 200 {object} response.Response{msg=string} "删除用户"
-// @Router /user/deleteUser/:id [delete]
+// @Param id path integer true "用户ID" minimum(1)
+// @Success 200 {object} response.Response{msg=string} "删除用户成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
+// @Failure 403 {object} response.Response "不能删除自己"
+// @Router /user/deleteUser/{id} [delete]
 func (b *BaseApi) DeleteUser(c *fiber.Ctx) error {
 	id, _ := c.ParamsInt("id")
 	jwtId, _ := utils.GetUserID(c)
@@ -283,14 +301,17 @@ func (b *BaseApi) DeleteUser(c *fiber.Ctx) error {
 	}
 }
 
-// SetUserInfo
+// SetUserInfo 设置用户信息
 // @Tags SysUser
 // @Summary 设置用户信息
+// @Description 设置指定用户的基本信息
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param data body system.SysUser true "ID, 用户名, 昵称, 头像链接"
-// @Success 200 {object} response.Response{msg=string} "设置用户信息"
+// @Param data body system.SysUser true "用户信息"
+// @Success 200 {object} response.Response{msg=string} "设置用户信息成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
 // @Router /user/setUserInfo [put]
 func (b *BaseApi) SetUserInfo(c *fiber.Ctx) error {
 	var user systemReq.ChangeUserInfo

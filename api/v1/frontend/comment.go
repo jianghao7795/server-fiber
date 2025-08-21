@@ -11,12 +11,15 @@ import (
 
 type CommentApi struct{}
 
-/**
- * @api {get} /comment/:articleId 获取文章评论
- * @apiName GetCommentByArticleId
- * @apiGroup commentServiceApp
- * @apiParam {Number} articleId 文章ID
- */
+// GetCommentByArticleId 获取文章评论
+// @Tags Frontend Comment
+// @Summary 获取文章评论
+// @Description 根据文章ID获取相关评论列表
+// @Produce application/json
+// @Param articleId path integer true "文章ID" minimum(1)
+// @Success 200 {object} response.Response{msg=string,data=[]frontend.Comment,code=integer} "获取成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Router /frontend/comment/{articleId} [get]
 func (s *CommentApi) GetCommentByArticleId(c *fiber.Ctx) error {
 	id, err := c.ParamsInt("articleId")
 	if err != nil {
@@ -31,13 +34,16 @@ func (s *CommentApi) GetCommentByArticleId(c *fiber.Ctx) error {
 	}
 }
 
-/**
- * @api {post} /comment 创建评论
- * @apiName CreatedComment
- * @apiGroup commentServiceApp
- * @apiParam {Number} articleId 文章
- * @apiParam {String} content 评论内容
- */
+// CreatedComment 创建评论
+// @Tags Frontend Comment
+// @Summary 创建评论
+// @Description 为指定文章创建新评论
+// @Accept application/json
+// @Produce application/json
+// @Param data body frontend.Comment true "评论信息"
+// @Success 200 {object} response.Response{msg=string,data=integer,code=integer} "评论成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Router /frontend/comment [post]
 func (s *CommentApi) CreatedComment(c *fiber.Ctx) error {
 	var comment frontend.Comment
 	if err := c.BodyParser(&comment); err != nil {

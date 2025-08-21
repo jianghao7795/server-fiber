@@ -13,15 +13,19 @@ import (
 
 type ArticleApi struct{}
 
-// GetArticleList 分页获取article列表
-// FindArticle Get Article
+// GetArticleList 分页获取文章列表
 // @Tags Frontend Article
-// @Summary Get Article
-// @Security ApiKeyAuth
-// @accept application/json
+// @Summary 分页获取文章列表
+// @Description 分页获取前台文章列表，支持搜索和筛选
 // @Produce application/json
-// @Param query query request.ArticleSearch true "Get Article"
-// @Success 200 {string} string "{"success":true, "msg":"获得成功"}"
+// @Param page query integer false "页码" default(1) minimum(1)
+// @Param pageSize query integer false "每页数量" default(10) minimum(1) maximum(100)
+// @Param title query string false "文章标题搜索"
+// @Param state query integer false "文章状态"
+// @Param is_important query integer false "是否首页显示"
+// @Success 200 {object} response.Response{msg=string,data=response.PageResult{list=[]app.Article,total=integer,page=integer,pageSize=integer},code=integer} "获取成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 500 {object} response.Response "服务器错误"
 // @Router /getArticleList [get]
 func (s *ArticleApi) GetArticleList(c *fiber.Ctx) error {
 	var pageInfo request.ArticleSearch
@@ -48,15 +52,16 @@ func (s *ArticleApi) GetArticleList(c *fiber.Ctx) error {
 	}
 }
 
-// GetArticleDetail get单个Article
+// GetArticleDetail 获取文章详情
 // @Tags Frontend Article
-// @Summary get单个Article
-// @Security ApiKeyAuth
-// @accept application/json
+// @Summary 获取文章详情
+// @Description 根据文章ID获取文章详细信息
 // @Produce application/json
-// @Param id path number true "get单个Article"
-// @Success 200 {string} string "{"success":true, "msg":"获得成功"}"
-// @Router /getArticle/:id [get]
+// @Param id path integer true "文章ID" minimum(1)
+// @Success 200 {object} response.Response{msg=string,data=app.Article,code=integer} "获取成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 404 {object} response.Response "文章不存在"
+// @Router /getArticle/{id} [get]
 func (s *ArticleApi) GetArticleDetail(c *fiber.Ctx) error {
 	id, err := c.ParamsInt("id")
 	if err != nil {
@@ -77,15 +82,17 @@ func (s *ArticleApi) GetArticleDetail(c *fiber.Ctx) error {
 	}
 }
 
-// GetSearchArticle get单个Article
+// GetSearchArticle 搜索文章
 // @Tags Frontend Article
-// @Summary get单个Article
-// @Security ApiKeyAuth
-// @accept application/json
+// @Summary 搜索文章
+// @Description 根据标签或文章名称搜索相关内容
 // @Produce application/json
-// @Param query query request.ArticleSearch true "Search Article"
-// @Success 200 {object} response.Response{string} "获得成功"
-// @Router /getSearchArticle/:name/:value [get]
+// @Param name path string true "搜索类型" Enums(tags, articles)
+// @Param value path string true "搜索值"
+// @Param sort query string false "排序方式"
+// @Success 200 {object} response.Response{msg=string,data=[]app.Article,code=integer} "搜索成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Router /getSearchArticle/{name}/{value} [get]
 func (s *ArticleApi) GetSearchArticle(c *fiber.Ctx) error {
 	var searchValue request.ArticleSearch
 	err := c.ParamsParser(&searchValue)

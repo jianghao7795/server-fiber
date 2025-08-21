@@ -39,6 +39,17 @@ type User struct{}
 // 	}
 // }
 
+// Login 前台用户登录
+// @Tags Frontend User
+// @Summary 前台用户登录
+// @Description 前台用户登录获取 token
+// @Accept application/json
+// @Produce application/json
+// @Param data body systemReq.Login true "登录信息"
+// @Success 200 {object} response.Response{msg=string,data=systemRes.LoginResponse} "登录成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "登录失败"
+// @Router /frontend/login [post]
 func (b *User) Login(c *fiber.Ctx) error {
 	var l systemReq.Login
 	if err := c.BodyParser(&l); err != nil {

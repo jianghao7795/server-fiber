@@ -15,12 +15,14 @@ import (
 
 type AuthorityMenuApi struct{}
 
+// GetMenu 获取用户动态路由
 // @Tags AuthorityMenu
 // @Summary 获取用户动态路由
+// @Description 根据用户权限获取可访问的菜单树
 // @Security ApiKeyAuth
-// @Produce  application/json
-// @Param data body request.Empty true "空"
-// @Success 200 {object} response.Response{data=systemRes.SysMenusResponse,msg=string} "获取用户动态路由,返回包括系统菜单详情列表"
+// @Produce application/json
+// @Success 200 {object} response.Response{data=[]system.SysMenu,msg=string} "获取用户动态路由成功"
+// @Failure 401 {object} response.Response "未授权"
 // @Router /menu/getMenu [get]
 func (a *AuthorityMenuApi) GetMenu(c *fiber.Ctx) error {
 	authorityId, err := utils.GetUserAuthorityId(c)
@@ -39,12 +41,14 @@ func (a *AuthorityMenuApi) GetMenu(c *fiber.Ctx) error {
 	}
 }
 
+// GetBaseMenuTree 获取基础菜单树
 // @Tags AuthorityMenu
-// @Summary 获取用户动态路由
+// @Summary 获取基础菜单树
+// @Description 获取系统所有基础菜单的树形结构
 // @Security ApiKeyAuth
-// @Produce  application/json
-// @Param data body request.Empty true "空"
-// @Success 200 {object} response.Response{data=systemRes.SysBaseMenusResponse,msg=string} "获取用户动态路由,返回包括系统菜单列表"
+// @Produce application/json
+// @Success 200 {object} response.Response{data=[]system.SysBaseMenu,msg=string} "获取基础菜单树成功"
+// @Failure 401 {object} response.Response "未授权"
 // @Router /menu/getBaseMenuTree [get]
 func (a *AuthorityMenuApi) GetBaseMenuTree(c *fiber.Ctx) error {
 	if menus, err := menuService.GetBaseMenuTree(); err != nil {
@@ -55,13 +59,17 @@ func (a *AuthorityMenuApi) GetBaseMenuTree(c *fiber.Ctx) error {
 	}
 }
 
+// AddMenuAuthority 增加菜单和角色关联关系
 // @Tags AuthorityMenu
-// @Summary 增加menu和角色关联关系
+// @Summary 增加菜单和角色关联关系
+// @Description 为指定角色添加菜单权限
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param data body systemReq.AddMenuAuthorityInfo true "角色ID"
-// @Success 200 {object} response.Response{msg=string} "增加menu和角色关联关系"
+// @Param data body systemReq.AddMenuAuthorityInfo true "菜单权限信息"
+// @Success 200 {object} response.Response{msg=string} "增加菜单和角色关联关系成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
 // @Router /menu/addMenuAuthority [post]
 func (a *AuthorityMenuApi) AddMenuAuthority(c *fiber.Ctx) error {
 	var authorityMenu systemReq.AddMenuAuthorityInfo
@@ -77,13 +85,17 @@ func (a *AuthorityMenuApi) AddMenuAuthority(c *fiber.Ctx) error {
 	}
 }
 
+// GetMenuAuthority 获取指定角色菜单
 // @Tags AuthorityMenu
-// @Summary 获取指定角色menu
+// @Summary 获取指定角色菜单
+// @Description 获取指定角色可访问的菜单列表
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param data body request.GetAuthorityId true "角色ID"
-// @Success 200 {object} response.Response{data=map[string]any,msg=string} "获取指定角色menu"
+// @Param authorityId query string true "角色ID"
+// @Success 200 {object} response.Response{data=[]system.SysMenu,msg=string} "获取指定角色菜单成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
 // @Router /menu/getMenuAuthority [get]
 func (a *AuthorityMenuApi) GetMenuAuthority(c *fiber.Ctx) error {
 	var param request.GetAuthorityId

@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "server-fiber/docs" // 引入生成的文档
 	"server-fiber/core"
 )
 

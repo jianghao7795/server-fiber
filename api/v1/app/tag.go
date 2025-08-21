@@ -11,14 +11,17 @@ import (
 	"go.uber.org/zap"
 )
 
-// CreateTag 创建Tag
+// CreateTag 创建标签
 // @Tags Tag
-// @Summary 创建Tag
+// @Summary 创建标签
+// @Description 创建新的标签
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param data body app.Tag true "创建Tag"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
+// @Param data body app.Tag true "标签信息"
+// @Success 200 {object} response.Response{msg=string,data=integer} "创建标签成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
 // @Router /tag/createTag [post]
 func (TagApi *TagApi) CreateTag(c *fiber.Ctx) error {
 	var appTab app.Tag
@@ -35,15 +38,18 @@ func (TagApi *TagApi) CreateTag(c *fiber.Ctx) error {
 	}
 }
 
-// DeleteTag 删除Tag
+// DeleteTag 删除标签
 // @Tags Tag
-// @Summary 删除Tag
+// @Summary 删除标签
+// @Description 根据标签ID删除指定标签
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param data body app.Tag true "删除Tag"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
-// @Router /tag/deleteTag [delete]
+// @Param id path integer true "标签ID" minimum(1)
+// @Success 200 {object} response.Response{msg=string} "删除标签成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
+// @Router /tag/deleteTag/{id} [delete]
 func (TagApi *TagApi) DeleteTag(c *fiber.Ctx) error {
 	id, _ := c.ParamsInt("id")
 	if err := appTabService.DeleteTag(uint(id)); err != nil {
@@ -54,14 +60,17 @@ func (TagApi *TagApi) DeleteTag(c *fiber.Ctx) error {
 	}
 }
 
-// DeleteTagByIds 批量删除Tag
+// DeleteTagByIds 批量删除标签
 // @Tags Tag
-// @Summary 批量删除Tag
+// @Summary 批量删除标签
+// @Description 根据ID列表批量删除标签
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param data body request.IdsReq true "批量删除Tag"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"批量删除成功"}"
+// @Param data body request.IdsReq true "标签ID列表"
+// @Success 200 {object} response.Response{msg=string} "批量删除标签成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
 // @Router /tag/deleteTagByIds [delete]
 func (TagApi *TagApi) DeleteTagByIds(c *fiber.Ctx) error {
 	var IDS request.IdsReq
@@ -74,14 +83,17 @@ func (TagApi *TagApi) DeleteTagByIds(c *fiber.Ctx) error {
 	}
 }
 
-// UpdateTag 更新Tag
+// UpdateTag 更新标签
 // @Tags Tag
-// @Summary 更新Tag
+// @Summary 更新标签
+// @Description 更新标签信息
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param data body app.Tag true "更新Tag"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"更新成功"}"
+// @Param data body app.Tag true "标签信息"
+// @Success 200 {object} response.Response{msg=string} "更新标签成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
 // @Router /tag/updateTag [put]
 func (TagApi *TagApi) UpdateTag(c *fiber.Ctx) error {
 	var appTab app.Tag
@@ -105,8 +117,8 @@ func (TagApi *TagApi) UpdateTag(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data query app.Tag true "用id查询Tag"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"查询成功"}"
-// @Router /tag/findTag [get]
+// @Success 200 {string} string "{"success":true,"data":app.Tag,"msg":"查询成功"}"
+// @Router /tag/:id [get]
 func (TagApi *TagApi) FindTag(c *fiber.Ctx) error {
 	id, _ := c.ParamsInt("id")
 	if tag, err := appTabService.GetTag(uint(id)); err != nil {
@@ -124,7 +136,7 @@ func (TagApi *TagApi) FindTag(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data query appReq.TagSearch true "分页获取Tag列表"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
+// @Success 200 {string} string "{"success":true,"data":[]app.Tag,total=integer,"msg":"获取成功"}"
 // @Router /tag/getTagList [get]
 func (TagApi *TagApi) GetTagList(c *fiber.Ctx) error {
 	var pageInfo appReq.TagSearch

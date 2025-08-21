@@ -19,13 +19,20 @@ import (
 	"go.uber.org/zap"
 )
 
+// UploadFile 上传文件示例
 // @Tags ExaFileUploadAndDownload
 // @Summary 上传文件示例
+// @Description 上传文件到服务器，支持图片裁剪
 // @Security ApiKeyAuth
-// @accept multipart/form-data
-// @Produce  application/json
-// @Param file formData file true "上传文件示例"
-// @Success 200 {object} response.Response{data=exampleRes.ExaFileResponse,msg=string} "上传文件示例,返回包括文件详情"
+// @Accept multipart/form-data
+// @Produce application/json
+// @Param file formData file true "上传文件"
+// @Param noSave query string false "是否保存到数据库" default("0")
+// @Param is_cropper query integer false "是否裁剪图片" default(1)
+// @Success 200 {object} response.Response{data=exampleRes.ExaFileResponse,msg=string} "上传文件成功"
+// @Failure 400 {object} response.Response "文件过大或格式错误"
+// @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response "服务器错误"
 // @Router /fileUploadAndDownload/upload [post]
 func (u *FileUploadAndDownloadApi) UploadFile(c *fiber.Ctx) error {
 	var file example.ExaFileUploadAndDownload
@@ -80,6 +87,17 @@ func (u *FileUploadAndDownloadApi) UploadFile(c *fiber.Ctx) error {
 }
 
 // EditFileName 编辑文件名或者备注
+// @Tags ExaFileUploadAndDownload
+// @Summary 编辑文件名或者备注
+// @Description 编辑文件的名称或备注信息
+// @Security ApiKeyAuth
+// @Accept application/json
+// @Produce application/json
+// @Param data body example.ExaFileUploadAndDownload true "文件信息"
+// @Success 200 {object} response.Response{msg=string} "编辑成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
+// @Router /fileUploadAndDownload/editFileName [put]
 func (u *FileUploadAndDownloadApi) EditFileName(c *fiber.Ctx) error {
 	var data example.ExaFileUploadAndDownload
 	if err := c.BodyParser(&data); err != nil {
@@ -93,12 +111,17 @@ func (u *FileUploadAndDownloadApi) EditFileName(c *fiber.Ctx) error {
 	return response.OkWithMessage("编辑成功", c)
 }
 
+// DeleteFile 删除文件
 // @Tags ExaFileUploadAndDownload
 // @Summary 删除文件
+// @Description 根据文件ID删除指定文件
 // @Security ApiKeyAuth
-// @Produce  application/json
-// @Param data body example.ExaFileUploadAndDownload true "传入文件里面id即可"
-// @Success 200 {object} response.Response{msg=string} "删除文件"
+// @Accept application/json
+// @Produce application/json
+// @Param data body example.ExaFileUploadAndDownload true "文件信息"
+// @Success 200 {object} response.Response{msg=string} "删除成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
 // @Router /fileUploadAndDownload/deleteFile [delete]
 func (u *FileUploadAndDownloadApi) DeleteFile(c *fiber.Ctx) error {
 	id, err := c.ParamsInt("id")

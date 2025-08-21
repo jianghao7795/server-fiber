@@ -11,6 +11,16 @@ import (
 
 type RegisterMobile struct{}
 
+// Register 移动端用户注册
+// @Tags Mobile Register
+// @Summary 移动端用户注册
+// @Description 移动端用户注册新账号
+// @Accept application/json
+// @Produce application/json
+// @Param data body mobile.Register true "注册信息"
+// @Success 200 {object} response.Response{msg=string} "注册成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Router /mobile/register [post]
 func (*RegisterMobile) Register(c *fiber.Ctx) (err error) {
 	var data mobile.Register
 	err = c.BodyParser(&data)

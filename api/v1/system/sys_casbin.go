@@ -12,13 +12,17 @@ import (
 
 type CasbinApi struct{}
 
+// UpdateCasbin 更新角色API权限
 // @Tags Casbin
-// @Summary 更新角色api权限
+// @Summary 更新角色API权限
+// @Description 更新指定角色的API权限配置
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param data body request.CasbinInReceive true "权限id, 权限模型列表"
-// @Success 200 {object} response.Response{msg=string} "更新角色api权限"
+// @Param data body request.CasbinInReceive true "权限配置信息"
+// @Success 200 {object} response.Response{msg=string} "更新角色API权限成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
 // @Router /casbin/UpdateCasbin [post]
 func (cas *CasbinApi) UpdateCasbin(c *fiber.Ctx) error {
 	var cmr request.CasbinInReceive
@@ -37,14 +41,18 @@ func (cas *CasbinApi) UpdateCasbin(c *fiber.Ctx) error {
 	}
 }
 
+// GetPolicyPathByAuthorityId 获取权限列表
 // @Tags Casbin
 // @Summary 获取权限列表
+// @Description 根据角色ID获取权限策略列表
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param data body request.CasbinInReceive true "权限id, 权限模型列表"
-// @Success 200 {object} response.Response{data=string,msg=string} "获取权限列表,返回包括casbin详情列表"
-// @Router /casbin/getPolicyPathByAuthorityId [get]
+// @Param id path string true "角色ID"
+// @Success 200 {object} response.Response{data=[]string,msg=string} "获取权限列表成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
+// @Router /casbin/getPolicyPathByAuthorityId/{id} [get]
 func (cas *CasbinApi) GetPolicyPathByAuthorityId(c *fiber.Ctx) error {
 	var casbin request.CasbinInReceive
 	_ = c.QueryParser(&casbin)

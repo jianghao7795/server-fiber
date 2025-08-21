@@ -15,13 +15,17 @@ import (
 
 type AuthorityApi struct{}
 
+// CreateAuthority 创建角色
 // @Tags Authority
 // @Summary 创建角色
+// @Description 创建新的系统角色
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param data body system.SysAuthority true "权限id, 权限名, 父角色id"
-// @Success 200 {object} response.Response{data=systemRes.SysAuthorityResponse,msg=string} "创建角色,返回包括系统角色详情"
+// @Param data body system.SysAuthority true "角色信息"
+// @Success 200 {object} response.Response{data=systemRes.SysAuthorityResponse,msg=string} "创建角色成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
 // @Router /authority/createAuthority [post]
 func (a *AuthorityApi) CreateAuthority(c *fiber.Ctx) error {
 	var authority system.SysAuthority
@@ -47,13 +51,17 @@ func (a *AuthorityApi) CreateAuthority(c *fiber.Ctx) error {
 	}
 }
 
+// CopyAuthority 拷贝角色
 // @Tags Authority
 // @Summary 拷贝角色
+// @Description 基于现有角色创建新的角色副本
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param data body systemRes.SysAuthorityCopyResponse true "旧角色id, 新权限id, 新权限名, 新父角色id"
-// @Success 200 {object} response.Response{data=systemRes.SysAuthorityResponse,msg=string} "拷贝角色,返回包括系统角色详情"
+// @Param data body systemRes.SysAuthorityCopyResponse true "角色拷贝信息"
+// @Success 200 {object} response.Response{data=systemRes.SysAuthorityResponse,msg=string} "拷贝角色成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
 // @Router /authority/copyAuthority [post]
 func (a *AuthorityApi) CopyAuthority(c *fiber.Ctx) error {
 	var copyInfo systemRes.SysAuthorityCopyResponse
@@ -76,13 +84,17 @@ func (a *AuthorityApi) CopyAuthority(c *fiber.Ctx) error {
 	}
 }
 
+// DeleteAuthority 删除角色
 // @Tags Authority
 // @Summary 删除角色
+// @Description 删除指定的系统角色
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param data body system.SysAuthority true "删除角色"
-// @Success 200 {object} response.Response{msg=string} "删除角色"
+// @Param authorityId query string true "角色ID"
+// @Success 200 {object} response.Response{msg=string} "删除角色成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
 // @Router /authority/deleteAuthority [delete]
 func (a *AuthorityApi) DeleteAuthority(c *fiber.Ctx) error {
 	var authority system.SysAuthority

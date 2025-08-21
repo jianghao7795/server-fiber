@@ -7,13 +7,18 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-// StartTasking start Tasking
-// @Tags start Tasking
-// @Summary start Tasking
+// StartTasking 启动任务
+// @Tags Tasking
+// @Summary 启动任务
+// @Description 启动指定的定时任务
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"开启成功"}"
+// @Param task query string true "任务名称"
+// @Success 200 {object} response.Response{msg=string} "启动任务成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
+// @Failure 404 {object} response.Response "任务不存在"
 // @Router /tasking/start [get]
 func (*TaskNameApi) StartTasking(c *fiber.Ctx) error {
 	tasking := c.Query("task")
@@ -32,12 +37,18 @@ func (*TaskNameApi) StartTasking(c *fiber.Ctx) error {
 	}
 }
 
-// @Tags start Tasking
-// @Summary start Tasking
+// StopTasking 停止任务
+// @Tags Tasking
+// @Summary 停止任务
+// @Description 停止指定的定时任务
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"关闭成功"}"
+// @Param task query string true "任务名称"
+// @Success 200 {object} response.Response{msg=string} "停止任务成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
+// @Failure 404 {object} response.Response "任务不存在"
 // @Router /tasking/stop [get]
 func (*TaskNameApi) StopTasking(c *fiber.Ctx) error {
 	tasking := c.Query("task")

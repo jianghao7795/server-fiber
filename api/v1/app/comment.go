@@ -11,14 +11,17 @@ import (
 	"go.uber.org/zap"
 )
 
-// CreateComment 创建Comment
+// CreateComment 创建评论
 // @Tags Comment
-// @Summary 创建Comment
+// @Summary 创建评论
+// @Description 创建新的评论
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param data body app.Comment true "创建Comment"
-// @Success 200 {object} response.Response{msg=string,code=number} "创建Comment"
+// @Param data body app.Comment true "评论信息"
+// @Success 200 {object} response.Response{msg=string,code=integer} "创建评论成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
 // @Router /comment/createComment [post]
 func (commentApi *CommentApi) CreateComment(c *fiber.Ctx) error {
 	var commentData app.Comment
@@ -35,15 +38,18 @@ func (commentApi *CommentApi) CreateComment(c *fiber.Ctx) error {
 	}
 }
 
-// DeleteComment 删除Comment
+// DeleteComment 删除评论
 // @Tags Comment
-// @Summary 删除Comment
+// @Summary 删除评论
+// @Description 根据评论ID删除指定评论
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param id path number true "删除Comment"
-// @Success 200 {object} response.Response{msg=string,code=number} "删除Comment"
-// @Router /comment/deleteComment/:id [delete]
+// @Param id path integer true "评论ID" minimum(1)
+// @Success 200 {object} response.Response{msg=string,code=integer} "删除评论成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
+// @Router /comment/deleteComment/{id} [delete]
 func (commentApi *CommentApi) DeleteComment(c *fiber.Ctx) error {
 	id, err := c.ParamsInt("id")
 	if err != nil {
@@ -58,14 +64,17 @@ func (commentApi *CommentApi) DeleteComment(c *fiber.Ctx) error {
 	}
 }
 
-// DeleteCommentByIds 批量删除Comment
+// DeleteCommentByIds 批量删除评论
 // @Tags Comment
-// @Summary 批量删除Comment
+// @Summary 批量删除评论
+// @Description 根据ID列表批量删除评论
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param data body request.IdsReq true "批量删除Comment"
-// @Success 200 {object} response.Response{msg=string,code=number} "批量删除成功"
+// @Param data body request.IdsReq true "评论ID列表"
+// @Success 200 {object} response.Response{msg=string,code=integer} "批量删除评论成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
 // @Router /comment/deleteCommentByIds [delete]
 func (commentApi *CommentApi) DeleteCommentByIds(c *fiber.Ctx) error {
 	var IDS request.IdsReq
@@ -82,16 +91,19 @@ func (commentApi *CommentApi) DeleteCommentByIds(c *fiber.Ctx) error {
 	}
 }
 
-// UpdateComment 更新Comment
+// UpdateComment 更新评论
 // @Tags Comment
-// @Summary 更新Comment
+// @Summary 更新评论
+// @Description 根据评论ID更新评论信息
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param id path number true "获取id"
-// @Param data body app.Comment true "更新Comment"
-// @Success 200 {object} response.Response{msg=string,code=number} "更新成功"
-// @Router /comment/updateComment/:id [put]
+// @Param id path integer true "评论ID" minimum(1)
+// @Param data body app.Comment true "评论信息"
+// @Success 200 {object} response.Response{msg=string,code=integer} "更新评论成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
+// @Router /comment/updateComment/{id} [put]
 func (commentApi *CommentApi) UpdateComment(c *fiber.Ctx) error {
 	var comment2 app.Comment
 	id, err := c.ParamsInt("id")

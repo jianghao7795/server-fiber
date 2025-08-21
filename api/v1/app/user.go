@@ -12,14 +12,17 @@ import (
 	"go.uber.org/zap"
 )
 
-// CreateUser 创建User
+// CreateUser 创建用户
 // @Tags User
-// @Summary 创建User
+// @Summary 创建用户
+// @Description 创建新的应用用户
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param data body app.User true "创建User"
-// @Success 200 {object} response.Response{msg=string,code=number} "获取成功"
+// @Param data body app.User true "用户信息"
+// @Success 200 {object} response.Response{msg=string,data=integer,code=integer} "创建用户成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
 // @Router /user/createUser [post]
 func (userApi *UserApi) CreateUser(c *fiber.Ctx) error {
 	var user app.User
@@ -36,15 +39,18 @@ func (userApi *UserApi) CreateUser(c *fiber.Ctx) error {
 	}
 }
 
-// DeleteUser 删除User
+// DeleteUser 删除用户
 // @Tags User
-// @Summary 删除User
+// @Summary 删除用户
+// @Description 根据用户ID删除指定用户
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param id path number true "删除User"
-// @Success 200 {string} response.Response{msg=string,code=number} "删除User"
-// @Router /frontend-user/deleteUser/:id [delete]
+// @Param id path integer true "用户ID" minimum(1)
+// @Success 200 {object} response.Response{msg=string,code=integer} "删除用户成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
+// @Router /frontend-user/deleteUser/{id} [delete]
 func (userApi *UserApi) DeleteUser(c *fiber.Ctx) error {
 	id, err := c.ParamsInt("id")
 	if err != nil {
@@ -59,14 +65,17 @@ func (userApi *UserApi) DeleteUser(c *fiber.Ctx) error {
 	}
 }
 
-// DeleteUserByIds 批量删除User
+// DeleteUserByIds 批量删除用户
 // @Tags User
-// @Summary 批量删除User
+// @Summary 批量删除用户
+// @Description 根据ID列表批量删除用户
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param data body request.IdsReq true "批量删除User"
-// @Success 200 {object} response.Response{msg=string,code=number} "批量删除成功"
+// @Param data body request.IdsReq true "用户ID列表"
+// @Success 200 {object} response.Response{msg=string,code=integer} "批量删除用户成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
 // @Router /user/deleteUserByIds [delete]
 func (userApi *UserApi) DeleteUserByIds(c *fiber.Ctx) error {
 	var IDS request.IdsReq
@@ -83,16 +92,19 @@ func (userApi *UserApi) DeleteUserByIds(c *fiber.Ctx) error {
 	}
 }
 
-// UpdateUser 更新User
+// UpdateUser 更新用户
 // @Tags User
-// @Summary 更新User
+// @Summary 更新用户
+// @Description 根据用户ID更新用户信息
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param id path number true "删除User"
-// @Param data body app.User true "更新User"
-// @Success 200 {object} response.Response{msg=string,code=number} "更新成功"
-// @Router /user/updateUser/:id [put]
+// @Param id path integer true "用户ID" minimum(1)
+// @Param data body app.User true "用户信息"
+// @Success 200 {object} response.Response{msg=string,code=integer} "更新用户成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
+// @Router /user/updateUser/{id} [put]
 func (userApi *UserApi) UpdateUser(c *fiber.Ctx) error {
 	var user app.User
 	id, err := c.ParamsInt("id")

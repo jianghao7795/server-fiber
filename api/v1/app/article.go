@@ -11,15 +11,19 @@ import (
 	"go.uber.org/zap"
 )
 
-// CreateArticle 创建Article
+// CreateArticle 创建文章
 // @Tags Article
-// @Summary 创建Article
+// @Summary 创建文章
+// @Description 创建新的文章
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param data body app.Article true "创建Article"
-// @Success 200 {object} response.Response{msg=string,code=number} "创建成功"
-// @Router /Article/createArticle [post]
+// @Param data body app.Article true "文章信息"
+// @Success 200 {object} response.Response{msg=string,code=integer,data=integer} "创建成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response "服务器错误"
+// @Router /article/createArticle [post]
 func (a *ArticleApi) CreateArticle(c *fiber.Ctx) error {
 	var article app.Article
 	err := c.BodyParser(&article)
@@ -37,15 +41,19 @@ func (a *ArticleApi) CreateArticle(c *fiber.Ctx) error {
 	return response.OkWithId("创建成功", article.ID, c)
 }
 
-// DeleteArticle 删除Article
+// DeleteArticle 删除文章
 // @Tags Article
-// @Summary 删除Article
+// @Summary 删除文章
+// @Description 根据文章ID删除指定文章
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param data body app.Article true "删除Article"
-// @Success 200 {object} response.Response{msg=string,code=number} "删除成功"
-// @Router /article/deleteArticle/:id [delete]
+// @Param id path integer true "文章ID" minimum(1)
+// @Success 200 {object} response.Response{msg=string,code=integer} "删除成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response "服务器错误"
+// @Router /article/deleteArticle/{id} [delete]
 func (*ArticleApi) DeleteArticle(c *fiber.Ctx) error {
 	id, err := c.ParamsInt("id")
 	if err != nil {
@@ -62,14 +70,18 @@ func (*ArticleApi) DeleteArticle(c *fiber.Ctx) error {
 	return response.OkWithMessage("删除成功", c)
 }
 
-// DeleteArticleByIds 批量删除Article
+// DeleteArticleByIds 批量删除文章
 // @Tags Article
-// @Summary 批量删除Article
+// @Summary 批量删除文章
+// @Description 根据ID列表批量删除文章
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param data body app.Article true "批量删除Article"
-// @Success 200 {object} response.Response{code=number,msg=string} "批量删除成功"
+// @Param data body request.IdsReq true "文章ID列表"
+// @Success 200 {object} response.Response{msg=string,code=integer} "批量删除成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response "服务器错误"
 // @Router /article/deleteArticleByIds [delete]
 func (a *ArticleApi) DeleteArticleByIds(c *fiber.Ctx) error {
 	var IDS request.IdsReq
@@ -88,15 +100,20 @@ func (a *ArticleApi) DeleteArticleByIds(c *fiber.Ctx) error {
 	return response.OkWithMessage("批量删除成功", c)
 }
 
-// UpdateArticle 更新Article
+// UpdateArticle 更新文章
 // @Tags Article
-// @Summary 更新Article
+// @Summary 更新文章
+// @Description 根据文章ID更新文章信息
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param data body app.Article true "更新Article"
-// @Success 200 {string} string "{"success":true, "msg":"更新成功"}"
-// @Router /article/updateArticle/:id [put]
+// @Param id path integer true "文章ID" minimum(1)
+// @Param data body app.Article true "文章信息"
+// @Success 200 {object} response.Response{msg=string,code=integer} "更新成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response "服务器错误"
+// @Router /article/updateArticle/{id} [put]
 func (*ArticleApi) UpdateArticle(c *fiber.Ctx) error {
 	var article app.Article
 	err := c.BodyParser(&article)
@@ -122,15 +139,16 @@ func (*ArticleApi) UpdateArticle(c *fiber.Ctx) error {
 	return response.OkWithMessage("更新成功", c)
 }
 
-// FindArticle get单个Article
+// FindArticle 根据ID获取文章
 // @Tags Article
-// @Summary get单个Article
-// @Security ApiKeyAuth
-// @accept application/json
+// @Summary 根据ID获取文章
+// @Description 根据文章ID获取文章详情
 // @Produce application/json
-// @Param data body app.Article true "get单个Article"
-// @Success 200 {object} response.Response{msg=string,data=app.Article,code=number} "获得成功"
-// @Router /article/findArticle/:id [get]
+// @Param id path integer true "文章ID" minimum(1)
+// @Success 200 {object} response.Response{msg=string,data=app.Article,code=integer} "获取成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 404 {object} response.Response "文章不存在"
+// @Router /article/findArticle/{id} [get]
 func (*ArticleApi) FindArticle(c *fiber.Ctx) error {
 	id, err := c.ParamsInt("id")
 	if err != nil {
@@ -147,15 +165,19 @@ func (*ArticleApi) FindArticle(c *fiber.Ctx) error {
 	}
 }
 
-// GetArticleList 分页获取article列表
-// FindArticle Get Article
+// GetArticleList 分页获取文章列表
 // @Tags Article
-// @Summary Get Article
-// @Security ApiKeyAuth
-// @accept application/json
+// @Summary 分页获取文章列表
+// @Description 分页获取文章列表，支持搜索和筛选
 // @Produce application/json
-// @Param data query app.Article true "Get Article"
-// @Success 200 {string} response.Response{msg=string,data=response.PageResult{list=app.Article[],total=number},code=number,page=number,pageSize=number} "获得成功"
+// @Param page query integer false "页码" default(1) minimum(1)
+// @Param pageSize query integer false "每页数量" default(10) minimum(1) maximum(100)
+// @Param title query string false "文章标题搜索"
+// @Param state query integer false "文章状态"
+// @Param is_important query integer false "是否首页显示"
+// @Success 200 {object} response.Response{msg=string,data=response.PageResult{list=[]app.Article,total=integer,page=integer,pageSize=integer},code=integer} "获取成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 500 {object} response.Response "服务器错误"
 // @Router /article/getArticleList [get]
 func (*ArticleApi) GetArticleList(c *fiber.Ctx) error {
 	var pageInfo appReq.ArticleSearch
@@ -179,14 +201,18 @@ func (*ArticleApi) GetArticleList(c *fiber.Ctx) error {
 	}
 }
 
-// PutArticleByIds 批量更新Article
+// PutArticleByIds 批量更新文章
 // @Tags Article
-// @Summary 批量更新Article
+// @Summary 批量更新文章
+// @Description 批量更新文章的显示状态
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param data body request.IdsReq true "批量更新Article"
-// @Success 200 {object} response.Response{msg=string,code=number} "{}"
+// @Param data body request.IdsReq true "文章ID列表"
+// @Success 200 {object} response.Response{msg=string,code=integer} "批量更新成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response "服务器错误"
 // @Router /article/putArticleByIds [put]
 func (*ArticleApi) PutArticleByIds(c *fiber.Ctx) error {
 	var IDS request.IdsReq
@@ -209,11 +235,12 @@ func (*ArticleApi) PutArticleByIds(c *fiber.Ctx) error {
 // GetArticleReading 获取文章阅读量
 // @Tags Article
 // @Summary 获取文章阅读量
+// @Description 获取指定用户的文章阅读量统计
 // @Security ApiKeyAuth
-// @accept application/json
 // @Produce application/json
-// @Param data body app.Article true "获取文章阅读量"
-// @Success 200 {string} {object} response.Response{msg=string,data=number,code=number} "获取成功"
+// @Success 200 {object} response.Response{msg=string,data=object{reading_quantity=integer},code=integer} "获取成功"
+// @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response "服务器错误"
 // @Router /article/getArticleReading [get]
 func (*ArticleApi) GetArticleReading(c *fiber.Ctx) error {
 	userID := c.Locals("user_id")

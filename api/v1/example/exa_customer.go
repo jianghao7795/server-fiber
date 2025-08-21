@@ -12,13 +12,17 @@ import (
 	"go.uber.org/zap"
 )
 
+// CreateExaCustomer 创建客户
 // @Tags ExaCustomer
 // @Summary 创建客户
+// @Description 创建新的客户信息
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param data body example.ExaCustomer true "客户用户名, 客户手机号码"
-// @Success 200 {object} response.Response{msg=string} "创建客户"
+// @Param data body example.ExaCustomer true "客户信息"
+// @Success 200 {object} response.Response{msg=string,data=integer} "创建客户成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
 // @Router /customer/customer [post]
 func (e *CustomerApi) CreateExaCustomer(c *fiber.Ctx) error {
 	var customer example.ExaCustomer
@@ -48,14 +52,18 @@ func (e *CustomerApi) CreateExaCustomer(c *fiber.Ctx) error {
 	}
 }
 
+// DeleteExaCustomer 删除客户
 // @Tags ExaCustomer
 // @Summary 删除客户
+// @Description 根据客户ID删除指定客户
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param id path number true "客户ID"
-// @Success 200 {object} response.Response{msg=string} "删除客户"
-// @Router /customer/customer/:id [delete]
+// @Param id path integer true "客户ID" minimum(1)
+// @Success 200 {object} response.Response{msg=string} "删除客户成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
+// @Router /customer/customer/{id} [delete]
 func (e *CustomerApi) DeleteExaCustomer(c *fiber.Ctx) error {
 	id, err := c.ParamsInt("id")
 	if err != nil {
@@ -72,15 +80,19 @@ func (e *CustomerApi) DeleteExaCustomer(c *fiber.Ctx) error {
 	}
 }
 
+// UpdateExaCustomer 更新客户信息
 // @Tags ExaCustomer
 // @Summary 更新客户信息
+// @Description 根据客户ID更新客户信息
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param id path number true "客户ID"
-// @Param data body example.ExaCustomer true "客户ID, 客户信息"
-// @Success 200 {object} response.Response{msg=string,code=number} "更新客户信息"
-// @Router /customer/customer/:id [put]
+// @Param id path integer true "客户ID" minimum(1)
+// @Param data body example.ExaCustomer true "客户信息"
+// @Success 200 {object} response.Response{msg=string,code=integer} "更新客户信息成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
+// @Router /customer/customer/{id} [put]
 func (e *CustomerApi) UpdateExaCustomer(c *fiber.Ctx) error {
 	id, _ := c.ParamsInt("id")
 	if id == 0 {

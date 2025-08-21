@@ -13,14 +13,17 @@ import (
 
 type UserApi struct{}
 
-// CreateMobileUser 创建MobileUser
+// CreateMobileUser 创建移动端用户
 // @Tags MobileUser
-// @Summary 创建MobileUser
+// @Summary 创建移动端用户
+// @Description 创建新的移动端用户
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param data body mobile.MobileUser true "创建MobileUser"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
+// @Param data body mobile.MobileUser true "移动端用户信息"
+// @Success 200 {object} response.Response{msg=string} "创建移动端用户成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
 // @Router /mobileUser/createMobileUser [post]
 func (userApi *UserApi) CreateMobileUser(c *fiber.Ctx) error {
 	var mobileUser mobile.MobileUser
@@ -36,15 +39,18 @@ func (userApi *UserApi) CreateMobileUser(c *fiber.Ctx) error {
 	}
 }
 
-// DeleteMobileUser 删除MobileUser
+// DeleteMobileUser 删除移动端用户
 // @Tags MobileUser
-// @Summary 删除MobileUser
+// @Summary 删除移动端用户
+// @Description 根据用户ID删除指定移动端用户
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param data body mobile.MobileUser true "删除MobileUser"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
-// @Router /mobileUser/deleteMobileUser [delete]
+// @Param id path integer true "用户ID" minimum(1)
+// @Success 200 {object} response.Response{msg=string} "删除移动端用户成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
+// @Router /mobileUser/deleteMobileUser/{id} [delete]
 func (userApi *UserApi) DeleteMobileUser(c *fiber.Ctx) error {
 	id, _ := c.ParamsInt("id")
 	if err := userService.DeleteMobileUser(uint(id)); err != nil {
@@ -55,14 +61,17 @@ func (userApi *UserApi) DeleteMobileUser(c *fiber.Ctx) error {
 	}
 }
 
-// DeleteMobileUserByIds 批量删除MobileUser
+// DeleteMobileUserByIds 批量删除移动端用户
 // @Tags MobileUser
-// @Summary 批量删除MobileUser
+// @Summary 批量删除移动端用户
+// @Description 根据ID列表批量删除移动端用户
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param data body request.IdsReq true "批量删除MobileUser"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"批量删除成功"}"
+// @Param data body request.IdsReq true "用户ID列表"
+// @Success 200 {object} response.Response{msg=string} "创建移动端用户成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
 // @Router /mobileUser/deleteMobileUserByIds [delete]
 func (userApi *UserApi) DeleteMobileUserByIds(c *fiber.Ctx) error {
 	var IDS request.IdsReq
@@ -78,14 +87,17 @@ func (userApi *UserApi) DeleteMobileUserByIds(c *fiber.Ctx) error {
 	}
 }
 
-// UpdateMobileUser 更新MobileUser
+// UpdateMobileUser 更新移动端用户
 // @Tags MobileUser
-// @Summary 更新MobileUser
+// @Summary 更新移动端用户
+// @Description 更新移动端用户信息
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param data body mobile.MobileUser true "更新MobileUser"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"更新成功"}"
+// @Param data body mobile.MobileUser true "移动端用户信息"
+// @Success 200 {object} response.Response{msg=string} "更新移动端用户成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
 // @Router /mobileUser/updateMobileUser [put]
 func (userApi *UserApi) UpdateMobileUser(c *fiber.Ctx) error {
 	var mobileUser mobile.MobileUser
@@ -108,7 +120,7 @@ func (userApi *UserApi) UpdateMobileUser(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data query mobile.MobileUser true "用id查询MobileUser"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"查询成功"}"
+// @Success 200 {string} string "{"success":true,"data":mobile.MobileUser,"msg":"查询成功"}"
 // @Router /mobileUser/findMobileUser/:id [get]
 func (userApi *UserApi) FindMobileUser(c *fiber.Ctx) error {
 	id, err := c.ParamsInt("id")

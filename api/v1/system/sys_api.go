@@ -45,9 +45,9 @@ func (s *SystemApiApi) CreateApi(c *fiber.Ctx) (err error) {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body system.SysApi true "ID"
+// @Param id path integer true "ID" minimum(1)
 // @Success 200 {object} response.Response{msg=string} "删除api"
-// @Router /api/deleteApi [post]
+// @Router /api/delete/{id} [delete]
 func (s *SystemApiApi) DeleteApi(c *fiber.Ctx) error {
 	var api system.SysApi
 	id, _ := c.ParamsInt("id")

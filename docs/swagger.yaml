@@ -178,6 +178,512 @@ definitions:
         description: 更新时间
         type: string
     type: object
+  config.AliyunOSS:
+    properties:
+      access-key-id:
+        type: string
+      access-key-secret:
+        type: string
+      base-path:
+        type: string
+      bucket-name:
+        type: string
+      bucket-url:
+        type: string
+      endpoint:
+        type: string
+    type: object
+  config.Autocode:
+    properties:
+      root:
+        type: string
+      server:
+        type: string
+      server-api:
+        type: string
+      server-initialize:
+        type: string
+      server-model:
+        type: string
+      server-request:
+        type: string
+      server-router:
+        type: string
+      server-service:
+        type: string
+      transfer-restart:
+        type: boolean
+      web:
+        type: string
+      web-api:
+        type: string
+      web-form:
+        type: string
+      web-table:
+        type: string
+    type: object
+  config.AwsS3:
+    properties:
+      base-url:
+        type: string
+      bucket:
+        type: string
+      disable-ssl:
+        type: boolean
+      endpoint:
+        type: string
+      path-prefix:
+        type: string
+      region:
+        type: string
+      s3-force-path-style:
+        type: boolean
+      secret-id:
+        type: string
+      secret-key:
+        type: string
+    type: object
+  config.CORS:
+    properties:
+      mode:
+        type: string
+      whitelist:
+        items:
+          $ref: '#/definitions/config.CORSWhitelist'
+        type: array
+    type: object
+  config.CORSWhitelist:
+    properties:
+      allow-credentials:
+        type: boolean
+      allow-headers:
+        type: string
+      allow-methods:
+        type: string
+      allow-origin:
+        type: string
+      expose-headers:
+        type: string
+    type: object
+  config.Cache:
+    properties:
+      time:
+        description: 时间
+        type: integer
+    type: object
+  config.Captcha:
+    properties:
+      dot-count:
+        description: 干扰点数量
+        type: integer
+      img-height:
+        description: 验证码高度
+        type: integer
+      img-width:
+        description: 验证码宽度
+        type: integer
+      key-long:
+        description: 验证码长度
+        type: integer
+      max-skew:
+        description: 最大倾斜度
+        type: number
+    type: object
+  config.Casbin:
+    properties:
+      model-path:
+        description: 存放casbin模型的相对路径
+        type: string
+    type: object
+  config.DB:
+    properties:
+      alias-name:
+        description: 佚名
+        type: string
+      config:
+        description: 高级配置
+        type: string
+      db-name:
+        description: 数据库名
+        type: string
+      disable:
+        type: boolean
+      log-mode:
+        description: 是否开启Gorm全局日志
+        type: string
+      log-zap:
+        type: boolean
+      max-idle-conns:
+        description: 空闲中的最大连接数
+        type: integer
+      max-open-conns:
+        description: 打开到数据库的最大连接数
+        type: integer
+      password:
+        description: 数据库密码
+        type: string
+      path:
+        description: 服务器地址:端口
+        type: string
+      port:
+        description: :端口
+        type: string
+      type:
+        description: db 类型
+        type: string
+      username:
+        description: 数据库用户名
+        type: string
+    type: object
+  config.Detail:
+    properties:
+      compareField:
+        description: 需要比较时间的字段
+        type: string
+      interval:
+        description: 时间间隔
+        type: string
+      tableName:
+        description: 需要清理的表名
+        type: string
+    type: object
+  config.Excel:
+    properties:
+      dir:
+        description: 文件路径
+        type: string
+    type: object
+  config.HuaWeiObs:
+    properties:
+      access-key:
+        type: string
+      bucket:
+        type: string
+      endpoint:
+        type: string
+      path:
+        type: string
+      secret-key:
+        type: string
+    type: object
+  config.Local:
+    properties:
+      path:
+        description: 本地文件路径
+        type: string
+      size:
+        description: 本地文件大小限制
+        type: integer
+    type: object
+  config.Mysql:
+    properties:
+      config:
+        description: 高级配置
+        type: string
+      db-name:
+        description: 数据库名
+        type: string
+      debug:
+        description: 是否开启debug
+        type: boolean
+      log-mode:
+        description: 开启Gorm全局日志 写入日志的格式
+        type: string
+      log-zap:
+        description: 是否通过zap写入日志文件
+        type: boolean
+      max-idle-conns:
+        description: 空闲中的最大连接数
+        type: integer
+      max-open-conns:
+        description: 打开到数据库的最大连接数
+        type: integer
+      password:
+        description: 数据库密码
+        type: string
+      path:
+        description: 服务器地址
+        type: string
+      port:
+        description: 端口
+        type: string
+      skip-transaction:
+        description: 是否跳过默认事务
+        type: boolean
+      username:
+        description: 数据库用户名
+        type: string
+    type: object
+  config.Pgsql:
+    properties:
+      config:
+        description: 高级配置
+        type: string
+      db-name:
+        description: 数据库名
+        type: string
+      log-mode:
+        description: 是否开启Gorm全局日志
+        type: string
+      log-zap:
+        description: 是否通过zap写入日志文件
+        type: boolean
+      max-idle-conns:
+        description: 空闲中的最大连接数
+        type: integer
+      max-open-conns:
+        description: 打开到数据库的最大连接数
+        type: integer
+      password:
+        description: 数据库密码
+        type: string
+      path:
+        description: 服务器地址:端口
+        type: string
+      port:
+        description: :端口
+        type: string
+      username:
+        description: 数据库用户名
+        type: string
+    type: object
+  config.PrivacyJWT:
+    properties:
+      buffer-time:
+        description: 缓冲时间
+        type: integer
+      expires-time:
+        description: 过期时间
+        type: integer
+      issuer:
+        description: 签发者
+        type: string
+      signing-key:
+        description: 签名密钥 HS256使用
+        type: string
+    type: object
+  config.Qiniu:
+    properties:
+      access-key:
+        description: 秘钥AK
+        type: string
+      bucket:
+        description: 空间名称
+        type: string
+      img-path:
+        description: CDN加速域名
+        type: string
+      secret-key:
+        description: 秘钥SK
+        type: string
+      use-cdn-domains:
+        description: 上传是否使用CDN上传加速
+        type: boolean
+      use-https:
+        description: 是否使用https
+        type: boolean
+      zone:
+        description: 存储区域
+        type: string
+    type: object
+  config.Redis:
+    properties:
+      addr:
+        description: 服务器地址:端口
+        type: string
+      db:
+        description: redis的哪个数据库
+        type: integer
+      password:
+        description: 密码
+        type: string
+      port:
+        description: 端口
+        type: string
+    type: object
+  config.Server:
+    properties:
+      aliyun-oss:
+        $ref: '#/definitions/config.AliyunOSS'
+      autocode:
+        allOf:
+        - $ref: '#/definitions/config.Autocode'
+        description: auto
+      aws-s3:
+        $ref: '#/definitions/config.AwsS3'
+      cache:
+        allOf:
+        - $ref: '#/definitions/config.Cache'
+        description: 缓存
+      captcha:
+        allOf:
+        - $ref: '#/definitions/config.Captcha'
+        description: 验证码配置
+      casbin:
+        $ref: '#/definitions/config.Casbin'
+      cors:
+        allOf:
+        - $ref: '#/definitions/config.CORS'
+        description: 跨域配置
+      db-list:
+        items:
+          $ref: '#/definitions/config.DB'
+        type: array
+      email:
+        allOf:
+        - $ref: '#/definitions/server-fiber_config.Email'
+        description: email
+      excel:
+        $ref: '#/definitions/config.Excel'
+      hua-wei-obs:
+        $ref: '#/definitions/config.HuaWeiObs'
+      jwt:
+        allOf:
+        - $ref: '#/definitions/config.PrivacyJWT'
+        description: JWT
+      local:
+        allOf:
+        - $ref: '#/definitions/config.Local'
+        description: oss
+      mysql:
+        allOf:
+        - $ref: '#/definitions/config.Mysql'
+        description: gorm
+      pgsql:
+        $ref: '#/definitions/config.Pgsql'
+      qiniu:
+        $ref: '#/definitions/config.Qiniu'
+      redis:
+        allOf:
+        - $ref: '#/definitions/config.Redis'
+        description: Redis
+      sqlite:
+        $ref: '#/definitions/config.Sqlite'
+      system:
+        $ref: '#/definitions/config.System'
+      tencent-cos:
+        $ref: '#/definitions/config.TencentCOS'
+      timer:
+        allOf:
+        - $ref: '#/definitions/config.Timer'
+        description: 任务配置
+      zap:
+        allOf:
+        - $ref: '#/definitions/config.Zap'
+        description: zap 压缩
+    type: object
+  config.Sqlite:
+    properties:
+      log-mode:
+        description: 是否开启Gorm全局日志
+        type: string
+      path:
+        description: 文件路径
+        type: string
+    type: object
+  config.System:
+    properties:
+      addr:
+        description: 端口值
+        type: integer
+      db-type:
+        description: 数据库类型:mysql(默认)|sqlite|sqlserver|postgresql
+        type: string
+      domain:
+        description: 域名
+        type: string
+      env:
+        description: 环境值
+        type: string
+      iplimit-count:
+        description: 访问次数限制
+        type: integer
+      iplimit-time:
+        description: 访问时间限制
+        type: integer
+      oss-type:
+        description: Oss类型
+        type: string
+      use-multipoint:
+        description: 多点登录拦截
+        type: boolean
+      use-redis:
+        description: 使用redis
+        type: boolean
+    type: object
+  config.Task:
+    properties:
+      interval:
+        description: 时间间隔 秒
+        type: string
+      output:
+        description: 输出
+        type: string
+      taskName:
+        description: 执行任务名
+        type: string
+    type: object
+  config.TencentCOS:
+    properties:
+      base-url:
+        type: string
+      bucket:
+        type: string
+      path-prefix:
+        type: string
+      region:
+        type: string
+      secret-id:
+        type: string
+      secret-key:
+        type: string
+    type: object
+  config.Timer:
+    properties:
+      detail:
+        description: '任务: 清除数据库'
+        items:
+          $ref: '#/definitions/config.Detail'
+        type: array
+      spec:
+        description: CRON表达式
+        type: string
+      start:
+        description: 是否启用
+        type: boolean
+      tasks:
+        description: 任务： 执行任务
+        items:
+          $ref: '#/definitions/config.Task'
+        type: array
+    type: object
+  config.Zap:
+    properties:
+      director:
+        description: 日志文件夹
+        type: string
+      encode-level:
+        description: 编码级
+        type: string
+      format:
+        description: 输出
+        type: string
+      level:
+        description: 级别
+        type: string
+      log-in-console:
+        description: 输出控制台
+        type: boolean
+      prefix:
+        description: 日志前缀
+        type: string
+      show-line:
+        description: 显示行
+        type: boolean
+      stacktrace-key:
+        description: 栈名
+        type: string
+    type: object
   example.ExaCustomer:
     properties:
       createdAt:
@@ -287,6 +793,73 @@ definitions:
         description: 图片宽度
         type: integer
     type: object
+  example.ExcelInfo:
+    properties:
+      fileName:
+        description: 文件名
+        type: string
+      infoList:
+        items:
+          $ref: '#/definitions/example.FielUploadImport'
+        type: array
+    type: object
+  example.FielUploadImport:
+    properties:
+      createdAt:
+        description: 创建时间
+        type: string
+      file_path:
+        description: 文件路径
+        type: string
+      file_size:
+        description: 文件大小
+        type: integer
+      file_type:
+        description: 文件类型
+        type: string
+      filename:
+        description: 文件名
+        type: string
+      filename_md5:
+        description: 文件名md5
+        type: string
+      id:
+        description: 主键ID
+        type: integer
+      state:
+        description: 状态
+        type: integer
+      updatedAt:
+        description: 更新时间
+        type: string
+    type: object
+  frontend.ArticleUser:
+    properties:
+      createdAt:
+        description: 创建时间
+        type: string
+      headerImg:
+        type: string
+      id:
+        description: 主键ID
+        type: integer
+      nickName:
+        type: string
+      updatedAt:
+        description: 更新时间
+        type: string
+      userName:
+        type: string
+    type: object
+  mobile.Login:
+    properties:
+      password:
+        type: string
+      realname:
+        type: string
+      username:
+        type: string
+    type: object
   mobile.MobileUser:
     properties:
       avatar:
@@ -313,6 +886,26 @@ definitions:
       realname:
         type: string
       sign:
+        type: string
+      updatedAt:
+        description: 更新时间
+        type: string
+      username:
+        type: string
+    type: object
+  mobile.Register:
+    properties:
+      createdAt:
+        description: 创建时间
+        type: string
+      id:
+        description: 主键ID
+        type: integer
+      password:
+        type: string
+      phone:
+        type: string
+      realname:
         type: string
       updatedAt:
         description: 更新时间
@@ -359,21 +952,6 @@ definitions:
         type: string
       username:
         description: 用户名
-        type: string
-    type: object
-  request.Empty:
-    properties:
-      page:
-        description: 页码
-        type: integer
-      pageSize:
-        description: 每页大小
-        type: integer
-    type: object
-  request.GetAuthorityId:
-    properties:
-      authorityId:
-        description: 角色ID
         type: string
     type: object
   request.GetById:
@@ -423,6 +1001,31 @@ definitions:
         type: string
       username:
         description: 用户名
+        type: string
+    type: object
+  request.LoginToken:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  request.MobileUpdate:
+    properties:
+      field:
+        type: string
+      value: {}
+    type: object
+  request.MobileUpdatePassword:
+    properties:
+      id:
+        type: integer
+      newPassword:
+        type: string
+      password:
         type: string
     type: object
   request.PageInfo:
@@ -640,13 +1243,6 @@ definitions:
       menu:
         $ref: '#/definitions/system.SysBaseMenu'
     type: object
-  response.SysBaseMenusResponse:
-    properties:
-      menus:
-        items:
-          $ref: '#/definitions/system.SysBaseMenu'
-        type: array
-    type: object
   response.SysCaptchaResponse:
     properties:
       captchaId:
@@ -656,12 +1252,167 @@ definitions:
       picPath:
         type: string
     type: object
-  response.SysMenusResponse:
+  server-fiber_config.Email:
     properties:
-      menus:
+      from:
+        description: 收件人
+        type: string
+      host:
+        description: 服务器地址
+        type: string
+      is-ssl:
+        description: 是否SSL
+        type: boolean
+      nickname:
+        description: 昵称
+        type: string
+      port:
+        description: 端口
+        type: integer
+      secret:
+        description: 密钥
+        type: string
+      to:
+        description: 收件人:多个以英文逗号分隔
+        type: string
+    type: object
+  server-fiber_model_frontend.Article:
+    properties:
+      content:
+        type: string
+      createdAt:
+        description: 创建时间
+        type: string
+      desc:
+        type: string
+      id:
+        description: 主键ID
+        type: integer
+      is_important:
+        type: integer
+      reading_quantity:
+        type: integer
+      state:
+        type: integer
+      tags:
         items:
-          $ref: '#/definitions/system.SysMenu'
+          $ref: '#/definitions/server-fiber_model_frontend.Tag'
         type: array
+      title:
+        type: string
+      updatedAt:
+        description: 更新时间
+        type: string
+      user:
+        $ref: '#/definitions/frontend.ArticleUser'
+      user_id:
+        type: integer
+    type: object
+  server-fiber_model_frontend.Comment:
+    properties:
+      article:
+        $ref: '#/definitions/server-fiber_model_frontend.Article'
+      article_id:
+        type: integer
+      children:
+        items:
+          $ref: '#/definitions/server-fiber_model_frontend.Comment'
+        type: array
+      content:
+        type: string
+      createdAt:
+        description: 创建时间
+        type: string
+      id:
+        description: 主键ID
+        type: integer
+      parent_id:
+        type: integer
+      to_user:
+        $ref: '#/definitions/server-fiber_model_frontend.User'
+      to_user_id:
+        type: integer
+      updatedAt:
+        description: 更新时间
+        type: string
+      user:
+        $ref: '#/definitions/server-fiber_model_frontend.User'
+      user_id:
+        type: integer
+    type: object
+  server-fiber_model_frontend.Tag:
+    properties:
+      aritcles:
+        items:
+          $ref: '#/definitions/server-fiber_model_frontend.Article'
+        type: array
+      createdAt:
+        description: 创建时间
+        type: string
+      id:
+        description: 主键ID
+        type: integer
+      name:
+        type: string
+      status:
+        type: integer
+      updatedAt:
+        description: 更新时间
+        type: string
+    type: object
+  server-fiber_model_frontend.User:
+    properties:
+      activeColor:
+        description: 活跃颜色
+        type: string
+      authorityId:
+        description: 用户角色ID
+        type: string
+      baseColor:
+        description: 基础颜色
+        type: string
+      content:
+        type: string
+      createdAt:
+        description: 创建时间
+        type: string
+      email:
+        description: 用户邮箱
+        type: string
+      head_img:
+        type: string
+      headerImg:
+        description: 用户头像
+        type: string
+      id:
+        description: 主键ID
+        type: integer
+      introduction:
+        type: string
+      nickName:
+        description: 用户昵称
+        type: string
+      phone:
+        description: 用户手机号
+        type: string
+      sideMode:
+        description: 用户侧边主题
+        type: string
+      updatedAt:
+        description: 更新时间
+        type: string
+      userName:
+        description: 用户登录名
+        type: string
+    type: object
+  server-fiber_model_system_response.LoginResponse:
+    properties:
+      expiresAt:
+        type: integer
+      token:
+        type: string
+      user:
+        $ref: '#/definitions/system.SysUser'
     type: object
   system.AutoCodeStruct:
     properties:
@@ -754,6 +1505,10 @@ definitions:
       Backend: 后台
       Frontend: 前端
       Mobile: 移动端
+    x-enum-descriptions:
+    - 后台
+    - 前端
+    - 移动端
     x-enum-varnames:
     - Backend
     - Frontend
@@ -1138,40 +1893,13 @@ definitions:
         type: string
     type: object
   system.System:
+    properties:
+      config:
+        $ref: '#/definitions/config.Server'
     type: object
 info:
   contact: {}
 paths:
-  /Article/createArticle:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: 创建Article
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/app.Article'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: 创建成功
-          schema:
-            allOf:
-            - $ref: '#/definitions/response.Response'
-            - properties:
-                code:
-                  type: number
-                msg:
-                  type: string
-              type: object
-      security:
-      - ApiKeyAuth: []
-      summary: 创建Article
-      tags:
-      - Article
   /api/createApi:
     post:
       consumes:
@@ -1354,198 +2082,63 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: 修改基础api
-  /appTab/createTag:
+  /article/createArticle:
     post:
       consumes:
       - application/json
+      description: 创建新的文章
       parameters:
-      - description: 创建Tag
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/app.Tag'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: '{"success":true,"data":{},"msg":"获取成功"}'
-          schema:
-            type: string
-      security:
-      - ApiKeyAuth: []
-      summary: 创建Tag
-      tags:
-      - Tag
-  /appTab/deleteTag:
-    delete:
-      consumes:
-      - application/json
-      parameters:
-      - description: 删除Tag
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/app.Tag'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: '{"success":true,"data":{},"msg":"删除成功"}'
-          schema:
-            type: string
-      security:
-      - ApiKeyAuth: []
-      summary: 删除Tag
-      tags:
-      - Tag
-  /appTab/deleteTagByIds:
-    delete:
-      consumes:
-      - application/json
-      parameters:
-      - description: 批量删除Tag
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/request.IdsReq'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: '{"success":true,"data":{},"msg":"批量删除成功"}'
-          schema:
-            type: string
-      security:
-      - ApiKeyAuth: []
-      summary: 批量删除Tag
-      tags:
-      - Tag
-  /appTab/findTag:
-    get:
-      consumes:
-      - application/json
-      parameters:
-      - description: 创建时间
-        in: query
-        name: createdAt
-        type: string
-      - description: 主键ID
-        in: query
-        name: id
-        type: integer
-      - in: query
-        name: name
-        type: string
-      - in: query
-        name: status
-        type: integer
-      - description: 更新时间
-        in: query
-        name: updatedAt
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: '{"success":true,"data":{},"msg":"查询成功"}'
-          schema:
-            type: string
-      security:
-      - ApiKeyAuth: []
-      summary: 用id查询Tag
-      tags:
-      - Tag
-  /appTab/getTagList:
-    get:
-      consumes:
-      - application/json
-      parameters:
-      - description: 创建时间
-        in: query
-        name: createdAt
-        type: string
-      - description: 主键ID
-        in: query
-        name: id
-        type: integer
-      - description: 是否为截图 1, 或 2
-        in: query
-        name: is_cropper
-        type: string
-      - description: 关键字
-        in: query
-        name: keyword
-        type: string
-      - in: query
-        name: name
-        type: string
-      - description: 页码
-        in: query
-        name: page
-        type: integer
-      - description: 每页大小
-        in: query
-        name: pageSize
-        type: integer
-      - in: query
-        name: proportion
-        type: string
-      - in: query
-        name: status
-        type: integer
-      - description: 更新时间
-        in: query
-        name: updatedAt
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: '{"success":true,"data":{},"msg":"获取成功"}'
-          schema:
-            type: string
-      security:
-      - ApiKeyAuth: []
-      summary: 分页获取Tag列表
-      tags:
-      - Tag
-  /appTab/updateTag:
-    put:
-      consumes:
-      - application/json
-      parameters:
-      - description: 更新Tag
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/app.Tag'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: '{"success":true,"data":{},"msg":"更新成功"}'
-          schema:
-            type: string
-      security:
-      - ApiKeyAuth: []
-      summary: 更新Tag
-      tags:
-      - Tag
-  /article/deleteArticle/:id:
-    delete:
-      consumes:
-      - application/json
-      parameters:
-      - description: 删除Article
+      - description: 文章信息
         in: body
         name: data
         required: true
         schema:
           $ref: '#/definitions/app.Article'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 创建成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: integer
+                data:
+                  type: integer
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: 服务器错误
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 创建文章
+      tags:
+      - Article
+  /article/deleteArticle/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 根据文章ID删除指定文章
+      parameters:
+      - description: 文章ID
+        in: path
+        minimum: 1
+        name: id
+        required: true
+        type: integer
       produces:
       - application/json
       responses:
@@ -1556,26 +2149,39 @@ paths:
             - $ref: '#/definitions/response.Response'
             - properties:
                 code:
-                  type: number
+                  type: integer
                 msg:
                   type: string
               type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: 服务器错误
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
-      summary: 删除Article
+      summary: 删除文章
       tags:
       - Article
   /article/deleteArticleByIds:
     delete:
       consumes:
       - application/json
+      description: 根据ID列表批量删除文章
       parameters:
-      - description: 批量删除Article
+      - description: 文章ID列表
         in: body
         name: data
         required: true
         schema:
-          $ref: '#/definitions/app.Article'
+          $ref: '#/definitions/request.IdsReq'
       produces:
       - application/json
       responses:
@@ -1586,115 +2192,163 @@ paths:
             - $ref: '#/definitions/response.Response'
             - properties:
                 code:
-                  type: number
+                  type: integer
                 msg:
                   type: string
               type: object
-      security:
-      - ApiKeyAuth: []
-      summary: 批量删除Article
-      tags:
-      - Article
-  /article/findArticle/:id:
-    get:
-      consumes:
-      - application/json
-      parameters:
-      - description: get单个Article
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/app.Article'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: 获得成功
+        "400":
+          description: 参数错误
           schema:
-            allOf:
-            - $ref: '#/definitions/response.Response'
-            - properties:
-                code:
-                  type: number
-                data:
-                  $ref: '#/definitions/app.Article'
-                msg:
-                  type: string
-              type: object
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: 服务器错误
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
-      summary: get单个Article
+      summary: 批量删除文章
       tags:
       - Article
-  /article/getArticleList:
+  /article/findArticle/{id}:
     get:
-      consumes:
-      - application/json
+      description: 根据文章ID获取文章详情
       parameters:
-      - in: query
-        name: content
-        type: string
-      - description: 创建时间
-        in: query
-        name: createdAt
-        type: string
-      - in: query
-        name: desc
-        type: string
-      - description: 主键ID
-        in: query
+      - description: 文章ID
+        in: path
+        minimum: 1
         name: id
-        type: integer
-      - in: query
-        name: is_important
-        type: integer
-      - in: query
-        name: reading_quantity
-        type: integer
-      - in: query
-        name: state
-        type: integer
-      - in: query
-        name: title
-        type: string
-      - description: 更新时间
-        in: query
-        name: updatedAt
-        type: string
-      - in: query
-        name: user_id
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: 获得成功
-          schema:
-            type: string
-      security:
-      - ApiKeyAuth: []
-      summary: Get Article
-      tags:
-      - Article
-  /article/getArticleReading:
-    get:
-      consumes:
-      - application/json
-      parameters:
-      - description: 获取文章阅读量
-        in: body
-        name: data
         required: true
-        schema:
-          $ref: '#/definitions/app.Article'
+        type: integer
       produces:
       - application/json
       responses:
         "200":
           description: 获取成功
           schema:
-            type: string
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: integer
+                data:
+                  $ref: '#/definitions/app.Article'
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "404":
+          description: 文章不存在
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 根据ID获取文章
+      tags:
+      - Article
+  /article/getArticleList:
+    get:
+      description: 分页获取文章列表，支持搜索和筛选
+      parameters:
+      - default: 1
+        description: 页码
+        in: query
+        minimum: 1
+        name: page
+        type: integer
+      - default: 10
+        description: 每页数量
+        in: query
+        maximum: 100
+        minimum: 1
+        name: pageSize
+        type: integer
+      - description: 文章标题搜索
+        in: query
+        name: title
+        type: string
+      - description: 文章状态
+        in: query
+        name: state
+        type: integer
+      - description: 是否首页显示
+        in: query
+        name: is_important
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: integer
+                data:
+                  allOf:
+                  - $ref: '#/definitions/response.PageResult'
+                  - properties:
+                      list:
+                        items:
+                          $ref: '#/definitions/app.Article'
+                        type: array
+                      page:
+                        type: integer
+                      pageSize:
+                        type: integer
+                      total:
+                        type: integer
+                    type: object
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: 服务器错误
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 分页获取文章列表
+      tags:
+      - Article
+  /article/getArticleReading:
+    get:
+      description: 获取指定用户的文章阅读量统计
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: integer
+                data:
+                  properties:
+                    reading_quantity:
+                      type: integer
+                  type: object
+                msg:
+                  type: string
+              type: object
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: 服务器错误
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
       summary: 获取文章阅读量
@@ -1704,8 +2358,9 @@ paths:
     put:
       consumes:
       - application/json
+      description: 批量更新文章的显示状态
       parameters:
-      - description: 批量更新Article
+      - description: 文章ID列表
         in: body
         name: data
         required: true
@@ -1715,27 +2370,46 @@ paths:
       - application/json
       responses:
         "200":
-          description: '{}'
+          description: 批量更新成功
           schema:
             allOf:
             - $ref: '#/definitions/response.Response'
             - properties:
                 code:
-                  type: number
+                  type: integer
                 msg:
                   type: string
               type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: 服务器错误
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
-      summary: 批量更新Article
+      summary: 批量更新文章
       tags:
       - Article
-  /article/updateArticle/:id:
+  /article/updateArticle/{id}:
     put:
       consumes:
       - application/json
+      description: 根据文章ID更新文章信息
       parameters:
-      - description: 更新Article
+      - description: 文章ID
+        in: path
+        minimum: 1
+        name: id
+        required: true
+        type: integer
+      - description: 文章信息
         in: body
         name: data
         required: true
@@ -1745,20 +2419,40 @@ paths:
       - application/json
       responses:
         "200":
-          description: '{"success":true, "msg":"更新成功"}'
+          description: 更新成功
           schema:
-            type: string
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: integer
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: 服务器错误
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
-      summary: 更新Article
+      summary: 更新文章
       tags:
       - Article
   /authority/copyAuthority:
     post:
       consumes:
       - application/json
+      description: 基于现有角色创建新的角色副本
       parameters:
-      - description: 旧角色id, 新权限id, 新权限名, 新父角色id
+      - description: 角色拷贝信息
         in: body
         name: data
         required: true
@@ -1768,7 +2462,7 @@ paths:
       - application/json
       responses:
         "200":
-          description: 拷贝角色,返回包括系统角色详情
+          description: 拷贝角色成功
           schema:
             allOf:
             - $ref: '#/definitions/response.Response'
@@ -1778,6 +2472,14 @@ paths:
                 msg:
                   type: string
               type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
       summary: 拷贝角色
@@ -1787,8 +2489,9 @@ paths:
     post:
       consumes:
       - application/json
+      description: 创建新的系统角色
       parameters:
-      - description: 权限id, 权限名, 父角色id
+      - description: 角色信息
         in: body
         name: data
         required: true
@@ -1798,7 +2501,7 @@ paths:
       - application/json
       responses:
         "200":
-          description: 创建角色,返回包括系统角色详情
+          description: 创建角色成功
           schema:
             allOf:
             - $ref: '#/definitions/response.Response'
@@ -1808,6 +2511,14 @@ paths:
                 msg:
                   type: string
               type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
       summary: 创建角色
@@ -1817,18 +2528,18 @@ paths:
     delete:
       consumes:
       - application/json
+      description: 删除指定的系统角色
       parameters:
-      - description: 删除角色
-        in: body
-        name: data
+      - description: 角色ID
+        in: query
+        name: authorityId
         required: true
-        schema:
-          $ref: '#/definitions/system.SysAuthority'
+        type: string
       produces:
       - application/json
       responses:
         "200":
-          description: 删除角色
+          description: 删除角色成功
           schema:
             allOf:
             - $ref: '#/definitions/response.Response'
@@ -1836,6 +2547,14 @@ paths:
                 msg:
                   type: string
               type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
       summary: 删除角色
@@ -2389,32 +3108,48 @@ paths:
       - Base
   /base/getToken/login:
     post:
+      consumes:
+      - application/json
+      description: 用户登录获取 token，无需验证码
       parameters:
-      - description: 用户名, 密码
+      - description: 登录信息
         in: body
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.Login'
+          $ref: '#/definitions/request.LoginToken'
       produces:
       - application/json
       responses:
         "200":
-          description: 返回包括用户信息,token,过期时间
+          description: 登录成功
           schema:
             allOf:
             - $ref: '#/definitions/response.Response'
             - properties:
+                data:
+                  $ref: '#/definitions/server-fiber_model_system_response.LoginResponse'
                 msg:
                   type: string
               type: object
-      summary: 用户登录 获取token
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 登录失败
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 用户登录获取token
       tags:
       - Base
   /base/login:
     post:
+      consumes:
+      - application/json
+      description: 用户登录获取 token 和用户信息
       parameters:
-      - description: 用户名, 密码, 验证码
+      - description: 登录信息
         in: body
         name: data
         required: true
@@ -2424,14 +3159,24 @@ paths:
       - application/json
       responses:
         "200":
-          description: 返回包括用户信息,token,过期时间
+          description: 登录成功
           schema:
             allOf:
             - $ref: '#/definitions/response.Response'
             - properties:
+                data:
+                  $ref: '#/definitions/server-fiber_model_system_response.LoginResponse'
                 msg:
                   type: string
               type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 登录失败
+          schema:
+            $ref: '#/definitions/response.Response'
       summary: 用户登录
       tags:
       - Base
@@ -2439,8 +3184,9 @@ paths:
     post:
       consumes:
       - application/json
+      description: 创建新的基础消息
       parameters:
-      - description: 创建base_message
+      - description: 基础消息信息
         in: body
         name: data
         required: true
@@ -2450,60 +3196,89 @@ paths:
       - application/json
       responses:
         "200":
-          description: 创建base_message
+          description: 创建基础消息成功
           schema:
             allOf:
             - $ref: '#/definitions/response.Response'
             - properties:
                 code:
-                  type: number
+                  type: integer
                 data:
-                  type: object
+                  type: integer
                 msg:
                   type: string
               type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
-      summary: 创建BaseMessage
+      summary: 创建基础消息
       tags:
       - BaseMessage
-  /base_message/getBaseMessage/:id:
+  /base_message/getBaseMessage/{id}:
     get:
       consumes:
       - application/json
+      description: 根据ID查找基础消息详情
       parameters:
-      - description: 查找base message
+      - description: 基础消息ID
         in: path
+        minimum: 1
         name: id
         required: true
-        type: number
+        type: integer
       produces:
       - application/json
       responses:
         "200":
-          description: 查找base message
+          description: 查找基础消息成功
           schema:
             allOf:
             - $ref: '#/definitions/response.Response'
             - properties:
                 code:
-                  type: number
+                  type: integer
                 data:
                   $ref: '#/definitions/app.BaseMessage'
                 msg:
                   type: string
               type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
+        "404":
+          description: 基础消息不存在
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
-      summary: 查找base message
+      summary: 查找基础消息
       tags:
       - BaseMessage
-  /base_message/updateBaseMessage/:id:
+  /base_message/updateBaseMessage/{id}:
     put:
       consumes:
       - application/json
+      description: 根据ID更新基础消息信息
       parameters:
-      - description: 创建base_message
+      - description: 基础消息ID
+        in: path
+        minimum: 1
+        name: id
+        required: true
+        type: integer
+      - description: 基础消息信息
         in: body
         name: data
         required: true
@@ -2513,19 +3288,27 @@ paths:
       - application/json
       responses:
         "200":
-          description: 查找base message
+          description: 更新基础消息成功
           schema:
             allOf:
             - $ref: '#/definitions/response.Response'
             - properties:
                 code:
-                  type: number
+                  type: integer
                 msg:
                   type: string
               type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
-      summary: 更新 base_message
+      summary: 更新基础消息
       tags:
       - BaseMessage
   /base_message/upload:
@@ -2566,8 +3349,9 @@ paths:
     post:
       consumes:
       - application/json
+      description: 更新指定角色的API权限配置
       parameters:
-      - description: 权限id, 权限模型列表
+      - description: 权限配置信息
         in: body
         name: data
         required: true
@@ -2577,7 +3361,7 @@ paths:
       - application/json
       responses:
         "200":
-          description: 更新角色api权限
+          description: 更新角色API权限成功
           schema:
             allOf:
             - $ref: '#/definitions/response.Response'
@@ -2585,36 +3369,54 @@ paths:
                 msg:
                   type: string
               type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
-      summary: 更新角色api权限
+      summary: 更新角色API权限
       tags:
       - Casbin
-  /casbin/getPolicyPathByAuthorityId:
+  /casbin/getPolicyPathByAuthorityId/{id}:
     get:
       consumes:
       - application/json
+      description: 根据角色ID获取权限策略列表
       parameters:
-      - description: 权限id, 权限模型列表
-        in: body
-        name: data
+      - description: 角色ID
+        in: path
+        name: id
         required: true
-        schema:
-          $ref: '#/definitions/request.CasbinInReceive'
+        type: string
       produces:
       - application/json
       responses:
         "200":
-          description: 获取权限列表,返回包括casbin详情列表
+          description: 获取权限列表成功
           schema:
             allOf:
             - $ref: '#/definitions/response.Response'
             - properties:
                 data:
-                  type: string
+                  items:
+                    type: string
+                  type: array
                 msg:
                   type: string
               type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
       summary: 获取权限列表
@@ -2624,8 +3426,9 @@ paths:
     post:
       consumes:
       - application/json
+      description: 创建新的评论
       parameters:
-      - description: 创建Comment
+      - description: 评论信息
         in: body
         name: data
         required: true
@@ -2635,56 +3438,75 @@ paths:
       - application/json
       responses:
         "200":
-          description: 创建Comment
+          description: 创建评论成功
           schema:
             allOf:
             - $ref: '#/definitions/response.Response'
             - properties:
                 code:
-                  type: number
+                  type: integer
                 msg:
                   type: string
               type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
-      summary: 创建Comment
+      summary: 创建评论
       tags:
       - Comment
-  /comment/deleteComment/:id:
+  /comment/deleteComment/{id}:
     delete:
       consumes:
       - application/json
+      description: 根据评论ID删除指定评论
       parameters:
-      - description: 删除Comment
+      - description: 评论ID
         in: path
+        minimum: 1
         name: id
         required: true
-        type: number
+        type: integer
       produces:
       - application/json
       responses:
         "200":
-          description: 删除Comment
+          description: 删除评论成功
           schema:
             allOf:
             - $ref: '#/definitions/response.Response'
             - properties:
                 code:
-                  type: number
+                  type: integer
                 msg:
                   type: string
               type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
-      summary: 删除Comment
+      summary: 删除评论
       tags:
       - Comment
   /comment/deleteCommentByIds:
     delete:
       consumes:
       - application/json
+      description: 根据ID列表批量删除评论
       parameters:
-      - description: 批量删除Comment
+      - description: 评论ID列表
         in: body
         name: data
         required: true
@@ -2694,19 +3516,27 @@ paths:
       - application/json
       responses:
         "200":
-          description: 批量删除成功
+          description: 批量删除评论成功
           schema:
             allOf:
             - $ref: '#/definitions/response.Response'
             - properties:
                 code:
-                  type: number
+                  type: integer
                 msg:
                   type: string
               type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
-      summary: 批量删除Comment
+      summary: 批量删除评论
       tags:
       - Comment
   /comment/getComment/:id:
@@ -2786,7 +3616,9 @@ paths:
                   - $ref: '#/definitions/response.PageResult'
                   - properties:
                       list:
-                        $ref: '#/definitions/app.Comment'
+                        items:
+                          $ref: '#/definitions/app.Comment'
+                        type: array
                       page:
                         type: number
                       pageSize:
@@ -2848,7 +3680,9 @@ paths:
                   - $ref: '#/definitions/response.PageResult'
                   - properties:
                       list:
-                        $ref: '#/definitions/app.Comment'
+                        items:
+                          $ref: '#/definitions/app.Comment'
+                        type: array
                       page:
                         type: number
                       pageSize:
@@ -2896,17 +3730,19 @@ paths:
       summary: 点赞
       tags:
       - Comment
-  /comment/updateComment/:id:
+  /comment/updateComment/{id}:
     put:
       consumes:
       - application/json
+      description: 根据评论ID更新评论信息
       parameters:
-      - description: 获取id
+      - description: 评论ID
         in: path
+        minimum: 1
         name: id
         required: true
-        type: number
-      - description: 更新Comment
+        type: integer
+      - description: 评论信息
         in: body
         name: data
         required: true
@@ -2916,27 +3752,36 @@ paths:
       - application/json
       responses:
         "200":
-          description: 更新成功
+          description: 更新评论成功
           schema:
             allOf:
             - $ref: '#/definitions/response.Response'
             - properties:
                 code:
-                  type: number
+                  type: integer
                 msg:
                   type: string
               type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
-      summary: 更新Comment
+      summary: 更新评论
       tags:
       - Comment
   /customer/customer:
     post:
       consumes:
       - application/json
+      description: 创建新的客户信息
       parameters:
-      - description: 客户用户名, 客户手机号码
+      - description: 客户信息
         in: body
         name: data
         required: true
@@ -2946,46 +3791,30 @@ paths:
       - application/json
       responses:
         "200":
-          description: 创建客户
+          description: 创建客户成功
           schema:
             allOf:
             - $ref: '#/definitions/response.Response'
             - properties:
+                data:
+                  type: integer
                 msg:
                   type: string
               type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
       summary: 创建客户
       tags:
       - ExaCustomer
   /customer/customer/:id:
-    delete:
-      consumes:
-      - application/json
-      parameters:
-      - description: 客户ID
-        in: path
-        name: id
-        required: true
-        type: number
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: 删除客户
-          schema:
-            allOf:
-            - $ref: '#/definitions/response.Response'
-            - properties:
-                msg:
-                  type: string
-              type: object
-      security:
-      - ApiKeyAuth: []
-      summary: 删除客户
-      tags:
-      - ExaCustomer
     get:
       consumes:
       - application/json
@@ -3014,16 +3843,55 @@ paths:
       summary: 获取单一客户信息
       tags:
       - ExaCustomer
-    put:
+  /customer/customer/{id}:
+    delete:
       consumes:
       - application/json
+      description: 根据客户ID删除指定客户
       parameters:
       - description: 客户ID
         in: path
+        minimum: 1
         name: id
         required: true
-        type: number
-      - description: 客户ID, 客户信息
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 删除客户成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除客户
+      tags:
+      - ExaCustomer
+    put:
+      consumes:
+      - application/json
+      description: 根据客户ID更新客户信息
+      parameters:
+      - description: 客户ID
+        in: path
+        minimum: 1
+        name: id
+        required: true
+        type: integer
+      - description: 客户信息
         in: body
         name: data
         required: true
@@ -3033,16 +3901,24 @@ paths:
       - application/json
       responses:
         "200":
-          description: 更新客户信息
+          description: 更新客户信息成功
           schema:
             allOf:
             - $ref: '#/definitions/response.Response'
             - properties:
                 code:
-                  type: number
+                  type: integer
                 msg:
                   type: string
               type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
       summary: 更新客户信息
@@ -3151,10 +4027,47 @@ paths:
       summary: 下载模板
       tags:
       - excel
+  /excel/exportExcel:
+    post:
+      consumes:
+      - application/json
+      description: 根据提供的数据导出Excel文件
+      parameters:
+      - description: 导出Excel文件信息
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/example.ExcelInfo'
+      produces:
+      - application/octet-stream
+      responses:
+        "200":
+          description: Excel文件
+          schema:
+            type: file
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: 服务器错误
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 导出Excel
+      tags:
+      - excel
   /excel/importExcel:
     post:
       consumes:
       - multipart/form-data
+      description: 上传并导入Excel文件到系统
       parameters:
       - description: 导入Excel文件
         in: formData
@@ -3165,7 +4078,7 @@ paths:
       - application/json
       responses:
         "200":
-          description: 导入Excel文件
+          description: 导入Excel文件成功
           schema:
             allOf:
             - $ref: '#/definitions/response.Response'
@@ -3173,6 +4086,18 @@ paths:
                 msg:
                   type: string
               type: object
+        "400":
+          description: 文件格式错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: 服务器错误
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
       summary: 导入Excel文件
@@ -3226,8 +4151,11 @@ paths:
       summary: 断点续传到服务器
   /fileUploadAndDownload/deleteFile:
     delete:
+      consumes:
+      - application/json
+      description: 根据文件ID删除指定文件
       parameters:
-      - description: 传入文件里面id即可
+      - description: 文件信息
         in: body
         name: data
         required: true
@@ -3237,7 +4165,7 @@ paths:
       - application/json
       responses:
         "200":
-          description: 删除文件
+          description: 删除成功
           schema:
             allOf:
             - $ref: '#/definitions/response.Response'
@@ -3245,9 +4173,83 @@ paths:
                 msg:
                   type: string
               type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
       summary: 删除文件
+      tags:
+      - ExaFileUploadAndDownload
+  /fileUploadAndDownload/deleteFileBreakpoint:
+    delete:
+      consumes:
+      - multipart/form-data
+      parameters:
+      - description: Find the file, 删除缓存文件
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 删除缓存文件
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.FileResponse'
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 删除文件
+      tags:
+      - ExaFileUploadAndDownload
+  /fileUploadAndDownload/editFileName:
+    put:
+      consumes:
+      - application/json
+      description: 编辑文件的名称或备注信息
+      parameters:
+      - description: 文件信息
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/example.ExaFileUploadAndDownload'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 编辑成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 编辑文件名或者备注
       tags:
       - ExaFileUploadAndDownload
   /fileUploadAndDownload/findFile:
@@ -3305,6 +4307,35 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: 创建文件
+      tags:
+      - ExaFileUploadAndDownload
+  /fileUploadAndDownload/findFileBreakpoint:
+    get:
+      consumes:
+      - multipart/form-data
+      parameters:
+      - description: Find the file, 查找缓存文件列表
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 查找缓存文件列表
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.FileResponse'
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 查找缓存文件
       tags:
       - ExaFileUploadAndDownload
   /fileUploadAndDownload/getFileList:
@@ -3373,17 +4404,28 @@ paths:
     post:
       consumes:
       - multipart/form-data
+      description: 上传文件到服务器，支持图片裁剪
       parameters:
-      - description: 上传文件示例
+      - description: 上传文件
         in: formData
         name: file
         required: true
         type: file
+      - default: '"0"'
+        description: 是否保存到数据库
+        in: query
+        name: noSave
+        type: string
+      - default: 1
+        description: 是否裁剪图片
+        in: query
+        name: is_cropper
+        type: integer
       produces:
       - application/json
       responses:
         "200":
-          description: 上传文件示例,返回包括文件详情
+          description: 上传文件成功
           schema:
             allOf:
             - $ref: '#/definitions/response.Response'
@@ -3393,209 +4435,432 @@ paths:
                 msg:
                   type: string
               type: object
+        "400":
+          description: 文件过大或格式错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: 服务器错误
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
       summary: 上传文件示例
       tags:
       - ExaFileUploadAndDownload
-  /frontend-user/deleteUser/:id:
+  /frontend-user/deleteUser/{id}:
     delete:
       consumes:
       - application/json
+      description: 根据用户ID删除指定用户
       parameters:
-      - description: 删除User
+      - description: 用户ID
         in: path
+        minimum: 1
         name: id
         required: true
-        type: number
+        type: integer
       produces:
       - application/json
       responses:
         "200":
-          description: 删除User
+          description: 删除用户成功
           schema:
-            type: string
-      security:
-      - ApiKeyAuth: []
-      summary: 删除User
-      tags:
-      - User
-  /getArticle/:id:
-    get:
-      consumes:
-      - application/json
-      parameters:
-      - description: get单个Article
-        in: path
-        name: id
-        required: true
-        type: number
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: '{"success":true, "msg":"获得成功"}'
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: integer
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 参数错误
           schema:
-            type: string
-      security:
-      - ApiKeyAuth: []
-      summary: get单个Article
-      tags:
-      - Frontend Article
-  /getArticleList:
-    get:
-      consumes:
-      - application/json
-      parameters:
-      - in: query
-        name: content
-        type: string
-      - description: 创建时间
-        in: query
-        name: createdAt
-        type: string
-      - in: query
-        name: desc
-        type: string
-      - description: 主键ID
-        in: query
-        name: id
-        type: integer
-      - description: 是否为截图 1, 或 2
-        in: query
-        name: is_cropper
-        type: string
-      - in: query
-        name: is_important
-        type: integer
-      - description: 关键字
-        in: query
-        name: keyword
-        type: string
-      - in: query
-        name: name
-        type: string
-      - description: 页码
-        in: query
-        name: page
-        type: integer
-      - description: 每页大小
-        in: query
-        name: pageSize
-        type: integer
-      - in: query
-        name: proportion
-        type: string
-      - in: query
-        name: reading_quantity
-        type: integer
-      - in: query
-        name: sort
-        type: string
-      - in: query
-        name: state
-        type: integer
-      - in: query
-        name: title
-        type: string
-      - description: 更新时间
-        in: query
-        name: updatedAt
-        type: string
-      - in: query
-        name: user_id
-        type: integer
-      - in: query
-        name: value
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: '{"success":true, "msg":"获得成功"}'
-          schema:
-            type: string
-      security:
-      - ApiKeyAuth: []
-      summary: Get Article
-      tags:
-      - Frontend Article
-  /getSearchArticle/:name/:value:
-    get:
-      consumes:
-      - application/json
-      parameters:
-      - in: query
-        name: content
-        type: string
-      - description: 创建时间
-        in: query
-        name: createdAt
-        type: string
-      - in: query
-        name: desc
-        type: string
-      - description: 主键ID
-        in: query
-        name: id
-        type: integer
-      - description: 是否为截图 1, 或 2
-        in: query
-        name: is_cropper
-        type: string
-      - in: query
-        name: is_important
-        type: integer
-      - description: 关键字
-        in: query
-        name: keyword
-        type: string
-      - in: query
-        name: name
-        type: string
-      - description: 页码
-        in: query
-        name: page
-        type: integer
-      - description: 每页大小
-        in: query
-        name: pageSize
-        type: integer
-      - in: query
-        name: proportion
-        type: string
-      - in: query
-        name: reading_quantity
-        type: integer
-      - in: query
-        name: sort
-        type: string
-      - in: query
-        name: state
-        type: integer
-      - in: query
-        name: title
-        type: string
-      - description: 更新时间
-        in: query
-        name: updatedAt
-        type: string
-      - in: query
-        name: user_id
-        type: integer
-      - in: query
-        name: value
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: 获得成功
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
           schema:
             $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
-      summary: get单个Article
+      summary: 删除用户
+      tags:
+      - User
+  /frontend/comment:
+    post:
+      consumes:
+      - application/json
+      description: 为指定文章创建新评论
+      parameters:
+      - description: 评论信息
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/server-fiber_model_frontend.Comment'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 评论成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: integer
+                data:
+                  type: integer
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 创建评论
+      tags:
+      - Frontend Comment
+  /frontend/comment/{articleId}:
+    get:
+      description: 根据文章ID获取相关评论列表
+      parameters:
+      - description: 文章ID
+        in: path
+        minimum: 1
+        name: articleId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: integer
+                data:
+                  items:
+                    $ref: '#/definitions/server-fiber_model_frontend.Comment'
+                  type: array
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 获取文章评论
+      tags:
+      - Frontend Comment
+  /frontend/getImages:
+    get:
+      description: 获取前台展示的图片列表
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: integer
+                data:
+                  items:
+                    $ref: '#/definitions/app.FileUploadAndDownload'
+                  type: array
+                msg:
+                  type: string
+              type: object
+        "500":
+          description: 服务器错误
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 获取图片列表
+      tags:
+      - Frontend Image
+  /frontend/getTag/{id}:
+    get:
+      description: 根据标签ID获取标签及其关联的文章
+      parameters:
+      - description: 标签ID
+        in: path
+        minimum: 1
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: integer
+                data:
+                  properties:
+                    tag:
+                      items:
+                        $ref: '#/definitions/app.Tag'
+                      type: array
+                  type: object
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 获取标签详情
+      tags:
+      - Frontend Tag
+  /frontend/getTagList:
+    get:
+      description: 分页获取前台展示的标签列表
+      parameters:
+      - default: 1
+        description: 页码
+        in: query
+        minimum: 1
+        name: page
+        type: integer
+      - default: 10
+        description: 每页数量
+        in: query
+        maximum: 100
+        minimum: 1
+        name: pageSize
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: integer
+                data:
+                  allOf:
+                  - $ref: '#/definitions/response.PageResult'
+                  - properties:
+                      list:
+                        items:
+                          $ref: '#/definitions/app.Tag'
+                        type: array
+                    type: object
+                msg:
+                  type: string
+              type: object
+        "500":
+          description: 服务器错误
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 获取标签列表
+      tags:
+      - Frontend Tag
+  /frontend/login:
+    post:
+      consumes:
+      - application/json
+      description: 前台用户登录获取 token
+      parameters:
+      - description: 登录信息
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.Login'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 登录成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/server-fiber_model_system_response.LoginResponse'
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 登录失败
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 前台用户登录
+      tags:
+      - Frontend User
+  /getArticle/{id}:
+    get:
+      description: 根据文章ID获取文章详细信息
+      parameters:
+      - description: 文章ID
+        in: path
+        minimum: 1
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: integer
+                data:
+                  $ref: '#/definitions/app.Article'
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "404":
+          description: 文章不存在
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 获取文章详情
+      tags:
+      - Frontend Article
+  /getArticleList:
+    get:
+      description: 分页获取前台文章列表，支持搜索和筛选
+      parameters:
+      - default: 1
+        description: 页码
+        in: query
+        minimum: 1
+        name: page
+        type: integer
+      - default: 10
+        description: 每页数量
+        in: query
+        maximum: 100
+        minimum: 1
+        name: pageSize
+        type: integer
+      - description: 文章标题搜索
+        in: query
+        name: title
+        type: string
+      - description: 文章状态
+        in: query
+        name: state
+        type: integer
+      - description: 是否首页显示
+        in: query
+        name: is_important
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: integer
+                data:
+                  allOf:
+                  - $ref: '#/definitions/response.PageResult'
+                  - properties:
+                      list:
+                        items:
+                          $ref: '#/definitions/app.Article'
+                        type: array
+                      page:
+                        type: integer
+                      pageSize:
+                        type: integer
+                      total:
+                        type: integer
+                    type: object
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: 服务器错误
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 分页获取文章列表
+      tags:
+      - Frontend Article
+  /getSearchArticle/{name}/{value}:
+    get:
+      description: 根据标签或文章名称搜索相关内容
+      parameters:
+      - description: 搜索类型
+        enum:
+        - tags
+        - articles
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: 搜索值
+        in: path
+        name: value
+        required: true
+        type: string
+      - description: 排序方式
+        in: query
+        name: sort
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 搜索成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                code:
+                  type: integer
+                data:
+                  items:
+                    $ref: '#/definitions/app.Article'
+                  type: array
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 搜索文章
       tags:
       - Frontend Article
   /init/checkdb:
@@ -3695,8 +4960,9 @@ paths:
     post:
       consumes:
       - application/json
+      description: 为指定角色添加菜单权限
       parameters:
-      - description: 角色ID
+      - description: 菜单权限信息
         in: body
         name: data
         required: true
@@ -3706,7 +4972,7 @@ paths:
       - application/json
       responses:
         "200":
-          description: 增加menu和角色关联关系
+          description: 增加菜单和角色关联关系成功
           schema:
             allOf:
             - $ref: '#/definitions/response.Response'
@@ -3714,9 +4980,17 @@ paths:
                 msg:
                   type: string
               type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
-      summary: 增加menu和角色关联关系
+      summary: 增加菜单和角色关联关系
       tags:
       - AuthorityMenu
   /menu/deleteBaseMenu:
@@ -3779,55 +5053,55 @@ paths:
       - Menu
   /menu/getBaseMenuTree:
     get:
-      parameters:
-      - description: 空
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/request.Empty'
+      description: 获取系统所有基础菜单的树形结构
       produces:
       - application/json
       responses:
         "200":
-          description: 获取用户动态路由,返回包括系统菜单列表
+          description: 获取基础菜单树成功
           schema:
             allOf:
             - $ref: '#/definitions/response.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/response.SysBaseMenusResponse'
+                  items:
+                    $ref: '#/definitions/system.SysBaseMenu'
+                  type: array
                 msg:
                   type: string
               type: object
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
-      summary: 获取用户动态路由
+      summary: 获取基础菜单树
       tags:
       - AuthorityMenu
   /menu/getMenu:
     get:
-      parameters:
-      - description: 空
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/request.Empty'
+      description: 根据用户权限获取可访问的菜单树
       produces:
       - application/json
       responses:
         "200":
-          description: 获取用户动态路由,返回包括系统菜单详情列表
+          description: 获取用户动态路由成功
           schema:
             allOf:
             - $ref: '#/definitions/response.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/response.SysMenusResponse'
+                  items:
+                    $ref: '#/definitions/system.SysMenu'
+                  type: array
                 msg:
                   type: string
               type: object
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
       summary: 获取用户动态路由
@@ -3837,31 +5111,40 @@ paths:
     get:
       consumes:
       - application/json
+      description: 获取指定角色可访问的菜单列表
       parameters:
       - description: 角色ID
-        in: body
-        name: data
+        in: query
+        name: authorityId
         required: true
-        schema:
-          $ref: '#/definitions/request.GetAuthorityId'
+        type: string
       produces:
       - application/json
       responses:
         "200":
-          description: 获取指定角色menu
+          description: 获取指定角色菜单成功
           schema:
             allOf:
             - $ref: '#/definitions/response.Response'
             - properties:
                 data:
-                  additionalProperties: true
-                  type: object
+                  items:
+                    $ref: '#/definitions/system.SysMenu'
+                  type: array
                 msg:
                   type: string
               type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
-      summary: 获取指定角色menu
+      summary: 获取指定角色菜单
       tags:
       - AuthorityMenu
   /menu/getMenuList:
@@ -3922,12 +5205,178 @@ paths:
       summary: 更新菜单
       tags:
       - Menu
+  /mobile/getUserInfo:
+    get:
+      description: 根据用户ID获取移动端用户详细信息
+      parameters:
+      - description: 用户ID
+        in: header
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  type: object
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 获取移动端用户信息
+      tags:
+      - Mobile Login
+  /mobile/login:
+    post:
+      consumes:
+      - application/json
+      description: 移动端用户登录获取用户信息
+      parameters:
+      - description: 登录信息
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/mobile.Login'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 登录成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  type: object
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 移动端用户登录
+      tags:
+      - Mobile Login
+  /mobile/register:
+    post:
+      consumes:
+      - application/json
+      description: 移动端用户注册新账号
+      parameters:
+      - description: 注册信息
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/mobile.Register'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 注册成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 移动端用户注册
+      tags:
+      - Mobile Register
+  /mobile/updateMobileUser:
+    put:
+      consumes:
+      - application/json
+      description: 更新移动端用户的基本信息
+      parameters:
+      - description: 用户ID
+        in: header
+        name: user_id
+        required: true
+        type: string
+      - description: 用户更新信息
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.MobileUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 更新成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  type: object
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 更新移动端用户信息
+      tags:
+      - Mobile Login
+  /mobile/updatePassword:
+    put:
+      consumes:
+      - application/json
+      description: 更新移动端用户的登录密码
+      parameters:
+      - description: 密码更新信息
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.MobileUpdatePassword'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 更新成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  type: string
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 更新移动端用户密码
+      tags:
+      - Mobile Login
   /mobileUser/createMobileUser:
     post:
       consumes:
       - application/json
+      description: 创建新的移动端用户
       parameters:
-      - description: 创建MobileUser
+      - description: 移动端用户信息
         in: body
         name: data
         required: true
@@ -3937,43 +5386,71 @@ paths:
       - application/json
       responses:
         "200":
-          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          description: 创建移动端用户成功
           schema:
-            type: string
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
-      summary: 创建MobileUser
+      summary: 创建移动端用户
       tags:
       - MobileUser
-  /mobileUser/deleteMobileUser:
+  /mobileUser/deleteMobileUser/{id}:
     delete:
       consumes:
       - application/json
+      description: 根据用户ID删除指定移动端用户
       parameters:
-      - description: 删除MobileUser
-        in: body
-        name: data
+      - description: 用户ID
+        in: path
+        minimum: 1
+        name: id
         required: true
-        schema:
-          $ref: '#/definitions/mobile.MobileUser'
+        type: integer
       produces:
       - application/json
       responses:
         "200":
-          description: '{"success":true,"data":{},"msg":"删除成功"}'
+          description: 删除移动端用户成功
           schema:
-            type: string
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
-      summary: 删除MobileUser
+      summary: 删除移动端用户
       tags:
       - MobileUser
   /mobileUser/deleteMobileUserByIds:
     delete:
       consumes:
       - application/json
+      description: 根据ID列表批量删除移动端用户
       parameters:
-      - description: 批量删除MobileUser
+      - description: 用户ID列表
         in: body
         name: data
         required: true
@@ -3983,15 +5460,28 @@ paths:
       - application/json
       responses:
         "200":
-          description: '{"success":true,"data":{},"msg":"批量删除成功"}'
+          description: 创建移动端用户成功
           schema:
-            type: string
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
-      summary: 批量删除MobileUser
+      summary: 批量删除移动端用户
       tags:
       - MobileUser
-  /mobileUser/findMobileUser:
+  /mobileUser/findMobileUser/:id:
     get:
       consumes:
       - application/json
@@ -4134,8 +5624,9 @@ paths:
     put:
       consumes:
       - application/json
+      description: 更新移动端用户信息
       parameters:
-      - description: 更新MobileUser
+      - description: 移动端用户信息
         in: body
         name: data
         required: true
@@ -4145,12 +5636,25 @@ paths:
       - application/json
       responses:
         "200":
-          description: '{"success":true,"data":{},"msg":"更新成功"}'
+          description: 更新移动端用户成功
           schema:
-            type: string
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
-      summary: 更新MobileUser
+      summary: 更新移动端用户
       tags:
       - MobileUser
   /sysDictionary/createSysDictionary:
@@ -4209,7 +5713,7 @@ paths:
       summary: 删除SysDictionary
       tags:
       - SysDictionary
-  /sysDictionary/findSysDictionary/:id:
+  /sysDictionary/findSysDictionary:
     get:
       consumes:
       - application/json
@@ -4721,6 +6225,10 @@ paths:
           Backend: 后台
           Frontend: 前端
           Mobile: 移动端
+        x-enum-descriptions:
+        - 后台
+        - 前端
+        - 移动端
         x-enum-varnames:
         - Backend
         - Frontend
@@ -4832,6 +6340,10 @@ paths:
           Backend: 后台
           Frontend: 前端
           Mobile: 移动端
+        x-enum-descriptions:
+        - 后台
+        - 前端
+        - 移动端
         x-enum-varnames:
         - Backend
         - Frontend
@@ -4951,22 +6463,325 @@ paths:
       summary: 设置配置文件内容
       tags:
       - System
-  /tasking/start:
+  /tag/:id:
     get:
       consumes:
       - application/json
+      parameters:
+      - description: 创建时间
+        in: query
+        name: createdAt
+        type: string
+      - description: 主键ID
+        in: query
+        name: id
+        type: integer
+      - in: query
+        name: name
+        type: string
+      - in: query
+        name: status
+        type: integer
+      - description: 更新时间
+        in: query
+        name: updatedAt
+        type: string
       produces:
       - application/json
       responses:
         "200":
-          description: '{"success":true,"data":{},"msg":"开启成功"}'
+          description: '{"success":true,"data":app.Tag,"msg":"查询成功"}'
           schema:
             type: string
       security:
       - ApiKeyAuth: []
-      summary: start Tasking
+      summary: 用id查询Tag
       tags:
-      - start Tasking
+      - Tag
+  /tag/createTag:
+    post:
+      consumes:
+      - application/json
+      description: 创建新的标签
+      parameters:
+      - description: 标签信息
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/app.Tag'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 创建标签成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  type: integer
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 创建标签
+      tags:
+      - Tag
+  /tag/deleteTag/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 根据标签ID删除指定标签
+      parameters:
+      - description: 标签ID
+        in: path
+        minimum: 1
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 删除标签成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除标签
+      tags:
+      - Tag
+  /tag/deleteTagByIds:
+    delete:
+      consumes:
+      - application/json
+      description: 根据ID列表批量删除标签
+      parameters:
+      - description: 标签ID列表
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.IdsReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 批量删除标签成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 批量删除标签
+      tags:
+      - Tag
+  /tag/getTagList:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 创建时间
+        in: query
+        name: createdAt
+        type: string
+      - description: 主键ID
+        in: query
+        name: id
+        type: integer
+      - description: 是否为截图 1, 或 2
+        in: query
+        name: is_cropper
+        type: string
+      - description: 关键字
+        in: query
+        name: keyword
+        type: string
+      - in: query
+        name: name
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 每页大小
+        in: query
+        name: pageSize
+        type: integer
+      - in: query
+        name: proportion
+        type: string
+      - in: query
+        name: status
+        type: integer
+      - description: 更新时间
+        in: query
+        name: updatedAt
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":app.Tag[],total=integer,"msg":"获取成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 分页获取Tag列表
+      tags:
+      - Tag
+  /tag/updateTag:
+    put:
+      consumes:
+      - application/json
+      description: 更新标签信息
+      parameters:
+      - description: 标签信息
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/app.Tag'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 更新标签成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新标签
+      tags:
+      - Tag
+  /tasking/start:
+    get:
+      consumes:
+      - application/json
+      description: 启动指定的定时任务
+      parameters:
+      - description: 任务名称
+        in: query
+        name: task
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 启动任务成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
+        "404":
+          description: 任务不存在
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 启动任务
+      tags:
+      - Tasking
+  /tasking/stop:
+    get:
+      consumes:
+      - application/json
+      description: 停止指定的定时任务
+      parameters:
+      - description: 任务名称
+        in: query
+        name: task
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 停止任务成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
+        "404":
+          description: 任务不存在
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 停止任务
+      tags:
+      - Tasking
   /user/SetSelfInfo:
     put:
       consumes:
@@ -5049,8 +6864,9 @@ paths:
     post:
       consumes:
       - application/json
+      description: 创建新的应用用户
       parameters:
-      - description: 创建User
+      - description: 用户信息
         in: body
         name: data
         required: true
@@ -5060,37 +6876,48 @@ paths:
       - application/json
       responses:
         "200":
-          description: 获取成功
+          description: 创建用户成功
           schema:
             allOf:
             - $ref: '#/definitions/response.Response'
             - properties:
                 code:
-                  type: number
+                  type: integer
+                data:
+                  type: integer
                 msg:
                   type: string
               type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
-      summary: 创建User
+      summary: 创建用户
       tags:
       - User
-  /user/deleteUser/:id:
+  /user/deleteUser/{id}:
     delete:
       consumes:
       - application/json
+      description: 根据用户ID删除指定用户
       parameters:
       - description: 用户ID
-        in: body
-        name: data
+        in: path
+        minimum: 1
+        name: id
         required: true
-        schema:
-          $ref: '#/definitions/request.GetById'
+        type: integer
       produces:
       - application/json
       responses:
         "200":
-          description: 删除用户
+          description: 删除用户成功
           schema:
             allOf:
             - $ref: '#/definitions/response.Response'
@@ -5098,6 +6925,18 @@ paths:
                 msg:
                   type: string
               type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
+        "403":
+          description: 不能删除自己
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
       summary: 删除用户
@@ -5107,8 +6946,9 @@ paths:
     delete:
       consumes:
       - application/json
+      description: 根据ID列表批量删除用户
       parameters:
-      - description: 批量删除User
+      - description: 用户ID列表
         in: body
         name: data
         required: true
@@ -5118,19 +6958,27 @@ paths:
       - application/json
       responses:
         "200":
-          description: 批量删除成功
+          description: 批量删除用户成功
           schema:
             allOf:
             - $ref: '#/definitions/response.Response'
             - properties:
                 code:
-                  type: number
+                  type: integer
                 msg:
                   type: string
               type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
-      summary: 批量删除User
+      summary: 批量删除用户
       tags:
       - User
   /user/findUser/:id:
@@ -5300,8 +7148,9 @@ paths:
     post:
       consumes:
       - application/json
+      description: 设置指定用户的多个角色权限
       parameters:
-      - description: 用户UUID, 角色ID
+      - description: 用户权限信息
         in: body
         name: data
         required: true
@@ -5311,7 +7160,7 @@ paths:
       - application/json
       responses:
         "200":
-          description: 设置用户权限
+          description: 设置用户权限成功
           schema:
             allOf:
             - $ref: '#/definitions/response.Response'
@@ -5319,6 +7168,14 @@ paths:
                 msg:
                   type: string
               type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
       summary: 设置用户权限
@@ -5328,8 +7185,9 @@ paths:
     post:
       consumes:
       - application/json
+      description: 更改指定用户的角色权限
       parameters:
-      - description: 用户UUID, 角色ID
+      - description: 用户权限信息
         in: body
         name: data
         required: true
@@ -5339,7 +7197,7 @@ paths:
       - application/json
       responses:
         "200":
-          description: 设置用户权限
+          description: 设置用户权限成功
           schema:
             allOf:
             - $ref: '#/definitions/response.Response'
@@ -5347,6 +7205,14 @@ paths:
                 msg:
                   type: string
               type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
       summary: 更改用户权限
@@ -5356,8 +7222,9 @@ paths:
     put:
       consumes:
       - application/json
+      description: 设置指定用户的基本信息
       parameters:
-      - description: ID, 用户名, 昵称, 头像链接
+      - description: 用户信息
         in: body
         name: data
         required: true
@@ -5367,7 +7234,7 @@ paths:
       - application/json
       responses:
         "200":
-          description: 设置用户信息
+          description: 设置用户信息成功
           schema:
             allOf:
             - $ref: '#/definitions/response.Response'
@@ -5375,22 +7242,32 @@ paths:
                 msg:
                   type: string
               type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
       summary: 设置用户信息
       tags:
       - SysUser
-  /user/updateUser/:id:
+  /user/updateUser/{id}:
     put:
       consumes:
       - application/json
+      description: 根据用户ID更新用户信息
       parameters:
-      - description: 删除User
+      - description: 用户ID
         in: path
+        minimum: 1
         name: id
         required: true
-        type: number
-      - description: 更新User
+        type: integer
+      - description: 用户信息
         in: body
         name: data
         required: true
@@ -5400,19 +7277,27 @@ paths:
       - application/json
       responses:
         "200":
-          description: 更新成功
+          description: 更新用户成功
           schema:
             allOf:
             - $ref: '#/definitions/response.Response'
             - properties:
                 code:
-                  type: number
+                  type: integer
                 msg:
                   type: string
               type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/response.Response'
       security:
       - ApiKeyAuth: []
-      summary: 更新User
+      summary: 更新用户
       tags:
       - User
 swagger: "2.0"

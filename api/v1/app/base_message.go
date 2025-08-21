@@ -12,14 +12,17 @@ import (
 	"gorm.io/gorm"
 )
 
-// CreateBaseMessage 创建base_message
+// CreateBaseMessage 创建基础消息
 // @Tags BaseMessage
-// @Summary 创建BaseMessage
+// @Summary 创建基础消息
+// @Description 创建新的基础消息
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param data body app.BaseMessage true "创建base_message"
-// @Success 200 {object} response.Response{msg=string,data=object,code=number} "创建base_message"
+// @Param data body app.BaseMessage true "基础消息信息"
+// @Success 200 {object} response.Response{msg=string,data=integer,code=integer} "创建基础消息成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
 // @Router /base_message/createBaseMessage [post]
 func (a *BaseMessageApi) CreateBaseMessage(c *fiber.Ctx) error {
 	var baseMessage app.BaseMessage
@@ -36,14 +39,19 @@ func (a *BaseMessageApi) CreateBaseMessage(c *fiber.Ctx) error {
 	}
 }
 
+// UpdateBaseMessage 更新基础消息
 // @Tags BaseMessage
-// @Summary 更新 base_message
+// @Summary 更新基础消息
+// @Description 根据ID更新基础消息信息
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param data body app.BaseMessage true "创建base_message"
-// @Success 200 {object} response.Response{msg=string,code=number} "查找base message"
-// @Router /base_message/updateBaseMessage/:id [put]
+// @Param id path integer true "基础消息ID" minimum(1)
+// @Param data body app.BaseMessage true "基础消息信息"
+// @Success 200 {object} response.Response{msg=string,code=integer} "更新基础消息成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
+// @Router /base_message/updateBaseMessage/{id} [put]
 func (a *BaseMessageApi) UpdateBaseMessage(c *fiber.Ctx) error {
 	var baseMessage app.BaseMessage
 	id, err := c.ParamsInt("id", 0)
@@ -64,14 +72,19 @@ func (a *BaseMessageApi) UpdateBaseMessage(c *fiber.Ctx) error {
 	}
 }
 
+// FindBaseMessage 查找基础消息
 // @Tags BaseMessage
-// @Summary 查找base message
+// @Summary 查找基础消息
+// @Description 根据ID查找基础消息详情
 // @Security ApiKeyAuth
-// @accept application/json
+// @Accept application/json
 // @Produce application/json
-// @Param id path number true "查找base message"
-// @Success 200 {object} response.Response{msg=string,data=app.BaseMessage,code=number} "查找base message"
-// @Router /base_message/getBaseMessage/:id [get]
+// @Param id path integer true "基础消息ID" minimum(1)
+// @Success 200 {object} response.Response{msg=string,data=app.BaseMessage,code=integer} "查找基础消息成功"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
+// @Failure 404 {object} response.Response "基础消息不存在"
+// @Router /base_message/getBaseMessage/{id} [get]
 func (a *BaseMessageApi) FindBaseMessage(c *fiber.Ctx) error {
 	id, err := c.ParamsInt("id")
 	if err != nil {
