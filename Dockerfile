@@ -1,4 +1,4 @@
-FROM golang:1.25.0 AS builder
+FROM golang:latest AS builder
 
 LABEL org.opencontainers.image.authors="jianghao"
 
@@ -8,7 +8,7 @@ ENV GO111MODULE=on
 
 WORKDIR /app
 COPY . /app
-RUN GOEXPERIMENT=jsonv2 CGO_ENABLED=0 GOOS=linux go build -tags=jsoniter -trimpath -o fiber -ldflags="-s -w" cmd/main.go #CGO_ENABLED=0 go build -trimpath -ldflags="-s -w" -o fiber cmd/main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -tags=jsoniter -trimpath -o fiber -ldflags="-s -w" cmd/main.go #CGO_ENABLED=0 go build -trimpath -ldflags="-s -w" -o fiber cmd/main.go
 
 FROM rockylinux:9-minimal AS runner
 WORKDIR /app
