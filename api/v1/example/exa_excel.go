@@ -136,7 +136,10 @@ func (e *ExcelApi) LoadExcel(c *fiber.Ctx) error {
 // @accept multipart/form-data
 // @Produce  application/json
 // @Param fileName query string true "模板名称"
-// @Success 200
+// @Success 200 {object} response.Response{data=string,msg=string} "下载模板"
+// @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response "服务器错误"
 // @Router /excel/downloadTemplate [get]
 func (e *ExcelApi) DownloadTemplate(c *fiber.Ctx) error {
 	fileName := c.Query("fileName")

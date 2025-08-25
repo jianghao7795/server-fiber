@@ -17,7 +17,7 @@ type AuthorityBtnApi struct{}
 // @accept application/json
 // @Produce application/json
 // @Param data body request.SysAuthorityBtnReq true "菜单id, 角色id, 选中的按钮id"
-// @Success 200 {object} response.Response{data=response.SysAuthorityBtnRes,msg=string} "返回列表成功"
+// @Success 200 {object} response.Response{data=object,msg=string} "返回列表成功"
 // @Router /authorityBtn/getAuthorityBtn [post]
 func (a *AuthorityBtnApi) GetAuthorityBtn(c *fiber.Ctx) error {
 	var req request.SysAuthorityBtnReq

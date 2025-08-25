@@ -142,7 +142,7 @@ func (u *FileUploadAndDownloadApi) DeleteFile(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data body request.PageInfo true "页码, 每页大小"
-// @Success 200 {object} response.Response{data=response.PageResult{list=example.ExaFileUploadAndDownload[]},msg=string} "分页文件列表,返回包括列表,总数,页码,每页数量"
+// @Success 200 {object} response.Response{data=response.PageResult,msg=string} "分页文件列表,返回包括列表,总数,页码,每页数量"
 // @Router /fileUploadAndDownload/getFileList [get]
 func (u *FileUploadAndDownloadApi) GetFileList(c *fiber.Ctx) error {
 	var pageInfo request.PageInfo

@@ -154,8 +154,8 @@ func (commentApi *CommentApi) FindComment(c *fiber.Ctx) error {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data query request.CommentSearch true "分页获取Comment列表"
-// @Success 200 {object} response.Response{msg=string,data=response.PageResult{list=[]app.Comment,total=number,page=number,pageSize=number},code=number} "获取成功"
+// @Param data query commentReq.CommentSearch true "分页获取Comment列表"
+// @Success 200 {object} response.Response{msg=string,data=response.PageResult,code=number} "获取成功"
 // @Router /comment/getCommentList [get]
 func (commentApi *CommentApi) GetCommentList(c *fiber.Ctx) error {
 	var pageInfo commentReq.CommentSearch
@@ -186,8 +186,8 @@ func (commentApi *CommentApi) GetCommentList(c *fiber.Ctx) error {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data query request.CommentSearch true "分页获取Comment列表"
-// @Success 200 {object} response.Response{msg=string,data=response.PageResult{list=[]app.Comment,total=number,page=number,pageSize=number},code=number} "获取成功"
+// @Param data query commentReq.CommentSearch true "分页获取Comment列表"
+// @Success 200 {object} response.Response{msg=string,data=response.PageResult,code=number} "获取成功"
 // @Router /comment/getCommentTreeList [get]
 func (*CommentApi) GetCommentTreeList(c *fiber.Ctx) error {
 	var pageInfo commentReq.CommentSearch

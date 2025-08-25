@@ -51,7 +51,7 @@ func (*LoginApi) Login(c *fiber.Ctx) error {
 // @Description 根据用户ID获取移动端用户详细信息
 // @Produce application/json
 // @Param user_id header string true "用户ID"
-// @Success 200 {object} response.Response{msg=string,data=object} "获取成功"
+// @Success 200 {object} response.Response{msg=string,data=mobile.MobileUser} "获取成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Router /mobile/getUserInfo [get]
 func (*LoginApi) GetUserInfo(c *fiber.Ctx) error {

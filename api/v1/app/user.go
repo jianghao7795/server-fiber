@@ -162,7 +162,7 @@ func (userApi *UserApi) FindUser(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data query appReq.UserSearch true "分页获取User列表"
-// @Success 200 {object} response.Response{msg=string,code=number,data=response.PageResult{list=app.User[]}} "获取成功"
+// @Success 200 {object} response.Response{msg=string,code=number,data=response.PageResult} "获取成功"
 // @Router /user/getUserList [get]
 func (userApi *UserApi) GetUserList(c *fiber.Ctx) error {
 	var pageInfo appReq.UserSearch

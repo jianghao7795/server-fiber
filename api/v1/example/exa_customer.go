@@ -4,7 +4,7 @@ import (
 	global "server-fiber/model"
 	"server-fiber/model/common/response"
 	"server-fiber/model/example"
-	"server-fiber/model/example/request"
+	exampleReq "server-fiber/model/example/request"
 	exampleRes "server-fiber/model/example/response"
 	"server-fiber/utils"
 
@@ -147,11 +147,11 @@ func (e *CustomerApi) GetExaCustomer(c *fiber.Ctx) error {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data query request.PageInfo true "页码, 每页大小"
-// @Success 200 {object} response.Response{data=response.PageResult{list=example.ExaCustomer[]},msg=string} "分页获取权限客户列表,返回包括列表,总数,页码,每页数量"
+// @Param data query exampleReq.SearchCustomerParams true "页码, 每页大小"
+// @Success 200 {object} response.Response{data=response.PageResult,msg=string} "分页获取权限客户列表,返回包括列表,总数,页码,每页数量"
 // @Router /customer/customerList [get]
 func (e *CustomerApi) GetExaCustomerList(c *fiber.Ctx) error {
-	var pageInfo request.SearchCustomerParams
+	var pageInfo exampleReq.SearchCustomerParams
 	_ = c.QueryParser(&pageInfo)
 	if err := utils.Verify(pageInfo, utils.PageInfoVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)

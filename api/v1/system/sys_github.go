@@ -18,6 +18,16 @@ import (
 
 type SystemGithubApi struct{}
 
+// @Tags SysGithub
+// @Summary 获取GitHub提交列表
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param page query int false "页码" default(1)
+// @Param pageSize query int false "每页大小" default(10)
+// @Success 200 {object} response.Response{data=response.PageResult,msg=string} "获取成功"
+// @Failure 400 {object} response.Response{msg=string} "获取失败"
+// @Router /github/getGithubList [get]
 func (g *SystemGithubApi) GetGithubList(c *fiber.Ctx) error {
 	var searchInfo request.PageInfo
 	_ = c.QueryParser(&searchInfo)
@@ -33,6 +43,15 @@ func (g *SystemGithubApi) GetGithubList(c *fiber.Ctx) error {
 	}
 }
 
+// @Tags SysGithub
+// @Summary 创建GitHub提交记录
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Description 从GitHub API获取最新的提交记录并保存到数据库
+// @Success 200 {object} response.Response{data=object,msg=string} "创建成功"
+// @Failure 400 {object} response.Response{msg=string} "创建失败或网络错误"
+// @Router /github/createGithub [get]
 func (g *SystemGithubApi) CreateGithub(c *fiber.Ctx) error {
 	isCheck := utils.NetWorkStatus("https://api.github.com")
 	if !isCheck {

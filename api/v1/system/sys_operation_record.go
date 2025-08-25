@@ -92,7 +92,7 @@ func (s *OperationRecordApi) FindSysOperationRecord(c *fiber.Ctx) error {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data query request.SysOperationRecordSearch true "页码, 每页大小, 搜索条件"
+// @Param data query systemReq.SysOperationRecordSearch true "页码, 每页大小, 搜索条件"
 // @Success 200 {object} response.Response{data=response.PageResult,msg=string} "分页获取SysOperationRecord列表,返回包括列表,总数,页码,每页数量"
 // @Router /sysOperationRecord/getSysOperationRecordList [get]
 func (s *OperationRecordApi) GetSysOperationRecordList(c *fiber.Ctx) error {

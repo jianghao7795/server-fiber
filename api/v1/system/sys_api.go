@@ -95,7 +95,7 @@ func (s *SystemApiApi) GetApiList(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data body request.GetById true "根据id获取api"
-// @Success 200 {object} response.Response{string} "根据id获取api,返回包括api详情"
+// @Success 200 {object} response.Response{system.SysApi} "根据id获取api,返回包括api详情"
 // @Router /api/getApiById [post]
 func (s *SystemApiApi) GetApiById(c *fiber.Ctx) error {
 	var idInfo request.GetById
@@ -143,7 +143,7 @@ func (s *SystemApiApi) UpdateApi(c *fiber.Ctx) error {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Success 200 {object} response.Response{msg=string} "获取所有的Api 不分页,返回包括api列表"
+// @Success 200 {object} response.Response{msg=string,[]system.SysApi} "获取所有的Api 不分页,返回包括api列表"
 // @Router /api/getAllApis [get]
 func (s *SystemApiApi) GetAllApis(c *fiber.Ctx) error {
 	if apis, err := apiService.GetAllApis(); err != nil {

@@ -175,7 +175,7 @@ func (*ArticleApi) FindArticle(c *fiber.Ctx) error {
 // @Param title query string false "文章标题搜索"
 // @Param state query integer false "文章状态"
 // @Param is_important query integer false "是否首页显示"
-// @Success 200 {object} response.Response{msg=string,data=response.PageResult{list=[]app.Article,total=integer,page=integer,pageSize=integer},code=integer} "获取成功"
+// @Success 200 {object} response.Response{msg=string,data=response.PageResult,code=integer} "获取成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 500 {object} response.Response "服务器错误"
 // @Router /article/getArticleList [get]
@@ -238,7 +238,7 @@ func (*ArticleApi) PutArticleByIds(c *fiber.Ctx) error {
 // @Description 获取指定用户的文章阅读量统计
 // @Security ApiKeyAuth
 // @Produce application/json
-// @Success 200 {object} response.Response{msg=string,data=object{reading_quantity=integer},code=integer} "获取成功"
+// @Success 200 {object} response.Response{msg=string,data=object,code=integer} "获取成功"
 // @Failure 401 {object} response.Response "未授权"
 // @Failure 500 {object} response.Response "服务器错误"
 // @Router /article/getArticleReading [get]

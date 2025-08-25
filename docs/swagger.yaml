@@ -1,183 +1,4 @@
 definitions:
-  app.Article:
-    properties:
-      content:
-        type: string
-      createdAt:
-        description: 创建时间
-        type: string
-      desc:
-        type: string
-      id:
-        description: 主键ID
-        type: integer
-      is_important:
-        type: integer
-      reading_quantity:
-        type: integer
-      state:
-        type: integer
-      tags:
-        description: 多对多 article_tag
-        items:
-          $ref: '#/definitions/app.Tag'
-        type: array
-      title:
-        type: string
-      updatedAt:
-        description: 更新时间
-        type: string
-      user:
-        $ref: '#/definitions/system.SysUser'
-      user_id:
-        type: integer
-    type: object
-  app.BaseMessage:
-    properties:
-      copyright:
-        type: string
-      createdAt:
-        description: 创建时间
-        type: string
-      head_img:
-        type: string
-      id:
-        description: 主键ID
-        type: integer
-      introduction:
-        type: string
-      link:
-        type: string
-      record_info:
-        type: string
-      title:
-        type: string
-      updatedAt:
-        description: 更新时间
-        type: string
-      user_id:
-        type: integer
-    type: object
-  app.Comment:
-    properties:
-      article:
-        $ref: '#/definitions/app.Article'
-      article_id:
-        type: integer
-      children:
-        items:
-          $ref: '#/definitions/app.Comment'
-        type: array
-      content:
-        type: string
-      createdAt:
-        description: 创建时间
-        type: string
-      id:
-        description: 主键ID
-        type: integer
-      parent_id:
-        type: integer
-      to_user:
-        $ref: '#/definitions/system.SysUser'
-      to_user_id:
-        description: 作为外键 关联User
-        type: integer
-      updatedAt:
-        description: 更新时间
-        type: string
-      user:
-        allOf:
-        - $ref: '#/definitions/system.SysUser'
-        description: foreignKey是管联UserId的SysUser的表
-      user_id:
-        description: 作为外键 关联User
-        type: integer
-    type: object
-  app.FileUploadAndDownload:
-    properties:
-      createdAt:
-        description: 创建时间
-        type: string
-      id:
-        description: 主键ID
-        type: integer
-      key:
-        description: 编号
-        type: string
-      name:
-        description: 文件名
-        type: string
-      tag:
-        description: 文件标签
-        type: string
-      updatedAt:
-        description: 更新时间
-        type: string
-      url:
-        description: 文件地址
-        type: string
-    type: object
-  app.Praise:
-    properties:
-      comment_id:
-        type: integer
-      createdAt:
-        description: 创建时间
-        type: string
-      id:
-        description: 主键ID
-        type: integer
-      updatedAt:
-        description: 更新时间
-        type: string
-      user_id:
-        type: integer
-    type: object
-  app.Tag:
-    properties:
-      articles:
-        items:
-          $ref: '#/definitions/app.Article'
-        type: array
-      createdAt:
-        description: 创建时间
-        type: string
-      id:
-        description: 主键ID
-        type: integer
-      name:
-        type: string
-      status:
-        type: integer
-      updatedAt:
-        description: 更新时间
-        type: string
-    type: object
-  app.User:
-    properties:
-      content:
-        type: string
-      createdAt:
-        description: 创建时间
-        type: string
-      headImg:
-        type: string
-      header:
-        type: string
-      id:
-        description: 主键ID
-        type: integer
-      introduction:
-        type: string
-      name:
-        type: string
-      password:
-        type: string
-      updatedAt:
-        description: 更新时间
-        type: string
-    type: object
   config.AliyunOSS:
     properties:
       access-key-id:
@@ -345,6 +166,30 @@ definitions:
         type: string
       tableName:
         description: 需要清理的表名
+        type: string
+    type: object
+  config.Email:
+    properties:
+      from:
+        description: 收件人
+        type: string
+      host:
+        description: 服务器地址
+        type: string
+      is-ssl:
+        description: 是否SSL
+        type: boolean
+      nickname:
+        description: 昵称
+        type: string
+      port:
+        description: 端口
+        type: integer
+      secret:
+        description: 密钥
+        type: string
+      to:
+        description: 收件人:多个以英文逗号分隔
         type: string
     type: object
   config.Excel:
@@ -531,7 +376,7 @@ definitions:
         type: array
       email:
         allOf:
-        - $ref: '#/definitions/server-fiber_config.Email'
+        - $ref: '#/definitions/config.Email'
         description: email
       excel:
         $ref: '#/definitions/config.Excel'
@@ -684,7 +529,239 @@ definitions:
         description: 栈名
         type: string
     type: object
-  example.ExaCustomer:
+  server-fiber_model_app.Article:
+    properties:
+      content:
+        type: string
+      createdAt:
+        description: 创建时间
+        type: string
+      desc:
+        type: string
+      id:
+        description: 主键ID
+        type: integer
+      is_important:
+        type: integer
+      reading_quantity:
+        type: integer
+      state:
+        type: integer
+      tags:
+        description: 多对多 article_tag
+        items:
+          $ref: '#/definitions/server-fiber_model_app.Tag'
+        type: array
+      title:
+        type: string
+      updatedAt:
+        description: 更新时间
+        type: string
+      user:
+        $ref: '#/definitions/server-fiber_model_system.SysUser'
+      user_id:
+        type: integer
+    type: object
+  server-fiber_model_app.BaseMessage:
+    properties:
+      copyright:
+        type: string
+      createdAt:
+        description: 创建时间
+        type: string
+      head_img:
+        type: string
+      id:
+        description: 主键ID
+        type: integer
+      introduction:
+        type: string
+      link:
+        type: string
+      record_info:
+        type: string
+      title:
+        type: string
+      updatedAt:
+        description: 更新时间
+        type: string
+      user_id:
+        type: integer
+    type: object
+  server-fiber_model_app.Comment:
+    properties:
+      article:
+        $ref: '#/definitions/server-fiber_model_app.Article'
+      article_id:
+        type: integer
+      children:
+        items:
+          $ref: '#/definitions/server-fiber_model_app.Comment'
+        type: array
+      content:
+        type: string
+      createdAt:
+        description: 创建时间
+        type: string
+      id:
+        description: 主键ID
+        type: integer
+      parent_id:
+        type: integer
+      to_user:
+        $ref: '#/definitions/server-fiber_model_system.SysUser'
+      to_user_id:
+        description: 作为外键 关联User
+        type: integer
+      updatedAt:
+        description: 更新时间
+        type: string
+      user:
+        allOf:
+        - $ref: '#/definitions/server-fiber_model_system.SysUser'
+        description: foreignKey是管联UserId的SysUser的表
+      user_id:
+        description: 作为外键 关联User
+        type: integer
+    type: object
+  server-fiber_model_app.FileUploadAndDownload:
+    properties:
+      createdAt:
+        description: 创建时间
+        type: string
+      id:
+        description: 主键ID
+        type: integer
+      key:
+        description: 编号
+        type: string
+      name:
+        description: 文件名
+        type: string
+      tag:
+        description: 文件标签
+        type: string
+      updatedAt:
+        description: 更新时间
+        type: string
+      url:
+        description: 文件地址
+        type: string
+    type: object
+  server-fiber_model_app.Praise:
+    properties:
+      comment_id:
+        type: integer
+      createdAt:
+        description: 创建时间
+        type: string
+      id:
+        description: 主键ID
+        type: integer
+      updatedAt:
+        description: 更新时间
+        type: string
+      user_id:
+        type: integer
+    type: object
+  server-fiber_model_app.Tag:
+    properties:
+      articles:
+        items:
+          $ref: '#/definitions/server-fiber_model_app.Article'
+        type: array
+      createdAt:
+        description: 创建时间
+        type: string
+      id:
+        description: 主键ID
+        type: integer
+      name:
+        type: string
+      status:
+        type: integer
+      updatedAt:
+        description: 更新时间
+        type: string
+    type: object
+  server-fiber_model_app.User:
+    properties:
+      content:
+        type: string
+      createdAt:
+        description: 创建时间
+        type: string
+      headImg:
+        type: string
+      header:
+        type: string
+      id:
+        description: 主键ID
+        type: integer
+      introduction:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      updatedAt:
+        description: 更新时间
+        type: string
+    type: object
+  server-fiber_model_app_response.ResponseUploadFile:
+    properties:
+      file:
+        $ref: '#/definitions/server-fiber_model_app.FileUploadAndDownload'
+    type: object
+  server-fiber_model_common_request.GetById:
+    properties:
+      id:
+        description: 主键ID
+        type: integer
+    type: object
+  server-fiber_model_common_request.IdsReq:
+    properties:
+      ids:
+        items:
+          type: integer
+        type: array
+    type: object
+  server-fiber_model_common_request.PageInfo:
+    properties:
+      is_cropper:
+        description: 是否为截图 1, 或 2
+        type: string
+      keyword:
+        description: 关键字
+        type: string
+      page:
+        description: 页码
+        type: integer
+      pageSize:
+        description: 每页大小
+        type: integer
+      proportion:
+        type: string
+    type: object
+  server-fiber_model_common_response.PageResult:
+    properties:
+      list: {}
+      page:
+        type: integer
+      pageSize:
+        type: integer
+      total:
+        type: integer
+    type: object
+  server-fiber_model_common_response.Response:
+    properties:
+      code:
+        type: integer
+      data: {}
+      msg:
+        type: string
+    type: object
+  server-fiber_model_example.ExaCustomer:
     properties:
       createdAt:
         description: 创建时间
@@ -700,7 +777,7 @@ definitions:
         type: integer
       sysUser:
         allOf:
-        - $ref: '#/definitions/system.SysUser'
+        - $ref: '#/definitions/server-fiber_model_system.SysUser'
         description: 管理详情
       sysUserAuthorityID:
         description: 管理角色ID
@@ -712,7 +789,7 @@ definitions:
         description: 更新时间
         type: string
     type: object
-  example.ExaFile:
+  server-fiber_model_example.ExaFile:
     properties:
       chunk_total:
         type: integer
@@ -722,7 +799,7 @@ definitions:
       exa_file_chunk:
         description: 切片结构体
         items:
-          $ref: '#/definitions/example.ExaFileChunk'
+          $ref: '#/definitions/server-fiber_model_example.ExaFileChunk'
         type: array
       file_md5:
         type: string
@@ -739,7 +816,7 @@ definitions:
         description: 更新时间
         type: string
     type: object
-  example.ExaFileChunk:
+  server-fiber_model_example.ExaFileChunk:
     properties:
       createdAt:
         description: 创建时间
@@ -757,7 +834,7 @@ definitions:
         description: 更新时间
         type: string
     type: object
-  example.ExaFileUploadAndDownload:
+  server-fiber_model_example.ExaFileUploadAndDownload:
     properties:
       createdAt:
         description: 创建时间
@@ -793,17 +870,17 @@ definitions:
         description: 图片宽度
         type: integer
     type: object
-  example.ExcelInfo:
+  server-fiber_model_example.ExcelInfo:
     properties:
       fileName:
         description: 文件名
         type: string
       infoList:
         items:
-          $ref: '#/definitions/example.FielUploadImport'
+          $ref: '#/definitions/server-fiber_model_example.FielUploadImport'
         type: array
     type: object
-  example.FielUploadImport:
+  server-fiber_model_example.FielUploadImport:
     properties:
       createdAt:
         description: 创建时间
@@ -833,448 +910,25 @@ definitions:
         description: 更新时间
         type: string
     type: object
-  frontend.ArticleUser:
-    properties:
-      createdAt:
-        description: 创建时间
-        type: string
-      headerImg:
-        type: string
-      id:
-        description: 主键ID
-        type: integer
-      nickName:
-        type: string
-      updatedAt:
-        description: 更新时间
-        type: string
-      userName:
-        type: string
-    type: object
-  mobile.Login:
-    properties:
-      password:
-        type: string
-      realname:
-        type: string
-      username:
-        type: string
-    type: object
-  mobile.MobileUser:
-    properties:
-      avatar:
-        type: string
-      content:
-        type: string
-      cover:
-        type: string
-      createdAt:
-        description: 创建时间
-        type: string
-      gender:
-        type: integer
-      id:
-        description: 主键ID
-        type: integer
-      industry:
-        description: Password string `json:"password" form:"password" gorm:"column:password;comment:密码;size:100;"`
-        type: integer
-      nickname:
-        type: string
-      phone:
-        type: string
-      realname:
-        type: string
-      sign:
-        type: string
-      updatedAt:
-        description: 更新时间
-        type: string
-      username:
-        type: string
-    type: object
-  mobile.Register:
-    properties:
-      createdAt:
-        description: 创建时间
-        type: string
-      id:
-        description: 主键ID
-        type: integer
-      password:
-        type: string
-      phone:
-        type: string
-      realname:
-        type: string
-      updatedAt:
-        description: 更新时间
-        type: string
-      username:
-        type: string
-    type: object
-  request.AddMenuAuthorityInfo:
-    properties:
-      authorityId:
-        description: 角色ID
-        type: string
-      menus:
-        items:
-          $ref: '#/definitions/system.SysBaseMenu'
-        type: array
-    type: object
-  request.CasbinInReceive:
-    properties:
-      authorityId:
-        description: 权限id
-        type: string
-      casbinInfos:
-        items:
-          $ref: '#/definitions/request.CasbinInfo'
-        type: array
-    type: object
-  request.CasbinInfo:
-    properties:
-      method:
-        description: 方法
-        type: string
-      path:
-        description: 路径
-        type: string
-    type: object
-  request.ChangePasswordStruct:
-    properties:
-      newPassword:
-        description: 新密码
-        type: string
-      password:
-        description: 密码
-        type: string
-      username:
-        description: 用户名
-        type: string
-    type: object
-  request.GetById:
-    properties:
-      id:
-        description: 主键ID
-        type: integer
-    type: object
-  request.IdsReq:
-    properties:
-      ids:
-        items:
-          type: integer
-        type: array
-    type: object
-  request.InitDB:
-    properties:
-      dbName:
-        description: 数据库名
-        type: string
-      dbType:
-        description: 数据库类型
-        type: string
-      host:
-        description: 服务器地址
-        type: string
-      password:
-        description: 数据库密码
-        type: string
-      port:
-        description: 数据库连接端口
-        type: string
-      userName:
-        description: 数据库用户名
-        type: string
-    type: object
-  request.Login:
-    properties:
-      captcha:
-        description: 验证码
-        type: string
-      captchaId:
-        description: 验证码ID
-        type: string
-      password:
-        description: 密码
-        type: string
-      username:
-        description: 用户名
-        type: string
-    type: object
-  request.LoginToken:
-    properties:
-      password:
-        type: string
-      username:
-        type: string
-    required:
-    - password
-    - username
-    type: object
-  request.MobileUpdate:
-    properties:
-      field:
-        type: string
-      value: {}
-    type: object
-  request.MobileUpdatePassword:
-    properties:
-      id:
-        type: integer
-      newPassword:
-        type: string
-      password:
-        type: string
-    type: object
-  request.PageInfo:
-    properties:
-      is_cropper:
-        description: 是否为截图 1, 或 2
-        type: string
-      keyword:
-        description: 关键字
-        type: string
-      page:
-        description: 页码
-        type: integer
-      pageSize:
-        description: 每页大小
-        type: integer
-      proportion:
-        type: string
-    type: object
-  request.Register:
-    properties:
-      authorityId:
-        type: string
-      authorityIds:
-        items:
-          type: string
-        type: array
-      email:
-        type: string
-      headerImg:
-        type: string
-      nickName:
-        type: string
-      passWord:
-        type: string
-      phone:
-        type: string
-      userName:
-        type: string
-    type: object
-  request.RollBack:
-    properties:
-      deleteTable:
-        description: 是否删除表
-        type: boolean
-      id:
-        description: 主键ID
-        type: integer
-    type: object
-  request.SearchApiParams:
-    properties:
-      api_group:
-        description: api组
-        type: string
-      createdAt:
-        description: 创建时间
-        type: string
-      desc:
-        description: 排序方式:升序false(默认)|降序true
-        type: string
-      description:
-        description: api中文描述
-        type: string
-      id:
-        description: 主键ID
-        type: integer
-      is_cropper:
-        description: 是否为截图 1, 或 2
-        type: string
-      keyword:
-        description: 关键字
-        type: string
-      method:
-        description: 方法:创建POST(默认)|查看GET|更新PUT|删除DELETE
-        type: string
-      orderKey:
-        description: 排序
-        type: string
-      page:
-        description: 页码
-        type: integer
-      pageSize:
-        description: 每页大小
-        type: integer
-      path:
-        description: api路径
-        type: string
-      proportion:
-        type: string
-      updatedAt:
-        description: 更新时间
-        type: string
-    type: object
-  request.SetUserAuth:
-    properties:
-      authorityId:
-        description: 角色ID
-        type: string
-    type: object
-  request.SetUserAuthorities:
-    properties:
-      authorityIds:
-        description: 角色ID
-        items:
-          type: string
-        type: array
-      id:
-        type: integer
-    type: object
-  request.SysAuthorityBtnReq:
-    properties:
-      authorityId:
-        type: string
-      menuID:
-        type: integer
-      selected:
-        items:
-          type: integer
-        type: array
-    type: object
-  request.SysAutoHistory:
-    properties:
-      is_cropper:
-        description: 是否为截图 1, 或 2
-        type: string
-      keyword:
-        description: 关键字
-        type: string
-      page:
-        description: 页码
-        type: integer
-      pageSize:
-        description: 每页大小
-        type: integer
-      proportion:
-        type: string
-    type: object
-  response.Email:
-    properties:
-      body:
-        description: 邮件内容
-        type: string
-      subject:
-        description: 邮件标题
-        type: string
-      to:
-        description: 邮件发送给谁
-        type: string
-    type: object
-  response.ExaCustomerResponse:
+  server-fiber_model_example_response.ExaCustomerResponse:
     properties:
       customer:
-        $ref: '#/definitions/example.ExaCustomer'
+        $ref: '#/definitions/server-fiber_model_example.ExaCustomer'
     type: object
-  response.ExaFileResponse:
+  server-fiber_model_example_response.ExaFileResponse:
     properties:
       file:
-        $ref: '#/definitions/example.ExaFileUploadAndDownload'
+        $ref: '#/definitions/server-fiber_model_example.ExaFileUploadAndDownload'
     type: object
-  response.FilePathResponse:
+  server-fiber_model_example_response.FilePathResponse:
     properties:
       filePath:
         type: string
     type: object
-  response.FileResponse:
+  server-fiber_model_example_response.FileResponse:
     properties:
       file:
-        $ref: '#/definitions/example.ExaFile'
-    type: object
-  response.PageResult:
-    properties:
-      list: {}
-      page:
-        type: integer
-      pageSize:
-        type: integer
-      total:
-        type: integer
-    type: object
-  response.Response:
-    properties:
-      code:
-        type: integer
-      data: {}
-      msg:
-        type: string
-    type: object
-  response.ResponseUploadFile:
-    properties:
-      file:
-        $ref: '#/definitions/app.FileUploadAndDownload'
-    type: object
-  response.SysAuthorityBtnRes:
-    properties:
-      selected:
-        items:
-          type: integer
-        type: array
-    type: object
-  response.SysAuthorityCopyResponse:
-    properties:
-      authority:
-        $ref: '#/definitions/system.SysAuthority'
-      oldAuthorityId:
-        description: 旧角色ID
-        type: string
-    type: object
-  response.SysAuthorityResponse:
-    properties:
-      authority:
-        $ref: '#/definitions/system.SysAuthority'
-    type: object
-  response.SysBaseMenuResponse:
-    properties:
-      menu:
-        $ref: '#/definitions/system.SysBaseMenu'
-    type: object
-  response.SysCaptchaResponse:
-    properties:
-      captchaId:
-        type: string
-      captchaLength:
-        type: integer
-      picPath:
-        type: string
-    type: object
-  server-fiber_config.Email:
-    properties:
-      from:
-        description: 收件人
-        type: string
-      host:
-        description: 服务器地址
-        type: string
-      is-ssl:
-        description: 是否SSL
-        type: boolean
-      nickname:
-        description: 昵称
-        type: string
-      port:
-        description: 端口
-        type: integer
-      secret:
-        description: 密钥
-        type: string
-      to:
-        description: 收件人:多个以英文逗号分隔
-        type: string
+        $ref: '#/definitions/server-fiber_model_example.ExaFile'
     type: object
   server-fiber_model_frontend.Article:
     properties:
@@ -1304,9 +958,27 @@ definitions:
         description: 更新时间
         type: string
       user:
-        $ref: '#/definitions/frontend.ArticleUser'
+        $ref: '#/definitions/server-fiber_model_frontend.ArticleUser'
       user_id:
         type: integer
+    type: object
+  server-fiber_model_frontend.ArticleUser:
+    properties:
+      createdAt:
+        description: 创建时间
+        type: string
+      headerImg:
+        type: string
+      id:
+        description: 主键ID
+        type: integer
+      nickName:
+        type: string
+      updatedAt:
+        description: 更新时间
+        type: string
+      userName:
+        type: string
     type: object
   server-fiber_model_frontend.Comment:
     properties:
@@ -1405,16 +1077,84 @@ definitions:
         description: 用户登录名
         type: string
     type: object
-  server-fiber_model_system_response.LoginResponse:
+  server-fiber_model_mobile.Login:
     properties:
-      expiresAt:
-        type: integer
-      token:
+      password:
         type: string
-      user:
-        $ref: '#/definitions/system.SysUser'
+      realname:
+        type: string
+      username:
+        type: string
     type: object
-  system.AutoCodeStruct:
+  server-fiber_model_mobile.MobileUser:
+    properties:
+      avatar:
+        type: string
+      content:
+        type: string
+      cover:
+        type: string
+      createdAt:
+        description: 创建时间
+        type: string
+      gender:
+        type: integer
+      id:
+        description: 主键ID
+        type: integer
+      industry:
+        description: Password string `json:"password" form:"password" gorm:"column:password;comment:密码;size:100;"`
+        type: integer
+      nickname:
+        type: string
+      phone:
+        type: string
+      realname:
+        type: string
+      sign:
+        type: string
+      updatedAt:
+        description: 更新时间
+        type: string
+      username:
+        type: string
+    type: object
+  server-fiber_model_mobile.Register:
+    properties:
+      createdAt:
+        description: 创建时间
+        type: string
+      id:
+        description: 主键ID
+        type: integer
+      password:
+        type: string
+      phone:
+        type: string
+      realname:
+        type: string
+      updatedAt:
+        description: 更新时间
+        type: string
+      username:
+        type: string
+    type: object
+  server-fiber_model_mobile_request.MobileUpdate:
+    properties:
+      field:
+        type: string
+      value: {}
+    type: object
+  server-fiber_model_mobile_request.MobileUpdatePassword:
+    properties:
+      id:
+        type: integer
+      newPassword:
+        type: string
+      password:
+        type: string
+    type: object
+  server-fiber_model_system.AutoCodeStruct:
     properties:
       abbreviation:
         description: Struct简称
@@ -1430,7 +1170,7 @@ definitions:
         type: string
       fields:
         items:
-          $ref: '#/definitions/system.Field'
+          $ref: '#/definitions/server-fiber_model_system.Field'
         type: array
       humpPackageName:
         description: go文件名称
@@ -1447,7 +1187,7 @@ definitions:
         description: 表名
         type: string
     type: object
-  system.Field:
+  server-fiber_model_system.Field:
     properties:
       columnName:
         description: 数据库字段
@@ -1477,7 +1217,7 @@ definitions:
         description: Field数据类型
         type: string
     type: object
-  system.Meta:
+  server-fiber_model_system.Meta:
     properties:
       closeTab:
         description: 自动关闭tab
@@ -1495,7 +1235,7 @@ definitions:
         description: 菜单名
         type: string
     type: object
-  system.PolicyType:
+  server-fiber_model_system.PolicyType:
     enum:
     - 0
     - 1
@@ -1513,7 +1253,7 @@ definitions:
     - Backend
     - Frontend
     - Mobile
-  system.SysApi:
+  server-fiber_model_system.SysApi:
     properties:
       api_group:
         description: api组
@@ -1537,7 +1277,7 @@ definitions:
         description: 更新时间
         type: string
     type: object
-  system.SysAuthority:
+  server-fiber_model_system.SysAuthority:
     properties:
       authorityId:
         description: 角色ID
@@ -1547,14 +1287,14 @@ definitions:
         type: string
       children:
         items:
-          $ref: '#/definitions/system.SysAuthority'
+          $ref: '#/definitions/server-fiber_model_system.SysAuthority'
         type: array
       createdAt:
         description: 创建时间
         type: string
       dataAuthorityId:
         items:
-          $ref: '#/definitions/system.SysAuthority'
+          $ref: '#/definitions/server-fiber_model_system.SysAuthority'
         type: array
       defaultRouter:
         description: 默认菜单(默认dashboard)
@@ -1563,7 +1303,7 @@ definitions:
         type: string
       menus:
         items:
-          $ref: '#/definitions/system.SysBaseMenu'
+          $ref: '#/definitions/server-fiber_model_system.SysBaseMenu'
         type: array
       parentId:
         description: 父角色ID
@@ -1572,7 +1312,7 @@ definitions:
         description: 更新时间
         type: string
     type: object
-  system.SysAutoCode:
+  server-fiber_model_system.SysAutoCode:
     properties:
       createdAt:
         description: 创建时间
@@ -1590,15 +1330,15 @@ definitions:
         description: 更新时间
         type: string
     type: object
-  system.SysBaseMenu:
+  server-fiber_model_system.SysBaseMenu:
     properties:
       authoritys:
         items:
-          $ref: '#/definitions/system.SysAuthority'
+          $ref: '#/definitions/server-fiber_model_system.SysAuthority'
         type: array
       children:
         items:
-          $ref: '#/definitions/system.SysBaseMenu'
+          $ref: '#/definitions/server-fiber_model_system.SysBaseMenu'
         type: array
       component:
         description: 对应前端文件路径
@@ -1614,18 +1354,18 @@ definitions:
         type: integer
       menuBtn:
         items:
-          $ref: '#/definitions/system.SysBaseMenuBtn'
+          $ref: '#/definitions/server-fiber_model_system.SysBaseMenuBtn'
         type: array
       meta:
         allOf:
-        - $ref: '#/definitions/system.Meta'
+        - $ref: '#/definitions/server-fiber_model_system.Meta'
         description: 附加属性
       name:
         description: 路由name
         type: string
       parameters:
         items:
-          $ref: '#/definitions/system.SysBaseMenuParameter'
+          $ref: '#/definitions/server-fiber_model_system.SysBaseMenuParameter'
         type: array
       parentId:
         description: 父菜单ID
@@ -1640,7 +1380,7 @@ definitions:
         description: 更新时间
         type: string
     type: object
-  system.SysBaseMenuBtn:
+  server-fiber_model_system.SysBaseMenuBtn:
     properties:
       createdAt:
         description: 创建时间
@@ -1658,7 +1398,7 @@ definitions:
         description: 更新时间
         type: string
     type: object
-  system.SysBaseMenuParameter:
+  server-fiber_model_system.SysBaseMenuParameter:
     properties:
       createdAt:
         description: 创建时间
@@ -1681,7 +1421,7 @@ definitions:
         description: 地址栏携带参数的值
         type: string
     type: object
-  system.SysDictionary:
+  server-fiber_model_system.SysDictionary:
     properties:
       createdAt:
         description: 创建时间
@@ -1700,7 +1440,7 @@ definitions:
         type: boolean
       sysDictionaryDetails:
         items:
-          $ref: '#/definitions/system.SysDictionaryDetail'
+          $ref: '#/definitions/server-fiber_model_system.SysDictionaryDetail'
         type: array
       type:
         description: 字典名（英）
@@ -1709,7 +1449,7 @@ definitions:
         description: 更新时间
         type: string
     type: object
-  system.SysDictionaryDetail:
+  server-fiber_model_system.SysDictionaryDetail:
     properties:
       createdAt:
         description: 创建时间
@@ -1736,11 +1476,11 @@ definitions:
         description: 字典值
         type: integer
     type: object
-  system.SysMenu:
+  server-fiber_model_system.SysMenu:
     properties:
       authoritys:
         items:
-          $ref: '#/definitions/system.SysAuthority'
+          $ref: '#/definitions/server-fiber_model_system.SysAuthority'
         type: array
       btns:
         additionalProperties:
@@ -1748,7 +1488,7 @@ definitions:
         type: object
       children:
         items:
-          $ref: '#/definitions/system.SysMenu'
+          $ref: '#/definitions/server-fiber_model_system.SysMenu'
         type: array
       component:
         description: 对应前端文件路径
@@ -1764,20 +1504,20 @@ definitions:
         type: integer
       menuBtn:
         items:
-          $ref: '#/definitions/system.SysBaseMenuBtn'
+          $ref: '#/definitions/server-fiber_model_system.SysBaseMenuBtn'
         type: array
       menuId:
         type: string
       meta:
         allOf:
-        - $ref: '#/definitions/system.Meta'
+        - $ref: '#/definitions/server-fiber_model_system.Meta'
         description: 附加属性
       name:
         description: 路由name
         type: string
       parameters:
         items:
-          $ref: '#/definitions/system.SysBaseMenuParameter'
+          $ref: '#/definitions/server-fiber_model_system.SysBaseMenuParameter'
         type: array
       parentId:
         description: 父菜单ID
@@ -1792,7 +1532,7 @@ definitions:
         description: 更新时间
         type: string
     type: object
-  system.SysOperationRecord:
+  server-fiber_model_system.SysOperationRecord:
     properties:
       agent:
         description: 代理
@@ -1828,27 +1568,27 @@ definitions:
         description: 请求状态
         type: integer
       type_port:
-        $ref: '#/definitions/system.PolicyType'
+        $ref: '#/definitions/server-fiber_model_system.PolicyType'
       updatedAt:
         description: 更新时间
         type: string
       user:
-        $ref: '#/definitions/system.SysUser'
+        $ref: '#/definitions/server-fiber_model_system.SysUser'
       user_id:
         description: 用户id
         type: integer
     type: object
-  system.SysUser:
+  server-fiber_model_system.SysUser:
     properties:
       activeColor:
         description: 活跃颜色
         type: string
       authorities:
         items:
-          $ref: '#/definitions/system.SysAuthority'
+          $ref: '#/definitions/server-fiber_model_system.SysAuthority'
         type: array
       authority:
-        $ref: '#/definitions/system.SysAuthority'
+        $ref: '#/definitions/server-fiber_model_system.SysAuthority'
       authorityId:
         description: 用户角色ID
         type: string
@@ -1892,10 +1632,263 @@ definitions:
         description: 用户UUID
         type: string
     type: object
-  system.System:
+  server-fiber_model_system.System:
     properties:
       config:
         $ref: '#/definitions/config.Server'
+    type: object
+  server-fiber_model_system_request.AddMenuAuthorityInfo:
+    properties:
+      authorityId:
+        description: 角色ID
+        type: string
+      menus:
+        items:
+          $ref: '#/definitions/server-fiber_model_system.SysBaseMenu'
+        type: array
+    type: object
+  server-fiber_model_system_request.CasbinInReceive:
+    properties:
+      authorityId:
+        description: 权限id
+        type: string
+      casbinInfos:
+        items:
+          $ref: '#/definitions/server-fiber_model_system_request.CasbinInfo'
+        type: array
+    type: object
+  server-fiber_model_system_request.CasbinInfo:
+    properties:
+      method:
+        description: 方法
+        type: string
+      path:
+        description: 路径
+        type: string
+    type: object
+  server-fiber_model_system_request.ChangePasswordStruct:
+    properties:
+      newPassword:
+        description: 新密码
+        type: string
+      password:
+        description: 密码
+        type: string
+      username:
+        description: 用户名
+        type: string
+    type: object
+  server-fiber_model_system_request.InitDB:
+    properties:
+      dbName:
+        description: 数据库名
+        type: string
+      dbType:
+        description: 数据库类型
+        type: string
+      host:
+        description: 服务器地址
+        type: string
+      password:
+        description: 数据库密码
+        type: string
+      port:
+        description: 数据库连接端口
+        type: string
+      userName:
+        description: 数据库用户名
+        type: string
+    type: object
+  server-fiber_model_system_request.Login:
+    properties:
+      captcha:
+        description: 验证码
+        type: string
+      captchaId:
+        description: 验证码ID
+        type: string
+      password:
+        description: 密码
+        type: string
+      username:
+        description: 用户名
+        type: string
+    type: object
+  server-fiber_model_system_request.LoginToken:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  server-fiber_model_system_request.Register:
+    properties:
+      authorityId:
+        type: string
+      authorityIds:
+        items:
+          type: string
+        type: array
+      email:
+        type: string
+      headerImg:
+        type: string
+      nickName:
+        type: string
+      passWord:
+        type: string
+      phone:
+        type: string
+      userName:
+        type: string
+    type: object
+  server-fiber_model_system_request.RollBack:
+    properties:
+      deleteTable:
+        description: 是否删除表
+        type: boolean
+      id:
+        description: 主键ID
+        type: integer
+    type: object
+  server-fiber_model_system_request.SearchApiParams:
+    properties:
+      api_group:
+        description: api组
+        type: string
+      createdAt:
+        description: 创建时间
+        type: string
+      desc:
+        description: 排序方式:升序false(默认)|降序true
+        type: string
+      description:
+        description: api中文描述
+        type: string
+      id:
+        description: 主键ID
+        type: integer
+      is_cropper:
+        description: 是否为截图 1, 或 2
+        type: string
+      keyword:
+        description: 关键字
+        type: string
+      method:
+        description: 方法:创建POST(默认)|查看GET|更新PUT|删除DELETE
+        type: string
+      orderKey:
+        description: 排序
+        type: string
+      page:
+        description: 页码
+        type: integer
+      pageSize:
+        description: 每页大小
+        type: integer
+      path:
+        description: api路径
+        type: string
+      proportion:
+        type: string
+      updatedAt:
+        description: 更新时间
+        type: string
+    type: object
+  server-fiber_model_system_request.SetUserAuth:
+    properties:
+      authorityId:
+        description: 角色ID
+        type: string
+    type: object
+  server-fiber_model_system_request.SetUserAuthorities:
+    properties:
+      authorityIds:
+        description: 角色ID
+        items:
+          type: string
+        type: array
+      id:
+        type: integer
+    type: object
+  server-fiber_model_system_request.SysAuthorityBtnReq:
+    properties:
+      authorityId:
+        type: string
+      menuID:
+        type: integer
+      selected:
+        items:
+          type: integer
+        type: array
+    type: object
+  server-fiber_model_system_request.SysAutoHistory:
+    properties:
+      is_cropper:
+        description: 是否为截图 1, 或 2
+        type: string
+      keyword:
+        description: 关键字
+        type: string
+      page:
+        description: 页码
+        type: integer
+      pageSize:
+        description: 每页大小
+        type: integer
+      proportion:
+        type: string
+    type: object
+  server-fiber_model_system_response.LoginResponse:
+    properties:
+      expiresAt:
+        type: integer
+      token:
+        type: string
+      user:
+        $ref: '#/definitions/server-fiber_model_system.SysUser'
+    type: object
+  server-fiber_model_system_response.SysAuthorityCopyResponse:
+    properties:
+      authority:
+        $ref: '#/definitions/server-fiber_model_system.SysAuthority'
+      oldAuthorityId:
+        description: 旧角色ID
+        type: string
+    type: object
+  server-fiber_model_system_response.SysAuthorityResponse:
+    properties:
+      authority:
+        $ref: '#/definitions/server-fiber_model_system.SysAuthority'
+    type: object
+  server-fiber_model_system_response.SysBaseMenuResponse:
+    properties:
+      menu:
+        $ref: '#/definitions/server-fiber_model_system.SysBaseMenu'
+    type: object
+  server-fiber_model_system_response.SysCaptchaResponse:
+    properties:
+      captchaId:
+        type: string
+      captchaLength:
+        type: integer
+      picPath:
+        type: string
+    type: object
+  server-fiber_plugin_email_model_response.Email:
+    properties:
+      body:
+        description: 邮件内容
+        type: string
+      subject:
+        description: 邮件标题
+        type: string
+      to:
+        description: 邮件发送给谁
+        type: string
     type: object
 info:
   contact: {}
@@ -1910,7 +1903,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/system.SysApi'
+          $ref: '#/definitions/server-fiber_model_system.SysApi'
       produces:
       - application/json
       responses:
@@ -1918,7 +1911,7 @@ paths:
           description: 创建基础api
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -1928,17 +1921,17 @@ paths:
       summary: 创建基础api
       tags:
       - SysApi
-  /api/deleteApi:
-    post:
+  /api/delete/{id}:
+    delete:
       consumes:
       - application/json
       parameters:
       - description: ID
-        in: body
-        name: data
+        in: path
+        minimum: 1
+        name: id
         required: true
-        schema:
-          $ref: '#/definitions/system.SysApi'
+        type: integer
       produces:
       - application/json
       responses:
@@ -1946,7 +1939,7 @@ paths:
           description: 删除api
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -1966,7 +1959,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.IdsReq'
+          $ref: '#/definitions/server-fiber_model_common_request.IdsReq'
       produces:
       - application/json
       responses:
@@ -1974,7 +1967,7 @@ paths:
           description: 删除选中Api
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -1995,7 +1988,7 @@ paths:
           description: 获取所有的Api 不分页,返回包括api列表
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -2015,14 +2008,14 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.GetById'
+          $ref: '#/definitions/server-fiber_model_common_request.GetById'
       produces:
       - application/json
       responses:
         "200":
           description: 根据id获取api,返回包括api详情
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 根据id获取api
@@ -2038,7 +2031,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.SearchApiParams'
+          $ref: '#/definitions/server-fiber_model_system_request.SearchApiParams'
       produces:
       - application/json
       responses:
@@ -2046,10 +2039,10 @@ paths:
           description: 分页获取API列表,返回包括列表,总数,页码,每页数量
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/response.PageResult'
+                  $ref: '#/definitions/server-fiber_model_common_response.PageResult'
                 msg:
                   type: string
               type: object
@@ -2066,7 +2059,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/system.SysApi'
+          $ref: '#/definitions/server-fiber_model_system.SysApi'
       produces:
       - application/json
       responses:
@@ -2074,7 +2067,7 @@ paths:
           description: 修改基础api
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -2093,7 +2086,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/app.Article'
+          $ref: '#/definitions/server-fiber_model_app.Article'
       produces:
       - application/json
       responses:
@@ -2101,7 +2094,7 @@ paths:
           description: 创建成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 code:
                   type: integer
@@ -2113,15 +2106,15 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "500":
           description: 服务器错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 创建文章
@@ -2146,7 +2139,7 @@ paths:
           description: 删除成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 code:
                   type: integer
@@ -2156,15 +2149,15 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "500":
           description: 服务器错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 删除文章
@@ -2181,7 +2174,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.IdsReq'
+          $ref: '#/definitions/server-fiber_model_common_request.IdsReq'
       produces:
       - application/json
       responses:
@@ -2189,7 +2182,7 @@ paths:
           description: 批量删除成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 code:
                   type: integer
@@ -2199,15 +2192,15 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "500":
           description: 服务器错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 批量删除文章
@@ -2230,23 +2223,23 @@ paths:
           description: 获取成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 code:
                   type: integer
                 data:
-                  $ref: '#/definitions/app.Article'
+                  $ref: '#/definitions/server-fiber_model_app.Article'
                 msg:
                   type: string
               type: object
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "404":
           description: 文章不存在
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       summary: 根据ID获取文章
       tags:
       - Article
@@ -2286,36 +2279,23 @@ paths:
           description: 获取成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 code:
                   type: integer
                 data:
-                  allOf:
-                  - $ref: '#/definitions/response.PageResult'
-                  - properties:
-                      list:
-                        items:
-                          $ref: '#/definitions/app.Article'
-                        type: array
-                      page:
-                        type: integer
-                      pageSize:
-                        type: integer
-                      total:
-                        type: integer
-                    type: object
+                  $ref: '#/definitions/server-fiber_model_common_response.PageResult'
                 msg:
                   type: string
               type: object
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "500":
           description: 服务器错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       summary: 分页获取文章列表
       tags:
       - Article
@@ -2329,14 +2309,11 @@ paths:
           description: 获取成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 code:
                   type: integer
                 data:
-                  properties:
-                    reading_quantity:
-                      type: integer
                   type: object
                 msg:
                   type: string
@@ -2344,11 +2321,11 @@ paths:
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "500":
           description: 服务器错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 获取文章阅读量
@@ -2365,7 +2342,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.IdsReq'
+          $ref: '#/definitions/server-fiber_model_common_request.IdsReq'
       produces:
       - application/json
       responses:
@@ -2373,7 +2350,7 @@ paths:
           description: 批量更新成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 code:
                   type: integer
@@ -2383,15 +2360,15 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "500":
           description: 服务器错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 批量更新文章
@@ -2414,7 +2391,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/app.Article'
+          $ref: '#/definitions/server-fiber_model_app.Article'
       produces:
       - application/json
       responses:
@@ -2422,7 +2399,7 @@ paths:
           description: 更新成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 code:
                   type: integer
@@ -2432,15 +2409,15 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "500":
           description: 服务器错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 更新文章
@@ -2457,7 +2434,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/response.SysAuthorityCopyResponse'
+          $ref: '#/definitions/server-fiber_model_system_response.SysAuthorityCopyResponse'
       produces:
       - application/json
       responses:
@@ -2465,21 +2442,21 @@ paths:
           description: 拷贝角色成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/response.SysAuthorityResponse'
+                  $ref: '#/definitions/server-fiber_model_system_response.SysAuthorityResponse'
                 msg:
                   type: string
               type: object
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 拷贝角色
@@ -2496,7 +2473,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/system.SysAuthority'
+          $ref: '#/definitions/server-fiber_model_system.SysAuthority'
       produces:
       - application/json
       responses:
@@ -2504,21 +2481,21 @@ paths:
           description: 创建角色成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/response.SysAuthorityResponse'
+                  $ref: '#/definitions/server-fiber_model_system_response.SysAuthorityResponse'
                 msg:
                   type: string
               type: object
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 创建角色
@@ -2542,7 +2519,7 @@ paths:
           description: 删除角色成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -2550,11 +2527,11 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 删除角色
@@ -2570,7 +2547,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.PageInfo'
+          $ref: '#/definitions/server-fiber_model_common_request.PageInfo'
       produces:
       - application/json
       responses:
@@ -2578,10 +2555,10 @@ paths:
           description: 分页获取角色列表,返回包括列表,总数,页码,每页数量
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/response.PageResult'
+                  $ref: '#/definitions/server-fiber_model_common_response.PageResult'
                 msg:
                   type: string
               type: object
@@ -2600,7 +2577,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/system.SysAuthority'
+          $ref: '#/definitions/server-fiber_model_system.SysAuthority'
       produces:
       - application/json
       responses:
@@ -2608,7 +2585,7 @@ paths:
           description: 设置角色资源权限
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -2628,7 +2605,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/system.SysAuthority'
+          $ref: '#/definitions/server-fiber_model_system.SysAuthority'
       produces:
       - application/json
       responses:
@@ -2636,10 +2613,10 @@ paths:
           description: 更新角色信息,返回包括系统角色详情
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/response.SysAuthorityResponse'
+                  $ref: '#/definitions/server-fiber_model_system_response.SysAuthorityResponse'
                 msg:
                   type: string
               type: object
@@ -2659,7 +2636,7 @@ paths:
           description: 删除成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -2679,7 +2656,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.SysAuthorityBtnReq'
+          $ref: '#/definitions/server-fiber_model_system_request.SysAuthorityBtnReq'
       produces:
       - application/json
       responses:
@@ -2687,10 +2664,10 @@ paths:
           description: 返回列表成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/response.SysAuthorityBtnRes'
+                  type: object
                 msg:
                   type: string
               type: object
@@ -2709,7 +2686,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.SysAuthorityBtnReq'
+          $ref: '#/definitions/server-fiber_model_system_request.SysAuthorityBtnReq'
       produces:
       - application/json
       responses:
@@ -2717,7 +2694,7 @@ paths:
           description: 返回列表成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -2737,7 +2714,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/system.SysAutoCode'
+          $ref: '#/definitions/server-fiber_model_system.SysAutoCode'
       produces:
       - application/json
       responses:
@@ -2745,7 +2722,7 @@ paths:
           description: 创建package成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
                   additionalProperties: true
@@ -2768,7 +2745,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/system.AutoCodeStruct'
+          $ref: '#/definitions/server-fiber_model_system.AutoCodeStruct'
       produces:
       - application/json
       responses:
@@ -2791,7 +2768,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/system.SysAutoCode'
+          $ref: '#/definitions/server-fiber_model_system.SysAutoCode'
       produces:
       - application/json
       responses:
@@ -2799,7 +2776,7 @@ paths:
           description: 删除package成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
                   additionalProperties: true
@@ -2822,7 +2799,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.GetById'
+          $ref: '#/definitions/server-fiber_model_common_request.GetById'
       produces:
       - application/json
       responses:
@@ -2830,7 +2807,7 @@ paths:
           description: 删除回滚记录
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -2851,7 +2828,7 @@ paths:
           description: 获取当前表所有字段
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
                   additionalProperties: true
@@ -2875,7 +2852,7 @@ paths:
           description: 获取当前所有数据库
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
                   additionalProperties: true
@@ -2898,7 +2875,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.GetById'
+          $ref: '#/definitions/server-fiber_model_common_request.GetById'
       produces:
       - application/json
       responses:
@@ -2906,7 +2883,7 @@ paths:
           description: 获取meta信息
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
                   additionalProperties: true
@@ -2930,7 +2907,7 @@ paths:
           description: 创建package成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
                   additionalProperties: true
@@ -2953,7 +2930,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.SysAutoHistory'
+          $ref: '#/definitions/server-fiber_model_system_request.SysAutoHistory'
       produces:
       - application/json
       responses:
@@ -2961,10 +2938,10 @@ paths:
           description: 查询回滚记录,返回包括列表,总数,页码,每页数量
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/response.PageResult'
+                  $ref: '#/definitions/server-fiber_model_common_response.PageResult'
                 msg:
                   type: string
               type: object
@@ -2984,7 +2961,7 @@ paths:
           description: 获取当前数据库所有表
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
                   additionalProperties: true
@@ -3007,7 +2984,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/system.AutoCodeStruct'
+          $ref: '#/definitions/server-fiber_model_system.AutoCodeStruct'
       produces:
       - application/json
       responses:
@@ -3015,7 +2992,7 @@ paths:
           description: 预览创建后的代码
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
                   additionalProperties: true
@@ -3038,7 +3015,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.RollBack'
+          $ref: '#/definitions/server-fiber_model_system_request.RollBack'
       produces:
       - application/json
       responses:
@@ -3046,7 +3023,7 @@ paths:
           description: 回滚自动生成代码
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -3067,12 +3044,12 @@ paths:
           description: 生成验证码,返回包括随机数id,base64,验证码长度
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 code:
                   type: number
                 data:
-                  $ref: '#/definitions/response.SysCaptchaResponse'
+                  $ref: '#/definitions/server-fiber_model_system_response.SysCaptchaResponse'
                 msg:
                   type: string
               type: object
@@ -3092,12 +3069,12 @@ paths:
           description: 生成验证码,返回包括随机数id,base64,验证码长度
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 code:
                   type: number
                 data:
-                  $ref: '#/definitions/response.SysCaptchaResponse'
+                  $ref: '#/definitions/server-fiber_model_system_response.SysCaptchaResponse'
                 msg:
                   type: string
               type: object
@@ -3117,7 +3094,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.LoginToken'
+          $ref: '#/definitions/server-fiber_model_system_request.LoginToken'
       produces:
       - application/json
       responses:
@@ -3125,7 +3102,7 @@ paths:
           description: 登录成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
                   $ref: '#/definitions/server-fiber_model_system_response.LoginResponse'
@@ -3135,11 +3112,11 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 登录失败
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       summary: 用户登录获取token
       tags:
       - Base
@@ -3154,7 +3131,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.Login'
+          $ref: '#/definitions/server-fiber_model_system_request.Login'
       produces:
       - application/json
       responses:
@@ -3162,7 +3139,7 @@ paths:
           description: 登录成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
                   $ref: '#/definitions/server-fiber_model_system_response.LoginResponse'
@@ -3172,11 +3149,11 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 登录失败
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       summary: 用户登录
       tags:
       - Base
@@ -3191,7 +3168,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/app.BaseMessage'
+          $ref: '#/definitions/server-fiber_model_app.BaseMessage'
       produces:
       - application/json
       responses:
@@ -3199,7 +3176,7 @@ paths:
           description: 创建基础消息成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 code:
                   type: integer
@@ -3211,11 +3188,11 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 创建基础消息
@@ -3240,27 +3217,27 @@ paths:
           description: 查找基础消息成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 code:
                   type: integer
                 data:
-                  $ref: '#/definitions/app.BaseMessage'
+                  $ref: '#/definitions/server-fiber_model_app.BaseMessage'
                 msg:
                   type: string
               type: object
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "404":
           description: 基础消息不存在
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 查找基础消息
@@ -3283,7 +3260,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/app.BaseMessage'
+          $ref: '#/definitions/server-fiber_model_app.BaseMessage'
       produces:
       - application/json
       responses:
@@ -3291,7 +3268,7 @@ paths:
           description: 更新基础消息成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 code:
                   type: integer
@@ -3301,11 +3278,11 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 更新基础消息
@@ -3328,15 +3305,10 @@ paths:
           description: 上传文件示例,返回包括文件详情
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
-                  allOf:
-                  - $ref: '#/definitions/response.ResponseUploadFile'
-                  - properties:
-                      file:
-                        $ref: '#/definitions/app.FileUploadAndDownload'
-                    type: object
+                  $ref: '#/definitions/server-fiber_model_app_response.ResponseUploadFile'
                 msg:
                   type: string
               type: object
@@ -3356,7 +3328,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.CasbinInReceive'
+          $ref: '#/definitions/server-fiber_model_system_request.CasbinInReceive'
       produces:
       - application/json
       responses:
@@ -3364,7 +3336,7 @@ paths:
           description: 更新角色API权限成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -3372,11 +3344,11 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 更新角色API权限
@@ -3400,7 +3372,7 @@ paths:
           description: 获取权限列表成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
                   items:
@@ -3412,11 +3384,11 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 获取权限列表
@@ -3433,7 +3405,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/app.Comment'
+          $ref: '#/definitions/server-fiber_model_app.Comment'
       produces:
       - application/json
       responses:
@@ -3441,7 +3413,7 @@ paths:
           description: 创建评论成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 code:
                   type: integer
@@ -3451,11 +3423,11 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 创建评论
@@ -3480,7 +3452,7 @@ paths:
           description: 删除评论成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 code:
                   type: integer
@@ -3490,11 +3462,11 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 删除评论
@@ -3511,7 +3483,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.IdsReq'
+          $ref: '#/definitions/server-fiber_model_common_request.IdsReq'
       produces:
       - application/json
       responses:
@@ -3519,7 +3491,7 @@ paths:
           description: 批量删除评论成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 code:
                   type: integer
@@ -3529,11 +3501,11 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 批量删除评论
@@ -3556,12 +3528,12 @@ paths:
           description: 查询成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 code:
                   type: number
                 data:
-                  $ref: '#/definitions/app.Comment'
+                  $ref: '#/definitions/server-fiber_model_app.Comment'
                 msg:
                   type: string
               type: object
@@ -3607,25 +3579,12 @@ paths:
           description: 获取成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 code:
                   type: number
                 data:
-                  allOf:
-                  - $ref: '#/definitions/response.PageResult'
-                  - properties:
-                      list:
-                        items:
-                          $ref: '#/definitions/app.Comment'
-                        type: array
-                      page:
-                        type: number
-                      pageSize:
-                        type: number
-                      total:
-                        type: number
-                    type: object
+                  $ref: '#/definitions/server-fiber_model_common_response.PageResult'
                 msg:
                   type: string
               type: object
@@ -3671,25 +3630,12 @@ paths:
           description: 获取成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 code:
                   type: number
                 data:
-                  allOf:
-                  - $ref: '#/definitions/response.PageResult'
-                  - properties:
-                      list:
-                        items:
-                          $ref: '#/definitions/app.Comment'
-                        type: array
-                      page:
-                        type: number
-                      pageSize:
-                        type: number
-                      total:
-                        type: number
-                    type: object
+                  $ref: '#/definitions/server-fiber_model_common_response.PageResult'
                 msg:
                   type: string
               type: object
@@ -3708,7 +3654,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/app.Praise'
+          $ref: '#/definitions/server-fiber_model_app.Praise'
       produces:
       - application/json
       responses:
@@ -3716,12 +3662,12 @@ paths:
           description: 点赞成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 code:
                   type: number
                 data:
-                  $ref: '#/definitions/app.Praise'
+                  $ref: '#/definitions/server-fiber_model_app.Praise'
                 msg:
                   type: string
               type: object
@@ -3747,7 +3693,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/app.Comment'
+          $ref: '#/definitions/server-fiber_model_app.Comment'
       produces:
       - application/json
       responses:
@@ -3755,7 +3701,7 @@ paths:
           description: 更新评论成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 code:
                   type: integer
@@ -3765,11 +3711,11 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 更新评论
@@ -3786,7 +3732,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/example.ExaCustomer'
+          $ref: '#/definitions/server-fiber_model_example.ExaCustomer'
       produces:
       - application/json
       responses:
@@ -3794,7 +3740,7 @@ paths:
           description: 创建客户成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
                   type: integer
@@ -3804,11 +3750,11 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 创建客户
@@ -3831,10 +3777,10 @@ paths:
           description: 获取单一客户信息,返回包括客户详情
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/response.ExaCustomerResponse'
+                  $ref: '#/definitions/server-fiber_model_example_response.ExaCustomerResponse'
                 msg:
                   type: string
               type: object
@@ -3862,7 +3808,7 @@ paths:
           description: 删除客户成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -3870,11 +3816,11 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 删除客户
@@ -3896,7 +3842,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/example.ExaCustomer'
+          $ref: '#/definitions/server-fiber_model_example.ExaCustomer'
       produces:
       - application/json
       responses:
@@ -3904,7 +3850,7 @@ paths:
           description: 更新客户信息成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 code:
                   type: integer
@@ -3914,11 +3860,11 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 更新客户信息
@@ -3929,6 +3875,12 @@ paths:
       consumes:
       - application/json
       parameters:
+      - in: query
+        name: customerName
+        type: string
+      - in: query
+        name: customerPhoneData
+        type: string
       - description: 是否为截图 1, 或 2
         in: query
         name: is_cropper
@@ -3955,15 +3907,10 @@ paths:
           description: 分页获取权限客户列表,返回包括列表,总数,页码,每页数量
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
-                  allOf:
-                  - $ref: '#/definitions/response.PageResult'
-                  - properties:
-                      list:
-                        $ref: '#/definitions/example.ExaCustomer'
-                    type: object
+                  $ref: '#/definitions/server-fiber_model_common_response.PageResult'
                 msg:
                   type: string
               type: object
@@ -3994,7 +3941,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/response.Email'
+          $ref: '#/definitions/server-fiber_plugin_email_model_response.Email'
       produces:
       - application/json
       responses:
@@ -4021,7 +3968,28 @@ paths:
       - application/json
       responses:
         "200":
-          description: OK
+          description: 下载模板
+          schema:
+            allOf:
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
+            - properties:
+                data:
+                  type: string
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
+        "500":
+          description: 服务器错误
+          schema:
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 下载模板
@@ -4038,7 +4006,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/example.ExcelInfo'
+          $ref: '#/definitions/server-fiber_model_example.ExcelInfo'
       produces:
       - application/octet-stream
       responses:
@@ -4049,15 +4017,15 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "500":
           description: 服务器错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 导出Excel
@@ -4081,7 +4049,7 @@ paths:
           description: 导入Excel文件成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -4089,15 +4057,15 @@ paths:
         "400":
           description: 文件格式错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "500":
           description: 服务器错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 导入Excel文件
@@ -4112,10 +4080,10 @@ paths:
           description: 加载Excel数据,返回包括列表,总数,页码,每页数量
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/response.PageResult'
+                  $ref: '#/definitions/server-fiber_model_common_response.PageResult'
                 msg:
                   type: string
               type: object
@@ -4141,7 +4109,7 @@ paths:
           description: 断点续传到服务器
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -4160,7 +4128,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/example.ExaFileUploadAndDownload'
+          $ref: '#/definitions/server-fiber_model_example.ExaFileUploadAndDownload'
       produces:
       - application/json
       responses:
@@ -4168,7 +4136,7 @@ paths:
           description: 删除成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -4176,11 +4144,11 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 删除文件
@@ -4203,10 +4171,10 @@ paths:
           description: 删除缓存文件
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/response.FileResponse'
+                  $ref: '#/definitions/server-fiber_model_example_response.FileResponse'
                 msg:
                   type: string
               type: object
@@ -4226,7 +4194,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/example.ExaFileUploadAndDownload'
+          $ref: '#/definitions/server-fiber_model_example.ExaFileUploadAndDownload'
       produces:
       - application/json
       responses:
@@ -4234,7 +4202,7 @@ paths:
           description: 编辑成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -4242,11 +4210,11 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 编辑文件名或者备注
@@ -4269,10 +4237,10 @@ paths:
           description: 查找文件,返回包括文件详情
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/response.FileResponse'
+                  $ref: '#/definitions/server-fiber_model_example_response.FileResponse'
                 msg:
                   type: string
               type: object
@@ -4297,10 +4265,10 @@ paths:
           description: 创建文件,返回包括文件路径
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/response.FilePathResponse'
+                  $ref: '#/definitions/server-fiber_model_example_response.FilePathResponse'
                 msg:
                   type: string
               type: object
@@ -4326,10 +4294,10 @@ paths:
           description: 查找缓存文件列表
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/response.FileResponse'
+                  $ref: '#/definitions/server-fiber_model_example_response.FileResponse'
                 msg:
                   type: string
               type: object
@@ -4348,7 +4316,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.PageInfo'
+          $ref: '#/definitions/server-fiber_model_common_request.PageInfo'
       produces:
       - application/json
       responses:
@@ -4356,15 +4324,10 @@ paths:
           description: 分页文件列表,返回包括列表,总数,页码,每页数量
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
-                  allOf:
-                  - $ref: '#/definitions/response.PageResult'
-                  - properties:
-                      list:
-                        $ref: '#/definitions/example.ExaFileUploadAndDownload'
-                    type: object
+                  $ref: '#/definitions/server-fiber_model_common_response.PageResult'
                 msg:
                   type: string
               type: object
@@ -4390,7 +4353,7 @@ paths:
           description: 删除切片
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -4428,25 +4391,25 @@ paths:
           description: 上传文件成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/response.ExaFileResponse'
+                  $ref: '#/definitions/server-fiber_model_example_response.ExaFileResponse'
                 msg:
                   type: string
               type: object
         "400":
           description: 文件过大或格式错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "500":
           description: 服务器错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 上传文件示例
@@ -4471,7 +4434,7 @@ paths:
           description: 删除用户成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 code:
                   type: integer
@@ -4481,11 +4444,11 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 删除用户
@@ -4510,7 +4473,7 @@ paths:
           description: 评论成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 code:
                   type: integer
@@ -4522,7 +4485,7 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       summary: 创建评论
       tags:
       - Frontend Comment
@@ -4543,7 +4506,7 @@ paths:
           description: 获取成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 code:
                   type: integer
@@ -4557,7 +4520,7 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       summary: 获取文章评论
       tags:
       - Frontend Comment
@@ -4571,13 +4534,13 @@ paths:
           description: 获取成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 code:
                   type: integer
                 data:
                   items:
-                    $ref: '#/definitions/app.FileUploadAndDownload'
+                    $ref: '#/definitions/server-fiber_model_app.FileUploadAndDownload'
                   type: array
                 msg:
                   type: string
@@ -4585,7 +4548,7 @@ paths:
         "500":
           description: 服务器错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       summary: 获取图片列表
       tags:
       - Frontend Image
@@ -4606,16 +4569,11 @@ paths:
           description: 获取成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 code:
                   type: integer
                 data:
-                  properties:
-                    tag:
-                      items:
-                        $ref: '#/definitions/app.Tag'
-                      type: array
                   type: object
                 msg:
                   type: string
@@ -4623,7 +4581,7 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       summary: 获取标签详情
       tags:
       - Frontend Tag
@@ -4651,26 +4609,19 @@ paths:
           description: 获取成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 code:
                   type: integer
                 data:
-                  allOf:
-                  - $ref: '#/definitions/response.PageResult'
-                  - properties:
-                      list:
-                        items:
-                          $ref: '#/definitions/app.Tag'
-                        type: array
-                    type: object
+                  $ref: '#/definitions/server-fiber_model_common_response.PageResult'
                 msg:
                   type: string
               type: object
         "500":
           description: 服务器错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       summary: 获取标签列表
       tags:
       - Frontend Tag
@@ -4685,7 +4636,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.Login'
+          $ref: '#/definitions/server-fiber_model_system_request.Login'
       produces:
       - application/json
       responses:
@@ -4693,7 +4644,7 @@ paths:
           description: 登录成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
                   $ref: '#/definitions/server-fiber_model_system_response.LoginResponse'
@@ -4703,11 +4654,11 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 登录失败
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       summary: 前台用户登录
       tags:
       - Frontend User
@@ -4728,23 +4679,23 @@ paths:
           description: 获取成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 code:
                   type: integer
                 data:
-                  $ref: '#/definitions/app.Article'
+                  $ref: '#/definitions/server-fiber_model_app.Article'
                 msg:
                   type: string
               type: object
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "404":
           description: 文章不存在
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       summary: 获取文章详情
       tags:
       - Frontend Article
@@ -4784,36 +4735,23 @@ paths:
           description: 获取成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 code:
                   type: integer
                 data:
-                  allOf:
-                  - $ref: '#/definitions/response.PageResult'
-                  - properties:
-                      list:
-                        items:
-                          $ref: '#/definitions/app.Article'
-                        type: array
-                      page:
-                        type: integer
-                      pageSize:
-                        type: integer
-                      total:
-                        type: integer
-                    type: object
+                  $ref: '#/definitions/server-fiber_model_common_response.PageResult'
                 msg:
                   type: string
               type: object
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "500":
           description: 服务器错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       summary: 分页获取文章列表
       tags:
       - Frontend Article
@@ -4845,13 +4783,13 @@ paths:
           description: 搜索成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 code:
                   type: integer
                 data:
                   items:
-                    $ref: '#/definitions/app.Article'
+                    $ref: '#/definitions/server-fiber_model_app.Article'
                   type: array
                 msg:
                   type: string
@@ -4859,10 +4797,86 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       summary: 搜索文章
       tags:
       - Frontend Article
+  /github/createGithub:
+    get:
+      consumes:
+      - application/json
+      description: 从GitHub API获取最新的提交记录并保存到数据库
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 创建成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
+            - properties:
+                data:
+                  type: object
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 创建失败或网络错误
+          schema:
+            allOf:
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 创建GitHub提交记录
+      tags:
+      - SysGithub
+  /github/getGithubList:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - default: 1
+        description: 页码
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: 每页大小
+        in: query
+        name: pageSize
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/server-fiber_model_common_response.PageResult'
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 获取失败
+          schema:
+            allOf:
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 获取GitHub提交列表
+      tags:
+      - SysGithub
   /init/checkdb:
     get:
       produces:
@@ -4872,7 +4886,7 @@ paths:
           description: 初始化用户数据库
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
                   additionalProperties: true
@@ -4891,7 +4905,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.InitDB'
+          $ref: '#/definitions/server-fiber_model_system_request.InitDB'
       produces:
       - application/json
       responses:
@@ -4899,7 +4913,7 @@ paths:
           description: 初始化用户数据库
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
                   type: string
@@ -4918,7 +4932,7 @@ paths:
           description: jwt加入黑名单
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -4938,7 +4952,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/system.SysBaseMenu'
+          $ref: '#/definitions/server-fiber_model_system.SysBaseMenu'
       produces:
       - application/json
       responses:
@@ -4946,7 +4960,7 @@ paths:
           description: 新增菜单
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -4967,7 +4981,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.AddMenuAuthorityInfo'
+          $ref: '#/definitions/server-fiber_model_system_request.AddMenuAuthorityInfo'
       produces:
       - application/json
       responses:
@@ -4975,7 +4989,7 @@ paths:
           description: 增加菜单和角色关联关系成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -4983,11 +4997,11 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 增加菜单和角色关联关系
@@ -5003,7 +5017,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.GetById'
+          $ref: '#/definitions/server-fiber_model_common_request.GetById'
       produces:
       - application/json
       responses:
@@ -5011,7 +5025,7 @@ paths:
           description: 删除菜单
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -5031,7 +5045,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.GetById'
+          $ref: '#/definitions/server-fiber_model_common_request.GetById'
       produces:
       - application/json
       responses:
@@ -5039,10 +5053,10 @@ paths:
           description: 根据id获取菜单,返回包括系统菜单列表
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/response.SysBaseMenuResponse'
+                  $ref: '#/definitions/server-fiber_model_system_response.SysBaseMenuResponse'
                 msg:
                   type: string
               type: object
@@ -5061,11 +5075,11 @@ paths:
           description: 获取基础菜单树成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
                   items:
-                    $ref: '#/definitions/system.SysBaseMenu'
+                    $ref: '#/definitions/server-fiber_model_system.SysBaseMenu'
                   type: array
                 msg:
                   type: string
@@ -5073,7 +5087,7 @@ paths:
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 获取基础菜单树
@@ -5089,11 +5103,11 @@ paths:
           description: 获取用户动态路由成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
                   items:
-                    $ref: '#/definitions/system.SysMenu'
+                    $ref: '#/definitions/server-fiber_model_system.SysMenu'
                   type: array
                 msg:
                   type: string
@@ -5101,7 +5115,7 @@ paths:
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 获取用户动态路由
@@ -5125,11 +5139,11 @@ paths:
           description: 获取指定角色菜单成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
                   items:
-                    $ref: '#/definitions/system.SysMenu'
+                    $ref: '#/definitions/server-fiber_model_system.SysMenu'
                   type: array
                 msg:
                   type: string
@@ -5137,11 +5151,11 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 获取指定角色菜单
@@ -5157,7 +5171,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.PageInfo'
+          $ref: '#/definitions/server-fiber_model_common_request.PageInfo'
       produces:
       - application/json
       responses:
@@ -5165,10 +5179,10 @@ paths:
           description: 分页获取基础menu列表,返回包括列表,总数,页码,每页数量
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/response.PageResult'
+                  $ref: '#/definitions/server-fiber_model_common_response.PageResult'
                 msg:
                   type: string
               type: object
@@ -5187,7 +5201,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/system.SysBaseMenu'
+          $ref: '#/definitions/server-fiber_model_system.SysBaseMenu'
       produces:
       - application/json
       responses:
@@ -5195,7 +5209,7 @@ paths:
           description: 更新菜单
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -5221,17 +5235,17 @@ paths:
           description: 获取成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
-                  type: object
+                  $ref: '#/definitions/server-fiber_model_mobile.MobileUser'
                 msg:
                   type: string
               type: object
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       summary: 获取移动端用户信息
       tags:
       - Mobile Login
@@ -5246,7 +5260,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/mobile.Login'
+          $ref: '#/definitions/server-fiber_model_mobile.Login'
       produces:
       - application/json
       responses:
@@ -5254,7 +5268,7 @@ paths:
           description: 登录成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
                   type: object
@@ -5264,7 +5278,7 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       summary: 移动端用户登录
       tags:
       - Mobile Login
@@ -5279,7 +5293,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/mobile.Register'
+          $ref: '#/definitions/server-fiber_model_mobile.Register'
       produces:
       - application/json
       responses:
@@ -5287,7 +5301,7 @@ paths:
           description: 注册成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -5295,7 +5309,7 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       summary: 移动端用户注册
       tags:
       - Mobile Register
@@ -5315,7 +5329,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.MobileUpdate'
+          $ref: '#/definitions/server-fiber_model_mobile_request.MobileUpdate'
       produces:
       - application/json
       responses:
@@ -5323,7 +5337,7 @@ paths:
           description: 更新成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
                   type: object
@@ -5333,7 +5347,7 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       summary: 更新移动端用户信息
       tags:
       - Mobile Login
@@ -5348,7 +5362,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.MobileUpdatePassword'
+          $ref: '#/definitions/server-fiber_model_mobile_request.MobileUpdatePassword'
       produces:
       - application/json
       responses:
@@ -5356,7 +5370,7 @@ paths:
           description: 更新成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
                   type: string
@@ -5366,7 +5380,7 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       summary: 更新移动端用户密码
       tags:
       - Mobile Login
@@ -5381,7 +5395,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/mobile.MobileUser'
+          $ref: '#/definitions/server-fiber_model_mobile.MobileUser'
       produces:
       - application/json
       responses:
@@ -5389,7 +5403,7 @@ paths:
           description: 创建移动端用户成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -5397,11 +5411,11 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 创建移动端用户
@@ -5426,7 +5440,7 @@ paths:
           description: 删除移动端用户成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -5434,11 +5448,11 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 删除移动端用户
@@ -5455,7 +5469,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.IdsReq'
+          $ref: '#/definitions/server-fiber_model_common_request.IdsReq'
       produces:
       - application/json
       responses:
@@ -5463,7 +5477,7 @@ paths:
           description: 创建移动端用户成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -5471,11 +5485,11 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 批量删除移动端用户
@@ -5533,7 +5547,7 @@ paths:
       - application/json
       responses:
         "200":
-          description: '{"success":true,"data":{},"msg":"查询成功"}'
+          description: '{"success":true,"data":mobile.MobileUser,"msg":"查询成功"}'
           schema:
             type: string
       security:
@@ -5631,7 +5645,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/mobile.MobileUser'
+          $ref: '#/definitions/server-fiber_model_mobile.MobileUser'
       produces:
       - application/json
       responses:
@@ -5639,7 +5653,7 @@ paths:
           description: 更新移动端用户成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -5647,11 +5661,11 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 更新移动端用户
@@ -5667,7 +5681,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/system.SysDictionary'
+          $ref: '#/definitions/server-fiber_model_system.SysDictionary'
       produces:
       - application/json
       responses:
@@ -5675,7 +5689,7 @@ paths:
           description: 创建SysDictionary
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -5695,7 +5709,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/system.SysDictionary'
+          $ref: '#/definitions/server-fiber_model_system.SysDictionary'
       produces:
       - application/json
       responses:
@@ -5703,7 +5717,7 @@ paths:
           description: 删除SysDictionary
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -5753,7 +5767,7 @@ paths:
           description: 用id查询SysDictionary
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
                   additionalProperties: true
@@ -5825,10 +5839,10 @@ paths:
           description: 分页获取SysDictionary列表,返回包括列表,总数,页码,每页数量
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/response.PageResult'
+                  $ref: '#/definitions/server-fiber_model_common_response.PageResult'
                 msg:
                   type: string
               type: object
@@ -5847,7 +5861,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/system.SysDictionary'
+          $ref: '#/definitions/server-fiber_model_system.SysDictionary'
       produces:
       - application/json
       responses:
@@ -5855,7 +5869,7 @@ paths:
           description: 更新SysDictionary
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -5875,7 +5889,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/system.SysDictionaryDetail'
+          $ref: '#/definitions/server-fiber_model_system.SysDictionaryDetail'
       produces:
       - application/json
       responses:
@@ -5883,7 +5897,7 @@ paths:
           description: 创建SysDictionaryDetail
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -5903,7 +5917,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/system.SysDictionaryDetail'
+          $ref: '#/definitions/server-fiber_model_system.SysDictionaryDetail'
       produces:
       - application/json
       responses:
@@ -5911,7 +5925,7 @@ paths:
           description: 删除SysDictionaryDetail
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -5965,7 +5979,7 @@ paths:
           description: 用id查询SysDictionaryDetail
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
                   additionalProperties: true
@@ -6041,10 +6055,10 @@ paths:
           description: 分页获取SysDictionaryDetail列表,返回包括列表,总数,页码,每页数量
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/response.PageResult'
+                  $ref: '#/definitions/server-fiber_model_common_response.PageResult'
                 msg:
                   type: string
               type: object
@@ -6063,7 +6077,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/system.SysDictionaryDetail'
+          $ref: '#/definitions/server-fiber_model_system.SysDictionaryDetail'
       produces:
       - application/json
       responses:
@@ -6071,7 +6085,7 @@ paths:
           description: 更新SysDictionaryDetail
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -6091,7 +6105,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/system.SysOperationRecord'
+          $ref: '#/definitions/server-fiber_model_system.SysOperationRecord'
       produces:
       - application/json
       responses:
@@ -6099,7 +6113,7 @@ paths:
           description: 创建SysOperationRecord
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -6119,7 +6133,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/system.SysOperationRecord'
+          $ref: '#/definitions/server-fiber_model_system.SysOperationRecord'
       produces:
       - application/json
       responses:
@@ -6127,7 +6141,7 @@ paths:
           description: 删除SysOperationRecord
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -6147,7 +6161,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.IdsReq'
+          $ref: '#/definitions/server-fiber_model_common_request.IdsReq'
       produces:
       - application/json
       responses:
@@ -6155,7 +6169,7 @@ paths:
           description: 批量删除SysOperationRecord
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -6248,7 +6262,7 @@ paths:
           description: 用id查询SysOperationRecord
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
                   additionalProperties: true
@@ -6363,10 +6377,10 @@ paths:
           description: 分页获取SysOperationRecord列表,返回包括列表,总数,页码,每页数量
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/response.PageResult'
+                  $ref: '#/definitions/server-fiber_model_common_response.PageResult'
                 msg:
                   type: string
               type: object
@@ -6384,7 +6398,7 @@ paths:
           description: 获取服务器信息
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
                   additionalProperties: true
@@ -6406,7 +6420,7 @@ paths:
           description: 获取配置文件内容,返回包括系统配置
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
                   type: string
@@ -6427,7 +6441,7 @@ paths:
           description: 重启系统
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -6445,7 +6459,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/system.System'
+          $ref: '#/definitions/server-fiber_model_system.System'
       produces:
       - application/json
       responses:
@@ -6453,7 +6467,7 @@ paths:
           description: 设置配置文件内容
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
                   type: string
@@ -6509,7 +6523,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/app.Tag'
+          $ref: '#/definitions/server-fiber_model_app.Tag'
       produces:
       - application/json
       responses:
@@ -6517,7 +6531,7 @@ paths:
           description: 创建标签成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
                   type: integer
@@ -6527,11 +6541,11 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 创建标签
@@ -6556,7 +6570,7 @@ paths:
           description: 删除标签成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -6564,11 +6578,11 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 删除标签
@@ -6585,7 +6599,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.IdsReq'
+          $ref: '#/definitions/server-fiber_model_common_request.IdsReq'
       produces:
       - application/json
       responses:
@@ -6593,7 +6607,7 @@ paths:
           description: 批量删除标签成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -6601,11 +6615,11 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 批量删除标签
@@ -6657,7 +6671,7 @@ paths:
       - application/json
       responses:
         "200":
-          description: '{"success":true,"data":app.Tag[],total=integer,"msg":"获取成功"}'
+          description: '{"success":true,"data":[]app.Tag,total=integer,"msg":"获取成功"}'
           schema:
             type: string
       security:
@@ -6676,7 +6690,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/app.Tag'
+          $ref: '#/definitions/server-fiber_model_app.Tag'
       produces:
       - application/json
       responses:
@@ -6684,7 +6698,7 @@ paths:
           description: 更新标签成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -6692,11 +6706,11 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 更新标签
@@ -6720,7 +6734,7 @@ paths:
           description: 启动任务成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -6728,15 +6742,15 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "404":
           description: 任务不存在
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 启动任务
@@ -6760,7 +6774,7 @@ paths:
           description: 停止任务成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -6768,15 +6782,15 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "404":
           description: 任务不存在
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 停止任务
@@ -6792,7 +6806,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/system.SysUser'
+          $ref: '#/definitions/server-fiber_model_system.SysUser'
       produces:
       - application/json
       responses:
@@ -6800,7 +6814,7 @@ paths:
           description: 设置用户信息
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -6818,7 +6832,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.Register'
+          $ref: '#/definitions/server-fiber_model_system_request.Register'
       produces:
       - application/json
       responses:
@@ -6826,7 +6840,7 @@ paths:
           description: 用户注册账号,返回包括用户信息
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -6842,7 +6856,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.ChangePasswordStruct'
+          $ref: '#/definitions/server-fiber_model_system_request.ChangePasswordStruct'
       produces:
       - application/json
       responses:
@@ -6850,7 +6864,7 @@ paths:
           description: 用户修改密码
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -6871,7 +6885,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/app.User'
+          $ref: '#/definitions/server-fiber_model_app.User'
       produces:
       - application/json
       responses:
@@ -6879,7 +6893,7 @@ paths:
           description: 创建用户成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 code:
                   type: integer
@@ -6891,11 +6905,11 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 创建用户
@@ -6920,7 +6934,7 @@ paths:
           description: 删除用户成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -6928,15 +6942,15 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "403":
           description: 不能删除自己
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 删除用户
@@ -6953,7 +6967,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.IdsReq'
+          $ref: '#/definitions/server-fiber_model_common_request.IdsReq'
       produces:
       - application/json
       responses:
@@ -6961,7 +6975,7 @@ paths:
           description: 批量删除用户成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 code:
                   type: integer
@@ -6971,11 +6985,11 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 批量删除用户
@@ -7023,7 +7037,7 @@ paths:
           description: 查询成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 code:
                   type: number
@@ -7044,7 +7058,7 @@ paths:
           description: 获取人员总数
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -7065,7 +7079,7 @@ paths:
           description: 获取用户信息
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -7106,10 +7120,10 @@ paths:
           description: 分页获取用户列表,返回包括列表,总数,页码,每页数量
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/response.PageResult'
+                  $ref: '#/definitions/server-fiber_model_common_response.PageResult'
                 msg:
                   type: string
               type: object
@@ -7126,7 +7140,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/system.SysUser'
+          $ref: '#/definitions/server-fiber_model_system.SysUser'
       produces:
       - application/json
       responses:
@@ -7134,7 +7148,7 @@ paths:
           description: 重置用户密码
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -7155,7 +7169,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.SetUserAuthorities'
+          $ref: '#/definitions/server-fiber_model_system_request.SetUserAuthorities'
       produces:
       - application/json
       responses:
@@ -7163,7 +7177,7 @@ paths:
           description: 设置用户权限成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -7171,11 +7185,11 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 设置用户权限
@@ -7192,7 +7206,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.SetUserAuth'
+          $ref: '#/definitions/server-fiber_model_system_request.SetUserAuth'
       produces:
       - application/json
       responses:
@@ -7200,7 +7214,7 @@ paths:
           description: 设置用户权限成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -7208,11 +7222,11 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 更改用户权限
@@ -7229,7 +7243,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/system.SysUser'
+          $ref: '#/definitions/server-fiber_model_system.SysUser'
       produces:
       - application/json
       responses:
@@ -7237,7 +7251,7 @@ paths:
           description: 设置用户信息成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 msg:
                   type: string
@@ -7245,11 +7259,11 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 设置用户信息
@@ -7272,7 +7286,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/app.User'
+          $ref: '#/definitions/server-fiber_model_app.User'
       produces:
       - application/json
       responses:
@@ -7280,7 +7294,7 @@ paths:
           description: 更新用户成功
           schema:
             allOf:
-            - $ref: '#/definitions/response.Response'
+            - $ref: '#/definitions/server-fiber_model_common_response.Response'
             - properties:
                 code:
                   type: integer
@@ -7290,11 +7304,11 @@ paths:
         "400":
           description: 参数错误
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
         "401":
           description: 未授权
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/server-fiber_model_common_response.Response'
       security:
       - ApiKeyAuth: []
       summary: 更新用户
