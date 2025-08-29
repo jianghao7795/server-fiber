@@ -21,6 +21,9 @@ type SystemApiApi struct{}
 // @Produce application/json
 // @Param data body system.SysApi true "api路径, api中文描述, api组, 方法"
 // @Success 200 {object} response.Response{msg=string} "创建基础api"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /api/createApi [post]
 func (s *SystemApiApi) CreateApi(c *fiber.Ctx) (err error) {
 	var api system.SysApi
@@ -47,6 +50,9 @@ func (s *SystemApiApi) CreateApi(c *fiber.Ctx) (err error) {
 // @Produce application/json
 // @Param id path integer true "ID" minimum(1)
 // @Success 200 {object} response.Response{msg=string} "删除api"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /api/delete/{id} [delete]
 func (s *SystemApiApi) DeleteApi(c *fiber.Ctx) error {
 	var api system.SysApi
@@ -70,6 +76,9 @@ func (s *SystemApiApi) DeleteApi(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data body systemReq.SearchApiParams true "分页获取API列表"
 // @Success 200 {object} response.Response{data=response.PageResult,msg=string} "分页获取API列表,返回包括列表,总数,页码,每页数量"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /api/getApiList [get]
 func (s *SystemApiApi) GetApiList(c *fiber.Ctx) error {
 	var pageInfo systemReq.SearchApiParams
@@ -95,7 +104,10 @@ func (s *SystemApiApi) GetApiList(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data body request.GetById true "根据id获取api"
-// @Success 200 {object} response.Response{system.SysApi} "根据id获取api,返回包括api详情"
+// @Success 200 {object} response.Response{data=system.SysApi,msg=string} "根据id获取api,返回包括api详情"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /api/getApiById [post]
 func (s *SystemApiApi) GetApiById(c *fiber.Ctx) error {
 	var idInfo request.GetById
@@ -119,6 +131,9 @@ func (s *SystemApiApi) GetApiById(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data body system.SysApi true "api路径, api中文描述, api组, 方法"
 // @Success 200 {object} response.Response{msg=string} "修改基础api"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /api/updateApi [put]
 func (s *SystemApiApi) UpdateApi(c *fiber.Ctx) error {
 	var api system.SysApi
@@ -143,7 +158,10 @@ func (s *SystemApiApi) UpdateApi(c *fiber.Ctx) error {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Success 200 {object} response.Response{msg=string,[]system.SysApi} "获取所有的Api 不分页,返回包括api列表"
+// @Success 200 {object} response.Response{data=[]system.SysApi,msg=string} "获取所有的Api 不分页,返回包括api列表"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /api/getAllApis [get]
 func (s *SystemApiApi) GetAllApis(c *fiber.Ctx) error {
 	if apis, err := apiService.GetAllApis(); err != nil {
@@ -161,6 +179,9 @@ func (s *SystemApiApi) GetAllApis(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data body request.IdsReq true "ID"
 // @Success 200 {object} response.Response{msg=string} "删除选中Api"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /api/deleteApisByIds [delete]
 func (s *SystemApiApi) DeleteApisByIds(c *fiber.Ctx) error {
 	var ids request.IdsReq

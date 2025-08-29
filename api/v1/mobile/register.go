@@ -20,6 +20,8 @@ type RegisterMobile struct{}
 // @Param data body mobile.Register true "注册信息"
 // @Success 200 {object} response.Response{msg=string} "注册成功"
 // @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /mobile/register [post]
 func (*RegisterMobile) Register(c *fiber.Ctx) (err error) {
 	var data mobile.Register

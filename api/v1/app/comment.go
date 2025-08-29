@@ -19,9 +19,10 @@ import (
 // @Accept application/json
 // @Produce application/json
 // @Param data body app.Comment true "评论信息"
-// @Success 200 {object} response.Response{msg=string,code=integer} "创建评论成功"
+// @Success 200 {object} response.Response{msg=string} "创建评论成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /comment/createComment [post]
 func (commentApi *CommentApi) CreateComment(c *fiber.Ctx) error {
 	var commentData app.Comment
@@ -46,9 +47,10 @@ func (commentApi *CommentApi) CreateComment(c *fiber.Ctx) error {
 // @Accept application/json
 // @Produce application/json
 // @Param id path integer true "评论ID" minimum(1)
-// @Success 200 {object} response.Response{msg=string,code=integer} "删除评论成功"
+// @Success 200 {object} response.Response{msg=string} "删除评论成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /comment/deleteComment/{id} [delete]
 func (commentApi *CommentApi) DeleteComment(c *fiber.Ctx) error {
 	id, err := c.ParamsInt("id")
@@ -72,9 +74,10 @@ func (commentApi *CommentApi) DeleteComment(c *fiber.Ctx) error {
 // @Accept application/json
 // @Produce application/json
 // @Param data body request.IdsReq true "评论ID列表"
-// @Success 200 {object} response.Response{msg=string,code=integer} "批量删除评论成功"
+// @Success 200 {object} response.Response{msg=string} "批量删除评论成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /comment/deleteCommentByIds [delete]
 func (commentApi *CommentApi) DeleteCommentByIds(c *fiber.Ctx) error {
 	var IDS request.IdsReq
@@ -100,9 +103,10 @@ func (commentApi *CommentApi) DeleteCommentByIds(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param id path integer true "评论ID" minimum(1)
 // @Param data body app.Comment true "评论信息"
-// @Success 200 {object} response.Response{msg=string,code=integer} "更新评论成功"
+// @Success 200 {object} response.Response{msg=string} "更新评论成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /comment/updateComment/{id} [put]
 func (commentApi *CommentApi) UpdateComment(c *fiber.Ctx) error {
 	var comment2 app.Comment
@@ -132,7 +136,10 @@ func (commentApi *CommentApi) UpdateComment(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param id path number true "用id查询Comment"
-// @Success 200 {object} response.Response{msg=string,data=app.Comment,code=number} "查询成功"
+// @Success 200 {object} response.Response{msg=string} "查询成功"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /comment/getComment/:id [get]
 func (commentApi *CommentApi) FindComment(c *fiber.Ctx) error {
 	id, err := c.ParamsInt("id", 0)
@@ -155,7 +162,10 @@ func (commentApi *CommentApi) FindComment(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data query commentReq.CommentSearch true "分页获取Comment列表"
-// @Success 200 {object} response.Response{msg=string,data=response.PageResult,code=number} "获取成功"
+// @Success 200 {object} response.Response{msg=string,data=response.PageResult{list=[]app.Comment,total=number,page=number,pageSize=number},code=number} "获取成功"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /comment/getCommentList [get]
 func (commentApi *CommentApi) GetCommentList(c *fiber.Ctx) error {
 	var pageInfo commentReq.CommentSearch
@@ -187,7 +197,10 @@ func (commentApi *CommentApi) GetCommentList(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data query commentReq.CommentSearch true "分页获取Comment列表"
-// @Success 200 {object} response.Response{msg=string,data=response.PageResult,code=number} "获取成功"
+// @Success 200 {object} response.Response{msg=string,data=response.PageResult{list=[]app.Comment,total=number,page=number,pageSize=number},code=number} "获取成功"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /comment/getCommentTreeList [get]
 func (*CommentApi) GetCommentTreeList(c *fiber.Ctx) error {
 	var pageInfo commentReq.CommentSearch
@@ -213,7 +226,10 @@ func (*CommentApi) GetCommentTreeList(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data body app.Praise true "点赞"
-// @Success 200 {object} response.Response{msg=string,code=number,data=app.Praise} "点赞成功"
+// @Success 200 {object} response.Response{msg=string} "点赞成功"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /comment/pariseComment [put]
 func (*CommentApi) PutLikeItOrDislike(c *fiber.Ctx) error {
 	var likeIt app.Praise

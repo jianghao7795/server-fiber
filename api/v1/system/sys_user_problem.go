@@ -10,8 +10,20 @@ import (
 	"go.uber.org/zap"
 )
 
+// UserProblem 用户问题管理
 type UserProblem struct{}
 
+// GetProblemSetting 获取用户问题设置
+// @Summary 获取用户问题设置
+// @Description 根据用户ID获取用户的问题设置列表
+// @Tags 用户问题管理
+// @Accept json
+// @Produce json
+// @Param id path int true "用户ID"
+// @Success 200 {object} response.Response{data=response.PageResult{list=[]problemReq.SysUserProblem},msg=string} "获取成功"
+// @Failure 400 {object} response.Response{msg=string} "传错参数,请传user id"
+// @Failure 500 {object} response.Response{msg=string} "获取失败"
+// @Router /api/v1/system/user-problem/setting/{id} [get]
 func (*UserProblem) GetProblemSetting(c *fiber.Ctx) error {
 	var search problemReq.SysUserProblem
 	var err error
@@ -30,10 +42,21 @@ func (*UserProblem) GetProblemSetting(c *fiber.Ctx) error {
 	}, "获取成功", c)
 }
 
+// UpdateProblemSettingData 更新问题设置数据结构
 type UpdateProblemSettingData struct {
-	Data []problemReq.SysUserProblem `json:"data"`
+	Data []problemReq.SysUserProblem `json:"data" example:"[{\"question\":\"安全问题1\",\"answer\":\"答案1\"}]"`
 }
 
+// UpdateProblemSetting 更新用户问题设置
+// @Summary 更新用户问题设置
+// @Description 批量更新用户的安全问题设置
+// @Tags 用户问题管理
+// @Accept json
+// @Produce json
+// @Param data body UpdateProblemSettingData true "问题设置数据"
+// @Success 200 {object} response.Response{msg=string} "更新成功"
+// @Failure 400 {object} response.Response{msg=string} "传错参数"
+// @Router /api/v1/system/user-problem/setting [put]
 func (*UserProblem) UpdateProblemSetting(c *fiber.Ctx) error {
 	var dataProblem UpdateProblemSettingData
 	err := c.BodyParser(&dataProblem)
@@ -55,6 +78,16 @@ func (*UserProblem) UpdateProblemSetting(c *fiber.Ctx) error {
 	return response.OkWithMessage(message, c)
 }
 
+// HasSetting 检查用户是否已设置问题
+// @Summary 检查用户是否已设置问题
+// @Description 检查指定用户是否已经设置了安全问题
+// @Tags 用户问题管理
+// @Accept json
+// @Produce json
+// @Param uid path int true "用户ID"
+// @Success 200 {object} response.Response{data=bool,msg=string} "获取成功"
+// @Failure 400 {object} response.Response{msg=string} "传错参数"
+// @Router /api/v1/system/user-problem/has-setting/{uid} [get]
 func (*UserProblem) HasSetting(c *fiber.Ctx) error {
 	SysUserProblemId, _ := c.ParamsInt("uid")
 	isSetting, err := userProblem.HasSetting(SysUserProblemId)
@@ -65,10 +98,22 @@ func (*UserProblem) HasSetting(c *fiber.Ctx) error {
 	return response.OkWithDetailed(isSetting, "获取成功", c)
 }
 
+// VerifyProblemSettingData 验证问题答案数据结构
 type VerifyProblemSettingData struct {
-	Data problemReq.SysUserProblem `json:"data"`
+	Data problemReq.SysUserProblem `json:"data" example:"{\"question\":\"安全问题1\",\"answer\":\"答案1\"}"`
 }
 
+// VerifyAnswer 验证问题答案
+// @Summary 验证问题答案
+// @Description 验证用户提供的安全问题答案是否正确
+// @Tags 用户问题管理
+// @Accept json
+// @Produce json
+// @Param data body VerifyProblemSettingData true "问题验证数据"
+// @Success 200 {object} response.Response{data=bool,msg=string} "已验证"
+// @Failure 400 {object} response.Response{msg=string} "传错参数"
+// @Failure 404 {object} response.Response{msg=string} "未查到此问题"
+// @Router /api/v1/system/user-problem/verify [post]
 func (*UserProblem) VerifyAnswer(c *fiber.Ctx) error {
 	var dataProblem VerifyProblemSettingData
 	err := c.BodyParser(&dataProblem)

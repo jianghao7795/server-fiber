@@ -4,7 +4,7 @@ import (
 	global "server-fiber/model"
 	"server-fiber/model/common/response"
 	"server-fiber/model/example"
-	exampleReq "server-fiber/model/example/request"
+	"server-fiber/model/example/request"
 	exampleRes "server-fiber/model/example/response"
 	"server-fiber/utils"
 
@@ -20,9 +20,10 @@ import (
 // @Accept application/json
 // @Produce application/json
 // @Param data body example.ExaCustomer true "客户信息"
-// @Success 200 {object} response.Response{msg=string,data=integer} "创建客户成功"
+// @Success 200 {object} response.Response{msg=string} "创建客户成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /customer/customer [post]
 func (e *CustomerApi) CreateExaCustomer(c *fiber.Ctx) error {
 	var customer example.ExaCustomer
@@ -63,6 +64,7 @@ func (e *CustomerApi) CreateExaCustomer(c *fiber.Ctx) error {
 // @Success 200 {object} response.Response{msg=string} "删除客户成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /customer/customer/{id} [delete]
 func (e *CustomerApi) DeleteExaCustomer(c *fiber.Ctx) error {
 	id, err := c.ParamsInt("id")
@@ -89,9 +91,10 @@ func (e *CustomerApi) DeleteExaCustomer(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param id path integer true "客户ID" minimum(1)
 // @Param data body example.ExaCustomer true "客户信息"
-// @Success 200 {object} response.Response{msg=string,code=integer} "更新客户信息成功"
+// @Success 200 {object} response.Response{msg=string} "更新客户信息成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /customer/customer/{id} [put]
 func (e *CustomerApi) UpdateExaCustomer(c *fiber.Ctx) error {
 	id, _ := c.ParamsInt("id")
@@ -126,7 +129,10 @@ func (e *CustomerApi) UpdateExaCustomer(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param id path number true "客户ID"
-// @Success 200 {object} response.Response{data=exampleRes.ExaCustomerResponse,msg=string} "获取单一客户信息,返回包括客户详情"
+// @Success 200 {object} response.Response{data=object,msg=string} "获取单一客户信息,返回包括客户详情"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /customer/customer/:id [get]
 func (e *CustomerApi) GetExaCustomer(c *fiber.Ctx) error {
 	id, _ := c.ParamsInt("id")
@@ -147,11 +153,14 @@ func (e *CustomerApi) GetExaCustomer(c *fiber.Ctx) error {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data query exampleReq.SearchCustomerParams true "页码, 每页大小"
-// @Success 200 {object} response.Response{data=response.PageResult,msg=string} "分页获取权限客户列表,返回包括列表,总数,页码,每页数量"
+// @Param data query request.PageInfo true "页码, 每页大小"
+// @Success 200 {object} response.Response{data=response.PageResult{list=example.ExaCustomer[]},msg=string} "分页获取权限客户列表,返回包括列表,总数,页码,每页数量"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /customer/customerList [get]
 func (e *CustomerApi) GetExaCustomerList(c *fiber.Ctx) error {
-	var pageInfo exampleReq.SearchCustomerParams
+	var pageInfo request.SearchCustomerParams
 	_ = c.QueryParser(&pageInfo)
 	if err := utils.Verify(pageInfo, utils.PageInfoVerify); err != nil {
 		return response.FailWithMessage(err.Error(), c)

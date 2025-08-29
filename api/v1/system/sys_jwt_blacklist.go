@@ -18,6 +18,9 @@ type JwtApi struct{}
 // @accept application/json
 // @Produce application/json
 // @Success 200 {object} response.Response{msg=string} "jwt加入黑名单"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /jwt/jsonInBlacklist [post]
 func (j *JwtApi) JsonInBlacklist(c *fiber.Ctx) error {
 	tokenString := c.Get("Authorization")

@@ -23,6 +23,7 @@ type CasbinApi struct{}
 // @Success 200 {object} response.Response{msg=string} "更新角色API权限成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /casbin/UpdateCasbin [post]
 func (cas *CasbinApi) UpdateCasbin(c *fiber.Ctx) error {
 	var cmr request.CasbinInReceive
@@ -49,9 +50,10 @@ func (cas *CasbinApi) UpdateCasbin(c *fiber.Ctx) error {
 // @Accept application/json
 // @Produce application/json
 // @Param id path string true "角色ID"
-// @Success 200 {object} response.Response{data=[]string,msg=string} "获取权限列表成功"
+// @Success 200 {object} response.Response{data=fiber.Map{paths=[]request.CasbinInfo},msg=string} "获取权限列表成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /casbin/getPolicyPathByAuthorityId/{id} [get]
 func (cas *CasbinApi) GetPolicyPathByAuthorityId(c *fiber.Ctx) error {
 	var casbin request.CasbinInReceive

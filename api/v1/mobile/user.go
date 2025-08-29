@@ -24,6 +24,7 @@ type UserApi struct{}
 // @Success 200 {object} response.Response{msg=string} "创建移动端用户成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /mobileUser/createMobileUser [post]
 func (userApi *UserApi) CreateMobileUser(c *fiber.Ctx) error {
 	var mobileUser mobile.MobileUser
@@ -50,6 +51,7 @@ func (userApi *UserApi) CreateMobileUser(c *fiber.Ctx) error {
 // @Success 200 {object} response.Response{msg=string} "删除移动端用户成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /mobileUser/deleteMobileUser/{id} [delete]
 func (userApi *UserApi) DeleteMobileUser(c *fiber.Ctx) error {
 	id, _ := c.ParamsInt("id")
@@ -72,6 +74,7 @@ func (userApi *UserApi) DeleteMobileUser(c *fiber.Ctx) error {
 // @Success 200 {object} response.Response{msg=string} "创建移动端用户成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /mobileUser/deleteMobileUserByIds [delete]
 func (userApi *UserApi) DeleteMobileUserByIds(c *fiber.Ctx) error {
 	var IDS request.IdsReq
@@ -98,6 +101,7 @@ func (userApi *UserApi) DeleteMobileUserByIds(c *fiber.Ctx) error {
 // @Success 200 {object} response.Response{msg=string} "更新移动端用户成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /mobileUser/updateMobileUser [put]
 func (userApi *UserApi) UpdateMobileUser(c *fiber.Ctx) error {
 	var mobileUser mobile.MobileUser
@@ -121,6 +125,9 @@ func (userApi *UserApi) UpdateMobileUser(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data query mobile.MobileUser true "用id查询MobileUser"
 // @Success 200 {string} string "{"success":true,"data":mobile.MobileUser,"msg":"查询成功"}"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /mobileUser/findMobileUser/:id [get]
 func (userApi *UserApi) FindMobileUser(c *fiber.Ctx) error {
 	id, err := c.ParamsInt("id")
@@ -144,6 +151,9 @@ func (userApi *UserApi) FindMobileUser(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data query mobileReq.MobileUserSearch true "分页获取MobileUser列表"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /mobileUser/getMobileUserList [get]
 func (userApi *UserApi) GetMobileUserList(c *fiber.Ctx) error {
 	var pageInfo mobileReq.MobileUserSearch

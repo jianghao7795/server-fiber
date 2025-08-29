@@ -23,7 +23,10 @@ import (
 // @accept multipart/form-data
 // @Produce  application/json
 // @Param file formData file true "上传文件示例"
-// @Success 200 {object} response.Response{data=responseUploadFile.ResponseUploadFile,msg=string} "上传文件示例,返回包括文件详情"
+// @Success 200 {object} response.Response{data=responseUploadFile.ResponseUploadFile{file=app.FileUploadAndDownload},msg=string} "上传文件示例,返回包括文件详情"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /base_message/upload [post]
 func (u *FileUploadAndDownloadApi) UploadFile(c *fiber.Ctx) error {
 	// var file app.FileUploadAndDownload

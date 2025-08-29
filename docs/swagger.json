@@ -50,6 +50,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -98,6 +116,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -149,6 +185,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -188,6 +242,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -223,6 +295,24 @@
                 "responses": {
                     "200": {
                         "description": "根据id获取api,返回包括api详情",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
@@ -276,6 +366,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -322,6 +430,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -601,6 +727,18 @@
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -688,6 +826,12 @@
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -740,6 +884,12 @@
                     },
                     "500": {
                         "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
@@ -961,6 +1111,12 @@
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -1027,6 +1183,12 @@
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -1088,6 +1250,12 @@
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -1141,6 +1309,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -1190,6 +1376,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -1244,6 +1448,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -1282,6 +1504,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -1336,6 +1576,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -1385,6 +1643,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -1440,6 +1716,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -1477,6 +1771,24 @@
                         "description": "{\"success\":true,\"data\":{},\"msg\":\"创建成功\"}",
                         "schema": {
                             "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -1532,6 +1844,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -1582,6 +1912,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -1625,6 +1973,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -1667,6 +2033,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -1722,6 +2106,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -1764,6 +2166,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -1818,6 +2238,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -1860,6 +2298,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -1915,6 +2371,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -1965,6 +2439,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -2010,6 +2502,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -2054,6 +2564,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -2116,6 +2644,12 @@
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -2174,6 +2708,12 @@
                     },
                     "401": {
                         "description": "登录失败",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
@@ -2243,6 +2783,12 @@
                     },
                     "401": {
                         "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
@@ -2320,6 +2866,12 @@
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -2394,6 +2946,12 @@
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -2444,6 +3002,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -2505,6 +3081,12 @@
                     },
                     "401": {
                         "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
@@ -2575,6 +3157,12 @@
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -2641,6 +3229,12 @@
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -2703,6 +3297,12 @@
                     },
                     "401": {
                         "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
@@ -2772,6 +3372,12 @@
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -2825,6 +3431,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -2912,6 +3536,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -2998,6 +3640,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -3053,6 +3713,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -3128,6 +3806,12 @@
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -3194,6 +3878,12 @@
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -3244,6 +3934,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -3319,6 +4027,12 @@
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             },
@@ -3376,6 +4090,12 @@
                     },
                     "401": {
                         "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
@@ -3462,6 +4182,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -3485,6 +4223,24 @@
                         "description": "{\"success\":true,\"data\":{},\"msg\":\"发送成功\"}",
                         "schema": {
                             "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -3520,6 +4276,24 @@
                         "description": "{\"success\":true,\"data\":{},\"msg\":\"发送成功\"}",
                         "schema": {
                             "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -3753,6 +4527,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -3797,6 +4589,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -3861,6 +4671,12 @@
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -3911,6 +4727,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -3975,6 +4809,12 @@
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -4026,6 +4866,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             },
@@ -4074,6 +4932,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -4125,6 +5001,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -4179,6 +5073,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -4226,6 +5138,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -4376,6 +5306,12 @@
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -4431,6 +5367,18 @@
                     },
                     "400": {
                         "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
@@ -4491,6 +5439,18 @@
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -4535,6 +5495,18 @@
                     },
                     "500": {
                         "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
@@ -4589,6 +5561,18 @@
                     },
                     "400": {
                         "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
@@ -4655,6 +5639,18 @@
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -4716,6 +5712,12 @@
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -4773,6 +5775,18 @@
                     },
                     "404": {
                         "description": "文章不存在",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
@@ -4863,6 +5877,12 @@
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -4936,6 +5956,18 @@
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -4996,6 +6028,18 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -5073,6 +6117,18 @@
                                 }
                             ]
                         }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -5107,6 +6163,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -5150,6 +6224,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -5188,6 +6280,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -5238,6 +6348,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -5302,6 +6430,12 @@
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -5351,6 +6485,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -5405,6 +6557,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -5454,6 +6624,18 @@
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -5500,6 +6682,18 @@
                     },
                     "401": {
                         "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
@@ -5570,6 +6764,12 @@
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -5623,6 +6823,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -5673,6 +6891,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -5720,6 +6956,18 @@
                     },
                     "400": {
                         "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
@@ -5778,6 +7026,18 @@
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -5827,6 +7087,18 @@
                     },
                     "400": {
                         "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
@@ -5892,6 +7164,18 @@
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -5944,6 +7228,18 @@
                     },
                     "400": {
                         "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
@@ -6010,6 +7306,12 @@
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -6069,6 +7371,12 @@
                     },
                     "401": {
                         "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
@@ -6132,6 +7440,12 @@
                     },
                     "401": {
                         "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
@@ -6232,6 +7546,24 @@
                         "description": "{\"success\":true,\"data\":mobile.MobileUser,\"msg\":\"查询成功\"}",
                         "schema": {
                             "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -6360,6 +7692,24 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -6423,6 +7773,12 @@
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -6473,6 +7829,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -6522,6 +7896,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -6609,6 +8001,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -6725,6 +8135,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -6774,6 +8202,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -6825,6 +8271,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -6874,6 +8338,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -6967,6 +8449,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -7089,6 +8589,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -7138,6 +8656,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -7189,6 +8725,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -7239,6 +8793,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -7288,6 +8860,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -7436,6 +9026,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -7613,6 +9221,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -7653,6 +9279,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -7692,6 +9336,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -7727,6 +9389,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -7774,6 +9454,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -7831,6 +9529,24 @@
                         "description": "{\"success\":true,\"data\":app.Tag,\"msg\":\"查询成功\"}",
                         "schema": {
                             "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -7898,6 +9614,12 @@
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -7957,6 +9679,12 @@
                     },
                     "401": {
                         "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
@@ -8020,6 +9748,12 @@
                     },
                     "401": {
                         "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
@@ -8109,6 +9843,24 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -8169,6 +9921,12 @@
                     },
                     "401": {
                         "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
@@ -8239,6 +9997,12 @@
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -8306,6 +10070,12 @@
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -8356,6 +10126,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -8397,6 +10185,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -8444,6 +10250,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -8511,6 +10335,12 @@
                     },
                     "401": {
                         "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
@@ -8582,6 +10412,12 @@
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -8645,6 +10481,12 @@
                     },
                     "401": {
                         "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
@@ -8740,6 +10582,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -8775,6 +10635,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -8814,6 +10692,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -8888,6 +10784,24 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -8934,6 +10848,24 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
                     }
                 }
@@ -8995,6 +10927,12 @@
                     },
                     "401": {
                         "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
@@ -9061,6 +10999,12 @@
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
+                    },
+                    "500": {
+                        "description": "服务器错误",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
                     }
                 }
             }
@@ -9121,6 +11065,12 @@
                     },
                     "401": {
                         "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }
@@ -9195,6 +11145,12 @@
                     },
                     "401": {
                         "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/server-fiber_model_common_response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器错误",
                         "schema": {
                             "$ref": "#/definitions/server-fiber_model_common_response.Response"
                         }

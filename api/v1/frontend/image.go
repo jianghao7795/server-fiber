@@ -13,8 +13,10 @@ import (
 // @Summary 获取图片列表
 // @Description 获取前台展示的图片列表
 // @Produce application/json
-// @Success 200 {object} response.Response{msg=string,data=[]app.FileUploadAndDownload,code=integer} "获取成功"
+// @Success 200 {object} response.Response{msg=string} "获取成功"
 // @Failure 500 {object} response.Response "服务器错误"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
 // @Router /frontend/getImages [get]
 func (u *User) GetImages(c *fiber.Ctx) error {
 	imageList, err := imagesServiceApp.GetImagesList()

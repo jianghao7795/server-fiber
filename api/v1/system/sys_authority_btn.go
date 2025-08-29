@@ -17,7 +17,10 @@ type AuthorityBtnApi struct{}
 // @accept application/json
 // @Produce application/json
 // @Param data body request.SysAuthorityBtnReq true "菜单id, 角色id, 选中的按钮id"
-// @Success 200 {object} response.Response{data=object,msg=string} "返回列表成功"
+// @Success 200 {object} response.Response{data=[]system.SysAuthorityBtn,msg=string} "返回列表成功"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /authorityBtn/getAuthorityBtn [post]
 func (a *AuthorityBtnApi) GetAuthorityBtn(c *fiber.Ctx) error {
 	var req request.SysAuthorityBtnReq
@@ -37,6 +40,9 @@ func (a *AuthorityBtnApi) GetAuthorityBtn(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data body request.SysAuthorityBtnReq true "菜单id, 角色id, 选中的按钮id"
 // @Success 200 {object} response.Response{msg=string} "返回列表成功"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /authorityBtn/setAuthorityBtn [post]
 func (a *AuthorityBtnApi) SetAuthorityBtn(c *fiber.Ctx) error {
 	var req request.SysAuthorityBtnReq
@@ -55,6 +61,9 @@ func (a *AuthorityBtnApi) SetAuthorityBtn(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Success 200 {object} response.Response{msg=string} "删除成功"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /authorityBtn/canRemoveAuthorityBtn [post]
 func (a *AuthorityBtnApi) CanRemoveAuthorityBtn(c *fiber.Ctx) error {
 	id, _ := c.ParamsInt("id")

@@ -20,6 +20,9 @@ type OperationRecordApi struct{}
 // @Produce application/json
 // @Param data body system.SysOperationRecord true "创建SysOperationRecord"
 // @Success 200 {object} response.Response{msg=string} "创建SysOperationRecord"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /sysOperationRecord/createSysOperationRecord [post]
 func (s *OperationRecordApi) CreateSysOperationRecord(c *fiber.Ctx) error {
 	var sysOperationRecord system.SysOperationRecord
@@ -39,6 +42,9 @@ func (s *OperationRecordApi) CreateSysOperationRecord(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data body system.SysOperationRecord true "SysOperationRecord模型"
 // @Success 200 {object} response.Response{msg=string} "删除SysOperationRecord"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /sysOperationRecord/deleteSysOperationRecord [delete]
 func (s *OperationRecordApi) DeleteSysOperationRecord(c *fiber.Ctx) error {
 	id, _ := c.ParamsInt("id")
@@ -57,6 +63,9 @@ func (s *OperationRecordApi) DeleteSysOperationRecord(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data body request.IdsReq true "批量删除SysOperationRecord"
 // @Success 200 {object} response.Response{msg=string} "批量删除SysOperationRecord"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /sysOperationRecord/deleteSysOperationRecordByIds [delete]
 func (s *OperationRecordApi) DeleteSysOperationRecordByIds(c *fiber.Ctx) error {
 	var IDS request.IdsReq
@@ -75,7 +84,10 @@ func (s *OperationRecordApi) DeleteSysOperationRecordByIds(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data query system.SysOperationRecord true "Id"
-// @Success 200 {object} response.Response{data=map[string]any,msg=string} "用id查询SysOperationRecord"
+// @Success 200 {object} response.Response{data=system.SysOperationRecord,msg=string} "用id查询SysOperationRecord"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /sysOperationRecord/findSysOperationRecord/:id [get]
 func (s *OperationRecordApi) FindSysOperationRecord(c *fiber.Ctx) error {
 	id, _ := c.ParamsInt("id")
@@ -92,8 +104,11 @@ func (s *OperationRecordApi) FindSysOperationRecord(c *fiber.Ctx) error {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data query systemReq.SysOperationRecordSearch true "页码, 每页大小, 搜索条件"
-// @Success 200 {object} response.Response{data=response.PageResult,msg=string} "分页获取SysOperationRecord列表,返回包括列表,总数,页码,每页数量"
+// @Param data query request.SysOperationRecordSearch true "页码, 每页大小, 搜索条件"
+// @Success 200 {object} response.Response{data=response.PageResult{list=[]system.SysOperationRecord,total=int64,page=int,pageSize=int},msg=string} "分页获取SysOperationRecord列表,返回包括列表,总数,页码,每页数量"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /sysOperationRecord/getSysOperationRecordList [get]
 func (s *OperationRecordApi) GetSysOperationRecordList(c *fiber.Ctx) error {
 	var pageInfo systemReq.SysOperationRecordSearch

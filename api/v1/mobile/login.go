@@ -23,8 +23,10 @@ type LoginApi struct{}
 // @Accept application/json
 // @Produce application/json
 // @Param data body mobile.Login true "登录信息"
-// @Success 200 {object} response.Response{msg=string,data=object} "登录成功"
+// @Success 200 {object} response.Response{msg=string} "登录成功"
 // @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /mobile/login [post]
 func (*LoginApi) Login(c *fiber.Ctx) error {
 	var l mobile.Login
@@ -51,8 +53,10 @@ func (*LoginApi) Login(c *fiber.Ctx) error {
 // @Description 根据用户ID获取移动端用户详细信息
 // @Produce application/json
 // @Param user_id header string true "用户ID"
-// @Success 200 {object} response.Response{msg=string,data=mobile.MobileUser} "获取成功"
+// @Success 200 {object} response.Response{msg=string} "获取成功"
 // @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /mobile/getUserInfo [get]
 func (*LoginApi) GetUserInfo(c *fiber.Ctx) error {
 	authorization := c.Get("user_id")
@@ -78,8 +82,10 @@ func (*LoginApi) GetUserInfo(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param user_id header string true "用户ID"
 // @Param data body request.MobileUpdate true "用户更新信息"
-// @Success 200 {object} response.Response{msg=string,data=object} "更新成功"
+// @Success 200 {object} response.Response{msg=string} "更新成功"
 // @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /mobile/updateMobileUser [put]
 func (*LoginApi) UpdateMobileUser(c *fiber.Ctx) error {
 	var data request.MobileUpdate
@@ -114,8 +120,10 @@ func (*LoginApi) UpdateMobileUser(c *fiber.Ctx) error {
 // @Accept application/json
 // @Produce application/json
 // @Param data body request.MobileUpdatePassword true "密码更新信息"
-// @Success 200 {object} response.Response{msg=string,data=string} "更新成功"
+// @Success 200 {object} response.Response{msg=string} "更新成功"
 // @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /mobile/updatePassword [put]
 func (*LoginApi) UpdatePassword(c *fiber.Ctx) error {
 	var data request.MobileUpdatePassword

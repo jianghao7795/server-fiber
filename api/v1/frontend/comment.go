@@ -17,8 +17,10 @@ type CommentApi struct{}
 // @Description 根据文章ID获取相关评论列表
 // @Produce application/json
 // @Param articleId path integer true "文章ID" minimum(1)
-// @Success 200 {object} response.Response{msg=string,data=[]frontend.Comment,code=integer} "获取成功"
+// @Success 200 {object} response.Response{msg=string} "获取成功"
 // @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /frontend/comment/{articleId} [get]
 func (s *CommentApi) GetCommentByArticleId(c *fiber.Ctx) error {
 	id, err := c.ParamsInt("articleId")
@@ -41,8 +43,10 @@ func (s *CommentApi) GetCommentByArticleId(c *fiber.Ctx) error {
 // @Accept application/json
 // @Produce application/json
 // @Param data body frontend.Comment true "评论信息"
-// @Success 200 {object} response.Response{msg=string,data=integer,code=integer} "评论成功"
+// @Success 200 {object} response.Response{msg=string} "评论成功"
 // @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /frontend/comment [post]
 func (s *CommentApi) CreatedComment(c *fiber.Ctx) error {
 	var comment frontend.Comment

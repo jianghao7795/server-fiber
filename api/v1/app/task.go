@@ -19,6 +19,7 @@ import (
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "未授权"
 // @Failure 404 {object} response.Response "任务不存在"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /tasking/start [get]
 func (*TaskNameApi) StartTasking(c *fiber.Ctx) error {
 	tasking := c.Query("task")
@@ -49,6 +50,7 @@ func (*TaskNameApi) StartTasking(c *fiber.Ctx) error {
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "未授权"
 // @Failure 404 {object} response.Response "任务不存在"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /tasking/stop [get]
 func (*TaskNameApi) StopTasking(c *fiber.Ctx) error {
 	tasking := c.Query("task")

@@ -20,7 +20,10 @@ type DBApi struct{}
 // @Summary 初始化用户数据库
 // @Produce  application/json
 // @Param data body request.InitDB true "初始化数据库参数"
-// @Success 200 {object} response.Response{data=string} "初始化用户数据库"
+// @Success 200 {object} response.Response{msg=string} "初始化用户数据库"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /init/initdb [post]
 func (i *DBApi) InitDB(c *fiber.Ctx) error {
 	if global.DB != nil {
@@ -43,7 +46,10 @@ func (i *DBApi) InitDB(c *fiber.Ctx) error {
 // @Tags CheckDB
 // @Summary 是否进行初始化
 // @Produce  application/json
-// @Success 200 {object} response.Response{data=map[string]any,msg=string} "初始化用户数据库"
+// @Success 200 {object} response.Response{msg=string} "初始化用户数据库"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /init/checkdb [get]
 func (i *DBApi) CheckDB(c *fiber.Ctx) error {
 	var (

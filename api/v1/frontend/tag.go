@@ -18,8 +18,10 @@ type TagApi struct{}
 // @Produce application/json
 // @Param page query integer false "页码" default(1) minimum(1)
 // @Param pageSize query integer false "每页数量" default(10) minimum(1) maximum(100)
-// @Success 200 {object} response.Response{msg=string,data=response.PageResult,code=integer} "获取成功"
+// @Success 200 {object} response.Response{msg=string,data=response.PageResult{list=[]app.Tag},code=integer} "获取成功"
 // @Failure 500 {object} response.Response "服务器错误"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
 // @Router /frontend/getTagList [get]
 func (appTabApi *TagApi) GetTagList(c *fiber.Ctx) error {
 	var pageInfo appReq.TagSearch
@@ -40,8 +42,10 @@ func (appTabApi *TagApi) GetTagList(c *fiber.Ctx) error {
 // @Description 根据标签ID获取标签及其关联的文章
 // @Produce application/json
 // @Param id path integer true "标签ID" minimum(1)
-// @Success 200 {object} response.Response{msg=string,data=object,code=integer} "获取成功"
+// @Success 200 {object} response.Response{msg=string,data=object{tag=[]app.Tag},code=integer} "获取成功"
 // @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /frontend/getTag/{id} [get]
 func (appTabApi *TagApi) GetTag(c *fiber.Ctx) error {
 	id, err := c.ParamsInt("id")

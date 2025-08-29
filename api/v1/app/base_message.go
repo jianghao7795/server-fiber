@@ -20,9 +20,10 @@ import (
 // @Accept application/json
 // @Produce application/json
 // @Param data body app.BaseMessage true "基础消息信息"
-// @Success 200 {object} response.Response{msg=string,data=integer,code=integer} "创建基础消息成功"
+// @Success 200 {object} response.Response{msg=string} "创建基础消息成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /base_message/createBaseMessage [post]
 func (a *BaseMessageApi) CreateBaseMessage(c *fiber.Ctx) error {
 	var baseMessage app.BaseMessage
@@ -48,9 +49,10 @@ func (a *BaseMessageApi) CreateBaseMessage(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param id path integer true "基础消息ID" minimum(1)
 // @Param data body app.BaseMessage true "基础消息信息"
-// @Success 200 {object} response.Response{msg=string,code=integer} "更新基础消息成功"
+// @Success 200 {object} response.Response{msg=string} "更新基础消息成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /base_message/updateBaseMessage/{id} [put]
 func (a *BaseMessageApi) UpdateBaseMessage(c *fiber.Ctx) error {
 	var baseMessage app.BaseMessage
@@ -80,10 +82,11 @@ func (a *BaseMessageApi) UpdateBaseMessage(c *fiber.Ctx) error {
 // @Accept application/json
 // @Produce application/json
 // @Param id path integer true "基础消息ID" minimum(1)
-// @Success 200 {object} response.Response{msg=string,data=app.BaseMessage,code=integer} "查找基础消息成功"
+// @Success 200 {object} response.Response{msg=string} "查找基础消息成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "未授权"
 // @Failure 404 {object} response.Response "基础消息不存在"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /base_message/getBaseMessage/{id} [get]
 func (a *BaseMessageApi) FindBaseMessage(c *fiber.Ctx) error {
 	id, err := c.ParamsInt("id")

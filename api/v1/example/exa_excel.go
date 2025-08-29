@@ -114,7 +114,10 @@ func (e *ExcelApi) ImportExcel(c *fiber.Ctx) error {
 // @Summary 加载Excel数据
 // @Security ApiKeyAuth
 // @Produce  application/json
-// @Success 200 {object} response.Response{data=response.PageResult,msg=string} "加载Excel数据,返回包括列表,总数,页码,每页数量"
+// @Success 200 {object} response.Response{data=object,msg=string} "加载Excel数据,返回包括列表,总数,页码,每页数量"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /excel/loadExcel [get]
 func (e *ExcelApi) LoadExcel(c *fiber.Ctx) error {
 	menus, err := excelService.ParseExcel2InfoList()
@@ -136,7 +139,7 @@ func (e *ExcelApi) LoadExcel(c *fiber.Ctx) error {
 // @accept multipart/form-data
 // @Produce  application/json
 // @Param fileName query string true "模板名称"
-// @Success 200 {object} response.Response{data=string,msg=string} "下载模板"
+// @Success 200 {object} response.Response{msg=string} "下载模板"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "未授权"
 // @Failure 500 {object} response.Response "服务器错误"

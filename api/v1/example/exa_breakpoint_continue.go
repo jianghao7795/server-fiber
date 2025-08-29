@@ -22,6 +22,9 @@ import (
 // @Produce  application/json
 // @Param file formData file true "an example for breakpoint resume, 断点续传示例"
 // @Success 200 {object} response.Response{msg=string} "断点续传到服务器"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /fileUploadAndDownload/breakpointContinue [post]
 func (u *FileUploadAndDownloadApi) BreakpointContinue(c *fiber.Ctx) error {
 	var breakpoint example.ExaFileData
@@ -80,7 +83,10 @@ func (u *FileUploadAndDownloadApi) BreakpointContinue(c *fiber.Ctx) error {
 // @accept multipart/form-data
 // @Produce  application/json
 // @Param file formData file true "Find the file, 查找文件"
-// @Success 200 {object} response.Response{data=exampleRes.FileResponse,msg=string} "查找文件,返回包括文件详情"
+// @Success 200 {object} response.Response{msg=string} "查找文件,返回包括文件详情"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /fileUploadAndDownload/findFile [get]
 func (u *FileUploadAndDownloadApi) FindFile(c *fiber.Ctx) error {
 	fileMd5 := c.Query("fileMd5")
@@ -105,7 +111,10 @@ func (u *FileUploadAndDownloadApi) FindFile(c *fiber.Ctx) error {
 // @accept multipart/form-data
 // @Produce  application/json
 // @Param file formData file true "上传文件完成"
-// @Success 200 {object} response.Response{data=exampleRes.FilePathResponse,msg=string} "创建文件,返回包括文件路径"
+// @Success 200 {object} response.Response{msg=string} "创建文件,返回包括文件路径"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /fileUploadAndDownload/findFile [post]
 func (b *FileUploadAndDownloadApi) BreakpointContinueFinish(c *fiber.Ctx) error {
 	var file request.BreakPoint
@@ -137,6 +146,9 @@ func (b *FileUploadAndDownloadApi) BreakpointContinueFinish(c *fiber.Ctx) error 
 // @Produce  application/json
 // @Param file formData file true "删除缓存切片"
 // @Success 200 {object} response.Response{msg=string} "删除切片"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /fileUploadAndDownload/removeChunk [delete]
 func (u *FileUploadAndDownloadApi) RemoveChunk(c *fiber.Ctx) error {
 	var file example.ExaFile
@@ -165,7 +177,10 @@ func (u *FileUploadAndDownloadApi) RemoveChunk(c *fiber.Ctx) error {
 // @accept multipart/form-data
 // @Produce  application/json
 // @Param file formData file true "Find the file, 查找缓存文件列表"
-// @Success 200 {object} response.Response{data=exampleRes.FileResponse,msg=string} "查找缓存文件列表"
+// @Success 200 {object} response.Response{data=object,msg=string} "查找缓存文件列表"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /fileUploadAndDownload/findFileBreakpoint [get]
 func (u *FileUploadAndDownloadApi) FindFileBreakpoint(c *fiber.Ctx) error {
 	page := c.QueryInt("page", 1)
@@ -190,7 +205,10 @@ func (u *FileUploadAndDownloadApi) FindFileBreakpoint(c *fiber.Ctx) error {
 // @accept multipart/form-data
 // @Produce  application/json
 // @Param file formData file true "Find the file, 删除缓存文件"
-// @Success 200 {object} response.Response{data=exampleRes.FileResponse,msg=string} "删除缓存文件"
+// @Success 200 {object} response.Response{msg=string} "删除缓存文件"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /fileUploadAndDownload/deleteFileBreakpoint [delete]
 func (u *FileUploadAndDownloadApi) DeleteFileBreakpoint(c *fiber.Ctx) error {
 	id, err := c.ParamsInt("id")

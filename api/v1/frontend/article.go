@@ -23,9 +23,10 @@ type ArticleApi struct{}
 // @Param title query string false "文章标题搜索"
 // @Param state query integer false "文章状态"
 // @Param is_important query integer false "是否首页显示"
-// @Success 200 {object} response.Response{msg=string,data=response.PageResult,code=integer} "获取成功"
+// @Success 200 {object} response.Response{msg=string,data=response.PageResult{list=[]app.Article,total=integer,page=integer,pageSize=integer},code=integer} "获取成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 500 {object} response.Response "服务器错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
 // @Router /getArticleList [get]
 func (s *ArticleApi) GetArticleList(c *fiber.Ctx) error {
 	var pageInfo request.ArticleSearch
@@ -58,9 +59,11 @@ func (s *ArticleApi) GetArticleList(c *fiber.Ctx) error {
 // @Description 根据文章ID获取文章详细信息
 // @Produce application/json
 // @Param id path integer true "文章ID" minimum(1)
-// @Success 200 {object} response.Response{msg=string,data=app.Article,code=integer} "获取成功"
+// @Success 200 {object} response.Response{msg=string} "获取成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 404 {object} response.Response "文章不存在"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /getArticle/{id} [get]
 func (s *ArticleApi) GetArticleDetail(c *fiber.Ctx) error {
 	id, err := c.ParamsInt("id")
@@ -90,8 +93,10 @@ func (s *ArticleApi) GetArticleDetail(c *fiber.Ctx) error {
 // @Param name path string true "搜索类型" Enums(tags, articles)
 // @Param value path string true "搜索值"
 // @Param sort query string false "排序方式"
-// @Success 200 {object} response.Response{msg=string,data=[]app.Article,code=integer} "搜索成功"
+// @Success 200 {object} response.Response{msg=string} "搜索成功"
 // @Failure 400 {object} response.Response "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /getSearchArticle/{name}/{value} [get]
 func (s *ArticleApi) GetSearchArticle(c *fiber.Ctx) error {
 	var searchValue request.ArticleSearch

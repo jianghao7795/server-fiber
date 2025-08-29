@@ -19,9 +19,10 @@ import (
 // @Accept application/json
 // @Produce application/json
 // @Param data body app.Tag true "标签信息"
-// @Success 200 {object} response.Response{msg=string,data=integer} "创建标签成功"
+// @Success 200 {object} response.Response{msg=string} "创建标签成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /tag/createTag [post]
 func (TagApi *TagApi) CreateTag(c *fiber.Ctx) error {
 	var appTab app.Tag
@@ -49,6 +50,7 @@ func (TagApi *TagApi) CreateTag(c *fiber.Ctx) error {
 // @Success 200 {object} response.Response{msg=string} "删除标签成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /tag/deleteTag/{id} [delete]
 func (TagApi *TagApi) DeleteTag(c *fiber.Ctx) error {
 	id, _ := c.ParamsInt("id")
@@ -71,6 +73,7 @@ func (TagApi *TagApi) DeleteTag(c *fiber.Ctx) error {
 // @Success 200 {object} response.Response{msg=string} "批量删除标签成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /tag/deleteTagByIds [delete]
 func (TagApi *TagApi) DeleteTagByIds(c *fiber.Ctx) error {
 	var IDS request.IdsReq
@@ -94,6 +97,7 @@ func (TagApi *TagApi) DeleteTagByIds(c *fiber.Ctx) error {
 // @Success 200 {object} response.Response{msg=string} "更新标签成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /tag/updateTag [put]
 func (TagApi *TagApi) UpdateTag(c *fiber.Ctx) error {
 	var appTab app.Tag
@@ -118,6 +122,9 @@ func (TagApi *TagApi) UpdateTag(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data query app.Tag true "用id查询Tag"
 // @Success 200 {string} string "{"success":true,"data":app.Tag,"msg":"查询成功"}"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /tag/:id [get]
 func (TagApi *TagApi) FindTag(c *fiber.Ctx) error {
 	id, _ := c.ParamsInt("id")
@@ -137,6 +144,9 @@ func (TagApi *TagApi) FindTag(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data query appReq.TagSearch true "分页获取Tag列表"
 // @Success 200 {string} string "{"success":true,"data":[]app.Tag,total=integer,"msg":"获取成功"}"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /tag/getTagList [get]
 func (TagApi *TagApi) GetTagList(c *fiber.Ctx) error {
 	var pageInfo appReq.TagSearch

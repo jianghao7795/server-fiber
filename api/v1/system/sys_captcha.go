@@ -24,7 +24,10 @@ type BaseApi struct{}
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Success 200 {object} response.Response{data=systemRes.SysCaptchaResponse,msg=string,code=number} "生成验证码,返回包括随机数id,base64,验证码长度"
+// @Success 200 {object} response.Response{data=systemRes.SysCaptchaResponse,msg=string} "生成验证码,返回包括随机数id,base64,验证码长度"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /base/captcha [get]
 func (b *BaseApi) Captcha(c *fiber.Ctx) error {
 	// 字符,公式,验证码配置
@@ -50,7 +53,10 @@ func (b *BaseApi) Captcha(c *fiber.Ctx) error {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Success 200 {object} response.Response{data=systemRes.SysCaptchaResponse,msg=string,code=number} "生成验证码,返回包括随机数id,base64,验证码长度"
+// @Success 200 {object} response.Response{data=systemRes.SysCaptchaImgResponse,msg=string} "生成验证码,返回包括随机数id,base64,验证码长度"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /base/captcha/img [get]
 func (b *BaseApi) CaptchaImg(c *fiber.Ctx) error {
 	capt := captcha.GetCaptcha()

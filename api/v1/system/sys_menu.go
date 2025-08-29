@@ -23,6 +23,8 @@ type AuthorityMenuApi struct{}
 // @Produce application/json
 // @Success 200 {object} response.Response{data=[]system.SysMenu,msg=string} "获取用户动态路由成功"
 // @Failure 401 {object} response.Response "未授权"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /menu/getMenu [get]
 func (a *AuthorityMenuApi) GetMenu(c *fiber.Ctx) error {
 	authorityId, err := utils.GetUserAuthorityId(c)
@@ -49,6 +51,8 @@ func (a *AuthorityMenuApi) GetMenu(c *fiber.Ctx) error {
 // @Produce application/json
 // @Success 200 {object} response.Response{data=[]system.SysBaseMenu,msg=string} "获取基础菜单树成功"
 // @Failure 401 {object} response.Response "未授权"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /menu/getBaseMenuTree [get]
 func (a *AuthorityMenuApi) GetBaseMenuTree(c *fiber.Ctx) error {
 	if menus, err := menuService.GetBaseMenuTree(); err != nil {
@@ -70,6 +74,7 @@ func (a *AuthorityMenuApi) GetBaseMenuTree(c *fiber.Ctx) error {
 // @Success 200 {object} response.Response{msg=string} "增加菜单和角色关联关系成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /menu/addMenuAuthority [post]
 func (a *AuthorityMenuApi) AddMenuAuthority(c *fiber.Ctx) error {
 	var authorityMenu systemReq.AddMenuAuthorityInfo
@@ -93,9 +98,10 @@ func (a *AuthorityMenuApi) AddMenuAuthority(c *fiber.Ctx) error {
 // @Accept application/json
 // @Produce application/json
 // @Param authorityId query string true "角色ID"
-// @Success 200 {object} response.Response{data=[]system.SysMenu,msg=string} "获取指定角色菜单成功"
+// @Success 200 {object} response.Response{data=system.SysMenus,msg=string} "获取指定角色菜单成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /menu/getMenuAuthority [get]
 func (a *AuthorityMenuApi) GetMenuAuthority(c *fiber.Ctx) error {
 	var param request.GetAuthorityId
@@ -118,6 +124,9 @@ func (a *AuthorityMenuApi) GetMenuAuthority(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data body system.SysBaseMenu true "路由path, 父菜单ID, 路由name, 对应前端文件路径, 排序标记"
 // @Success 200 {object} response.Response{msg=string} "新增菜单"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /menu/addBaseMenu [post]
 func (a *AuthorityMenuApi) AddBaseMenu(c *fiber.Ctx) error {
 	var menu system.SysBaseMenu
@@ -144,6 +153,9 @@ func (a *AuthorityMenuApi) AddBaseMenu(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data body request.GetById true "菜单id"
 // @Success 200 {object} response.Response{msg=string} "删除菜单"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /menu/deleteBaseMenu [post]
 func (a *AuthorityMenuApi) DeleteBaseMenu(c *fiber.Ctx) error {
 	var menu request.GetById
@@ -166,6 +178,9 @@ func (a *AuthorityMenuApi) DeleteBaseMenu(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data body system.SysBaseMenu true "路由path, 父菜单ID, 路由name, 对应前端文件路径, 排序标记"
 // @Success 200 {object} response.Response{msg=string} "更新菜单"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /menu/updateBaseMenu [post]
 func (a *AuthorityMenuApi) UpdateBaseMenu(c *fiber.Ctx) error {
 	var menu system.SysBaseMenu
@@ -190,7 +205,10 @@ func (a *AuthorityMenuApi) UpdateBaseMenu(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data body request.GetById true "菜单id"
-// @Success 200 {object} response.Response{data=systemRes.SysBaseMenuResponse,msg=string} "根据id获取菜单,返回包括系统菜单列表"
+// @Success 200 {object} response.Response{data=system.SysBaseMenu,msg=string} "根据id获取菜单,返回包括系统菜单列表"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /menu/getBaseMenuById/:id [get]
 func (a *AuthorityMenuApi) GetBaseMenuById(c *fiber.Ctx) error {
 	var idInfo request.GetById
@@ -213,7 +231,10 @@ func (a *AuthorityMenuApi) GetBaseMenuById(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data body request.PageInfo true "页码, 每页大小"
-// @Success 200 {object} response.Response{data=response.PageResult,msg=string} "分页获取基础menu列表,返回包括列表,总数,页码,每页数量"
+// @Success 200 {object} response.Response{data=response.PageResult{list=[]system.SysBaseMenu,total=int64,page=int,pageSize=int},msg=string} "分页获取基础menu列表,返回包括列表,总数,页码,每页数量"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /menu/getMenuList [post]
 func (a *AuthorityMenuApi) GetMenuList(c *fiber.Ctx) error {
 	var pageInfo request.PageInfo

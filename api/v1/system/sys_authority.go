@@ -23,9 +23,10 @@ type AuthorityApi struct{}
 // @Accept application/json
 // @Produce application/json
 // @Param data body system.SysAuthority true "角色信息"
-// @Success 200 {object} response.Response{data=systemRes.SysAuthorityResponse,msg=string} "创建角色成功"
+// @Success 200 {object} response.Response{data=system.SysAuthority,msg=string} "创建角色成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /authority/createAuthority [post]
 func (a *AuthorityApi) CreateAuthority(c *fiber.Ctx) error {
 	var authority system.SysAuthority
@@ -62,6 +63,7 @@ func (a *AuthorityApi) CreateAuthority(c *fiber.Ctx) error {
 // @Success 200 {object} response.Response{data=systemRes.SysAuthorityResponse,msg=string} "拷贝角色成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /authority/copyAuthority [post]
 func (a *AuthorityApi) CopyAuthority(c *fiber.Ctx) error {
 	var copyInfo systemRes.SysAuthorityCopyResponse
@@ -95,6 +97,7 @@ func (a *AuthorityApi) CopyAuthority(c *fiber.Ctx) error {
 // @Success 200 {object} response.Response{msg=string} "删除角色成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /authority/deleteAuthority [delete]
 func (a *AuthorityApi) DeleteAuthority(c *fiber.Ctx) error {
 	var authority system.SysAuthority
@@ -116,7 +119,10 @@ func (a *AuthorityApi) DeleteAuthority(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data body system.SysAuthority true "权限id, 权限名, 父角色id"
-// @Success 200 {object} response.Response{data=systemRes.SysAuthorityResponse,msg=string} "更新角色信息,返回包括系统角色详情"
+// @Success 200 {object} response.Response{msg=string} "更新角色信息,返回包括系统角色详情"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /authority/updateAuthority [post]
 func (a *AuthorityApi) UpdateAuthority(c *fiber.Ctx) error {
 	var auth system.SysAuthority
@@ -143,6 +149,9 @@ func (a *AuthorityApi) UpdateAuthority(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data body request.PageInfo true "页码, 每页大小"
 // @Success 200 {object} response.Response{data=response.PageResult,msg=string} "分页获取角色列表,返回包括列表,总数,页码,每页数量"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /authority/getAuthorityList [post]
 func (a *AuthorityApi) GetAuthorityList(c *fiber.Ctx) error {
 	var pageInfo request.PageInfo
@@ -176,6 +185,9 @@ func (a *AuthorityApi) GetAuthorityList(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data body system.SysAuthority true "设置角色资源权限"
 // @Success 200 {object} response.Response{msg=string} "设置角色资源权限"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /authority/setDataAuthority [post]
 func (a *AuthorityApi) SetDataAuthority(c *fiber.Ctx) error {
 	var auth system.SysAuthority

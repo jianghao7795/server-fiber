@@ -24,9 +24,10 @@ import (
 // @Accept application/json
 // @Produce application/json
 // @Param data body systemReq.Login true "登录信息"
-// @Success 200 {object} response.Response{msg=string,data=systemRes.LoginResponse} "登录成功"
+// @Success 200 {object} response.Response{msg=string} "登录成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "登录失败"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /base/login [post]
 func (b *BaseApi) Login(c *fiber.Ctx) error {
 	var l systemReq.Login
@@ -60,9 +61,10 @@ func (b *BaseApi) Login(c *fiber.Ctx) error {
 // @Accept application/json
 // @Produce application/json
 // @Param data body systemReq.LoginToken true "登录信息"
-// @Success 200 {object} response.Response{msg=string,data=systemRes.LoginResponse} "登录成功"
+// @Success 200 {object} response.Response{msg=string} "登录成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "登录失败"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /base/getToken/login [post]
 func (b *BaseApi) LoginToken(c *fiber.Ctx) error {
 	var l systemReq.LoginToken
@@ -138,6 +140,9 @@ func (b *BaseApi) tokenNext(c *fiber.Ctx, user *system.SysUser) error {
 // @Produce  application/json
 // @Param data body systemReq.Register true "用户名, 昵称, 密码, 角色ID"
 // @Success 200 {object} response.Response{msg=string} "用户注册账号,返回包括用户信息"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /user/admin_register [post]
 func (b *BaseApi) Register(c *fiber.Ctx) error {
 	var r systemReq.Register
@@ -168,6 +173,9 @@ func (b *BaseApi) Register(c *fiber.Ctx) error {
 // @Produce  application/json
 // @Param data body systemReq.ChangePasswordStruct true "用户名, 原密码, 新密码"
 // @Success 200 {object} response.Response{msg=string} "用户修改密码"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /user/changePassword [post]
 func (b *BaseApi) ChangePassword(c *fiber.Ctx) error {
 	var user systemReq.ChangePasswordStruct
@@ -191,7 +199,10 @@ func (b *BaseApi) ChangePassword(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param query query request.PageInfo true "页码, 每页大小"
-// @Success 200 {object} response.Response{data=response.PageResult,msg=string} "分页获取用户列表,返回包括列表,总数,页码,每页数量"
+// @Success 200 {object} response.Response{data=object,msg=string} "分页获取用户列表,返回包括列表,总数,页码,每页数量"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /user/getUserList [get]
 func (b *BaseApi) GetUserList(c *fiber.Ctx) error {
 	var searchInfo systemReq.SearchInfo
@@ -223,6 +234,7 @@ func (b *BaseApi) GetUserList(c *fiber.Ctx) error {
 // @Success 200 {object} response.Response{msg=string} "设置用户权限成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /user/setUserAuthority [post]
 func (b *BaseApi) SetUserAuthority(c *fiber.Ctx) error {
 	var sua systemReq.SetUserAuth
@@ -262,6 +274,7 @@ func (b *BaseApi) SetUserAuthority(c *fiber.Ctx) error {
 // @Success 200 {object} response.Response{msg=string} "设置用户权限成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /user/setUserAuthorities [post]
 func (b *BaseApi) SetUserAuthorities(c *fiber.Ctx) error {
 	var sua systemReq.SetUserAuthorities
@@ -286,6 +299,7 @@ func (b *BaseApi) SetUserAuthorities(c *fiber.Ctx) error {
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "未授权"
 // @Failure 403 {object} response.Response "不能删除自己"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /user/deleteUser/{id} [delete]
 func (b *BaseApi) DeleteUser(c *fiber.Ctx) error {
 	id, _ := c.ParamsInt("id")
@@ -312,6 +326,7 @@ func (b *BaseApi) DeleteUser(c *fiber.Ctx) error {
 // @Success 200 {object} response.Response{msg=string} "设置用户信息成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /user/setUserInfo [put]
 func (b *BaseApi) SetUserInfo(c *fiber.Ctx) error {
 	var user systemReq.ChangeUserInfo
@@ -352,6 +367,9 @@ func (b *BaseApi) SetUserInfo(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data body system.SysUser true "ID, 用户名, 昵称, 头像链接"
 // @Success 200 {object} response.Response{msg=string} "设置用户信息"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /user/SetSelfInfo [put]
 func (b *BaseApi) SetSelfInfo(c *fiber.Ctx) error {
 	var user systemReq.ChangeUserInfo
@@ -379,7 +397,10 @@ func (b *BaseApi) SetSelfInfo(c *fiber.Ctx) error {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Success 200 {object} response.Response{msg=string} "获取用户信息"
+// @Success 200 {object} response.Response{data=object,msg=string} "获取用户信息"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /user/getUserInfo [get]
 func (b *BaseApi) GetUserInfo(c *fiber.Ctx) error {
 	uuid := utils.GetUserUuid(c)
@@ -398,6 +419,9 @@ func (b *BaseApi) GetUserInfo(c *fiber.Ctx) error {
 // @Produce  application/json
 // @Param data body system.SysUser true "ID"
 // @Success 200 {object} response.Response{msg=string} "重置用户密码"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /user/resetPassword [post]
 func (b *BaseApi) ResetPassword(c *fiber.Ctx) error {
 	var user system.SysUser
@@ -415,7 +439,10 @@ func (b *BaseApi) ResetPassword(c *fiber.Ctx) error {
 // @Summary 获取人员总数
 // @Security ApiKeyAuth
 // @Produce  application/json
-// @Success 200 {object} response.Response{msg=string} "获取人员总数"
+// @Success 200 {object} response.Response{data=object,msg=string} "获取人员总数"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /user/getUserCount [get]
 func (b *BaseApi) GetUserCount(c *fiber.Ctx) error {
 	if userCount, err := userService.UserCount(); err != nil {

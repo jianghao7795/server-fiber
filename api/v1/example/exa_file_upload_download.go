@@ -29,7 +29,7 @@ import (
 // @Param file formData file true "上传文件"
 // @Param noSave query string false "是否保存到数据库" default("0")
 // @Param is_cropper query integer false "是否裁剪图片" default(1)
-// @Success 200 {object} response.Response{data=exampleRes.ExaFileResponse,msg=string} "上传文件成功"
+// @Success 200 {object} response.Response{msg=string} "上传文件成功"
 // @Failure 400 {object} response.Response "文件过大或格式错误"
 // @Failure 401 {object} response.Response "未授权"
 // @Failure 500 {object} response.Response "服务器错误"
@@ -97,6 +97,7 @@ func (u *FileUploadAndDownloadApi) UploadFile(c *fiber.Ctx) error {
 // @Success 200 {object} response.Response{msg=string} "编辑成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /fileUploadAndDownload/editFileName [put]
 func (u *FileUploadAndDownloadApi) EditFileName(c *fiber.Ctx) error {
 	var data example.ExaFileUploadAndDownload
@@ -122,6 +123,7 @@ func (u *FileUploadAndDownloadApi) EditFileName(c *fiber.Ctx) error {
 // @Success 200 {object} response.Response{msg=string} "删除成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /fileUploadAndDownload/deleteFile [delete]
 func (u *FileUploadAndDownloadApi) DeleteFile(c *fiber.Ctx) error {
 	id, err := c.ParamsInt("id")
@@ -142,7 +144,10 @@ func (u *FileUploadAndDownloadApi) DeleteFile(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data body request.PageInfo true "页码, 每页大小"
-// @Success 200 {object} response.Response{data=response.PageResult,msg=string} "分页文件列表,返回包括列表,总数,页码,每页数量"
+// @Success 200 {object} response.Response{data=response.PageResult{list=example.ExaFileUploadAndDownload[]},msg=string} "分页文件列表,返回包括列表,总数,页码,每页数量"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /fileUploadAndDownload/getFileList [get]
 func (u *FileUploadAndDownloadApi) GetFileList(c *fiber.Ctx) error {
 	var pageInfo request.PageInfo

@@ -20,6 +20,9 @@ type DictionaryApi struct{}
 // @Produce application/json
 // @Param data body system.SysDictionary true "SysDictionary模型"
 // @Success 200 {object} response.Response{msg=string} "创建SysDictionary"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /sysDictionary/createSysDictionary [post]
 func (s *DictionaryApi) CreateSysDictionary(c *fiber.Ctx) error {
 	var dictionary system.SysDictionary
@@ -39,6 +42,9 @@ func (s *DictionaryApi) CreateSysDictionary(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data body system.SysDictionary true "SysDictionary模型"
 // @Success 200 {object} response.Response{msg=string} "删除SysDictionary"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /sysDictionary/deleteSysDictionary/:id [delete]
 func (s *DictionaryApi) DeleteSysDictionary(c *fiber.Ctx) error {
 	id, _ := c.ParamsInt("id")
@@ -61,6 +67,9 @@ func (s *DictionaryApi) DeleteSysDictionary(c *fiber.Ctx) error {
 // @Produce application/json
 // @Param data body system.SysDictionary true "SysDictionary模型"
 // @Success 200 {object} response.Response{msg=string} "更新SysDictionary"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /sysDictionary/updateSysDictionary/:id [put]
 func (s *DictionaryApi) UpdateSysDictionary(c *fiber.Ctx) error {
 	var dictionary system.SysDictionary
@@ -83,7 +92,10 @@ func (s *DictionaryApi) UpdateSysDictionary(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data query system.SysDictionary true "ID或字典英名"
-// @Success 200 {object} response.Response{data=map[string]any,msg=string} "用id查询SysDictionary"
+// @Success 200 {object} response.Response{data=system.SysDictionary,msg=string} "用id查询SysDictionary"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /sysDictionary/findSysDictionary [get]
 func (s *DictionaryApi) FindSysDictionary(c *fiber.Ctx) error {
 	fieldType := c.Query("type")
@@ -106,7 +118,10 @@ func (s *DictionaryApi) FindSysDictionary(c *fiber.Ctx) error {
 // @accept application/json
 // @Produce application/json
 // @Param data query request.SysDictionarySearch true "页码, 每页大小, 搜索条件"
-// @Success 200 {object} response.Response{data=response.PageResult,msg=string} "分页获取SysDictionary列表,返回包括列表,总数,页码,每页数量"
+// @Success 200 {object} response.Response{data=response.PageResult{list=[]system.SysDictionary,total=int64,page=int,pageSize=int},msg=string} "分页获取SysDictionary列表,返回包括列表,总数,页码,每页数量"
+// @Failure 400 {object} response.Response{msg=string} "参数错误"
+// @Failure 401 {object} response.Response{msg=string} "未授权"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /sysDictionary/getSysDictionaryList [get]
 func (s *DictionaryApi) GetSysDictionaryList(c *fiber.Ctx) error {
 	var pageInfo request.SysDictionarySearch

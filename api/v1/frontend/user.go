@@ -46,9 +46,10 @@ type User struct{}
 // @Accept application/json
 // @Produce application/json
 // @Param data body systemReq.Login true "登录信息"
-// @Success 200 {object} response.Response{msg=string,data=systemRes.LoginResponse} "登录成功"
+// @Success 200 {object} response.Response{msg=string} "登录成功"
 // @Failure 400 {object} response.Response "参数错误"
 // @Failure 401 {object} response.Response "登录失败"
+// @Failure 500 {object} response.Response{msg=string} "服务器错误"
 // @Router /frontend/login [post]
 func (b *User) Login(c *fiber.Ctx) error {
 	var l systemReq.Login
