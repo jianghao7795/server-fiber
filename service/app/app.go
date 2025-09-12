@@ -1,6 +1,7 @@
 package app
 
 var ArticleServer = new(ArticleService)
+var LikeServer = new(LikeService)
 var BaseMessageServer = new(BaseMessageService)
 var CommentServer = new(CommentService)
 var TagServer = new(TagService)

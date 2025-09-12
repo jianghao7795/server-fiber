@@ -1,0 +1,222 @@
+{
+    "info": {
+        "name": "文章点赞功能API测试",
+        "description": "测试文章点赞相关的所有API接口",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:8888/backend",
+            "type": "string"
+        },
+        {
+            "key": "jwtToken",
+            "value": "your_jwt_token_here",
+            "type": "string"
+        },
+        {
+            "key": "postId",
+            "value": "1",
+            "type": "string"
+        }
+    ],
+    "item": [
+        {
+            "name": "1. 获取帖子点赞数",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/like/getPostLikeCount/{{postId}}",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "like",
+                        "getPostLikeCount",
+                        "{{postId}}"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "2. 检查用户点赞状态",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{jwtToken}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/like/checkUserLiked/{{postId}}",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "like",
+                        "checkUserLiked",
+                        "{{postId}}"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "3. 获取帖子点赞列表",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/like/getPostLikes/{{postId}}?page=1&page_size=10",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "like",
+                        "getPostLikes",
+                        "{{postId}}"
+                    ],
+                    "query": [
+                        {
+                            "key": "page",
+                            "value": "1"
+                        },
+                        {
+                            "key": "page_size",
+                            "value": "10"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "4. 点赞帖子",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{jwtToken}}",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/like/likePost/{{postId}}",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "like",
+                        "likePost",
+                        "{{postId}}"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "5. 取消点赞帖子",
+            "request": {
+                "method": "DELETE",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{jwtToken}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/like/unlikePost/{{postId}}",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "like",
+                        "unlikePost",
+                        "{{postId}}"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "6. 获取用户点赞的帖子列表",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{jwtToken}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/like/getUserLikedPosts?page=1&page_size=10",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "like",
+                        "getUserLikedPosts"
+                    ],
+                    "query": [
+                        {
+                            "key": "page",
+                            "value": "1"
+                        },
+                        {
+                            "key": "page_size",
+                            "value": "10"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        }
+    ],
+    "event": [
+        {
+            "listen": "prerequest",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    "// 在请求前执行的脚本",
+                    "console.log('开始测试API:', pm.info.requestName);"
+                ]
+            }
+        },
+        {
+            "listen": "test",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    "// 测试脚本",
+                    "pm.test('状态码应该是200', function () {",
+                    "    pm.response.to.have.status(200);",
+                    "});",
+                    "",
+                    "pm.test('响应应该包含code字段', function () {",
+                    "    const jsonData = pm.response.json();",
+                    "    pm.expect(jsonData).to.have.property('code');",
+                    "});",
+                    "",
+                    "pm.test('响应应该包含msg字段', function () {",
+                    "    const jsonData = pm.response.json();",
+                    "    pm.expect(jsonData).to.have.property('msg');",
+                    "});"
+                ]
+            }
+        }
+    ]
+}

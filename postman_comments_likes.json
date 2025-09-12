@@ -1,0 +1,448 @@
+{
+    "info": {
+        "name": "评论和点赞功能API测试",
+        "description": "测试评论的楼中楼功能和文章点赞功能的完整API测试集合",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:8888/backend",
+            "type": "string"
+        },
+        {
+            "key": "jwtToken",
+            "value": "your_jwt_token_here",
+            "type": "string"
+        },
+        {
+            "key": "postId",
+            "value": "1",
+            "type": "string"
+        },
+        {
+            "key": "commentId",
+            "value": "1",
+            "type": "string"
+        }
+    ],
+    "item": [
+        {
+            "name": "1. 创建测试帖子",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{jwtToken}}",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"title\": \"测试帖子 - 评论和点赞功能\",\n  \"desc\": \"这是一个用于测试评论和点赞功能的帖子\",\n  \"content\": \"这是帖子的详细内容，用于测试评论的楼中楼功能和点赞功能。\",\n  \"state\": 1,\n  \"user_id\": 1,\n  \"is_important\": 0\n}"
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/article/createArticle",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "article",
+                        "createArticle"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "2. 获取帖子点赞数",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/like/getPostLikeCount/{{postId}}",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "like",
+                        "getPostLikeCount",
+                        "{{postId}}"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "3. 点赞帖子",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{jwtToken}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/like/likePost/{{postId}}",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "like",
+                        "likePost",
+                        "{{postId}}"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "4. 检查用户点赞状态",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{jwtToken}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/like/checkUserLiked/{{postId}}",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "like",
+                        "checkUserLiked",
+                        "{{postId}}"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "5. 创建评论",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{jwtToken}}",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"post_id\": {{postId}},\n  \"content\": \"这是一条测试评论\",\n  \"parent_id\": 0,\n  \"user_id\": 1,\n  \"to_user_id\": 0\n}"
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/comment/createComment",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "comment",
+                        "createComment"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "6. 创建楼中楼评论（回复评论）",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{jwtToken}}",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"post_id\": {{postId}},\n  \"content\": \"这是对评论的回复，测试楼中楼功能\",\n  \"parent_id\": {{commentId}},\n  \"user_id\": 1,\n  \"to_user_id\": 1\n}"
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/comment/createComment",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "comment",
+                        "createComment"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "7. 获取帖子评论列表",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/comment/getCommentList?post_id={{postId}}&page=1&page_size=10",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "comment",
+                        "getCommentList"
+                    ],
+                    "query": [
+                        {
+                            "key": "post_id",
+                            "value": "{{postId}}"
+                        },
+                        {
+                            "key": "page",
+                            "value": "1"
+                        },
+                        {
+                            "key": "page_size",
+                            "value": "10"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "8. 获取帖子点赞列表",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/like/getPostLikes/{{postId}}?page=1&page_size=10",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "like",
+                        "getPostLikes",
+                        "{{postId}}"
+                    ],
+                    "query": [
+                        {
+                            "key": "page",
+                            "value": "1"
+                        },
+                        {
+                            "key": "page_size",
+                            "value": "10"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "9. 获取用户点赞的帖子列表",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{jwtToken}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/like/getUserLikedPosts?page=1&page_size=10",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "like",
+                        "getUserLikedPosts"
+                    ],
+                    "query": [
+                        {
+                            "key": "page",
+                            "value": "1"
+                        },
+                        {
+                            "key": "page_size",
+                            "value": "10"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "10. 取消点赞",
+            "request": {
+                "method": "DELETE",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{jwtToken}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/like/unlikePost/{{postId}}",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "like",
+                        "unlikePost",
+                        "{{postId}}"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "11. 删除评论",
+            "request": {
+                "method": "DELETE",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{jwtToken}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/comment/deleteComment/{{commentId}}",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "comment",
+                        "deleteComment",
+                        "{{commentId}}"
+                    ]
+                }
+            },
+            "response": []
+        }
+    ],
+    "event": [
+        {
+            "listen": "prerequest",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    "// 在请求前执行的脚本",
+                    "console.log('开始测试:', pm.info.requestName);",
+                    "",
+                    "// 如果是创建评论请求，设置commentId变量",
+                    "if (pm.info.requestName.includes('创建评论') && pm.response) {",
+                    "    const response = pm.response.json();",
+                    "    if (response.data) {",
+                    "        pm.collectionVariables.set('commentId', response.data);",
+                    "        console.log('设置commentId:', response.data);",
+                    "    }",
+                    "}"
+                ]
+            }
+        },
+        {
+            "listen": "test",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    "// 通用测试脚本",
+                    "pm.test('状态码应该是200', function () {",
+                    "    pm.response.to.have.status(200);",
+                    "});",
+                    "",
+                    "pm.test('响应应该包含code字段', function () {",
+                    "    const jsonData = pm.response.json();",
+                    "    pm.expect(jsonData).to.have.property('code');",
+                    "});",
+                    "",
+                    "pm.test('响应应该包含msg字段', function () {",
+                    "    const jsonData = pm.response.json();",
+                    "    pm.expect(jsonData).to.have.property('msg');",
+                    "});",
+                    "",
+                    "// 特定测试",
+                    "if (pm.info.requestName.includes('点赞帖子')) {",
+                    "    pm.test('点赞应该成功', function () {",
+                    "        const jsonData = pm.response.json();",
+                    "        pm.expect(jsonData.code).to.eql(200);",
+                    "        pm.expect(jsonData.msg).to.include('成功');",
+                    "    });",
+                    "}",
+                    "",
+                    "if (pm.info.requestName.includes('创建评论')) {",
+                    "    pm.test('评论创建应该成功', function () {",
+                    "        const jsonData = pm.response.json();",
+                    "        pm.expect(jsonData.code).to.eql(200);",
+                    "        pm.expect(jsonData.msg).to.include('成功');",
+                    "    });",
+                    "    ",
+                    "    pm.test('应该返回评论ID', function () {",
+                    "        const jsonData = pm.response.json();",
+                    "        pm.expect(jsonData).to.have.property('data');",
+                    "        pm.expect(jsonData.data).to.be.a('number');",
+                    "    });",
+                    "}",
+                    "",
+                    "if (pm.info.requestName.includes('获取帖子点赞数')) {",
+                    "    pm.test('应该返回点赞数', function () {",
+                    "        const jsonData = pm.response.json();",
+                    "        pm.expect(jsonData).to.have.property('data');",
+                    "        pm.expect(jsonData.data).to.have.property('like_count');",
+                    "        pm.expect(jsonData.data.like_count).to.be.a('number');",
+                    "    });",
+                    "}",
+                    "",
+                    "if (pm.info.requestName.includes('检查用户点赞状态')) {",
+                    "    pm.test('应该返回点赞状态', function () {",
+                    "        const jsonData = pm.response.json();",
+                    "        pm.expect(jsonData).to.have.property('data');",
+                    "        pm.expect(jsonData.data).to.have.property('liked');",
+                    "        pm.expect(jsonData.data.liked).to.be.a('boolean');",
+                    "    });",
+                    "}",
+                    "",
+                    "if (pm.info.requestName.includes('获取帖子评论列表')) {",
+                    "    pm.test('应该返回评论列表', function () {",
+                    "        const jsonData = pm.response.json();",
+                    "        pm.expect(jsonData).to.have.property('data');",
+                    "        pm.expect(jsonData.data).to.have.property('list');",
+                    "        pm.expect(jsonData.data).to.have.property('total');",
+                    "        pm.expect(jsonData.data.list).to.be.an('array');",
+                    "    });",
+                    "}",
+                    "",
+                    "if (pm.info.requestName.includes('获取帖子点赞列表')) {",
+                    "    pm.test('应该返回点赞列表', function () {",
+                    "        const jsonData = pm.response.json();",
+                    "        pm.expect(jsonData).to.have.property('data');",
+                    "        pm.expect(jsonData.data).to.have.property('list');",
+                    "        pm.expect(jsonData.data).to.have.property('total');",
+                    "        pm.expect(jsonData.data.list).to.be.an('array');",
+                    "    });",
+                    "}"
+                ]
+            }
+        }
+    ]
+}

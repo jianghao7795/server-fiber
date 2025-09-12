@@ -15,6 +15,7 @@ type appGroup struct {
 	app.UserRouter
 	app.TaskRouter
 	app.TagRouter
+	app.LikeRouter
 }
 
 var AppRouter = new(appGroup)
