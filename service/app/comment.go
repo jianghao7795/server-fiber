@@ -50,6 +50,29 @@ func (commentService *CommentService) GetComment(id int) (comment app.Comment, e
 	return
 }
 
+// GetCommentList 根据帖子ID获取评论列表
+func (commentService *CommentService) GetCommentList(postId uint, page, pageSize int) ([]app.Comment, int64, error) {
+	var comments []app.Comment
+	var total int64
+
+	// 计算总数
+	if err := global.DB.Model(&app.Comment{}).Where("post_id = ?", postId).Count(&total).Error; err != nil {
+		return nil, 0, err
+	}
+
+	// 分页查询
+	offset := (page - 1) * pageSize
+	err := global.DB.Where("post_id = ?", postId).
+		Preload("User").
+		Preload("ToUser").
+		Order("created_at DESC").
+		Limit(pageSize).
+		Offset(offset).
+		Find(&comments).Error
+
+	return comments, total, err
+}
+
 // GetCommentInfoList 分页获取Comment记录
 // Author wuhao
 func (commentService *CommentService) GetCommentInfoList(info *commentReq.CommentSearch) (list []app.Comment, total int64, err error) {
