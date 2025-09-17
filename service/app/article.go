@@ -1,6 +1,7 @@
 package app
 
 import (
+	"errors"
 	global "server-fiber/model"
 	"server-fiber/model/app"
 	appReq "server-fiber/model/app/request"
@@ -41,7 +42,15 @@ func (*ArticleService) DeleteArticleByIds(ids request.IdsReq) (err error) {
 
 // update
 func (*ArticleService) UpdateArticle(article *app.Article) (err error) {
-	err = global.DB.Model(&app.Article{}).Where("id = ?", article.ID).Save(article).Error
+	result := global.DB.Model(&app.Article{}).Where("id = ?", article.ID).Save(article)
+	if result.Error != nil {
+		err = result.Error
+		return
+	}
+	if result.RowsAffected == 0 {
+		err = errors.New("没有更新任何数据")
+		return
+	}
 	return err
 }
 
@@ -74,7 +83,15 @@ func (*ArticleService) GetArticleInfoList(info *appReq.ArticleSearch) (list []ap
 
 // 批量更新
 func (*ArticleService) PutArticleByIds(ids *request.IdsReq) (err error) {
-	err = global.DB.Model(&app.Article{}).Where("id in ?", ids.Ids).Update("is_important", 2).Error
+	result := global.DB.Model(&app.Article{}).Where("id in ?", ids.Ids).Update("is_important", 2)
+	if result.Error != nil {
+		err = result.Error
+		return
+	}
+	if result.RowsAffected == 0 {
+		err = errors.New("没有更新任何数据")
+		return
+	}
 	return
 }
 

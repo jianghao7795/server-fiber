@@ -29,7 +29,17 @@ func (*BaseMessageService) UpdateBaseMessage(id int, baseMessage *app.BaseMessag
 	if baseMessageReplica.ID == 0 {
 		return errors.New("数据库没有记录")
 	}
-	return db.Save(baseMessage).Error
+	// 这里可以添加对 baseMessageReplica 的字段赋值
+	result := db.Save(baseMessage)
+	if result.Error != nil {
+		err = result.Error
+		return
+	}
+	if result.RowsAffected == 0 {
+		err = errors.New("没有更新任何数据")
+		return
+	}
+	return
 }
 
 /**

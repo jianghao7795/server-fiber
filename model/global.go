@@ -45,19 +45,19 @@ func Done(c *fiber.Ctx, logString []byte) {
 }
 
 // // GetGlobalDBByDBName 通过名称获取db list中的db
-// func GetGlobalDBByDBName(dbname string) *gorm.DB {
-// 	lock.RLock()
-// 	defer lock.RUnlock()
-// 	return DBList[dbname]
-// }
+func GetGlobalDBByDBName(dbname string) *gorm.DB {
+	lock.RLock()
+	defer lock.RUnlock()
+	return DBList[dbname]
+}
 
 // MustGetGlobalDBByDBName 通过名称获取db 如果不存在则panic
-// func MustGetGlobalDBByDBName(dbname string) *gorm.DB {
-// 	lock.RLock()
-// 	defer lock.RUnlock()
-// 	db, ok := DBList[dbname]
-// 	if !ok || db == nil {
-// 		panic("db no init")
-// 	}
-// 	return db
-// }
+func MustGetGlobalDBByDBName(dbname string) *gorm.DB {
+	lock.RLock()
+	defer lock.RUnlock()
+	db, ok := DBList[dbname]
+	if !ok || db == nil {
+		panic("db no init")
+	}
+	return db
+}

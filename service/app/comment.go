@@ -40,7 +40,16 @@ func (commentService *CommentService) UpdateComment(comment *app.Comment) (err e
 	if commentReplica.ID == 0 {
 		return errors.New("未找到该comment")
 	}
-	return db.Save(comment).Error
+	result := db.Save(comment)
+	if result.Error != nil {
+		err = result.Error
+		return
+	}
+	if result.RowsAffected == 0 {
+		err = errors.New("没有更新任何数据")
+		return
+	}
+	return
 }
 
 // GetComment 根据id获取Comment记录
