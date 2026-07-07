@@ -3,6 +3,7 @@ package tests
 import (
 	"bytes"
 	"encoding/json"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -25,15 +26,31 @@ func (h *TestHelper) CreateTestApp() *fiber.App {
 	return app
 }
 
+// SendRequest 使用 fiber.Test() 发送请求并返回响应，比手动 httptest 更符合 Fiber 习惯
+func (h *TestHelper) SendRequest(app *fiber.App, method, path string, body []byte) (*http.Response, error) {
+	var req *http.Request
+	if body != nil {
+		req = httptest.NewRequest(method, path, bytes.NewReader(body))
+		req.Header.Set("Content-Type", "application/json")
+	} else {
+		req = httptest.NewRequest(method, path, nil)
+	}
+	return app.Test(req)
+}
+
 // AssertResponseStatus 验证响应状态码
-func (h *TestHelper) AssertResponseStatus(t *testing.T, resp *httptest.ResponseRecorder, expectedStatus int) {
-	assert.Equal(t, expectedStatus, resp.Code)
+func (h *TestHelper) AssertResponseStatus(t *testing.T, resp *http.Response, expectedStatus int) {
+	assert.Equal(t, expectedStatus, resp.StatusCode)
 }
 
 // AssertResponseBody 验证响应体结构
-func (h *TestHelper) AssertResponseBody(t *testing.T, resp *httptest.ResponseRecorder, expectedKeys ...string) {
+func (h *TestHelper) AssertResponseBody(t *testing.T, resp *http.Response, expectedKeys ...string) {
+	bodyBytes, err := io.ReadAll(resp.Body)
+	assert.NoError(t, err)
+	resp.Body.Close()
+
 	var responseBody map[string]any
-	err := json.NewDecoder(resp.Body).Decode(&responseBody)
+	err = json.Unmarshal(bodyBytes, &responseBody)
 	assert.NoError(t, err)
 
 	for _, key := range expectedKeys {
@@ -42,9 +59,13 @@ func (h *TestHelper) AssertResponseBody(t *testing.T, resp *httptest.ResponseRec
 }
 
 // AssertResponseMessage 验证响应消息
-func (h *TestHelper) AssertResponseMessage(t *testing.T, resp *httptest.ResponseRecorder, expectedMessage string) {
+func (h *TestHelper) AssertResponseMessage(t *testing.T, resp *http.Response, expectedMessage string) {
+	bodyBytes, err := io.ReadAll(resp.Body)
+	assert.NoError(t, err)
+	resp.Body.Close()
+
 	var responseBody map[string]any
-	err := json.NewDecoder(resp.Body).Decode(&responseBody)
+	err = json.Unmarshal(bodyBytes, &responseBody)
 	assert.NoError(t, err)
 
 	if msg, exists := responseBody["msg"]; exists {
@@ -52,7 +73,7 @@ func (h *TestHelper) AssertResponseMessage(t *testing.T, resp *httptest.Response
 	}
 }
 
-// CreateTestRequest 创建测试请求
+// CreateTestRequest 创建测试请求（兼容旧版本）
 func (h *TestHelper) CreateTestRequest(method, path string, body []byte) *http.Request {
 	req := httptest.NewRequest(method, path, bytes.NewReader(body))
 	if body != nil {
@@ -61,7 +82,7 @@ func (h *TestHelper) CreateTestRequest(method, path string, body []byte) *http.R
 	return req
 }
 
-// MockHTTPClient 模拟 HTTP 客户端
+// MockHTTPClient 模拟 HTTP 客户端（用于外部 API Mock）
 type MockHTTPClient struct {
 	Responses map[string]*MockResponse
 }
